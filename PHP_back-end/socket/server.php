@@ -47,6 +47,7 @@ function wsOnMessage($clientID, $message, $messageLength, $binary) {
 	elseif(strcmp($parsed_message->getOperation(),$WS_OP_MESSAGE) == 0){
 		
 		//$Server->log("RCV_ID = ".$parsed_message->getRecieverId());
+		echo "test echo";
 		$reciever_id = $parsed_message->getRecieverId();
 		$Server->log("reciever_id:".$reciever_id);
 		if(in_array($reciever_id,$Server->client_user_ids))
