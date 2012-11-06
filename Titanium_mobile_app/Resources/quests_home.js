@@ -1,3 +1,140 @@
+function removeAllContent() {
+	headerView.remove(headerAvatarHeaderIcon);
+	headerView.remove(nameOfCharacter);
+	levelView.remove(LVLlbl);
+	headerView.remove(levelView);
+	totalGoldView.remove(Goldlbl);
+	headerView.remove(totalGoldView);
+	headerView.remove(backButton);
+	myQuestsHeader.remove(myQuestsLbl);
+	myQuestsHeader.remove(completedLbl);
+	enabledWrapperView.remove(challengeImage);
+	enabledWrapperView.remove(avatarSmallImage);
+	enabledWrapperView.remove(avatarNameLbl);
+	enabledWrapperView.remove(numebrOfFriends);
+	levelView.remove(levelValueLbl);
+	enabledWrapperView.remove(friendsIconImage);
+	enabledWrapperView.remove(levelLbl);
+	enabledWrapperView.remove(levelValueLbl);
+	enabledWrapperView.remove(tickBox);
+	enabledWrapperView.remove(timeRemainingLbl);
+	enabledWrapperView.remove(timeRemainingMessageLbl);
+	enabledWrapperView.remove(rewardsLbl);
+	enabledWrapperView.remove(containerIconView);
+	enabledWrapperView.remove(containerNotificationIconView);
+	containerNotificationIconView.remove(containerNotification);
+	enabledWrapperView.remove(flowerIconView);
+	enabledWrapperView.remove(flowerNotificationIconView);
+	rewardsEarnedView.remove(rewardsEarnedLblView);
+	flowerNotificationIconView.remove(flowerNotification);
+	enabledWrapperView.remove(friendsIconView);
+	enabledWrapperView.remove(friendsNotificationIconView);
+	friendsNotificationIconView.remove(friendsNotification);
+	enabledWrapperView.remove(challengeMessage);
+	freePlayView.remove(freePlayLbl);
+	freePlayView.remove(lineBreakView3);
+	freePlayView.remove(gameIconsView);
+	gameIconsView.remove(horseRidingIconImage);
+	gameIconsView.remove(archeryIconImage);
+	gameIconsView.remove(paintingIconImage);
+	gameIconsView.remove(cookingIconImage);
+	gameIconsView.remove(playGamesMessageLbl);
+	footerView.remove(lblSortBy);
+	footerView.remove(myQuestsButton);
+	footerView.remove(theirQuestsButton);
+	footerView.remove(questsLogButton);
+	questsLogMainWin.remove(bottomLogView);
+	bottomLogView.remove(bottomHeaderLogView);
+	bottomLogLogicalView.remove(challengeImage);
+	bottomLogLogicalView.remove(avatarImage);
+	bottomLogLogicalView.remove(questLogLbl);
+	bottomLogLogicalView.remove(logStatisticsLbl);
+	bottomLogLogicalView.remove(logStatisticsValuesLbl);
+	bottomLogLogicalView.remove(friendsEarnedIconImage);
+	bottomLogLogicalView.remove(friendsEarnedLbl);
+	bottomLogLogicalView.remove(cancelBtn);
+	win.remove(headerView);
+	win.remove(myQuestsHeader);
+	win.remove(lineBreakView1);
+	win.remove(table);
+	win.remove(lineBreakView2);
+	win.remove(freePlayView);
+	win.remove(footerView);
+	win.remove(questsLogMainWin);
+	win.remove(bottomLogLogicalView);
+
+	win = null;
+	winWidth = null;
+	winHeight = null;
+	chkArray = null;
+	headerView = null;
+	headerAvatarHeaderIcon = null;
+	nameOfCharacter = null;
+	levelView = null;
+	LVLlbl = null;
+	totalGoldView = null;
+	Goldlbl = null;
+	backButton = null;
+	myQuestsHeader = null;
+	myQuestsLbl = null;
+	completedLbl = null;
+	lineBreakView1 = null;
+	tableData = null;
+	table = null;
+	row = null;
+	enabledWrapperView = null;
+	challengeImage = null;
+	avatarSmallImage = null;
+	avatarNameLbl = null;
+	numebrOfFriends = null;
+	friendsIconImage = null;
+	levelLbl = null;
+	levelValueLbl = null;
+	tickBox = null;
+	window1 = null;
+	timeRemainingLbl = null;
+	timeRemainingMessageLbl = null;
+	rewardsLbl = null;
+	containerIconView = null;
+	containerNotificationIconView = null;
+	containerNotification = null;
+	flowerIconView = null;
+	flowerNotificationIconView = null;
+	flowerNotification = null;
+	friendsIconView = null;
+	friendsNotificationIconView = null;
+	friendsNotification = null;
+	challengeMessage = null;
+	lineBreakView2 = null;
+	freePlayView = null;
+	freePlayLbl = null;
+	lineBreakView3 = null;
+	gameIconsView = null;
+	horseRidingIconImage = null;
+	archeryIconImage = null;
+	paintingIconImage = null;
+	cookingIconImage = null;
+	playGamesMessageLbl = null;
+	footerView = null;
+	lblSortBy = null;
+	myQuestsButton = null;
+	theirQuestsButton = null;
+	questsLogButton = null;
+	questsLogMainWin = null;
+	bottomLogView = null;
+	bottomBarView = null;
+	bottomHeaderLogView = null;
+	bottomLogLogicalView = null;
+	challengeImage = null;
+	avatarImage = null;
+	questLogLbl = null;
+	logStatisticsLbl = null;
+	logStatisticsValuesLbl = null;
+	friendsEarnedIconImage = null;
+	friendsEarnedLbl = null;
+	cancelBtn = null;
+}
+
 var win = Titanium.UI.createWindow({
 	title : "Crafting Home",
 	width : '100%',
@@ -12,14 +149,13 @@ var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
 var chkArray = ['Value 1', 'Value 2', 'Value 3', 'Value 4', 'Value 5', 'Value 6', 'Value 7', 'Value 8', 'Value 9', 'Value 10'];
 
-function isChallengeComplete(index)
-{
-	if((index % 2) == 0)
-	{
+function isChallengeComplete(index) {
+	if ((index % 2) == 0) {
 		return 'images/unchecked.png';
 	}
 	return 'images/checked.png';
 }
+
 function getSwitchValue(i) {
 	if ((i % 2) == 0) {
 		return true;
@@ -294,6 +430,7 @@ backButton.addEventListener("click", function(e) {
 		//url:'level2.js'
 	});
 	window1.open();
+	removeAllContent();
 });
 var myQuestsHeader = Ti.UI.createView({
 	height : getHeaderHeight(),
@@ -442,7 +579,7 @@ for (var i = 0; i < 6; i++) {
 
 	//Checkbox
 	var tickBox = Ti.UI.createButton({
-		backgroundImage : isChallengeComplete(i),//'images/unchecked.png',
+		backgroundImage : isChallengeComplete(i), //'images/unchecked.png',
 		width : 28,
 		height : 28,
 		checkBok : "tick",
@@ -452,35 +589,34 @@ for (var i = 0; i < 6; i++) {
 	});
 
 	tickBox.addEventListener('click', function(e) {
-		if((i % 2 ) == 0)
-		{
+		if ((i % 2 ) == 0) {
 			//is unchecked / Incompleted
 			var window1 = Titanium.UI.createWindow({
-				 url:'quests_incomplete.js'
-			 });
-			 window1.open();
-			
-		}
-		else
-		{
+				url : 'quests_incomplete.js'
+			});
+			window1.open();
+			removeAllContent();
+
+		} else {
 			//is checked / Completed
 			var window1 = Titanium.UI.createWindow({
-				 url:'quests_completed_info.js'
-			 });
-			 window1.open();
+				url : 'quests_completed_info.js'
+			});
+			window1.open();
+			removeAllContent();
 		}
-/*
-		if (e.source.checkBok) {
-			if (e.source.checked) {
-				e.source.backgroundImage = 'images/unchecked.png';
-				e.source.checked = false;
-			} else {
-				e.source.backgroundImage = 'images/checked.png';
-				e.source.checked = true;
-				//alert(e.source.customValue);
-			}
-		}
-*/
+		/*
+		 if (e.source.checkBok) {
+		 if (e.source.checked) {
+		 e.source.backgroundImage = 'images/unchecked.png';
+		 e.source.checked = false;
+		 } else {
+		 e.source.backgroundImage = 'images/checked.png';
+		 e.source.checked = true;
+		 //alert(e.source.customValue);
+		 }
+		 }
+		 */
 	});
 	enabledWrapperView.add(tickBox);
 
@@ -901,7 +1037,6 @@ var bottomHeaderLogView = Ti.UI.createView({
 });
 bottomLogView.add(bottomHeaderLogView);
 
-
 var bottomLogLogicalView = Ti.UI.createView({
 	visible : false,
 	bottom : 0,
@@ -937,64 +1072,75 @@ bottomLogLogicalView.add(avatarImage);
 var questLogLbl = Ti.UI.createLabel({
 	text : 'Quest Log',
 	color : '#FFFFFF',
-	font : {fontSize:getHeadingFontSize(), fontWeight:'bold'},
+	font : {
+		fontSize : getHeadingFontSize(),
+		fontWeight : 'bold'
+	},
 	textAlign : 'center',
 	height : getHeaderHeight(),
 	top : 0
 });
+
 bottomLogLogicalView.add(questLogLbl);
 
 var logStatisticsLbl = Ti.UI.createLabel({
 	top : questLogLbl.height + getMarginNormal1(),
 	color : '#FFFFFF',
 	left : avatarImage.width + (getMarginNormal1() * 2),
-	font : {fontSize:getHeadingFontSize()},
-	text : " Total Completed :\n Completed For Me:\n XP Earned:"  
-}); 
+	font : {
+		fontSize : getHeadingFontSize()
+	},
+	text : " Total Completed :\n Completed For Me:\n XP Earned:"
+});
 bottomLogLogicalView.add(logStatisticsLbl);
 
 var logStatisticsValuesLbl = Ti.UI.createLabel({
 	top : questLogLbl.height + getMarginNormal1(),
 	color : '#FDFF06',
 	right : getMarginNormal1(),
-	font : {fontSize:getHeadingFontSize(), fontWeight:'bold'},
+	font : {
+		fontSize : getHeadingFontSize(),
+		fontWeight : 'bold'
+	},
 	textAlign : 'right',
-	text : "250\n70\n70\n45" 
-}); 
+	text : "250\n70\n70\n45"
+});
 bottomLogLogicalView.add(logStatisticsValuesLbl);
 
 var friendsEarnedIconImage = Ti.UI.createImageView({
 	image : "images/friends_icon.png",
-	top : logStatisticsLbl.top + (getHeaderHeight()*2),
+	top : logStatisticsLbl.top + (getHeaderHeight() * 2),
 	left : avatarImage.width + (getMarginNormal1() * 2),
 	height : getFriendsIconHeight(),
 	width : getFriendsIconWidth()
-	//text : "\n\n\n" 
-}); 
+	//text : "\n\n\n"
+});
 bottomLogLogicalView.add(friendsEarnedIconImage);
-
 
 // Create a Label.
 var friendsEarnedLbl = Ti.UI.createLabel({
 	text : 'Earned:',
 	color : '#FFFFFF',
-	font : {fontSize:getHeadingFontSize()},
+	font : {
+		fontSize : getHeadingFontSize()
+	},
 	top : friendsEarnedIconImage.top - (getMarginNormal1()),
-	left : friendsEarnedIconImage.width+(getMarginNormal1()*3)+avatarImage.width,
+	left : friendsEarnedIconImage.width + (getMarginNormal1() * 3) + avatarImage.width,
 	textAlign : 'center'
 });
 bottomLogLogicalView.add(friendsEarnedLbl);
-
 
 // Create a Button.
 var cancelBtn = Ti.UI.createButton({
 	title : 'Cancel',
 	color : "#FFFFFF",
 	backgroundColor : "#474747",
-	height : getButtonHeight(),  
+	height : getButtonHeight(),
 	width : getButtonWidth(),
 	borderRadius : 2,
-	font:{fontFamily:"MagicalMedieval"},
+	font : {
+		fontFamily : "MagicalMedieval"
+	},
 	bottom : getHeaderHeight(),
 	right : getMarginNormal1()
 });
@@ -1003,9 +1149,6 @@ cancelBtn.addEventListener('click', function() {
 	bottomLogLogicalView.visible = false;
 });
 bottomLogLogicalView.add(cancelBtn);
-
-
-
 
 win.add(headerView);
 win.add(myQuestsHeader);
@@ -1019,9 +1162,10 @@ win.add(bottomLogLogicalView);
 
 win.addEventListener('android:back', function(e) {
 	var window = Titanium.UI.createWindow({
-		url : 'app.js'
+		url : 'inventory.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 win.open();

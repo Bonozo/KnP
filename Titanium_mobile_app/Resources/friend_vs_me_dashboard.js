@@ -1,3 +1,88 @@
+function removeAllContent() {
+	headerView.add(headerAvatarHeaderIcon);
+	headerView.add(nameOfCharacter);
+	levelView.add(LVLlbl);
+	headerView.add(levelView);
+	totalGoldView.add(Goldlbl);
+	headerView.add(totalGoldView);
+	headerView.add(backButton);
+	findFriendsView.add(myFriendsLbl);
+	findFriendsView.add(nameLbl);
+	goldView.add(goldImageView);
+	goldView.add(goldLbl);
+	level1View.add(level1Lbl);
+	enabledWrapperView1.add(displayImage); 
+	enabledWrapperView1.add(questTitleLbl);
+	enabledWrapperView1.add(questDescriptionLbl);
+	row.add(enabledWrapperView1);
+	friendshipMeterView.add(friendshipMeterHeading);
+	friendshipMeterView.add(questDescriptionLbl);
+	friendshipMeterView.add(boyDpImageView);
+	friendshipMeterView.add(girlDpImageView);
+	win.add(informationLbl);
+	win.add(currentLevelLbl);
+	win.add(findFriendsView);
+	win.add(goldView);
+	win.add(level1View);
+	win.add(lineBreakView1);
+	win.add(quotationLbl);
+	win.add(onlineStatusIcon);
+	win.add(onlineStatusDescription);
+	win.add(chatIcon);
+	win.add(messageIcon);
+	win.add(friendsBtn);
+	win.add(maleCharacterImage);
+	win.add(table);
+	win.add(friendshipMeterView);
+	win.add(girlFuelImageView);
+	win.add(boyFuelImageView);
+	win.add(headerView);
+	win.add(footerView);
+	
+	win = null;
+	winWidth = null;
+	winHeight = null;
+	headerView = null;
+	headerAvatarHeaderIcon = null;
+	nameOfCharacter = null;
+	levelView = null;
+	LVLlbl = null;
+	totalGoldView = null;
+	Goldlbl = null;
+	backButton = null;
+	findFriendsView = null;
+	myFriendsLbl = null;
+	nameLbl = null;
+	goldView = null;
+	goldImageView = null;
+	lineBreakView1 = null;
+	quotationLbl = null;
+	level1View = null;
+	level1Lbl = null;
+	onlineStatusIcon = null;
+	onlineStatusDescription = null;
+	chatIcon = null;
+	messageIcon = null;
+	friendsBtn = null;
+	maleCharacterImage = null;
+	tableData = null;
+	table = null;
+	row = null;
+	enabledWrapperView1 = null;
+	questTitleLbl = null;
+	questDescriptionLbl = null;
+	friendshipMeterView = null;
+	friendshipMeterHeading = null;
+	questDescriptionLbl = null;
+	boyDpImageView = null;
+	girlDpImageView = null;
+	girlFuelImageView = null;
+	boyFuelImageView = null;
+	informationLbl = null;
+	currentLevelLbl = null;
+	summaryView = null;
+	footerView = null;
+}
 var win = Titanium.UI.createWindow({
 	title : "Crafting Home",
 	width : '100%',
@@ -346,6 +431,7 @@ backButton.addEventListener("click", function(e) {
 		//url:'level2.js'
 	});
 	inventory_win.open();
+	removeAllContent();
 });
 var findFriendsView = Ti.UI.createView({
 	height : getHeaderHeight(),

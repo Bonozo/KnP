@@ -2,23 +2,6 @@
 var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
 
-Ti.App.GLBL_skin_color = 'gray'; 
-
-Ti.App.GLBL_hair_stlyes = ['Style1','Style2','Style3'];
-Ti.App.GLBL_hair_color = ['gray','red'];
-Ti.App.GLBL_hair_color_image_name = ['hdpi_male_character_bad.png','hdpi_male_character_good.png'];
-Ti.App.GLBL_skin_tone = ['Tone1','Tone2','Tone3'];
-Ti.App.GLBL_face = ['face1','face2','face3'];
-Ti.App.GLBL_clothing = ['clothing1','clothing2','clothing3'];
-Ti.App.GLBL_color_scheme = ['Color scheme1','Color scheme2','Color scheme3'];
-
-Ti.App.GLBL_curr_hair_stlyes = 0;
-Ti.App.GLBL_curr_hair_color = 0;
-Ti.App.GLBL_curr_skin_tone = 0;
-Ti.App.GLBL_curr_face = 0;
-Ti.App.GLBL_curr_clothing = 0;
-Ti.App.GLBL_curr_color_scheme = 0;
-
 function toTitleCase(str)
 {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});

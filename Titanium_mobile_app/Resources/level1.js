@@ -1,14 +1,94 @@
 Ti.include('func_level1.js');
-var window = Titanium.UI.createWindow({
-    url:'level2.js'
-});
+function removeAllContent() {
+	headerRowView.remove(header);
+	leftView.remove(characterImage);
+	hairStyleRowView.remove(lblHairStyle);
+	hairStyleRowView.remove(btnHairStyleMinus);
+	hairStyleRowView.remove(btnHairStylePlus);
+	rightView.remove(hairStyleRowView);
+	hairColorRowView.remove(btnHairColorPlus);
+	hairColorRowView.remove(btnHairColorMinus);
+	hairColorRowView.remove(lblHairColor);
+	rightView.remove(hairColorRowView);
+	hairSkinColorRowView.remove(btnSkinTonePlus);
+	hairSkinColorRowView.remove(btnSkinToneMinus);
+	hairSkinColorRowView.remove(lblSkinTone);
+	rightView.remove(hairSkinColorRowView);
+	FaceRowView.remove(btnFacePlus);
+	FaceRowView.remove(btnFaceMinus);
+	FaceRowView.remove(lblFace);
+	rightView.remove(FaceRowView);
+	clothingRowView.remove(btnClothingPlus); 
+	clothingRowView.remove(btnClothingMinus); 
+	clothingRowView.remove(lblClothing);
+	rightView.remove(clothingRowView);
+	colorSchemeRowView.remove(btnColorSchemePlus);
+	colorSchemeRowView.remove(btnColorSchemeMinus);
+	colorSchemeRowView.remove(lblColorScheme);
+	rightView.remove(colorSchemeRowView);
+	rightView.remove(blankRowView);
+	footer.remove(name);
+	footer.remove(level);
+	DoneAndDiceRowView.remove(doneButton);
+	DoneAndDiceRowView.remove(diceButton);
+	rightView.remove(DoneAndDiceRowView);
+	contentView.remove(rightView);
+	contentView.remove(leftView);
+	win.remove(footer);
+	win.remove(contentView);
+	win.remove(descriptionRowView);
+	win.remove(headerRowView);
+	
+	headerRowView = null;
+	header = null;
+	description = null;
+	descriptionRowView = null;
+	contentView = null;
+	leftView = null;
+	characterImage = null;
+	rightView = null;
+	hairStyleRowView = null;
+	btnHairStylePlus = null;
+	btnHairStyleMinus = null;
+	lblHairStyle = null;
+	hairColorRowView = null;
+	btnHairColorPlus = null;
+	btnHairColorMinus = null;
+	lblHairColor = null;
+	hairSkinColorRowView = null;
+	btnSkinTonePlus = null;
+	btnSkinToneMinus = null;
+	lblSkinTone = null; null;
+	FaceRowView = null;
+	btnFacePlus = null;
+	btnFaceMinus = null;
+	lblFace = null;
+	clothingRowView = null;
+	btnClothingPlus = null;
+	btnClothingMinus = null;
+	lblClothing = null;
+	colorSchemeRowView = null;
+	btnColorSchemePlus = null;
+	btnColorSchemeMinus = null;
+	lblColorScheme = null;
+	blankRowView = null;
+	DoneAndDiceRowView = null;
+	diceButton = null;
+	doneButton = null;
+	footer = null;
+	name = null;
+	level = null;
+	win = null;
+	window = null;
+}
+
 
 var win = Titanium.UI.createWindow({
 	title:"Customize your hero",
     width: '100%',
     navBarHidden : true,
     height: '100%',
-	backgroundColor:"#FFFFFF",
+	backgroundColor:"#D0C8B0",
 	exitOnClose:true
 });
 win.orientationModes = [Ti.UI.PORTRAIT];
@@ -53,8 +133,7 @@ var contentView = Titanium.UI.createView({
 	width:"100%",	
 	top:getHeaderHeight()+getDescriptionTextHeight(),
 	left:0,
-	height : getHairStyleRowY()+(7*getStylesRowHeight())+(getStylesRowHeight()),
-	backgroundColor : "#000000"
+	height : getHairStyleRowY()+(7*getStylesRowHeight())+(getStylesRowHeight())
 });
 
 //Left view
@@ -62,8 +141,7 @@ var leftView = Titanium.UI.createView({
 	width:"40%",	
 	top:0,
 	left:0,
-	height:getHairStyleRowY()+(7*getStylesRowHeight())+(getStylesRowHeight()),
-	backgroundColor : "#FFFFFF"
+	height:getHairStyleRowY()+(7*getStylesRowHeight())+(getStylesRowHeight())
 });
 
 //Character Image
@@ -80,8 +158,7 @@ var rightView = Titanium.UI.createView({
 	width:"60%",	
 	top:0,
 	height:getHairStyleRowY()+(7*getStylesRowHeight())+(getStylesRowHeight()),
-	right:0,			
-	backgroundColor : "#FFFFFF"
+	right:0
 });
 
 
@@ -454,8 +531,7 @@ rightView.add(blankRowView);
 var DoneAndDiceRowView = Titanium.UI.createView({
 	height:getStylesRowHeight(),		
 	width:"90%",	
-	top:getHairStyleRowY()+(6*getStylesRowHeight())+(getStylesRowHeight()/2),
-	backgroundColor : "#FFFFFF"
+	top:getHairStyleRowY()+(6*getStylesRowHeight())+(getStylesRowHeight()/2)
 });
 
 
@@ -472,19 +548,19 @@ var diceButton = Titanium.UI.createButton({
 diceButton.addEventListener("click", function(e){
 	//alert(Titanium.App.Properties.getString("gender"));
 	//alert(Ti.App.GLBL_gender);
-	curr_hair_stlyes = getRandomNumber(0,2);
-	curr_hair_color = getRandomNumber(0,2);
-	curr_skin_tone = getRandomNumber(0,2);
-	curr_face = getRandomNumber(0,2);
-	curr_clothing = getRandomNumber(0,2);
-	curr_color_scheme 	= getRandomNumber(0,2);
+	Ti.App.GLBL_curr_hair_stlyes = getRandomNumber(0,2);
+	Ti.App.GLBL_curr_hair_color = getRandomNumber(0,2);
+	Ti.App.GLBL_curr_skin_tone = getRandomNumber(0,2);
+	Ti.App.GLBL_curr_face = getRandomNumber(0,2);
+	Ti.App.GLBL_curr_clothing = getRandomNumber(0,2);
+	Ti.App.GLBL_curr_color_scheme 	= getRandomNumber(0,2);
 	
-	lblHairStyle.text 	= hair_stlyes[curr_hair_stlyes];
-	lblHairColor.text  	= hair_color[curr_hair_color];
-	lblSkinTone.text  	= skin_tone[curr_skin_tone];
-	lblFace.text  		= face[curr_face]; 
-	lblClothing.text  	= clothing[curr_clothing]; 
-	lblColorScheme.text = color_scheme[curr_color_scheme]; 	
+	lblHairStyle.text 	= Ti.App.GLBL_hair_stlyes[Ti.App.GLBL_curr_hair_stlyes];
+	lblHairColor.text  	= Ti.App.GLBL_hair_color[Ti.App.GLBL_curr_hair_color];
+	lblSkinTone.text  	= Ti.App.GLBL_skin_tone[Ti.App.GLBL_curr_skin_tone];
+	lblFace.text  		= Ti.App.GLBL_face[Ti.App.GLBL_curr_face]; 
+	lblClothing.text  	= Ti.App.GLBL_clothing[Ti.App.GLBL_curr_clothing]; 
+	lblColorScheme.text = Ti.App.GLBL_color_scheme[Ti.App.GLBL_curr_color_scheme]; 	
 
 });
 
@@ -501,7 +577,11 @@ var doneButton = Titanium.UI.createButton({
 	font:{fontFamily : Ti.App.GLBL_default_font}
 });
 doneButton.addEventListener("click", function(e){
+	var window = Titanium.UI.createWindow({
+	    url:'sign_up.js'
+	});
 	window.open();
+	removeAllContent();
 	//win.close();
 });
 
@@ -509,7 +589,6 @@ doneButton.addEventListener("click", function(e){
 var footer = Titanium.UI.createView({
 	width:"100%",	
 	top:(2*getHairStyleRowY())+(10*getStylesRowHeight()),
-	backgroundColor : "#FFFFFF",
 	zIndex : 1000
 });
 
@@ -543,9 +622,10 @@ contentView.add(leftView);
 
 win.addEventListener('android:back', function(e) {
 	var window = Titanium.UI.createWindow({
-	    url:'app.js'
+	    url:'choose_your_class.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 

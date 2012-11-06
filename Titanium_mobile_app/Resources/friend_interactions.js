@@ -1,3 +1,76 @@
+function removeAllContent() {
+	headerView.remove(headerAvatarHeaderIcon);
+	headerView.remove(nameOfCharacter);
+	levelView.remove(LVLlbl);
+	headerView.remove(levelView);
+	headerView.remove(totalGoldView);
+	totalGoldView.remove(Goldlbl);
+	headerView.remove(backButton);
+	findFriends.remove(knightsLbl);
+	findFriends.remove(findByName);
+	summaryView.remove(LVLButton);
+	summaryView.remove(goldButton);
+	summaryView.remove(rightButton);
+	footerView.remove(lblSortBy);
+	footerView.remove(footerButtonsViewer);
+	footerButtonsViewer.remove(knightButton);
+	footerButtonsViewer.remove(princessesButton);
+	footerView.remove(messagesButton);
+	win.remove(findFriends);
+	win.remove(table);
+	win.remove(headerView);
+	win.remove(summaryView);
+	win.remove(footerView);
+	
+	win = null;
+	winWidth = null;
+	winHeight = null;
+	headerView = null;
+	headerAvatarHeaderIcon = null;
+	nameOfCharacter = null;
+	levelView = null;
+	LVLlbl = null;
+	totalGoldView = null;
+	Goldlbl = null;
+	backButton = null;
+	findFriends = null;
+	knightsLbl = null;
+	findByName = null;
+	tableData = null;
+	table = null;
+	row = null;
+	enabledWrapperView = null;
+	CraftItem = null;
+	craftDescription = null;
+	onlineStatusIcon = null;
+	onlineStatusDescription = null;
+	avatarImage = null;
+	levelAndGoldView = null;
+	levelView = null;
+	levelLbl = null;
+	levelValueLbl = null;
+	goldView = null;
+	goldImageView = null;
+	goldLbl = null;
+	numberOfFriendsIconImage = null;
+	numberOfFriendsLbl = null;
+	addFriendHeadingView = null;
+	addIconImage = null;
+	addAsFriendLbl = null;
+	infoLbl = null;
+	messageField = null;
+	sendRequestsButton = null;
+	summaryView = null;
+	LVLButton = null;
+	goldButton = null;
+	rightButton = null;
+	footerView = null;
+	lblSortBy = null;
+	footerButtonsViewer = null;
+	knightButton = null;
+	princessesButton = null;
+	messagesButton = null;
+}
 var win = Titanium.UI.createWindow({
 	title : "Crafting Home",
 	width : '100%',
@@ -290,6 +363,7 @@ backButton.addEventListener("click",function(e){
 	    //url:'level2.js'
 	});
 	inventory_win.open();
+	removeAllContent();
 });
 var findFriends = Ti.UI.createView({
 	height : getHeaderHeight(),
@@ -322,275 +396,221 @@ findFriends.add(findByName);
 
 var tableData = [];
 var table = Ti.UI.createTableView({
-	objName : 'inventort_craft',
+	objName : 'friend_interactions',
 	height : winHeight - getHeaderHeight() - 2 * getHeaderHeight() + findFriends.height, // 100%-header_height-footer height
 	top : getHeaderHeight() + findFriends.height
 });
 
-for (var i = 0; i <= 20; i++) {
-	var row = Ti.UI.createTableViewRow({
-		className : 'row',
-		objName : 'row',
-		touchEnabled : true,
-		height : getRawDefaultHeight(),
-		top : 0,
-		expanded : false
-	});
-	row.addEventListener('click', function(e) {
-		if (e.row.expanded) {
-			e.row.height = getRawDefaultHeight();
-			e.row.expanded = false;
+
+var url = "http://justechinfo.com/kap_server/friends_list.php?uid=" + Ti.App.GLBL_uid;
+var rec;//,UID;
+var xhr = Ti.Network.createHTTPClient({
+	onload : function() {
+		json = JSON.parse(this.responseText);
+		
+		if (json.Record != undefined) {
+			//Record = json;
+			//alert("Successfully signed in!");
+			var response_result = "";
+			for (var i = 0; i < json.Record.length; i++) {
+				rec = json.Record[i];
+				//response_result = response_result + ", "+rec.UID;
+				
+				var row = Ti.UI.createTableViewRow({
+					className : 'row',
+					objName : 'row',
+					touchEnabled : true,
+					height : getRawDefaultHeight(),
+					top : 0,
+					uid : rec.UID,
+					expanded : false
+				});
+				row.addEventListener('click', function(e) {
+					/*if (e.row.expanded) {
+						e.row.height = getRawDefaultHeight();
+						e.row.expanded = false;
+					} else {
+						e.row.height = 300;
+						e.row.expanded = true;
+					}*/
+				});
+
+				var enabledWrapperView = Ti.UI.createView({
+					backgroundColor : '#3d3d3d',
+					objName : 'enabledWrapperView',
+					rowID : i,
+					width : Ti.UI.FILL,
+					top : 0,
+					height : 300
+				});
+				//enabledWrapperView.addEventListener("click",checkAlert);
+
+				// Create a CraftItem.
+				var CraftItem = Ti.UI.createLabel({
+					text : rec.NAME,
+					color : '#FFFFFF',
+					font : {
+						fontSize : getHeadingFontSize()
+					},
+					height : getHeadingFontSize() + getMarginNormal1(),
+					top : getMarginNormal1(),
+					left : getMarginNormal1()
+				});
+				// Add to the parent view.
+				enabledWrapperView.add(CraftItem);
+
+				// Craft Desctiption.
+				var craftDescription = Ti.UI.createLabel({
+					text : rec.EMAIL,
+					color : '#7e7e7e',
+					font : {
+						fontSize : getNormalFontSize()
+					},
+					height : getNormalFontSize() + getMarginNormal1(),
+					top : CraftItem.height + getMarginNormal1(),
+					left : getMarginNormal1(),
+					textAlign : 'center'
+				});
+
+				// Add to the parent view.
+				enabledWrapperView.add(craftDescription);
+
+				// Online Status Icon
+				var onlineStatusIcon = Ti.UI.createView({
+					backgroundImage : 'images/offline_icon.png',
+					width : getOnlineIconWidthHeight(),
+					height : getOnlineIconWidthHeight(),
+					left : getMarginNormal1(),
+					top : craftDescription.top + craftDescription.height + getMarginNormal1(),
+					zIndex : 50
+				});
+				enabledWrapperView.add(onlineStatusIcon);
+
+				// Online Status Desctiption.
+				var onlineStatusDescription = Ti.UI.createLabel({
+					text : 'Last online 1 day ago',
+					color : '#7e7e7e',
+					font : {
+						fontSize : getSmallFontSize()
+					},
+					top : craftDescription.top + craftDescription.height + getMarginNormal1(),
+					left : onlineStatusIcon.width + getMarginNormal1() * 2,
+					textAlign : 'center'
+				});
+
+				// Add to the parent view.
+				enabledWrapperView.add(onlineStatusDescription);
+
+				// Avatar Image
+				var avatarImage = Ti.UI.createView({
+					top : getMarginNormal1(),
+					right : getMarginNormal1(),
+					width : getAvatarImageWidthHeight(),
+					height : getAvatarImageWidthHeight(),
+					backgroundImage : 'images/other_avatar.png',
+					zIndex : 50
+				});
+				enabledWrapperView.add(avatarImage);
+
+				// Level And Gold View
+				var levelAndGoldView = Ti.UI.createView({
+					top : getMarginNormal1(),
+					right : avatarImage.width + 2 * getMarginNormal1(),
+					width : getAvatarImageWidthHeight(),
+					height : getAvatarImageWidthHeight(),
+					zIndex : 50
+				});
+				enabledWrapperView.add(levelAndGoldView);
+
+				var levelView = Ti.UI.createView({
+					width : "100%",
+					height : "30%",
+					top : 0,
+					backgroundColor : "#474747",
+					zIndex : 50
+				});
+				levelAndGoldView.add(levelView);
+
+				var levelLbl = Ti.UI.createLabel({
+					text : 'LVL : ',
+					color : '#FFFFFF',
+					font : {
+						fontSize : getNormalFontSize()
+					},
+					left : getMarginNormal1(),
+					textAlign : 'center'
+				});
+
+				// Add to the parent view.
+				levelView.add(levelLbl);
+
+				var levelValueLbl = Ti.UI.createLabel({
+					text : '4',
+					color : '#FFE801',
+					font : {
+						fontSize : getNormalFontSize()
+					},
+					right : getMarginNormal1(),
+					textAlign : 'center'
+				});
+
+				// Add to the parent view.
+				levelView.add(levelValueLbl);
+
+				var goldView = Ti.UI.createView({
+					width : "100%",
+					height : "65%",
+					bottom : 0,
+					backgroundColor : "#474747",
+					zIndex : 50
+				});
+				levelAndGoldView.add(goldView);
+
+				var goldImageView = Ti.UI.createImageView({
+					height : "40%",
+					image : "images/coin_icon.png",
+					top : 0
+				});
+				goldView.add(goldImageView);
+
+				var goldLbl = Ti.UI.createLabel({
+					height : "50%",
+					text : "600",
+					color : '#FFE801',
+					bottom : 0
+				});
+				goldView.add(goldLbl);
+
+				row.add(enabledWrapperView);
+				tableData.push(row);
+				
+				
+			}
+			table.setData(tableData);
+
+		} else if (json.Error != undefined) {
+			if (json.Error.AuthException != undefined) {
+				alert(json.Error.AuthException);
+			} else if (json.Error.Request) {
+				alert(json.Error.Request);
+			} else {
+				alert("Unknown error occured!");
+			}
 		} else {
-			e.row.height = 300;
-			e.row.expanded = true;
+			alert("You have no friends yet!");
 		}
-	});
 
-	var enabledWrapperView = Ti.UI.createView({
-		backgroundColor : '#3d3d3d',
-		objName : 'enabledWrapperView',
-		rowID : i,
-		width : Ti.UI.FILL,
-		top : 0,
-		height : 300
-	});
-	//enabledWrapperView.addEventListener("click",checkAlert);
-
-	// Create a CraftItem.
-	var CraftItem = Ti.UI.createLabel({
-		text : "LordValor",
-		color : '#FFFFFF',
-		font : {
-			fontSize : getHeadingFontSize()
-		},
-		height : getHeadingFontSize() + getMarginNormal1(),
-		top : getMarginNormal1(),
-		left : getMarginNormal1()
-	});
-	// Add to the parent view.
-	enabledWrapperView.add(CraftItem);
-
-	// Craft Desctiption.
-	var craftDescription = Ti.UI.createLabel({
-		text : 'makes a good gift',
-		color : '#7e7e7e',
-		font : {
-			fontSize : getNormalFontSize()
-		},
-		height : getNormalFontSize() + getMarginNormal1(),
-		top : CraftItem.height + getMarginNormal1(),
-		left : getMarginNormal1(),
-		textAlign : 'center'
-	});
-
-	// Add to the parent view.
-	enabledWrapperView.add(craftDescription);
-
-	// Online Status Icon
-	var onlineStatusIcon = Ti.UI.createView({
-		backgroundImage : 'images/offline_icon.png',
-		width : getOnlineIconWidthHeight(),
-		height : getOnlineIconWidthHeight(),
-		left : getMarginNormal1(),
-		top : craftDescription.top+craftDescription.height+getMarginNormal1(),
-		zIndex : 50
-	});
-	enabledWrapperView.add(onlineStatusIcon);
-
-	// Online Status Desctiption.
-	var onlineStatusDescription = Ti.UI.createLabel({
-		text : 'Last online 1 day ago',
-		color : '#7e7e7e',
-		font : {
-			fontSize : getSmallFontSize()
-		},
-		top : craftDescription.top+craftDescription.height+getMarginNormal1(),
-		left : onlineStatusIcon.width + getMarginNormal1() * 2,
-		textAlign : 'center'
-	});
-
-	// Add to the parent view.
-	enabledWrapperView.add(onlineStatusDescription);
-
-	// Avatar Image
-	var avatarImage = Ti.UI.createView({
-		top : getMarginNormal1(),
-		right : getMarginNormal1(),
-		width : getAvatarImageWidthHeight(),
-		height : getAvatarImageWidthHeight(),
-		backgroundImage : 'images/other_avatar.png',
-		zIndex : 50
-	});
-	enabledWrapperView.add(avatarImage);
-
-	// Level And Gold View
-	var levelAndGoldView = Ti.UI.createView({
-		top : getMarginNormal1(),
-		right : avatarImage.width + 2 * getMarginNormal1(),
-		width : getAvatarImageWidthHeight(),
-		height : getAvatarImageWidthHeight(),
-		zIndex : 50
-	});
-	enabledWrapperView.add(levelAndGoldView);
-
-	var levelView = Ti.UI.createView({
-		width : "100%",
-		height : "30%",
-		top : 0,
-		backgroundColor : "#474747",
-		zIndex : 50
-	});
-	levelAndGoldView.add(levelView);
-
-	var levelLbl = Ti.UI.createLabel({
-		text : 'LVL : ',
-		color : '#FFFFFF',
-		font : {
-			fontSize : getNormalFontSize()
-		},
-		left : getMarginNormal1(),
-		textAlign : 'center'
-	});
-
-	// Add to the parent view.
-	levelView.add(levelLbl);
-
-	var levelValueLbl = Ti.UI.createLabel({
-		text : '4',
-		color : '#FFE801',
-		font : {
-			fontSize : getNormalFontSize()
-		},
-		right : getMarginNormal1(),
-		textAlign : 'center'
-	});
-
-	// Add to the parent view.
-	levelView.add(levelValueLbl);
-
-	var goldView = Ti.UI.createView({
-		width : "100%",
-		height : "65%",
-		bottom : 0,
-		backgroundColor : "#474747",
-		zIndex : 50
-	});
-	levelAndGoldView.add(goldView);
-
-	var goldImageView = Ti.UI.createImageView({
-		height : "40%",
-		image : "images/coin_icon.png",
-		top : 0
-	});
-	goldView.add(goldImageView);
-
-	var goldLbl = Ti.UI.createLabel({
-		height : "50%",
-		text : "600",
-		color : '#FFE801',
-		bottom : 0
-	});
-	goldView.add(goldLbl);
-	
-	// numberOfFriendsIcon
-	var numberOfFriendsIconImage = Ti.UI.createImageView({
-		image : 'images/friends_icon.png',
-		width : getFriendsIconWidth(),
-		height : getFriendsIconHeight(),
-		top : levelAndGoldView.height+2*getMarginNormal1()+getMarginNormal1()/2,
-		right : avatarImage.width+getMarginNormal1()
-	});
-	// Add to the parent view.
-	enabledWrapperView.add(numberOfFriendsIconImage);
-	
-	
-	// numberOfFriendsLbl
-	var numberOfFriendsLbl = Ti.UI.createLabel({
-		text : '32 friends',
-		color : '#FFFFFF',
-		font : {fontSize:getSmallFontSize()},
-		top : levelAndGoldView.height+3*getMarginNormal1(),
-		right : getMarginNormal1()*4,
-		textAlign : 'center'
-	});
-	
-	// Add to the parent view.
-	enabledWrapperView.add(numberOfFriendsLbl);
-	//addFriendHeadingView
-	var addFriendHeadingView = Ti.UI.createView({
-		backgroundColor : "#626262",
-		width : "100%",
-		height : 25,
-		top : numberOfFriendsIconImage.top+numberOfFriendsIconImage.height+getMarginNormal1(),
-	});
-	enabledWrapperView.add(addFriendHeadingView);
-	
-	// Create an ImageView.
-	var addIconImage = Ti.UI.createImageView({
-		image : 'images/add_friend_icon.png',
-		width : getFriendsIconWidth()*2,
-		height : getFriendsIconHeight()*2,
-		top : numberOfFriendsIconImage.top+numberOfFriendsIconImage.height,
-		left : getMarginNormal1()
-	});
-
-	// Add to the parent view.
-	enabledWrapperView.add(addIconImage);
-	// Create a Label.
-	var addAsFriendLbl = Ti.UI.createLabel({
-		text : 'Add LordValor as friend?',
-		color : '#BABABA',
-		font : {fontSize:getNormalFontSize()},
-		textAlign : 'center'
-	});
-	// Add to the parent view.
-	addFriendHeadingView.add(addAsFriendLbl);
-	
-	// infoLbl
-	var infoLbl = Ti.UI.createLabel({
-		text : 'LordValor may have Quests for you to complete',
-		color : '#FFFFFF',
-		font : {fontSize:getSmallFontSize()},
-		top : addFriendHeadingView.top+addFriendHeadingView.height+getMarginNormal1(),
-		textAlign : 'center'
-	});
-	// Add to the parent view.
-	enabledWrapperView.add(infoLbl);
-
-	var messageField = Titanium.UI.createTextField({
-		width:"80%",
-		borderRadius : 0,
-		hintText:"type a message",
-		top : addFriendHeadingView.top+addFriendHeadingView.height+getMarginNormal1()*4,
-		height : getHeaderHeight(),
-		backgroundColor : "#626262",
-		borderColor : "#BBBBBB",
-		borderWidth : 2,
-		font : {fontSize : getNormalFontSize()},
-		color : "#BBBBBB",
-		keyboardType: Titanium.UI.KEYBOARD_ASCII 
-	});
-	enabledWrapperView.add(messageField);
-
-	//Send Requests Button
-	var sendRequestsButton = Titanium.UI.createButton({
-		color : "#FFFFFF",
-		title : "Send Request",
-		backgroundColor : "#474747",
-		font : {
-			fontSize : getSmallFontSize()
-		},
-		top : messageField.top + messageField.height+getMarginNormal1(),
-		height : getSmallButtonHeight(),
-		width : getButtonWidth(),
-		borderRadius : 2
-	});
-	enabledWrapperView.add(sendRequestsButton);
-
-
-	row.add(enabledWrapperView);
-	tableData.push(row);
-}
+	},
+	onerror : function(e) {
+		Ti.API.debug("STATUS: " + this.status);
+		Ti.API.debug("TEXT: " + this.responseText);
+		Ti.API.debug("ERROR: " + e.error);
+		alert('There was an error retrieving the remote data. Try again.');
+	},
+	timeout : 5000
+});
+xhr.open("GET", url);
+xhr.send();
 
 table.setData(tableData);
 
@@ -694,6 +714,7 @@ knightButton.addEventListener("click", function(e) {
 	    //url:'level2.js'
 	});
 	knights_friend_home.open();
+	removeAllContent();
 });
 footerButtonsViewer.add(knightButton);
 
@@ -715,7 +736,8 @@ princessesButton.addEventListener("click", function(e) {
 	    url:'princesses_friend_home.js'
 	    //url:'level2.js'
 	});
-	friend_interactions.open();
+	princesses_friend_home.open();
+	removeAllContent();
 });
 footerButtonsViewer.add(princessesButton);
 
@@ -729,6 +751,7 @@ messagesButton.addEventListener("click",function(e){
 		url : 'friend_vs_me_dashboard.js'
 	});
 	friend_vs_me_dashboard.open();
+	removeAllContent();
 });
 footerView.add(messagesButton);
 
@@ -871,6 +894,7 @@ win.addEventListener('android:back', function(e) {
 		url : 'knights_friend_home.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 win.open(); 

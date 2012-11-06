@@ -1,3 +1,56 @@
+function removeAllContent() {
+	headerView.remove(headerAvatarHeaderIcon);
+	headerView.remove(nameOfCharacter);
+	levelView.remove(LVLlbl);
+	headerView.remove(levelView);
+	totalGoldView.remove(Goldlbl);
+	headerView.remove(totalGoldView);
+	headerView.remove(backButton);
+	enabledWrapperView.remove(craftImage);
+	craftImage.remove(craftNotificationView);
+	craftImage.remove(numberOfCrafts);
+	enabledWrapperView.remove(CraftItem);
+	enabledWrapperView.remove(craftDescription);
+	enabledWrapperView.remove(containerIconView);
+	enabledWrapperView.remove(containerNotificationIconView);
+	containerNotificationIconView.remove(containerNotification);
+	enabledWrapperView.remove(flowerIconView);
+	enabledWrapperView.remove(flowerNotificationIconView);
+	flowerNotificationIconView.remove(flowerNotification);
+	enabledWrapperView.remove(craftButton);
+	row.remove(enabledWrapperView);
+	win.remove(table);
+	win.remove(headerView);
+	win.remove(footerView);
+	
+	headerView = null;
+	headerAvatarHeaderIcon = null;
+	nameOfCharacter = null;
+	levelView = null;
+	LVLlbl = null;
+	totalGoldView = null;
+	Goldlbl = null;
+	backButton = null;
+	tableData = null;
+	table = null;
+	row = null;
+	enabledWrapperView = null;
+	craftImage = null;
+	craftNotificationView = null;
+	numberOfCrafts = null;
+	CraftItem = null;
+	craftDescription = null;
+	containerIconView = null;
+	containerNotificationIconView = null;
+	containerNotification = null;
+	flowerIconView = null;
+	flowerNotificationIconView = null;
+	flowerNotification = null;
+	craftButton = null;
+	footerView = null;
+	win = null;
+
+}
 var win = Titanium.UI.createWindow({
 	title : "Crafting Home",
 	width : '100%',
@@ -242,6 +295,7 @@ backButton.addEventListener("click", function(e) {
 		//url:'level2.js'
 	});
 	window1.open();
+	removeAllContent();
 });
 
 var tableData = [];
@@ -447,6 +501,7 @@ win.addEventListener('android:back', function(e) {
 		url : 'inventory.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 win.open(); 

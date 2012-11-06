@@ -1,3 +1,127 @@
+function removeAllContent() {
+	headerView.remove(headerAvatarHeaderIcon);
+	headerView.remove(nameOfCharacter);
+	levelView.remove(LVLlbl);
+	headerView.remove(levelView);
+	totalGoldView.remove(Goldlbl);
+	headerView.remove(totalGoldView);
+	headerView.remove(backButton);
+	findFriends.remove(requestLbl);
+	enabledWrapperView.remove(myPicImage);
+	enabledWrapperView.remove(playerNameLbl);
+	enabledWrapperView.remove(levelAndGoldView);
+	levelAndGoldView.remove(levelView);
+	levelView.remove(levelLbl);
+	levelView.remove(levelValueLbl);
+	levelAndGoldView.remove(goldView);
+	goldView.remove(goldImageView);
+	goldView.remove(goldLbl);
+	enabledWrapperView.remove(numberOfFriendsIconImage);
+	enabledWrapperView.remove(numberOfFriendsLbl);
+	challengesCompletedView.remove(completeChallengesLbl);
+	challengesCompletedView.remove(freePlayView);
+	freePlayView.remove(gameIconsView);
+	gameIconsView.remove(horseRidingIconImage);
+	gameIconsView.remove(archeryIconImage);
+	gameIconsView.remove(paintingIconImage);
+	gameIconsView.remove(cookingIconImage);
+	rewardsEarnedView.remove(rewardsEarnedLblView);
+	rewardsEarnedLblView.remove(rewardsEarnedLbl);
+	rewardsEarnedView.remove(collectionsContainerView);
+	collectionsContainerView.remove(daggerIconView);
+	collectionsContainerView.remove(daggerNotificationIconView);
+	daggerNotificationIconView.remove(daggerNotificationLbl);
+	collectionsContainerView.remove(containerIconView);
+	collectionsContainerView.remove(containerNotificationIconView);
+	containerNotificationIconView.remove(containerNotificationLbl);
+	collectionsContainerView.remove(flowerIconView);
+	collectionsContainerView.remove(flowerNotificationIconView);
+	flowerNotificationIconView.remove(flowerNotificationLbl);
+	collectionsContainerView.remove(coinIconView);
+	collectionsContainerView.remove(coinNotificationIconView);
+	coinNotificationIconView.remove(coinNotificationLbl);
+	bottomBarView.remove(newFriendsIconImage);
+	bottomBarView.remove(newFriendsLbl);
+	bottomBarView.remove(xpLevelLbl);
+	bottomBarView.remove(lineBreakView1);
+	win.remove(headerView);
+	win.remove(findFriends);
+	win.remove(lineBreak3View);
+	win.remove(enabledWrapperView);
+	win.remove(onlineStatusIcon);
+	win.remove(onlineStatusDescription);
+	win.remove(chatIcon);
+	win.remove(messageIcon);
+	win.remove(lineBreakView0);
+	win.remove(Quest);
+	win.remove(challengesCompletedView);
+	win.remove(rewardsEarnedView);
+	win.remove(bottomBarView);
+
+	winWidth = null;
+	winHeight = null;
+	headerView = null;
+	headerAvatarHeaderIcon = null;
+	nameOfCharacter = null;
+	levelView = null;
+	LVLlbl = null;
+	totalGoldView = null;
+	Goldlbl = null;
+	backButton = null;
+	inventory_win = null;
+	findFriends = null;
+	requestLbl = null;
+	lineBreak3View = null;
+	enabledWrapperView = null;
+	myPicImage = null;
+	congratsMessageLbl = null;
+	playerNameLbl = null;
+	levelAndGoldView = null;
+	levelView = null;
+	levelLbl = null;
+	levelValueLbl = null;
+	goldView = null;
+	goldImageView = null;
+	goldLbl = null;
+	onlineStatusIcon = null;
+	onlineStatusDescription = null;
+	chatIcon = null;
+	messageIcon = null;
+	numberOfFriendsIconImage = null;
+	numberOfFriendsLbl = null;
+	Quest = null;
+	lineBreakView0 = null;
+	challengesCompletedView = null;
+	completeChallengesLbl = null;
+	freePlayView = null;
+	gameIconsView = null;
+	horseRidingIconImage = null;
+	archeryIconImage = null;
+	paintingIconImage = null;
+	cookingIconImage = null;
+	rewardsEarnedView = null;
+	rewardsEarnedLblView = null;
+	rewardsEarnedLbl = null;
+	collectionsContainerView = null;
+	daggerIconView = null;
+	daggerNotificationIconView = null;
+	daggerNotificationLbl = null;
+	containerIconView = null;
+	containerNotificationIconView = null;
+	containerNotificationLbl = null;
+	flowerIconView = null;
+	flowerNotificationIconView = null;
+	flowerNotificationLbl = null;
+	coinIconView = null;
+	coinNotificationIconView = null;
+	coinNotificationLbl = null;
+	bottomBarView = null;
+	newFriendsIconImage = null;
+	newFriendsLbl = null;
+	xpLevelLbl = null;
+	lineBreakView1 = null;
+}
+
 var win = Titanium.UI.createWindow({
 	title : "Incomplete Quests",
 	width : '100%',
@@ -10,8 +134,6 @@ var win = Titanium.UI.createWindow({
 win.orientationModes = [Ti.UI.PORTRAIT];
 var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
-
-
 
 function getChallengeImageWidth() {
 	if (winWidth >= 480 && winHeight >= 800) {
@@ -70,7 +192,6 @@ function getFriendsIconNormalWidth() {
 		return 11;
 	}
 }
-
 
 function getFriendsIconHeight() {
 	//480×800
@@ -346,6 +467,7 @@ backButton.addEventListener("click", function(e) {
 		//url:'level2.js'
 	});
 	inventory_win.open();
+	removeAllContent();
 });
 var findFriends = Ti.UI.createView({
 	height : getHeaderHeight(),
@@ -399,12 +521,12 @@ var congratsMessageLbl = Ti.UI.createLabel({
 	text : "Congratulations!\nYou are now friends!",
 	color : "#F7F705",
 	font : {
-			fontSize : getNormalFontSize(),
-			},
+		fontSize : getNormalFontSize(),
+	},
 	top : getMarginNormal1(),
 	right : getMarginNormal1(),
 	textAlign : "center"
-	 
+
 });
 // Add to the parent view.
 enabledWrapperView.add(congratsMessageLbl);
@@ -493,14 +615,13 @@ var goldLbl = Ti.UI.createLabel({
 });
 goldView.add(goldLbl);
 
-
 // Online Status Icon
 var onlineStatusIcon = Ti.UI.createView({
 	backgroundImage : 'images/online_icon.png',
 	width : getOnlineIconWidthHeight(),
 	height : getOnlineIconWidthHeight(),
 	left : levelAndGoldView.left + levelAndGoldView.width + getMarginNormal1(),
-	top : myPicImage.top + myPicImage.height + (getHeaderHeight() * 2),// myPicImage.height + 2 * getMarginNormal1() + getMarginNormal1() / 2,
+	top : myPicImage.top + myPicImage.height + (getHeaderHeight() * 2), // myPicImage.height + 2 * getMarginNormal1() + getMarginNormal1() / 2,
 	zIndex : 50
 });
 
@@ -511,8 +632,8 @@ var onlineStatusDescription = Ti.UI.createLabel({
 	font : {
 		fontSize : getSmallFontSize()
 	},
-	top : myPicImage.top + myPicImage.height + (getHeaderHeight() * 2),// myPicImage.height + 2 * getMarginNormal1() + getMarginNormal1() / 2,
-	left : onlineStatusIcon.left +  onlineStatusIcon.width + getMarginNormal1(),
+	top : myPicImage.top + myPicImage.height + (getHeaderHeight() * 2), // myPicImage.height + 2 * getMarginNormal1() + getMarginNormal1() / 2,
+	left : onlineStatusIcon.left + onlineStatusIcon.width + getMarginNormal1(),
 	textAlign : 'left'
 });
 
@@ -522,7 +643,7 @@ var chatIcon = Ti.UI.createView({
 	width : getChatIconWidthHeight(),
 	height : getChatIconWidthHeight(),
 	left : onlineStatusDescription.left + getHeaderHeight() * 3 + getMarginNormal1(),
-	top : myPicImage.top + myPicImage.height + (getHeaderHeight() * 2),// myPicImage.height + 2 * getMarginNormal1() + getMarginNormal1() / 2,
+	top : myPicImage.top + myPicImage.height + (getHeaderHeight() * 2), // myPicImage.height + 2 * getMarginNormal1() + getMarginNormal1() / 2,
 	zIndex : 50
 });
 
@@ -532,11 +653,9 @@ var messageIcon = Ti.UI.createView({
 	width : getChatIconWidthHeight(),
 	height : getChatIconWidthHeight(),
 	left : chatIcon.left + chatIcon.width + getMarginNormal1(),
-	top : myPicImage.top + myPicImage.height + (getHeaderHeight() * 2),// myPicImage.height + 2 * getMarginNormal1() + getMarginNormal1() / 2,
+	top : myPicImage.top + myPicImage.height + (getHeaderHeight() * 2), // myPicImage.height + 2 * getMarginNormal1() + getMarginNormal1() / 2,
 	zIndex : 50
 });
-
-
 
 // numberOfFriendsIcon
 var numberOfFriendsIconImage = Ti.UI.createImageView({
@@ -585,7 +704,7 @@ var lineBreakView0 = Ti.UI.createView({
 var challengesCompletedView = Ti.UI.createView({
 	top : Quest.top + getHeaderHeight(),
 	left : getMarginNormal1(),
-	width : winWidth - (getMarginNormal1()*2),
+	width : winWidth - (getMarginNormal1() * 2),
 	height : (getHeaderHeight() * 2)
 });
 
@@ -593,7 +712,9 @@ var challengesCompletedView = Ti.UI.createView({
 var completeChallengesLbl = Ti.UI.createLabel({
 	text : '4 of 4\nCompleted',
 	color : '#FFFFFF',
-	font : {fontSize:getNormalFontSize()},
+	font : {
+		fontSize : getNormalFontSize()
+	},
 	top : getMarginNormal1(),
 	left : getMarginNormal1(),
 	textAlign : 'center'
@@ -658,7 +779,6 @@ var cookingIconImage = Ti.UI.createImageView({
 });
 gameIconsView.add(cookingIconImage);
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -668,7 +788,6 @@ var rewardsEarnedView = Ti.UI.createView({
 	height : getHeaderHeight() * 3
 });
 
-
 // Create a Label.
 var rewardsEarnedLblView = Ti.UI.createView({
 	height : getHeaderHeight() + (getHeaderHeight() / 2),
@@ -676,12 +795,13 @@ var rewardsEarnedLblView = Ti.UI.createView({
 });
 rewardsEarnedView.add(rewardsEarnedLblView);
 
-
 // Create a Label.
 var rewardsEarnedLbl = Ti.UI.createLabel({
 	text : 'Rewards Earned!',
 	color : '#CCCCCC',
-	font : {fontSize:(getHeadingFontSize()*2)},
+	font : {
+		fontSize : (getHeadingFontSize() * 2)
+	},
 	textAlign : 'center'
 });
 rewardsEarnedLblView.add(rewardsEarnedLbl);
@@ -690,7 +810,7 @@ rewardsEarnedLblView.add(rewardsEarnedLbl);
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 var collectionsContainerView = Ti.UI.createView({
 	bottom : 0,
-	width : (getMarginNormal1()*4) +  getDaggerIconWidthHeight() + (getHeaderHeight()*3) + (getContainerIconWidth()*3),
+	width : (getMarginNormal1() * 4) + getDaggerIconWidthHeight() + (getHeaderHeight() * 3) + (getContainerIconWidth() * 3),
 	height : getHeaderHeight()
 });
 rewardsEarnedView.add(collectionsContainerView);
@@ -787,7 +907,6 @@ var flowerNotificationLbl = Ti.UI.createLabel({
 flowerNotificationIconView.add(flowerNotificationLbl);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 var coinIconView = Ti.UI.createView({
 	backgroundImage : 'images/coin_icon.png',
 	height : getDaggerIconWidthHeight(),
@@ -820,14 +939,13 @@ coinNotificationIconView.add(coinNotificationLbl);
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 var bottomBarView = Ti.UI.createView({
 	top : rewardsEarnedView.top + rewardsEarnedView.height + getHeaderHeight() + getMarginNormal1(),
 	height : getHeaderHeight()
 });
 
-// Create a New Friends Icon 
-var newFriendsIconImage =  Ti.UI.createImageView({
+// Create a New Friends Icon
+var newFriendsIconImage = Ti.UI.createImageView({
 	left : getMarginNormal1() * 2,
 	top : getMarginNormal1(),
 	image : "images/friends_icon.png",
@@ -836,29 +954,30 @@ var newFriendsIconImage =  Ti.UI.createImageView({
 });
 bottomBarView.add(newFriendsIconImage);
 
-
 // Create a New Friends Label.
 var newFriendsLbl = Ti.UI.createLabel({
 	text : 'New Friends',
 	color : '#FFFFFF',
-	font : {fontSize:(getSmallFontSize() - 1)},
+	font : {
+		fontSize : (getSmallFontSize() - 1)
+	},
 	bottom : 1,
 	left : getMarginNormal1(),
 	textAlign : 'center'
 });
 bottomBarView.add(newFriendsLbl);
 
-
 // XP Level.
 var xpLevelLbl = Ti.UI.createLabel({
 	text : '45 XP',
 	color : '#FFFFFF',
-	font : {fontSize:getHeadingFontSize()},
+	font : {
+		fontSize : getHeadingFontSize()
+	},
 	right : getMarginNormal1(),
 	textAlign : 'center'
 });
 bottomBarView.add(xpLevelLbl);
-
 
 // Line break
 var lineBreakView1 = Ti.UI.createView({
@@ -869,8 +988,6 @@ var lineBreakView1 = Ti.UI.createView({
 	left : getMarginNormal1()
 });
 bottomBarView.add(lineBreakView1);
-
-
 
 win.add(headerView);
 win.add(findFriends);
@@ -891,6 +1008,7 @@ win.addEventListener('android:back', function(e) {
 		url : 'quests_home.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 win.open();

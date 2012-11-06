@@ -1,4 +1,167 @@
 Ti.include('func_level3.js');
+function removeAllContent()
+{
+	coinView.remove(coinImage);
+	coinView.remove(lblCoin);
+	msgsView.remove(lblMsgs);
+	leadrView.remove(lblLeadr);
+	questsView.remove(lblQuests);
+	frndsView.remove(lblfrnds);
+	invView.remove(lblInv);
+	statusView.remove(lblStatus);
+	headerRowView.remove(questsView);
+	headerRowView.remove(frndsView);
+	headerRowView.remove(invView);
+	headerRowView.remove(statusView);
+	headerRowView.remove(leadrView);
+	headerRowView.remove(msgsView);
+	headerRowView.remove(coinView);
+	avatarIconBottomView.remove(lblGroupStatusText);
+	nameOfCharacterView.remove(lblNameOfCharacter);
+	groupStatusLastRow.remove(firendsIconImage);
+	groupStatusLastRow.remove(numberOfFriends);
+	groupStatusLastRow.remove(completedRequests);
+	groupStatusLastRow.remove(numberOfDays);
+	characterPointsImage.remove(lblCharacterPoints);
+	characterPointsView.remove(characterPointsImage);
+	win.remove(characterPointsView);
+	groupStatusView.remove(groupStatusLastRow);
+	groupStatusView.remove(energyFuelView);
+	groupStatusView.remove(xpFuelView);
+	groupStatusView.remove(nameOfCharacterView);
+	groupStatusView.remove(avatarIconBottomView);
+	groupStatusView.remove(myAvatarImage);
+	groupStatusView.remove(otherAvatarImage);
+	levelAndCurrentStatusView.remove(levelStatusView);
+	levelStatusView.remove(upLevelStatus);
+	upLevelStatus.remove(lblUpLevelStatus);
+	levelStatusView.remove(downLevelStatus);
+	downLevelStatus.remove(lblDownLevelStatus);
+	upLevelStatus.remove(lblUpLevelStatus);
+	levelAndCurrentStatusView.remove(currentStatusView);
+	currentStatusView.remove(lblCurrentStatus);
+	armedCharacterPlaceholderView.remove(armedCharacterView);
+	armedCharacterView.remove(armedCharacterImage);
+	armedCharacterView.remove(flowerImage);
+	armedCharacterView.remove(chestRedArmorImage);
+	armedCharacterView.remove(footRedArmorImage);
+	armedCharacterView.remove(glovesArmorImage);
+	armedCharacterView.remove(helmetArmorImage);
+	armedCharacterView.remove(legsArmorImage);
+	armedCharacterPlaceholderView.remove(armedHeadView);
+	armedHeadView.remove(armedHeadIcon);
+	armedHeadView.remove(lblArmedHeadIcon);
+	armedCharacterPlaceholderView.remove(armedChestView);
+	armedChestView.remove(armedChestIcon);
+	armedChestView.remove(lblArmedChestIcon);
+	armedCharacterPlaceholderView.remove(armedHandsView);
+	armedHandsView.remove(armedHandsIcon);
+	armedHandsView.remove(lblArmedHandsIcon);
+	armedCharacterPlaceholderView.remove(armedLegsView);
+	armedLegsView.remove(armedLegsIcon);
+	armedLegsView.remove(lblArmedLegsIcon);
+	armedCharacterPlaceholderView.remove(armedFootsView);
+	armedFootsView.remove(armedFootsIcon);
+	armedFootsView.remove(lblArmedFootsIcon);
+	armedCharacterPlaceholderView.remove(armedWeaponView);
+	armedWeaponView.remove(armedWeaponIcon);
+	armedWeaponView.remove(lblArmedWeaponIcon);
+	armedCharacterPlaceholderView.remove(armedMagicView);
+	armedMagicView.remove(armedMagicIcon);
+	armedMagicView.remove(lblArmedMagicIcon);
+	armedIconZoomView.remove(lblSelectedIconName);
+	armedIconZoomView.remove(selectedIconImage);
+	armedIconZoomView.remove(lblSelectedIconDesc);
+	win.remove(optionsButton);
+	win.remove(changeBGButton);
+	win.remove(armedIconZoomView);
+	win.remove(armedCharacterPlaceholderView);
+	win.remove(footerShadeView);
+	win.remove(levelAndCurrentStatusView);
+	win.remove(groupStatusView);
+	win.remove(headerRowView);
+	headerRowView = null;
+	coinView = null;
+	coinImage = null;
+	lblCoin = null;
+	msgsView = null;
+	lblMsgs = null;
+	leadrView = null;
+	lblLeadr = null;
+	questsView = null;
+	lblQuests = null;
+	frndsView = null;
+	lblfrnds = null;
+	invView = null;
+	lblInv = null;
+	statusView = null;
+	lblStatus = null;
+	groupStatusView = null;
+	otherAvatarImage = null;
+	myAvatarImage = null;
+	avatarIconBottomView = null;
+	lblGroupStatusText = null;
+	nameOfCharacterView = null;
+	lblNameOfCharacter = null;
+	xpFuelView = null;
+	energyFuelView = null;
+	groupStatusLastRow = null;
+	firendsIconImage = null;
+	numberOfFriends = null;
+	completedRequests = null;
+	numberOfDays = null;
+	characterPointsView = null;
+	characterPointsImage = null;
+	lblCharacterPoints = null;
+	levelAndCurrentStatusView = null;
+	levelStatusView = null;
+	upLevelStatus = null;
+	lblUpLevelStatus = null;
+	downLevelStatus = null;
+	lblDownLevelStatus = null;
+	currentStatusView = null;
+	lblCurrentStatus = null;
+	armedCharacterPlaceholderView = null;
+	armedCharacterView = null;
+	armedCharacterImage = null;
+	flowerImage = null;
+	chestRedArmorImage = null;
+	footRedArmorImage = null;
+	glovesArmorImage = null;
+	helmetArmorImage = null;
+	legsArmorImage = null;
+	armedHeadView = null;
+	armedHeadIcon = null;
+	lblArmedHeadIcon = null;
+	armedChestView = null;
+	armedChestIcon = null;
+	lblArmedChestIcon = null;
+	armedHandsView = null;
+	armedHandsIcon = null;
+	lblArmedHandsIcon = null;
+	armedLegsView = null;
+	armedLegsIcon = null;
+	lblArmedLegsIcon = null;
+	armedFootsView = null;
+	armedFootsIcon = null;
+	lblArmedFootsIcon = null;
+	armedWeaponView = null;
+	armedWeaponIcon = null;
+	lblArmedWeaponIcon = null;
+	armedMagicView = null;
+	armedMagicIcon = null;
+	lblArmedMagicIcon = null;
+	armedIconZoomView = null;
+	lblSelectedIconName = null;
+	selectedIconImage = null;
+	lblSelectedIconDesc = null;
+	optionsButton = null;
+	changeBGButton = null;
+	footerShadeView = null;
+	win = null;
+
+}
+
 var win = Titanium.UI.createWindow({
 	title:"Customize Home",
     width: '100%',
@@ -101,6 +264,7 @@ questsView.addEventListener("click", function(e) {
 		url : 'quests_home.js'
 	});
 	quests_home.open();
+	removeAllContent();
 
 });
 
@@ -125,6 +289,7 @@ frndsView.addEventListener("click",function(e){
 	    //url:'level2.js'
 	});
 	window1.open();
+	removeAllContent();
 });
 frndsView.add(lblfrnds);
 //Inv. View
@@ -150,6 +315,7 @@ invView.addEventListener("click",function(e){
 	    //url:'level2.js'
 	});
 	inventory_win.open();
+	removeAllContent();
 });
 //Status View
 var statusView = Titanium.UI.createView({
@@ -888,14 +1054,14 @@ optionsButton.addEventListener("click",function(e){
 	var window = Titanium.UI.createWindow({
 	    url:'level2.js'
 	});
-	window.open();
+	window.open();removeAllContent();
 	window.fireEvent('show_options',{a:'b'});
 });
 
 //changeBGButton
 var changeBGButton = Titanium.UI.createButton({
 	color : "#FFFFFF",
-	title : "Change BG",
+	title : "Change BG!",
 	backgroundColor : "#474747",
 	font : {fontSize : getButtonTextSize()},
 	height : getButtonHeight(),  
@@ -911,6 +1077,7 @@ changeBGButton.addEventListener("click",function(e){
 	    url:'level2.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 
@@ -939,6 +1106,7 @@ win.addEventListener('android:back', function(e) {
 	    url:'level2.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 

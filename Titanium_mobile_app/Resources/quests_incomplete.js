@@ -1,3 +1,125 @@
+function removeAllContent () {
+	  headerView.remove(headerAvatarHeaderIcon); 
+	headerView.remove(nameOfCharacter); 
+	levelView.remove(LVLlbl); 
+	headerView.remove(levelView); 
+	totalGoldView.remove(Goldlbl); 
+	headerView.remove(totalGoldView); 
+	headerView.remove(backButton); 
+	findFriends.remove(requestLbl);
+	enabledWrapperView.remove(myPicImage);
+	enabledWrapperView.remove(playerNameLbl);
+	enabledWrapperView.remove(avatarImage);
+	enabledWrapperView.remove(levelAndGoldView);
+	levelAndGoldView.remove(levelView);
+	levelView.remove(levelValueLbl); 
+	levelAndGoldView.remove(goldView);
+	enabledWrapperView.remove(levelLbl); 
+	enabledWrapperView.remove(levelValueLbl); 
+	goldView.remove(goldImageView);
+	goldView.remove(goldLbl);
+	enabledWrapperView.remove(numberOfFriendsIconImage);
+	enabledWrapperView.remove(numberOfFriendsLbl);
+	enabledWrapperView1.remove(craftImage);
+	enabledWrapperView1.remove(numberOfCrafts);
+	enabledWrapperView1.remove(winGameLbl);
+	enabledWrapperView1.remove(tapToChooseLbl);
+	enabledWrapperView1.remove(completedStatusLbl);
+	enabledWrapperView1.remove(tickBox);
+	currentRewardsView.remove(currentRewardsLbl);
+	currentRewardsView.remove(lineBreakView);
+	 currentRewardsView.remove(currentRewardsLbl);	
+	currentRewardsView.remove(collectionsContainerView);
+	collectionsContainerView.remove(daggerIconView);
+	collectionsContainerView.remove(daggerNotificationIconView);
+	daggerNotificationIconView.remove(daggerNotificationLbl);
+	collectionsContainerView.remove(containerIconView);
+	collectionsContainerView.remove(containerNotificationIconView);
+	containerNotificationIconView.remove(containerNotificationLbl);
+	collectionsContainerView.remove(flowerIconView);
+	collectionsContainerView.remove(flowerNotificationIconView);
+	flowerNotificationIconView.remove(flowerNotificationLbl);
+	collectionsContainerView.remove(coinIconView);
+	collectionsContainerView.remove(coinNotificationIconView);
+	coinNotificationIconView.remove(coinNotificationLbl);
+	
+	win.remove(headerView);
+	win.remove(findFriends);
+	win.remove(lineBreak3View);
+	win.remove(enabledWrapperView);
+	win.remove(lineBreakView0);
+	win.remove(Quest);
+	win.remove(numberOfQuests);
+	win.remove(timeRemainingLbl);
+	win.remove(timeLimit);
+	win.remove(lineBreak2View);
+	win.remove(table);
+	win.remove(currentRewardsView);
+
+	win = null;
+	winWidth = null;
+	winHeight = null;
+	chkArray = null;
+	headerView = null;
+	headerAvatarHeaderIcon = null;
+	nameOfCharacter = null;
+	levelView = null;
+	
+	LVLlbl = null;	
+	totalGoldView = null;
+	Goldlbl = null;
+	backButton = null;
+	findFriends = null;
+	requestLbl = null;
+	lineBreak3View = null;
+	enabledWrapperView = null;
+	myPicImage = null;
+	playerNameLbl = null;
+	avatarImage = null;
+	levelAndGoldView = null;
+	levelView = null;
+	levelLbl = null;
+	levelValueLbl = null;
+	goldView = null;
+	goldImageView = null;
+	goldLbl = null;
+	numberOfFriendsIconImage = null;
+	
+	numberOfFriendsLbl = null;
+	Quest = null;
+	lineBreakView0 = null;
+	numberOfQuests = null;
+	timeRemainingLbl = null;
+	timeLimit = null;
+	flowerNotification = null;
+	tableData = null;
+	table = null;
+	row = null;
+	enabledWrapperView1 = null;
+	craftImage = null;
+	numberOfCrafts = null;
+	winGameLbl = null;
+	tapToChooseLbl = null;
+	completedStatusLbl = null;
+	tickBox = null;
+	currentRewardsView = null;
+	currentRewardsLbl = null;
+	lineBreakView = null;
+	currentRewardsLbl = null;
+	collectionsContainerView = null;
+	daggerIconView = null;
+	daggerNotificationIconView = null;
+	daggerNotificationLbl = null;
+	containerIconView = null;
+	containerNotificationIconView = null;
+	containerNotificationLbl = null;
+	flowerIconView = null;
+	flowerNotificationIconView = null;
+	flowerNotificationLbl = null;
+	coinIconView = null;
+	coinNotificationIconView = null;
+	coinNotificationLbl = null;
+} 
 var win = Titanium.UI.createWindow({
 	title : "Incomplete Quests",
 	width : '100%',
@@ -309,6 +431,7 @@ backButton.addEventListener("click", function(e) {
 		//url:'level2.js'
 	});
 	inventory_win.open();
+	removeAllContent();
 });
 var findFriends = Ti.UI.createView({
 	height : getHeaderHeight(),
@@ -848,6 +971,7 @@ win.addEventListener('android:back', function(e) {
 		url : 'quests_home.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 win.open();

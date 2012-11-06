@@ -1,3 +1,172 @@
+function removeAllContent() {
+	coinView.remove(coinImage);
+	coinView.remove(lblCoin);
+	msgsView.remove(lblMsgs);
+	leadrView.remove(lblLeadr);
+	questsView.remove(lblQuests);
+	frndsView.remove(lblfrnds);
+	invView.remove(lblInv);
+	statusView.remove(lblStatus);
+	headerRowView.remove(questsView);
+	headerRowView.remove(frndsView);
+	headerRowView.remove(invView);
+	headerRowView.remove(statusView);
+	headerRowView.remove(leadrView);
+	headerRowView.remove(msgsView);
+	headerRowView.remove(coinView);
+	avatarIconBottomView.remove(lblGroupStatusText);
+	nameOfCharacterView.remove(lblNameOfCharacter);
+	groupStatusLastRow.remove(firendsIconImage);
+	groupStatusLastRow.remove(numberOfFriends);
+	groupStatusLastRow.remove(completedRequests);
+	groupStatusLastRow.remove(numberOfDays);
+	characterPointsImage.remove(lblCharacterPoints);
+	characterPointsView.remove(characterPointsImage);
+	win.remove(characterPointsView);
+	groupStatusView.remove(groupStatusLastRow);
+	groupStatusView.remove(energyFuelView);
+	groupStatusView.remove(xpFuelView);
+	groupStatusView.remove(nameOfCharacterView);
+	groupStatusView.remove(avatarIconBottomView);
+	groupStatusView.remove(myAvatarImage);
+	groupStatusView.remove(otherAvatarImage);
+	levelStatusView.remove(upLevelStatus);
+	upLevelStatus.remove(lblUpLevelStatus);
+	levelAndCurrentStatusView.remove(levelStatusView);
+	levelStatusView.remove(downLevelStatus);
+	downLevelStatus.remove(lblDownLevelStatus);
+	upLevelStatus.remove(lblUpLevelStatus);
+	levelAndCurrentStatusView.remove(currentStatusView);
+	currentStatusView.remove(lblCurrentStatus);
+	armedCharacterView.remove(armedCharacterImage);
+	armedCharacterView.remove(flowerImage);
+	armedCharacterView.remove(chestRedArmorImage);
+	armedCharacterView.remove(footRedArmorImage);
+	armedCharacterView.remove(glovesArmorImage);
+	armedCharacterView.remove(helmetArmorImage);
+	armedCharacterView.remove(legsArmorImage);
+	inventoryItemsView.remove(lblInventoryItems);
+	inventoryItemsView.remove(itemDescriptionView);
+	itemDescriptionView.remove(lblItemNumberDescription);
+	itemDescriptionView.remove(selectedItemIcon);
+	itemDescriptionView.remove(lblItemName);
+	itemDescriptionView.remove(lblItemValue);
+	itemDescriptionView.remove(lblItemDescription);
+	itemDescriptionView.remove(giftButton);
+	itemDescriptionView.remove(equipButton);
+	itemDescriptionView.remove(useButton);
+	inventoryItemsView.remove(itemsGridView);
+	itemsGridView.remove(item1Button);
+	item1Button.remove(gridItem1Icon);
+	itemsGridView.remove(item2Button);
+	item2Button.remove(gridItem2Icon);
+	itemsGridView.remove(item3Button);
+	item3Button.remove(gridItem3Icon);
+	itemsGridView.remove(item4Button);
+	item4Button.remove(gridItem4Icon);
+	itemsGridView.remove(item5Button);
+	item5Button.remove(gridItem5Icon);
+	itemsGridView.remove(item6Button);
+	item6Button.remove(gridItem6Icon);
+	itemsGridView.remove(item7Button);
+	item7Button.remove(gridItem7Icon);
+	itemsGridView.remove(item8Button);
+	item8Button.remove(gridItem8Icon);
+	itemsGridView.remove(item9Button);
+	item9Button.remove(gridItem9Icon);
+	itemsGridView.remove(craftingButton);
+	win.remove(optionsButton);
+	win.remove(inventoryItemsView);
+	win.remove(armedCharacterView);
+	win.remove(levelAndCurrentStatusView);
+	win.remove(groupStatusView);
+	win.remove(headerRowView);
+	win.remove(footerShadeView);
+	
+	win = null;
+	headerRowView = null;
+	coinView = null;
+	coinImage = null;
+	lblCoin = null;
+	msgsView = null;
+	lblMsgs = null;
+	leadrView = null;
+	lblLeadr = null;
+	questsView = null;
+	lblQuests = null;
+	frndsView = null;
+	lblfrnds = null;
+	invView = null;
+	lblInv = null;
+	statusView = null;
+	lblStatus = null;
+	groupStatusView = null;
+	otherAvatarImage = null;
+	myAvatarImage = null;
+	avatarIconBottomView = null;
+	lblGroupStatusText = null;
+	nameOfCharacterView = null;
+	lblNameOfCharacter = null;
+	xpFuelView = null;
+	energyFuelView = null;
+	groupStatusLastRow = null;
+	firendsIconImage = null;
+	numberOfFriends = null;
+	completedRequests = null;
+	numberOfDays = null;
+	characterPointsView = null;
+	characterPointsImage = null;
+	lblCharacterPoints = null;
+	levelAndCurrentStatusView = null;
+	levelStatusView = null;
+	upLevelStatus = null;
+	lblUpLevelStatus = null;
+	downLevelStatus = null;
+	lblDownLevelStatus = null;
+	currentStatusView = null;
+	lblCurrentStatus = null;
+	armedCharacterView = null;
+	armedCharacterImage = null;
+	flowerImage = null;
+	chestRedArmorImage = null;
+	footRedArmorImage = null;
+	glovesArmorImage = null;
+	helmetArmorImage = null;
+	legsArmorImage = null;
+	inventoryItemsView = null;
+	lblInventoryItems = null;
+	itemDescriptionView = null;
+	lblItemNumberDescription = null;
+	selectedItemIcon = null;
+	lblItemName = null;
+	lblItemValue = null;
+	lblItemDescription = null;
+	giftButton = null;
+	equipButton = null;
+	useButton = null;
+	itemsGridView = null;
+	item1Button = null;
+	gridItem1Icon = null;
+	item2Button = null;
+	gridItem2Icon = null;
+	item3Button = null;
+	gridItem3Icon = null;
+	item4Button = null;
+	gridItem4Icon = null;
+	item5Button = null;
+	gridItem5Icon = null;
+	item6Button = null;
+	gridItem6Icon = null;
+	item7Button = null;
+	gridItem7Icon = null;
+	item8Button = null;
+	gridItem8Icon = null;
+	item9Button = null;
+	gridItem9Icon = null;
+	craftingButton = null;
+	optionsButton = null;
+	footerShadeView = null;
+}
 Ti.include('func_inventory.js');
 
 var win = Titanium.UI.createWindow({
@@ -111,6 +280,7 @@ questsView.addEventListener("click", function(e) {
 		url : 'quests_home.js'
 	});
 	quests_home.open();
+	removeAllContent();
 
 });
 
@@ -139,6 +309,7 @@ frndsView.addEventListener("click", function(e) {
 		//url:'level2.js'
 	});
 	window1.open();
+	removeAllContent();
 });
 //Inv. View
 var invView = Titanium.UI.createView({
@@ -182,6 +353,7 @@ statusView.addEventListener("click", function(e) {
 		//url:'level2.js'
 	});
 	inventory_win.open();
+	removeAllContent();
 });
 
 statusView.add(lblStatus);
@@ -1025,6 +1197,7 @@ craftingButton.addEventListener("click", function(e) {
 		url : 'craft_home.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 itemsGridView.add(craftingButton);
@@ -1047,6 +1220,7 @@ optionsButton.addEventListener("click", function(e) {
 		url : 'level2.js'
 	});
 	window.open();
+	removeAllContent();
 	window.fireEvent('show_options', {
 		a : 'b'
 	});
@@ -1073,6 +1247,7 @@ win.addEventListener('android:back', function(e) {
 		url : 'level3.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 win.open(); 

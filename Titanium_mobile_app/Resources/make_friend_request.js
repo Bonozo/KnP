@@ -1,3 +1,103 @@
+function removeAllContent() {
+	headerView.remove(headerAvatarHeaderIcon);
+	headerView.remove(nameOfCharacter);
+	levelView.remove(LVLlbl);
+	headerView.remove(levelView);
+	totalGoldView.remove(Goldlbl);
+	headerView.remove(totalGoldView);
+	headerView.remove(backButton);
+	findFriends.remove(requestLbl);
+	findFriends.remove(findByName);
+	enabledWrapperView.remove(CraftItem);
+	enabledWrapperView.remove(craftDescription);
+	enabledWrapperView.remove(onlineStatusIcon);
+	enabledWrapperView.remove(onlineStatusDescription);
+	enabledWrapperView.remove(avatarImage);
+	enabledWrapperView.remove(levelAndGoldView);
+	levelAndGoldView.remove(levelView);
+	levelView.remove(levelLbl);
+	levelView.remove(levelValueLbl);
+	levelAndGoldView.remove(goldView);
+	goldView.remove(goldImageView);
+	goldView.remove(goldLbl);
+	enabledWrapperView.remove(numberOfFriendsIconImage);
+	enabledWrapperView.remove(numberOfFriendsLbl);
+	enabledWrapperView1.remove(craftImage);
+	enabledWrapperView1.remove(numberOfCrafts);
+	enabledWrapperView1.remove(tapToChooseLbl);
+	enabledWrapperView1.remove(questionSelection);
+	enabledWrapperView1.remove(winningMode);
+	enabledWrapperView1.remove(roundMode);
+	row.remove(enabledWrapperView1);
+	row.remove(noneLbl);
+	bottomButtonView1.remove(diceButton);
+	bottomButtonView1.remove(acceptRequestButton);
+	bottomButtonView1.remove(declineRequestButton);
+	win.remove(headerView);
+	win.remove(findFriends);
+	win.remove(enabledWrapperView);
+	win.remove(Quest);
+	win.remove(lineBreakView);
+	win.remove(numberOfQuests);
+	win.remove(timeLimit);
+	win.remove(lineBreak2View);
+	win.remove(table);
+	win.remove(messageField);
+	win.remove(bottomButtonView1);
+	
+	
+	win = null;
+	winWidth = null;
+	winHeight = null;
+	headerView = null;
+	headerAvatarHeaderIcon = null;
+	nameOfCharacter = null;
+	levelView = null;
+	LVLlbl = null;
+	totalGoldView = null;
+	Goldlbl = null;
+	backButton = null;
+	findFriends = null;
+	requestLbl = null;
+	findByName = null;
+	lineBreak3View = null;
+	enabledWrapperView = null;
+	CraftItem = null;
+	craftDescription = null;
+	onlineStatusIcon = null;
+	onlineStatusDescription = null;
+	avatarImage = null;
+	levelAndGoldView = null;
+	levelView = null;
+	levelLbl = null;
+	levelValueLbl = null;
+	goldView = null;
+	goldImageView = null;
+	goldLbl = null;
+	numberOfFriendsIconImage = null;
+	numberOfFriendsLbl = null;
+	Quest = null;
+	lineBreakView = null;
+	numberOfQuests = null;
+	timeLimit = null;
+	lineBreak2View = null;
+	tableData = null;
+	table = null;
+	row = null;
+	enabledWrapperView1 = null;
+	craftImage = null;
+	numberOfCrafts = null;
+	tapToChooseLbl = null;
+	questionSelection = null;
+	winningMode = null;
+	roundMode = null;
+	noneLbl = null;
+	messageField = null;
+	bottomButtonView1 = null;
+	diceButton = null;
+	acceptRequestButton = null;
+	declineRequestButton = null;
+}
 var win = Titanium.UI.createWindow({
 	title : "Crafting Home",
 	width : '100%',
@@ -301,6 +401,7 @@ backButton.addEventListener("click", function(e) {
 		//url:'level2.js'
 	});
 	inventory_win.open();
+	removeAllContent();
 });
 var findFriends = Ti.UI.createView({
 	height : getHeaderHeight(),
@@ -311,7 +412,7 @@ var findFriends = Ti.UI.createView({
 
 // Request label in search section
 var requestLbl = Ti.UI.createLabel({
-	text : 'Friend requests',
+	text : win.UID,
 	color : '#828282',
 	font : {
 		fontSize : getNormalFontSize()
@@ -712,7 +813,7 @@ var diceButton = Titanium.UI.createButton({
 bottomButtonView1.add(diceButton);
 
 //Assign Quests
-var assignQuestsButton = Titanium.UI.createButton({
+var acceptRequestButton = Titanium.UI.createButton({
 	color : "#FFFFFF",
 	backgroundColor : "#474747",
 	title : "Accept",
@@ -721,10 +822,53 @@ var assignQuestsButton = Titanium.UI.createButton({
 	width : getButtonWidth(),
 	borderRadius : 2
 });
-bottomButtonView1.add(assignQuestsButton);
+acceptRequestButton.addEventListener("click",function(e){
+	var url = "http://justechinfo.com/kap_server/friendship_notifications_action.php?uid="+Ti.App.Properties.getString('friend_request_uid')+"&friend_uid="+Ti.App.GLBL_uid+"&action=FRIENDS";
+	var Record;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if(json.Record != undefined){
+				Record = json.Record[0];
+				alert(Record);
+			}
+			else if(json.Error != undefined)
+			{
+				if(json.Error.AuthException != undefined)
+				{
+					alert(json.Error.AuthException);
+				}
+				else if (json.Error.Request) 
+				{
+					alert(json.Error.Request);
+				}
+				else
+				{
+					alert("Unknown error occured!");
+				}
+			}
+			else
+			{
+				alert("Something went wrong!");
+			}
+			
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+});
+
+bottomButtonView1.add(acceptRequestButton);
 
 //Accept Button
-var declineButton = Titanium.UI.createButton({
+var declineRequestButton = Titanium.UI.createButton({
 	color : "#FFFFFF",
 	backgroundColor : "#474747",
 	title : "Decline",
@@ -734,7 +878,57 @@ var declineButton = Titanium.UI.createButton({
 	width : getButtonWidth(),
 	borderRadius : 2
 });
-bottomButtonView1.add(declineButton);
+declineRequestButton.addEventListener("click",function(e){
+	var url = "http://justechinfo.com/kap_server/friendship_notifications_action.php?uid="+Ti.App.Properties.getString('friend_request_uid')+"&friend_uid="+Ti.App.GLBL_uid+"&action=DENIED";
+	var Record;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if(json.Record != undefined){
+				Record = json.Record[0];
+				alert(Record);
+				var request_friends = Titanium.UI.createWindow({
+				    url:'request_friends.js'
+				    //url:'level2.js'
+				});
+				
+				request_friends.open();
+				removeAllContent();
+			}
+			else if(json.Error != undefined)
+			{
+				if(json.Error.AuthException != undefined)
+				{
+					alert(json.Error.AuthException);
+				}
+				else if (json.Error.Request) 
+				{
+					alert(json.Error.Request);
+				}
+				else
+				{
+					alert("Unknown error occured!");
+				}
+			}
+			else
+			{
+				alert("Something went wrong!");
+			}
+			
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+});
+
+bottomButtonView1.add(declineRequestButton);
 
 
 win.add(headerView);
@@ -754,6 +948,7 @@ win.addEventListener('android:back', function(e) {
 		url : 'request_friends.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 win.open();

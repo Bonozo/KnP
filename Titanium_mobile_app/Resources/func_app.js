@@ -1,14 +1,28 @@
 var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
-Ti.App.GLBL_default_font = 'MagicMedieval';
-Ti.App.GLBL_gender = "";
-Ti.App.GLBL_name = "";
-Ti.App.GLBL_character_image = "";
 
-var window = Titanium.UI.createWindow({
-    url:'level1.js'
-    //url:'level2.js'
-});
+function getNormalFontSize() {
+	if (winWidth >= 480 && winHeight >= 800) {
+		return 16;
+	} else if (winWidth < 480 && winHeight < 800) {
+		return 10;
+	}
+}
+
+function getMarginNormal1() {
+	if (winWidth >= 480 && winHeight >= 800) {
+		return 8;
+	} else if (winWidth < 480 && winHeight < 800) {
+		return 4;
+	}
+}
+function getHeaderHeight() {
+	if (winWidth >= 480 && winHeight >= 800) {
+		return 48;
+	} else if (winWidth < 480 && winHeight < 800) {
+		return 18;
+	}
+}
 function setCharacterAsFemale(){
 	Ti.App.GLBL_items_visible = [false,false,false,false,false,false,false,false,false];
 	Ti.App.GLBL_items_title = 

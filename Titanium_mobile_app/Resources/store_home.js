@@ -1,3 +1,74 @@
+function removeAllConetent() {
+	headerView.remove(headerAvatarHeaderIcon);
+	headerView.remove(nameOfCharacter);
+	levelView.remove(LVLlbl);
+	headerView.remove(levelView);
+	totalGoldView.remove(Goldlbl);
+	headerView.remove(totalGoldView);
+	headerView.remove(backButton);
+	headingRow.remove(storeLbl);
+	headingRow.remove(lineBreak3View);
+	enabledWrapperView.remove(storeImage);
+	enabledWrapperView.remove(storeItemNameLbl);
+	enabledWrapperView.remove(storeItemDescriptionLbl);
+	storeItemInfo.remove(coin_icon);
+	storeItemInfo.remove(storeIconWorth);
+	storeItemInfo.remove(buyButton);
+	storeItemInfo.remove(unlockButton);
+	storeItemInfo.remove(lockedItemIconImage);
+	enabledWrapperView.remove(storeItemInfo);
+	summaryView.remove(getGoldButton);
+	footerView.remove(lblSortBy);
+	footerView.remove(giftsButton);
+	footerView.remove(suppliesButton);
+	footerView.remove(armorButton);
+	footerView.remove(spellsButton);
+	win.remove(headingRow);
+	win.remove(table);
+	win.remove(headerView);
+	win.remove(summaryView);
+	win.remove(footerView);
+	
+	win = null;
+	winWidth = null;
+	winHeight = null;
+	chkArray = null;
+	headerView = null;
+	headerAvatarHeaderIcon = null;
+	nameOfCharacter = null;
+	levelView = null;
+	LVLlbl = null;
+	totalGoldView = null;
+	Goldlbl = null;
+	backButton = null;
+	headingRow = null;
+	storeLbl = null;
+	lineBreak3View = null;
+	lineBreak3View = null;
+	tableData = null;
+	table = null;
+	enabledWrapperView = null;
+	row = null;
+	storeImage = null;
+	storeItemNameLbl = null;
+	storeItemDescriptionLbl = null;
+	storeItemInfo = null;
+	coin_icon = null;
+	storeIconWorth = null;
+	buyButton = null;
+	unlockButton = null;
+	lockedItemIconImage = null;
+	summaryView = null;
+	getGoldButton = null;
+	footerView = null;
+	window1 = null;
+	lblSortBy = null;
+	giftsButton = null;
+	suppliesButton = null;
+	armorButton = null;
+	spellsButton = null;
+}
+
 var win = Titanium.UI.createWindow({
 	title : "Crafting Home",
 	width : '100%',
@@ -11,7 +82,33 @@ win.orientationModes = [Ti.UI.PORTRAIT];
 var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
 
-function getFriendsIconHeight(){
+function getCoinIcon(goldRequired)//"images/listview_coin_icon.png",
+{
+	if (goldRequired >= 110) {
+		return "images/listview_coin_blur_icon.png";
+	} else {
+		return "images/listview_coin_icon.png";
+	}
+}
+
+function getLockedIconVisibility(goldRequired) {
+	if (goldRequired >= 110) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function getStoreItemInfoWidth() {
+	//480×800
+	if (winWidth >= 480 && winHeight >= 800) {
+		return 170;
+	} else if (winWidth < 480 && winHeight < 800) {
+		return 74;
+	}
+}
+
+function getFriendsIconHeight() {
 	//480×800
 	if (winWidth >= 480 && winHeight >= 800) {
 		return 20;
@@ -19,7 +116,8 @@ function getFriendsIconHeight(){
 		return 8;
 	}
 }
-function getFriendsIconWidth(){
+
+function getFriendsIconWidth() {
 	//480×800
 	if (winWidth >= 480 && winHeight >= 800) {
 		return 24;
@@ -27,7 +125,8 @@ function getFriendsIconWidth(){
 		return 11;
 	}
 }
-function getRawDefaultHeight(){
+
+function getRawDefaultHeight() {
 	//480×800
 	if (winWidth >= 480 && winHeight >= 800) {
 		return 100;
@@ -35,6 +134,7 @@ function getRawDefaultHeight(){
 		return 55;
 	}
 }
+
 function getKnightButtonLeft() {
 	//480×800
 	if (winWidth >= 480 && winHeight >= 800) {
@@ -284,14 +384,15 @@ var backButton = Titanium.UI.createImageView({
 	width : getHeaderHeight()
 });
 headerView.add(backButton);
-backButton.addEventListener("click",function(e){
+backButton.addEventListener("click", function(e) {
 	var inventory_win = Titanium.UI.createWindow({
-	    url:'inventory.js'
-	    //url:'level2.js'
+		url : 'inventory.js'
+		//url:'level2.js'
 	});
 	inventory_win.open();
+	removeAllConetent();
 });
-var findFriends = Ti.UI.createView({
+var headingRow = Ti.UI.createView({
 	height : getHeaderHeight(),
 	top : getHeaderHeight(),
 	width : "100%",
@@ -299,35 +400,36 @@ var findFriends = Ti.UI.createView({
 });
 
 // Knights label in search section
-var knightsLbl = Ti.UI.createLabel({
-	text : 'knights',
-	color : '#828282',
+var storeLbl = Ti.UI.createLabel({
+	text : 'STORE',
+	color : '#FFFFFF',
 	font : {
-		fontSize : getNormalFontSize()
+		fontWeight : 'bold',
+		fontSize : getHeadingFontSize()
 	},
-	left : getMarginNormal1() * 3,
 	textAlign : 'center'
 });
+headingRow.add(storeLbl);
 
-// Add to the parent view.
-findFriends.add(knightsLbl);
-
-// Text field to enter knight's name
-var findByName = Ti.UI.createImageView({
-	image : "images/find_by_names.png"
+// Line break
+var lineBreak3View = Ti.UI.createView({
+	backgroundImage : 'images/line_break_big.png',
+	height : 2,
+	zIndex : 200,
+	bottom : 1,
+	left : getMarginNormal1(),
+	width : winWidth - (getMarginNormal1() * 2)
 });
-
-// Add to the parent view.
-findFriends.add(findByName);
+headingRow.add(lineBreak3View);
 
 var tableData = [];
 var table = Ti.UI.createTableView({
 	objName : 'inventort_craft',
-	height : winHeight - getHeaderHeight() - 2 * getHeaderHeight() + findFriends.height, // 100%-header_height-footer height
-	top : getHeaderHeight() + findFriends.height
+	height : winHeight - getHeaderHeight() - 2 * getHeaderHeight() + headingRow.height, // 100%-header_height-footer height
+	top : getHeaderHeight() + headingRow.height
 });
 
-for (var i = 0; i <= 20; i++) {
+for (var i = 0; i < 4; i++) {
 	var row = Ti.UI.createTableViewRow({
 		className : 'row',
 		objName : 'row',
@@ -336,15 +438,6 @@ for (var i = 0; i <= 20; i++) {
 		top : 0,
 		expanded : false
 	});
-	row.addEventListener('click', function(e) {
-		if (e.row.expanded) {
-			e.row.height = getRawDefaultHeight();
-			e.row.expanded = false;
-		} else {
-			e.row.height = 300;
-			e.row.expanded = true;
-		}
-	});
 
 	var enabledWrapperView = Ti.UI.createView({
 		backgroundColor : '#3d3d3d',
@@ -352,253 +445,139 @@ for (var i = 0; i <= 20; i++) {
 		rowID : i,
 		width : Ti.UI.FILL,
 		top : 0,
-		height : 300
+		height : getRawDefaultHeight()
 	});
-	//enabledWrapperView.addEventListener("click",checkAlert);
 
-	// Create a CraftItem.
-	var CraftItem = Ti.UI.createLabel({
-		text : "LordValor",
-		color : '#FFFFFF',
-		font : {
-			fontSize : getHeadingFontSize()
-		},
-		height : getHeadingFontSize() + getMarginNormal1(),
+	// Store Image
+	var storeImage = Ti.UI.createView({
 		top : getMarginNormal1(),
-		left : getMarginNormal1()
-	});
-	// Add to the parent view.
-	enabledWrapperView.add(CraftItem);
-
-	// Craft Desctiption.
-	var craftDescription = Ti.UI.createLabel({
-		text : 'makes a good gift',
-		color : '#7e7e7e',
-		font : {
-			fontSize : getNormalFontSize()
-		},
-		height : getNormalFontSize() + getMarginNormal1(),
-		top : CraftItem.height + getMarginNormal1(),
 		left : getMarginNormal1(),
-		textAlign : 'center'
-	});
-
-	// Add to the parent view.
-	enabledWrapperView.add(craftDescription);
-
-	// Online Status Icon
-	var onlineStatusIcon = Ti.UI.createView({
-		backgroundImage : 'images/offline_icon.png',
-		width : getOnlineIconWidthHeight(),
-		height : getOnlineIconWidthHeight(),
-		left : getMarginNormal1(),
-		top : craftDescription.top+craftDescription.height+getMarginNormal1(),
-		zIndex : 50
-	});
-	enabledWrapperView.add(onlineStatusIcon);
-
-	// Online Status Desctiption.
-	var onlineStatusDescription = Ti.UI.createLabel({
-		text : 'Last online 1 day ago',
-		color : '#7e7e7e',
-		font : {
-			fontSize : getSmallFontSize()
-		},
-		top : craftDescription.top+craftDescription.height+getMarginNormal1(),
-		left : onlineStatusIcon.width + getMarginNormal1() * 2,
-		textAlign : 'center'
-	});
-
-	// Add to the parent view.
-	enabledWrapperView.add(onlineStatusDescription);
-
-	// Avatar Image
-	var avatarImage = Ti.UI.createView({
-		top : getMarginNormal1(),
-		right : getMarginNormal1(),
 		width : getAvatarImageWidthHeight(),
 		height : getAvatarImageWidthHeight(),
-		backgroundImage : 'images/other_avatar.png',
+		backgroundImage : 'images/store_image.png',
 		zIndex : 50
 	});
-	enabledWrapperView.add(avatarImage);
+	enabledWrapperView.add(storeImage);
 
-	// Level And Gold View
-	var levelAndGoldView = Ti.UI.createView({
+	// Create a storeItemNameLbl Label.
+	var storeItemNameLbl = Ti.UI.createLabel({
+		text : 'Yellow Rose',
+		color : '#FFFFFF',
+		font : {
+			fontSize : getNormalFontSize(),
+			fontWeight : 'bold'
+		},
 		top : getMarginNormal1(),
-		right : avatarImage.width + 2 * getMarginNormal1(),
-		width : getAvatarImageWidthHeight(),
-		height : getAvatarImageWidthHeight(),
-		zIndex : 50
-	});
-	enabledWrapperView.add(levelAndGoldView);
-
-	var levelView = Ti.UI.createView({
-		width : "100%",
-		height : "30%",
-		top : 0,
-		backgroundColor : "#474747",
-		zIndex : 50
-	});
-	levelAndGoldView.add(levelView);
-
-	var levelLbl = Ti.UI.createLabel({
-		text : 'LVL : ',
-		color : '#FFFFFF',
-		font : {
-			fontSize : getNormalFontSize()
-		},
-		left : getMarginNormal1(),
+		left : storeImage.left + storeImage.width + getMarginNormal1(),
 		textAlign : 'center'
 	});
+	enabledWrapperView.add(storeItemNameLbl);
 
-	// Add to the parent view.
-	levelView.add(levelLbl);
-
-	var levelValueLbl = Ti.UI.createLabel({
-		text : '4',
-		color : '#FFE801',
-		font : {
-			fontSize : getNormalFontSize()
-		},
-		right : getMarginNormal1(),
-		textAlign : 'center'
-	});
-
-	// Add to the parent view.
-	levelView.add(levelValueLbl);
-
-	var goldView = Ti.UI.createView({
-		width : "100%",
-		height : "65%",
-		bottom : 0,
-		backgroundColor : "#474747",
-		zIndex : 50
-	});
-	levelAndGoldView.add(goldView);
-
-	var goldImageView = Ti.UI.createImageView({
-		height : "40%",
-		image : "images/coin_icon.png",
-		top : 0
-	});
-	goldView.add(goldImageView);
-
-	var goldLbl = Ti.UI.createLabel({
-		height : "50%",
-		text : "600",
-		color : '#FFE801',
-		bottom : 0
-	});
-	goldView.add(goldLbl);
-	
-	// numberOfFriendsIcon
-	var numberOfFriendsIconImage = Ti.UI.createImageView({
-		image : 'images/friends_icon.png',
-		width : getFriendsIconWidth(),
-		height : getFriendsIconHeight(),
-		top : levelAndGoldView.height+2*getMarginNormal1()+getMarginNormal1()/2,
-		right : avatarImage.width+getMarginNormal1()
-	});
-	// Add to the parent view.
-	enabledWrapperView.add(numberOfFriendsIconImage);
-	
-	
-	// numberOfFriendsLbl
-	var numberOfFriendsLbl = Ti.UI.createLabel({
-		text : '32 friends',
-		color : '#FFFFFF',
-		font : {fontSize:getSmallFontSize()},
-		top : levelAndGoldView.height+3*getMarginNormal1(),
-		right : getMarginNormal1()*4,
-		textAlign : 'center'
-	});
-	
-	// Add to the parent view.
-	enabledWrapperView.add(numberOfFriendsLbl);
-	//addFriendHeadingView
-	var addFriendHeadingView = Ti.UI.createView({
-		backgroundColor : "#626262",
-		width : "100%",
-		height : 25,
-		top : numberOfFriendsIconImage.top+numberOfFriendsIconImage.height+getMarginNormal1(),
-	});
-	enabledWrapperView.add(addFriendHeadingView);
-	
-	// Create an ImageView.
-	var addIconImage = Ti.UI.createImageView({
-		image : 'images/add_friend_icon.png',
-		width : getFriendsIconWidth()*2,
-		height : getFriendsIconHeight()*2,
-		top : numberOfFriendsIconImage.top+numberOfFriendsIconImage.height,
-		left : getMarginNormal1()
-	});
-
-	// Add to the parent view.
-	enabledWrapperView.add(addIconImage);
 	// Create a Label.
-	var addAsFriendLbl = Ti.UI.createLabel({
-		text : 'Add LordValor as friend?',
-		color : '#BABABA',
-		font : {fontSize:getNormalFontSize()},
-		textAlign : 'center'
-	});
-	// Add to the parent view.
-	addFriendHeadingView.add(addAsFriendLbl);
-	
-	// infoLbl
-	var infoLbl = Ti.UI.createLabel({
-		text : 'LordValor may have Quests for you to complete',
-		color : '#FFFFFF',
-		font : {fontSize:getSmallFontSize()},
-		top : addFriendHeadingView.top+addFriendHeadingView.height+getMarginNormal1(),
-		textAlign : 'center'
-	});
-	// Add to the parent view.
-	enabledWrapperView.add(infoLbl);
-
-	var messageField = Titanium.UI.createTextField({
-		width:"80%",
-		borderRadius : 0,
-		hintText:"type a message",
-		top : addFriendHeadingView.top+addFriendHeadingView.height+getMarginNormal1()*4,
-		height : getHeaderHeight(),
-		backgroundColor : "#626262",
-		borderColor : "#BBBBBB",
-		borderWidth : 2,
-		font : {fontSize : getNormalFontSize()},
-		color : "#BBBBBB",
-		keyboardType: Titanium.UI.KEYBOARD_ASCII 
-	});
-	enabledWrapperView.add(messageField);
-
-	//Send Requests Button
-	var sendRequestsButton = Titanium.UI.createButton({
-		color : "#FFFFFF",
-		title : "Send Request",
-		backgroundColor : "#474747",
+	var storeItemDescriptionLbl = Ti.UI.createLabel({
+		text : 'Signifies friendship; "I care"',
+		color : '#787878',
 		font : {
-			fontSize : getSmallFontSize()
+			fontSize : getNormalFontSize()
 		},
-		top : messageField.top + messageField.height+getMarginNormal1(),
-		height : getSmallButtonHeight(),
-		width : getButtonWidth(),
-		borderRadius : 2
+		left : storeImage.left + storeImage.width + getMarginNormal1(),
+		textAlign : 'center'
 	});
-	enabledWrapperView.add(sendRequestsButton);
+	enabledWrapperView.add(storeItemDescriptionLbl);
 
+	var storeItemInfo = Ti.UI.createView({
+		right : 0,
+		width : getStoreItemInfoWidth(),
+		height : "100%"
+
+	});
+
+	var coin_icon = Ti.UI.createImageView({
+		image : getCoinIcon((i * 2) + (i + 2) + (i + 1) + 100), //"images/listview_coin_icon.png",
+		right : (getMarginNormal1() * 3),
+		top : getMarginNormal1(),
+		width : 50,
+		height : 23
+	});
+	storeItemInfo.add(coin_icon);
+
+	// Create a Label.
+	var storeIconWorth = Ti.UI.createLabel({
+		text : (i * 2) + (i + 2) + (i + 1) + 100,
+		color : '#FFFFFF',
+		font : {
+			fontSize : getNormalFontSize(),
+			fontWeight : 'bold'
+		},
+		top : coin_icon.top + coin_icon.height,
+		width : 50,
+		right : (getMarginNormal1() * 3),
+		textAlign : 'center'
+	});
+	storeItemInfo.add(storeIconWorth);
+
+	// Create a Button.
+	var buyButton = Ti.UI.createButton({
+		visible : !getLockedIconVisibility((i * 2) + (i + 2) + (i + 1) + 100),
+		title : 'BUY',
+		height : getButtonHeight(),
+		width : getButtonWidth(),
+		bottom : getMarginNormal1(),
+		right : getMarginNormal1(),
+		font : {
+			fontSize : getNormalFontSize()
+		},
+		backgroundColor : "#38B414",
+		color : "#FFFFFF"
+	});
+
+	// Listen for click events.
+	buyButton.addEventListener('click', function() {
+		alert('\'buyButton\' was clicked!');
+	});
+	storeItemInfo.add(buyButton);
+
+	// Create a Button.
+	var unlockButton = Ti.UI.createButton({
+		visible : getLockedIconVisibility((i * 2) + (i + 2) + (i + 1) + 100),
+		title : 'UNLOCK',
+		height : getButtonHeight(),
+		font : {
+			fontSize : getNormalFontSize()
+		},
+		width : getButtonWidth(),
+		bottom : getMarginNormal1(),
+		right : getMarginNormal1(),
+		backgroundColor : "#33B5E6",
+		color : "#FFFFFF"
+	});
+
+	// Listen for click events.
+	unlockButton.addEventListener('click', function() {
+		alert('\'unlockButton\' was clicked!');
+	});
+	storeItemInfo.add(unlockButton);
+
+	// Create an ImageView.
+	var lockedItemIconImage = Ti.UI.createImageView({
+		visible : getLockedIconVisibility((i * 2) + (i + 2) + (i + 1) + 100),
+		image : 'images/lock_icon.png',
+		width : 42,
+		height : 50,
+		left : getMarginNormal1()
+	});
+	lockedItemIconImage.addEventListener('load', function() {
+		Ti.API.info('Image loaded!');
+	});
+	storeItemInfo.add(lockedItemIconImage);
+
+	enabledWrapperView.add(storeItemInfo);
 
 	row.add(enabledWrapperView);
 	tableData.push(row);
 }
 
 table.setData(tableData);
-
-function checkAlert(e) {
-	alert(tableData[e]);
-
-}
-
 //Summary
 var summaryView = Titanium.UI.createView({
 	backgroundColor : "#3D3D3D",
@@ -608,43 +587,27 @@ var summaryView = Titanium.UI.createView({
 });
 
 // Create a Button.
-var LVLButton = Ti.UI.createButton({
-	title : 'LVL',
+var getGoldButton = Ti.UI.createButton({
+	color : "#FFFFFF",
+	title : "GET GOLD",
 	backgroundColor : "#474747",
-	color : "#FFFFFF",
-	height : getButtonHeight(),
-	borderColor : "#404040",
-	width : getButtonWidth(),
-	left : getMarginNormal1() * 6,
-	borderRadius : 2
-});
-// Add to the parent view.
-summaryView.add(LVLButton);
-
-// Create a Button.
-var goldButton = Ti.UI.createButton({
-	color : "#FFFFFF",
-	backgroundImage : "images/coin_icon.png",
-	height : getButtonHeight(),
+	borderColor : "#333333",
+	font : {
+		fontSize : getSmallFontSize()
+	},
+	height : getSmallButtonHeight(),
 	width : getButtonWidth(),
 	borderRadius : 2
 });
-// Add to the parent view.
-summaryView.add(goldButton);
-
-// Create a Button.
-var rightButton = Ti.UI.createButton({
-	title : 'Online',
-	color : "#FFFFFF",
-	backgroundColor : "#474747",
-	height : getButtonHeight(),
-	borderColor : "#404040",
-	width : getButtonWidth(),
-	right : getMarginNormal1() * 6,
-	borderRadius : 2
+getGoldButton.addEventListener("click", function(e) {
+	var window1 = Titanium.UI.createWindow({
+		url : 'store_get_gold.js'
+	});
+	window1.open();
+	removeAllConetent();
 });
 // Add to the parent view.
-summaryView.add(rightButton);
+summaryView.add(getGoldButton);
 
 //footerView
 var footerView = Titanium.UI.createView({
@@ -669,10 +632,10 @@ var lblSortBy = Ti.UI.createLabel({
 // Add to the parent view.
 footerView.add(lblSortBy);
 
-//Knight Button
-var knightButton = Titanium.UI.createButton({
+//Gifts Button
+var giftsButton = Titanium.UI.createButton({
 	color : "#FFFFFF",
-	title : "Kngiht",
+	title : "Gifts",
 	backgroundColor : "#3eaed6",
 	borderColor : "#6992a8",
 	font : {
@@ -683,120 +646,120 @@ var knightButton = Titanium.UI.createButton({
 	left : getKnightButtonLeft(),
 	borderRadius : 2
 });
-footerView.add(knightButton);
-knightButton.addEventListener("click", function(e) {
-/*
-	knightButton.backgroundColor = "#3eaed6";
-	knightButton.borderColor = "#6992a8";
+footerView.add(giftsButton);
+giftsButton.addEventListener("click", function(e) {
+	/*
+	 knightButton.backgroundColor = "#3eaed6";
+	 knightButton.borderColor = "#6992a8";
 
-	princessesButton.backgroundColor = "#474747";
-	princessesButton.borderColor = "none";
-	myFriendsButton.backgroundColor = "#474747";
-	myFriendsButton.borderColor = "none";
-	requestsButton.backgroundColor = "#474747";
-	requestsButton.borderColor = "none";
-*/
+	 princessesButton.backgroundColor = "#474747";
+	 princessesButton.borderColor = "none";
+	 myFriendsButton.backgroundColor = "#474747";
+	 myFriendsButton.borderColor = "none";
+	 requestsButton.backgroundColor = "#474747";
+	 requestsButton.borderColor = "none";
+	 */
 });
 
-//Princesses Button
-var princessesButton = Titanium.UI.createButton({
+//Supplies Button
+var suppliesButton = Titanium.UI.createButton({
 	color : "#FFFFFF",
-	title : "Princesses",
+	title : "Supplies",
 	backgroundColor : "#474747",
 	font : {
 		fontSize : getSmallFontSize()
 	},
 	height : getSmallButtonHeight(),
 	width : getButtonWidth(),
-	left : knightButton.left + knightButton.width + getMarginNormal1(),
+	left : giftsButton.left + giftsButton.width + getMarginNormal1(),
 	borderRadius : 2
 });
-footerView.add(princessesButton);
-princessesButton.addEventListener("click", function(e) {
-	var princesses_friend_home = Titanium.UI.createWindow({
-	    url:'princesses_friend_home.js'
-	    //url:'level2.js'
-	});
-	princesses_friend_home.open();
-/*
-	princessesButton.backgroundColor = "#3eaed6";
-	princessesButton.borderColor = "#6992a8";
+footerView.add(suppliesButton);
+suppliesButton.addEventListener("click", function(e) {
+	// var princesses_friend_home = Titanium.UI.createWindow({
+	// url : 'princesses_friend_home.js'
+	// //url:'level2.js'
+	// });
+	// princesses_friend_home.open();
+	/*
+	 princessesButton.backgroundColor = "#3eaed6";
+	 princessesButton.borderColor = "#6992a8";
 
-	knightButton.backgroundColor = "#474747";
-	knightButton.borderColor = "none";
-	myFriendsButton.backgroundColor = "#474747";
-	myFriendsButton.borderColor = "none";
-	requestsButton.backgroundColor = "#474747";
-	requestsButton.borderColor = "none";
-*/
+	 knightButton.backgroundColor = "#474747";
+	 knightButton.borderColor = "none";
+	 myFriendsButton.backgroundColor = "#474747";
+	 myFriendsButton.borderColor = "none";
+	 requestsButton.backgroundColor = "#474747";
+	 requestsButton.borderColor = "none";
+	 */
 });
 
-//MyFriends Button
-var myFriendsButton = Titanium.UI.createButton({
+//Armor Button
+var armorButton = Titanium.UI.createButton({
 	color : "#FFFFFF",
-	title : "MyFriends",
+	title : "Armor",
 	backgroundColor : "#474747",
 	font : {
 		fontSize : getSmallFontSize()
 	},
 	height : getSmallButtonHeight(),
 	width : getButtonWidth(),
-	left : princessesButton.left + princessesButton.width + getMarginNormal1(),
+	left : suppliesButton.left + suppliesButton.width + getMarginNormal1(),
 	borderRadius : 2
 });
-footerView.add(myFriendsButton);
-myFriendsButton.addEventListener("click", function(e) {
-	var friend_interactions = Titanium.UI.createWindow({
-	    url:'friend_interactions.js'
-	});
-	friend_interactions.open();
-/*
-	myFriendsButton.backgroundColor = "#3eaed6";
-	myFriendsButton.borderColor = "#6992a8";
+footerView.add(armorButton);
+armorButton.addEventListener("click", function(e) {
+	// var friend_interactions = Titanium.UI.createWindow({
+	// url : 'friend_interactions.js'
+	// });
+	// friend_interactions.open();
+	/*
+	 myFriendsButton.backgroundColor = "#3eaed6";
+	 myFriendsButton.borderColor = "#6992a8";
 
-	knightButton.backgroundColor = "#474747";
-	knightButton.borderColor = "none";
-	princessesButton.backgroundColor = "#474747";
-	princessesButton.borderColor = "none";
-	requestsButton.backgroundColor = "#474747";
-	requestsButton.borderColor = "none";
-*/
+	 knightButton.backgroundColor = "#474747";
+	 knightButton.borderColor = "none";
+	 princessesButton.backgroundColor = "#474747";
+	 princessesButton.borderColor = "none";
+	 requestsButton.backgroundColor = "#474747";
+	 requestsButton.borderColor = "none";
+	 */
 });
 
-//Requests Button
-var requestsButton = Titanium.UI.createButton({
+//Spells Button
+var spellsButton = Titanium.UI.createButton({
 	color : "#FFFFFF",
-	title : "Requests",
+	title : "Spells",
 	backgroundColor : "#474747",
 	font : {
 		fontSize : getSmallFontSize()
 	},
 	height : getSmallButtonHeight(),
 	width : getButtonWidth(),
-	left : myFriendsButton.left + myFriendsButton.width + getMarginNormal1(),
+	left : armorButton.left + armorButton.width + getMarginNormal1(),
 	borderRadius : 2
 });
-footerView.add(requestsButton);
-requestsButton.addEventListener("click", function(e) {
-	var request_friends = Titanium.UI.createWindow({
-	    url:'request_friends.js'
-	    //url:'level2.js'
-	});
-	request_friends.open();
-/*
-	requestsButton.backgroundColor = "#3eaed6";
-	requestsButton.borderColor = "#6992a8";
+footerView.add(spellsButton);
+spellsButton.addEventListener("click", function(e) {
+	// var request_friends = Titanium.UI.createWindow({
+	// url : 'request_friends.js'
+	// //url:'level2.js'
+	// });
+	// request_friends.open();
+	/*
+	 requestsButton.backgroundColor = "#3eaed6";
+	 requestsButton.borderColor = "#6992a8";
 
-	knightButton.backgroundColor = "#474747";
-	knightButton.borderColor = "none";
-	princessesButton.backgroundColor = "#474747";
-	princessesButton.borderColor = "none";
-	myFriendsButton.backgroundColor = "#474747";
-	myFriendsButton.borderColor = "none";
-*/
+	 knightButton.backgroundColor = "#474747";
+	 knightButton.borderColor = "none";
+	 princessesButton.backgroundColor = "#474747";
+	 princessesButton.borderColor = "none";
+	 myFriendsButton.backgroundColor = "#474747";
+	 myFriendsButton.borderColor = "none";
+	 */
 });
 
-win.add(findFriends);
+win.add(headingRow);
 win.add(table);
 win.add(headerView);
 win.add(summaryView);
@@ -804,9 +767,10 @@ win.add(footerView);
 
 win.addEventListener('android:back', function(e) {
 	var window = Titanium.UI.createWindow({
-		url : 'inventory.js'
+		url : 'level2.js'
 	});
 	window.open();
+	removeAllConetent();
 });
 
-win.open(); 
+win.open();

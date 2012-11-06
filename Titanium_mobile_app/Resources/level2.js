@@ -1,12 +1,138 @@
 Ti.include('func_level2.js');
-var window = Titanium.UI.createWindow({
-	url : 'level3.js'
-});
 
 Titanium.UI.currentWindow.addEventListener('show_options', function(e) {
 	optionsWindow.visible = true;
 });
-
+function removeAllContent() {
+	coinView.remove(coinImage);
+	coinView.remove(lblCoin);
+	msgsView.remove(lblMsgs);
+	leadrView.remove(lblLeadr);
+	questsView.remove(lblQuests);
+	frndsView.remove(lblfrnds);
+	invView.remove(lblInv);
+	statusView.remove(lblStatus);
+	headerRowView.remove(questsView);
+	headerRowView.remove(frndsView);
+	headerRowView.remove(invView);
+	headerRowView.remove(statusView);
+	headerRowView.remove(leadrView);
+	headerRowView.remove(msgsView);
+	headerRowView.remove(coinView);
+	customizeHomeHeaderView.remove(lblCustomizeHome);
+	customizeHomeHeaderView.remove(customizeHomeCloseIcon);
+	customizeHomeView.remove(customizeHomeRow1View);
+	colorlblView.remove(lblColor);
+	customizeHomeRow2View.remove(diceButton);
+	customizeHomeRow2View.remove(colorlblView);
+	customizeHomeRow2View.remove(btnColorPlus);
+	customizeHomeRow2View.remove(btnColorMinus);
+	customizeHomeView.remove(customizeHomeRow2View);
+	customizeHomeView.remove(customizeHomeRow3View);
+	customizeHomeRow4View.remove(storeButton);
+	customizeHomeRow4View.remove(themeslblView);
+	customizeHomeRow4View.remove(btnThemesPlus);
+	customizeHomeRow4View.remove(btnThemesMinus);
+	customizeHomeView.remove(customizeHomeRow4View);
+	customizeHomeView.remove(customizeHomeRow5View);
+	customizeHomeRow6View.remove(btnDecoMinus);
+	customizeHomeRow6View.remove(btnDeco1);
+	customizeHomeRow6View.remove(btnDeco2);
+	customizeHomeRow6View.remove(btnDeco3);
+	customizeHomeRow6View.remove(btnLock);
+	customizeHomeRow6View.remove(btnDecoPlus);
+	customizeHomeView.remove(customizeHomeRow6View);
+	backgroundUpView.remove(armedCharacterView);
+	armedCharacterView.remove(armedCharacterImage);
+	armedCharacterView.remove(flowerImage);
+	armedCharacterView.remove(chestRedArmorImage);
+	armedCharacterView.remove(footRedArmorImage);
+	armedCharacterView.remove(glovesArmorImage);
+	armedCharacterView.remove(helmetArmorImage);
+	armedCharacterView.remove(legsArmorImage);
+	backgroundView.remove(backgroundDownView);
+	backgroundView.remove(backgroundUpView);
+	customizeHomeView.remove(customizeHomeHeaderView);
+	optionsWindow.remove(header);
+	header.remove(optionsCloseButton);
+	optionsWindow.remove(reset_game);
+	optionsWindow.remove(report_on);
+	optionsWindow.remove(notification_on);
+	optionsWindow.remove(music_on);
+	optionsWindow.remove(sound_on);
+	header.remove(optionlbl);
+	win.remove(optionsWindow);
+	win.remove(optionsView);
+	win.remove(customizeHomeView);
+	win.remove(headerRowView);
+	win.remove(backgroundView);
+	win.remove(mainBackgroundView);
+	themeslblView.remove(lblThemes);
+	mainBackgroundView = null;
+	headerRowView = null;
+	coinView = null;
+	coinImage = null;
+	lblCoin = null;
+	msgsView = null;
+	lblMsgs = null;
+	leadrView = null;
+	lblLeadr = null;
+	questsView = null;
+	lblQuests = null;
+	frndsView = null;
+	lblfrnds = null;
+	invView = null;
+	lblInv = null;
+	statusView = null;
+	lblStatus = null;
+	backgroundView = null;
+	backgroundUpView = null;
+	backgroundDownView = null;
+	customizeHomeView = null;
+	customizeHomeHeaderView = null;
+	customizeHomeCloseIcon = null;
+	lblCustomizeHome = null;
+	customizeHomeRow2View = null;
+	btnColorMinus = null;
+	colorlblView = null;
+	lblColor = null;
+	btnColorPlus = null;
+	diceButton = null;
+	customizeHomeRow3View = null;
+	customizeHomeRow4View = null;
+	btnThemesMinus = null;
+	themeslblView = null;
+	lblThemes = null;
+	btnThemesPlus = null;
+	storeButton = null;
+	customizeHomeRow5View = null;
+	customizeHomeRow6View = null;
+	btnDecoMinus = null;
+	btnDeco1 = null;
+	btnDeco2 = null;
+	btnDeco3 = null;
+	btnLock = null;
+	btnDecoPlus = null;
+	armedCharacterView = null;
+	optionsView = null;
+	armedCharacterImage = null;
+	flowerImage = null;
+	chestRedArmorImage = null;
+	footRedArmorImage = null;
+	glovesArmorImage = null;
+	helmetArmorImage = null;
+	legsArmorImage = null;
+	optionsWindow = null;
+	header = null;
+	sound_on = null;
+	music_on = null;
+	notification_on = null;
+	report_on = null;
+	reset_game = null;
+	optionsCloseButton = null;
+	optionlbl = null;
+	win = null;
+}
 var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
 var win = Titanium.UI.createWindow({
@@ -122,7 +248,7 @@ var questsView = Titanium.UI.createView({
 });
 //quests Text
 var lblQuests = Titanium.UI.createLabel({
-	text : "quests",
+	text : "quests!",
 	color : "#FFFFFF",
 	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
 	font : {
@@ -137,6 +263,7 @@ questsView.addEventListener("click", function(e) {
 		url : 'quests_home.js'
 	});
 	quests_home.open();
+	removeAllContent();
 
 });
 //frnds View
@@ -165,6 +292,7 @@ frndsView.addEventListener("click", function(e) {
 		//url:'level2.js'
 	});
 	window1.open();
+	removeAllContent();
 });
 //Inv. View
 var invView = Titanium.UI.createView({
@@ -180,6 +308,7 @@ invView.addEventListener("click", function(e) {
 		//url:'level2.js'
 	});
 	inventory_win.open();
+	removeAllContent();
 });
 //inv. Text
 var lblInv = Titanium.UI.createLabel({
@@ -217,6 +346,7 @@ statusView.addEventListener("click", function(e) {
 		//url:'level2.js'
 	});
 	inventory_win.open();
+	removeAllContent();
 });
 
 statusView.add(lblStatus);
@@ -508,7 +638,12 @@ var storeButton = Titanium.UI.createButton({
 	borderRadius : 2
 });
 storeButton.addEventListener("click", function(e) {
-	window.open();
+	//alert(Ti.App.GLBL_gender);
+	var window = Titanium.UI.createWindow({
+		url : 'store_home.js'
+	});
+	//window.open();
+	//removeAllContent();
 	//win.close();
 });
 customizeHomeRow4View.add(storeButton);
@@ -852,10 +987,17 @@ win.add(customizeHomeView);
 win.add(headerRowView);
 win.add(backgroundView);
 win.add(mainBackgroundView);
-win.addEventListener('android:back', function(e) {
-	var window = Titanium.UI.createWindow({
-		url : 'level1.js'
+/*
+if(!Ti.App.GLBL_character_created){
+	win.addEventListener('android:back', function(e) {
+		
+			var window = Titanium.UI.createWindow({
+				url : 'level1.js'
+			});
+			window.open();
+			removeAllContent();
+		
 	});
-	window.open();
-});
+}
+*/
 win.open(); 
