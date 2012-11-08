@@ -1,3 +1,4 @@
+
 function removeAllContent() {
 
 	win = null;
@@ -276,6 +277,11 @@ var headerView = Titanium.UI.createView({
 	backgroundColor : "#808080",
 	zIndex : 0
 });
+
+var thread_avatars = Titanium.UI.createLabel({
+	text : "Robot 1 & Robot 2"
+});
+headerView.add(thread_avatars);
 /*
 * Back Button
 */
@@ -299,12 +305,21 @@ backButton.addEventListener("click", function(e) {
 var scrollView = Titanium.UI.createScrollView({
 	top : getHeaderHeight(),
 	left : 0,
-	height : winHeight - (getHeaderHeight()*3),
-    showVerticalScrollIndicator:true,
-    showHorizontalScrollIndicator:true
+	height : winHeight - (getHeaderHeight() * 3),
+	backgroundColor : '#E2E2E2',
+	showVerticalScrollIndicator : true,
+	showHorizontalScrollIndicator : true
 });
-win.add(scrollView); 
+win.add(scrollView);
+/*
+ {
+ "SENDER_UID":"10000002",
+ "RECEIVER_UID":"10000001",
+ "MESSAGE_TEXT":"Hey... join us on this sunday please....:)",
+ "DATETIME":"Nov 07 2012 03: 21 PM"
+ },
 
+ */
 var textArea = Ti.UI.createTextField({
 	hintText : "Message",
 	color : '#888',
@@ -319,6 +334,33 @@ var textArea = Ti.UI.createTextField({
 	width : winWidth - (getHeaderHeight() * 3) + (getHeaderHeight() / 2),
 	height : getHeaderHeight()
 });
+var url = "http://justechinfo.com/kap_server/get_thread_messages.php?sender_id=10000001&receiver_id=10000002";
+// + Ti.App.GLBL_uid + "&receiver_id=10000002";//http://justechinfo.com/kap_server/friend_list.php?uid=" + Ti.App.GLBL_uid;
+var xhr = Ti.Network.createHTTPClient({
+	onload : function() {
+		json = JSON.parse(this.responseText);
+		if (json.Record != undefined) {
+			for (var i = json.Record.length - 1; i > -1; i--) {
+				rec = json.Record[i];
+				if (rec.SENDER_UID == '10000001')
+					myMessage(rec.MESSAGE_TEXT);
+				else
+					friendMessage(rec.MESSAGE_TEXT);
+			}
+			//clientSocket.write(Ti.createBuffer("Hello"));
+			scrollView.scrollTo(0, scrollView.getHeight());
+		} else {
+			alert("Something went wrong!");
+		}
+
+	},
+	onerror : function(e) {
+		
+	},
+	timeout : 5000
+});
+xhr.open("GET", url);
+xhr.send();
 
 //Send Button
 var sendButton = Titanium.UI.createButton({
@@ -339,38 +381,167 @@ var sendButton = Titanium.UI.createButton({
 	}
 });
 var current_top = 0;
-function getCurrentTop(){
-	current_top
+
+function getCurrentTop(current_text_height) {
+	var temp = current_top;
+	//alert(current_text_height);
+	if (temp == 0) {
+		if (current_text_height == 32) {
+			current_top = (getMarginNormal1() * 4) + current_text_height + 20;
+		} else {
+			current_top = (getMarginNormal1() * 4) + current_text_height;
+		}
+		return getMarginNormal1() * 2;
+	} else {
+		if (current_text_height == 32) {
+			current_top = current_top + current_text_height + (getMarginNormal1() * 2) + 20;
+		} else {
+			current_top = current_top + current_text_height + (getMarginNormal1() * 2);
+		}
+	}
+
+	return temp;
 }
-sendButton.addEventListener("click", function(e) {
-	
+
+function myMessage(msg) {
 	var label = Titanium.UI.createLabel({
-		text : textArea.value
+		text : msg,
+		font : {
+			fontSize : 16,
+			fontWeight : 'bold'
+		},
+		textAlign : 'left',
+		left : getMarginNormal1() * 2,
+		color : '#1C1C1C'
 	});
-	
+
+	var floatToInt = function(float_value) {
+		float_value = String(float_value);
+		var index = float_value.indexOf('.');
+		if (index > 0) {
+			return float_value.substr(0, index);
+		} else {
+			return float_value;
+		}
+	};
 	//number of characters per line
-	var charsPerLn = 120; 
-	
+	var charsPerLn = 42;
+
 	//number of characters in text
-	var txtln = label.length;
-	
+	var txtln = label.text.length;
+
 	//number of lines
 	var numlns = txtln / charsPerLn;
-	var sometext = Titanium.UI.createLabel({
-		text : textArea.value
+	numlns = floatToInt(numlns);
+	numlns++;
+	//if(numlns == 0) {numlns = 1;}
+	//alert("txtln.size:" + txtln+"\nnumlns:"+numlns);
+
+	var avatar_image = Titanium.UI.createImageView({
+		image : "images/avatar_small_icon.png",
+		left : getMarginNormal1(),
+		top : getCurrentTop((getHeaderHeight() / 2) * numlns + (getMarginNormal1() * 2)),
+		width : getHeaderHeight()
 	});
-	alert("label.size:"+label.size.height);
-	/*var newview = Titanium.UI.createView({
-		top : current_top,
-		left : 0,
-		height : getHeaderHeight()*8,
-		backgroundColor : 'green',
+	var newview = Titanium.UI.createView({
+		top : avatar_image.top, // getCurrentTop(getHeaderHeight() * (2 / 3) * numlns),
+		borderRadius : 12,
+		left : (getMarginNormal1() * 2) + avatar_image.width,
+		height : (getHeaderHeight() / 2) * numlns + (getMarginNormal1() * 2),
+		width : getHeaderHeight() * 6 + (getMarginNormal1() * 2),
+		backgroundColor : '#F2F5A9',
+		borderColor : '#A4A4A4',
+		borderWidth : 2
 	});
-	newview.add(sometext);
-	
-	scrollView.add(newview);*/
-	
+	newview.add(label);
+
+	scrollView.add(avatar_image);
+	scrollView.add(newview);
+
+}
+
+function friendMessage(msg) {
+	var label = Titanium.UI.createLabel({
+		text : msg,
+		font : {
+			fontSize : 16,
+			fontWeight : 'bold'
+		},
+		textAlign : 'right',
+		right : getMarginNormal1() * 2,
+		color : '#1C1C1C'
+	});
+
+	var floatToInt = function(float_value) {
+		float_value = String(float_value);
+		var index = float_value.indexOf('.');
+		if (index > 0) {
+			return float_value.substr(0, index);
+		} else {
+			return float_value;
+		}
+	};
+	//number of characters per line
+	var charsPerLn = 35;
+
+	//number of characters in text
+	var txtln = label.text.length;
+
+	//number of lines
+	var numlns = txtln / charsPerLn;
+	numlns = floatToInt(numlns);
+	numlns++;
+	//if(numlns == 0) {numlns = 1;}
+	//alert("txtln.size:" + txtln+"\nnumlns:"+numlns);
+
+	var avatar_image = Titanium.UI.createImageView({
+		image : "images/friend_avatar_small_icon.png",
+		right : getMarginNormal1(),
+		top : getCurrentTop((getHeaderHeight() / 2) * numlns + (getMarginNormal1() * 2)),
+		width : getHeaderHeight()
+	});
+	var newview = Titanium.UI.createView({
+		top : avatar_image.top, // getCurrentTop(getHeaderHeight() * (2 / 3) * numlns),
+		borderRadius : 12,
+		right : (getMarginNormal1() * 2) + avatar_image.width,
+		height : (getHeaderHeight() / 2) * numlns + (getMarginNormal1() * 2),
+		width : getHeaderHeight() * 6 + (getMarginNormal1() * 2),
+		backgroundColor : '#F2F2F2',
+		borderColor : '#A4A4A4',
+		borderWidth : 2
+	});
+	newview.add(label);
+
+	scrollView.add(avatar_image);
+	scrollView.add(newview);
+
+}
+
+sendButton.addEventListener("click", function(e) {
+	myMessage(textArea.value);
+	var encoded_message = Ti.Network.encodeURIComponent(textArea.value);
+	sendMessage(10000001,10000002,encoded_message)
+	scrollView.scrollTo(0, scrollView.getHeight());
 });
+function sendMessage(sender_id,receiver_id,message){
+var url = "http://justechinfo.com/kap_server/send_message.php?sender_id="+sender_id+"&receiver_id="+receiver_id+"&message="+message;
+// + Ti.App.GLBL_uid + "&receiver_id=10000002";//http://justechinfo.com/kap_server/friend_list.php?uid=" + Ti.App.GLBL_uid;
+var xhr = Ti.Network.createHTTPClient({
+	onload : function() {
+		json = JSON.parse(this.responseText);
+		if (json.Message == undefined) {
+			alert("Something went wrong!");
+		} 
+
+	},
+	onerror : function(e) {
+		
+	},
+	timeout : 5000
+});
+xhr.open("GET", url);
+xhr.send();
+}
 
 win.add(sendButton);
 win.add(textArea);
