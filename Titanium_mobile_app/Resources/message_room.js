@@ -1,4 +1,3 @@
-
 function removeAllContent() {
 
 	win = null;
@@ -279,7 +278,7 @@ var headerView = Titanium.UI.createView({
 });
 
 var thread_avatars = Titanium.UI.createLabel({
-	text : "Robot 1 & Robot 2"
+	text : Ti.App.Properties.getString('friend_name')
 });
 headerView.add(thread_avatars);
 /*
@@ -295,7 +294,7 @@ var backButton = Titanium.UI.createImageView({
 headerView.add(backButton);
 backButton.addEventListener("click", function(e) {
 	var inventory_win = Titanium.UI.createWindow({
-		url : 'app.js'
+		url : 'friend_vs_me_dashboard.js'
 		//url:'level2.js'
 	});
 	inventory_win.open();
@@ -311,15 +310,7 @@ var scrollView = Titanium.UI.createScrollView({
 	showHorizontalScrollIndicator : true
 });
 win.add(scrollView);
-/*
- {
- "SENDER_UID":"10000002",
- "RECEIVER_UID":"10000001",
- "MESSAGE_TEXT":"Hey... join us on this sunday please....:)",
- "DATETIME":"Nov 07 2012 03: 21 PM"
- },
 
- */
 var textArea = Ti.UI.createTextField({
 	hintText : "Message",
 	color : '#888',
@@ -334,15 +325,17 @@ var textArea = Ti.UI.createTextField({
 	width : winWidth - (getHeaderHeight() * 3) + (getHeaderHeight() / 2),
 	height : getHeaderHeight()
 });
-var url = "http://justechinfo.com/kap_server/get_thread_messages.php?sender_id=10000001&receiver_id=10000002";
+var url = "http://justechinfo.com/kap_server/get_thread_messages.php?sender_id="+Ti.App.GLBL_uid+"&receiver_id="+Ti.App.Properties.getString('friend_request_uid')+"";
 // + Ti.App.GLBL_uid + "&receiver_id=10000002";//http://justechinfo.com/kap_server/friend_list.php?uid=" + Ti.App.GLBL_uid;
 var xhr = Ti.Network.createHTTPClient({
 	onload : function() {
+		//alert(Ti.App.Properties.getString('friend_request_uid'));
+		
 		json = JSON.parse(this.responseText);
 		if (json.Record != undefined) {
 			for (var i = json.Record.length - 1; i > -1; i--) {
 				rec = json.Record[i];
-				if (rec.SENDER_UID == '10000001')
+				if (rec.SENDER_UID == Ti.App.GLBL_uid)
 					myMessage(rec.MESSAGE_TEXT);
 				else
 					friendMessage(rec.MESSAGE_TEXT);
@@ -350,7 +343,7 @@ var xhr = Ti.Network.createHTTPClient({
 			//clientSocket.write(Ti.createBuffer("Hello"));
 			scrollView.scrollTo(0, scrollView.getHeight());
 		} else {
-			alert("Something went wrong!");
+//			alert("No messages found!");
 		}
 
 	},
@@ -520,7 +513,7 @@ function friendMessage(msg) {
 sendButton.addEventListener("click", function(e) {
 	myMessage(textArea.value);
 	var encoded_message = Ti.Network.encodeURIComponent(textArea.value);
-	sendMessage(10000001,10000002,encoded_message)
+	sendMessage(Ti.App.GLBL_uid,Ti.App.Properties.getString('friend_request_uid'),encoded_message)
 	scrollView.scrollTo(0, scrollView.getHeight());
 });
 function sendMessage(sender_id,receiver_id,message){
@@ -549,7 +542,7 @@ win.add(headerView);
 
 win.addEventListener('android:back', function(e) {
 	var window = Titanium.UI.createWindow({
-		url : 'app.js'
+		url : 'friend_vs_me_dashboard.js'
 	});
 	window.open();
 });

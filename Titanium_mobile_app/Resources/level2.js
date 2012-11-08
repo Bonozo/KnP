@@ -879,16 +879,6 @@ var legsArmorImage = Titanium.UI.createImageView({
 });
 armedCharacterView.add(legsArmorImage);
 
-/*
-
-///Character Image
-var characterImage = Titanium.UI.createImageView({
-image:Ti.App.GLBL_character_image,//"images/hdpi_"+Ti.App.GLBL_gender+"_character.png",
-height:getImageHeight(Ti.App.GLBL_gender),
-left : "10%",
-width:getImageWidth(Ti.App.GLBL_gender)
-});
-*/
 //backgroundUpView.add(characterImage);
 backgroundView.add(backgroundDownView);
 backgroundView.add(backgroundUpView);
@@ -987,17 +977,5 @@ win.add(customizeHomeView);
 win.add(headerRowView);
 win.add(backgroundView);
 win.add(mainBackgroundView);
-/*
-if(!Ti.App.GLBL_character_created){
-	win.addEventListener('android:back', function(e) {
-		
-			var window = Titanium.UI.createWindow({
-				url : 'level1.js'
-			});
-			window.open();
-			removeAllContent();
-		
-	});
-}
-*/
+
 win.open(); 

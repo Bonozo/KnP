@@ -273,12 +273,13 @@ var signInButton = Titanium.UI.createButton({
 		fontFamily : Ti.App.GLBL_default_font
 	}
 });
-signInButton.addEventListener("click", function(e) {
+/*signInButton.addEventListener("click", function(e) {
 	Titanium.UI.createWindow({
 		url : 'message_room.js'
 	}).open();
 });
-/*signInButton.addEventListener("click", function(e) {
+*/
+signInButton.addEventListener("click", function(e) {
 	var email = emailField.value;
 	var password = passwordField.value;
 	//alert("email : "+email+"\nPassword : "+password);
@@ -354,7 +355,7 @@ signInButton.addEventListener("click", function(e) {
 	xhr.send();
 	
 });
-*/
+
 signInButtonView.add(signInButton);
 
 win.add(headerRowView);

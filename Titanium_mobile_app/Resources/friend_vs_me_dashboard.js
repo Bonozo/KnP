@@ -564,6 +564,17 @@ var chatIcon = Ti.UI.createView({
 	top : getHeaderHeight() * 2 + getHeaderHeight() * 2 / 3,
 	zIndex : 50
 });
+chatIcon.addEventListener('click',function(e){
+	var message_room = Titanium.UI.createWindow({
+	    url:'message_room.js'
+	    //url:'level2.js'
+	});
+	
+	message_room.open();
+	
+	//Ti.App.Properties.getString('friend_request_uid');
+});
+//Ti.App.Properties.getString('friend_request_uid')
 
 // Message Icon
 var messageIcon = Ti.UI.createView({
@@ -600,7 +611,6 @@ var maleCharacterImage = Ti.UI.createImageView({
 	right : getMarginNormal1(),
 	zIndex : 1000
 });
-
 
 
 //findFriendsView.add(levelView);

@@ -423,9 +423,20 @@ var xhr = Ti.Network.createHTTPClient({
 					height : getRawDefaultHeight(),
 					top : 0,
 					uid : rec.UID,
+					name : rec.NAME,
 					expanded : false
 				});
 				row.addEventListener('click', function(e) {
+						var friend_vs_me_dashboard = Titanium.UI.createWindow({
+						    url:'friend_vs_me_dashboard.js'
+						    //url:'level2.js'
+						});
+						Ti.App.Properties.setString('friend_request_uid', e.row.uid);
+						Ti.App.Properties.setString('friend_name', e.row.name);
+						removeAllContent();
+						friend_vs_me_dashboard.open();
+
+
 					/*if (e.row.expanded) {
 						e.row.height = getRawDefaultHeight();
 						e.row.expanded = false;

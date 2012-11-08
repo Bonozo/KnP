@@ -1,3 +1,7 @@
+/*
+ * LIST OF FRIENDSHIPS NOTIFICATION  
+ */
+
 function removeAllContent() {
 	headerView.remove(headerAvatarHeaderIcon);
 	headerView.remove(nameOfCharacter);
