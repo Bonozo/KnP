@@ -1,6 +1,6 @@
 <?php
 //S83HSGGH5J
-include "../db/db.php";
+include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
 $dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'root', '');
@@ -23,7 +23,8 @@ function sendToAll($clientID,$message){
 }
 // when a client sends data to the server
 function wsOnMessage($clientID, $message, $messageLength, $binary) {
-
+	$Server->log( $message);
+	
 	$WS_OP_OPEN = "OPN";
 	$WS_OP_MESSAGE = "MSG";
 	$WS_HASH_CODE = "S83HSGGH5J";
@@ -35,27 +36,60 @@ function wsOnMessage($clientID, $message, $messageLength, $binary) {
 		$Server->wsClose($clientID);
 		return;
 	}
-	$Server->log( "$ip : " . $message);
+	//$Server->log( "$ip : " . $message);
 	
 	$parsed_message = new MessageParser($message,$WS_HASH_CODE);
 	
 	if(strcmp($parsed_message->getOperation(),$WS_OP_OPEN) == 0){
 		$message = "NEW".$parsed_message->getUID();
-		$Server->log("".$Server->wsGetClientSocket($clientID));
+		//$Server->log("".$Server->wsGetClientSocket($clientID));
 		sendToAll($clientID,$message);
 	}
 	elseif(strcmp($parsed_message->getOperation(),$WS_OP_MESSAGE) == 0){
-		
+		$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+		foreach($Server->client_user_ids as $key => $value){
+			$Server->log("[".$key."]:".$value);
+		}
 		//$Server->log("RCV_ID = ".$parsed_message->getRecieverId());
-		echo "test echo";
 		$reciever_id = $parsed_message->getRecieverId();
-		$Server->log("reciever_id:".$reciever_id);
+		//$Server->log("reciever_id:".$reciever_id);
 		if(in_array($reciever_id,$Server->client_user_ids))
 		{
 			$res_id = array_search($reciever_id, $Server->client_user_ids); 
 			$Server->wsSend($res_id, $parsed_message->getMessage());
 			$Server->log($res_id.":". $parsed_message->getMessage());
+			//array_search($clientID, $Server->client_user_ids);
+			
+			$query = 
+			"INSERT INTO 
+			`KNP_MESSAGE_MAIN`
+			(`SENDER_UID`,`RECEIVER_UID`,`MESSAGE_TEXT`,`STATUS`) 
+			VALUES 
+			(:sender_id,:receiver_id,:message_text,'READ');";
+			
+			$sql = "SELECT * FROM knp_message_main WHERE SENDER_UID = '10000001' AND RECEIVER_UID = '$reciever_id'";
+			$result = $dbObj->queryFetchAllAssoc($sql);
+			print_r($result);
+			
 		}
+		else
+		{
+			$query = 
+			"INSERT INTO 
+			`KNP_MESSAGE_MAIN`
+			(`SENDER_UID`,`RECEIVER_UID`,`MESSAGE_TEXT`,`STATUS`) 
+			VALUES 
+			(:sender_id,:receiver_id,:message_text,'UNREAD');";
+			
+		}
+			$sender_id = $parsed_message->getUID();
+			
+			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement->execute(
+			array(	':sender_id'=>$parsed_message->getUID(),
+					':receiver_id'=>$parsed_message->getRecieverId(),
+					':message_text'=>$parsed_message->getMessage()
+				));
 		
 	}
 	
@@ -129,6 +163,6 @@ $Server->bind('open', 'wsOnOpen');
 $Server->bind('close', 'wsOnClose');
 // for other computers to connect, you will probably need to change this to your LAN IP or external IP,
 // alternatively use: gethostbyaddr(gethostbyname($_SERVER['SERVER_NAME']))
-$Server->wsStartServer('192.168.0.100', 5000);
+$Server->wsStartServer('192.168.1.4', 5000);
 
 ?>

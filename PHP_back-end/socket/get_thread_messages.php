@@ -3,8 +3,11 @@ header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
-		$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
-
+$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'root', '');
+// prevent the server from timing out
+set_time_limit(0);
+// include the web sockets server script (the server is started at the far bottom of this file)
+require 'class.PHPWebSocket.php';
 if(isset($_GET))
 {
 	extract($_GET);

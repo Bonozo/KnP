@@ -54,7 +54,7 @@ input, textarea {
 
 		$(document).ready(function() {
 			log('Connecting...');
-			Server = new FancyWebSocket('ws://192.168.0.100:5000');	
+			Server = new FancyWebSocket('ws://192.168.0.4:5000');	
 
 			$('#message').keypress(function(e) {
 				if ( e.keyCode == 13 && this.value ) {
@@ -112,6 +112,6 @@ input, textarea {
         </select>
         
     </div>
-    <div>Testing</div>
+    <div></div>
 </body>
 </html>
