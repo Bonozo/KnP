@@ -7,15 +7,15 @@ Ti.App.GLBL_name = "";
 Ti.App.GLBL_character_image = "";
 Ti.App.GLBL_uid = "";
 
-Ti.App.GLBL_skin_color = 'gray'; 
+Ti.App.GLBL_skin_color = 'gray';
 
-Ti.App.GLBL_hair_stlyes = ['Style1','Style2','Style3'];
-Ti.App.GLBL_hair_color = ['gray','red'];
-Ti.App.GLBL_hair_color_image_name = ['hdpi_male_character_bad.png','hdpi_male_character_good.png'];
-Ti.App.GLBL_skin_tone = ['Tone1','Tone2','Tone3'];
-Ti.App.GLBL_face = ['face1','face2','face3'];
-Ti.App.GLBL_clothing = ['clothing1','clothing2','clothing3'];
-Ti.App.GLBL_color_scheme = ['Color scheme1','Color scheme2','Color scheme3'];
+Ti.App.GLBL_hair_stlyes = ['Style1', 'Style2', 'Style3'];
+Ti.App.GLBL_hair_color = ['gray', 'red'];
+Ti.App.GLBL_hair_color_image_name = ['hdpi_male_character_bad.png', 'hdpi_male_character_good.png'];
+Ti.App.GLBL_skin_tone = ['Tone1', 'Tone2', 'Tone3'];
+Ti.App.GLBL_face = ['face1', 'face2', 'face3'];
+Ti.App.GLBL_clothing = ['clothing1', 'clothing2', 'clothing3'];
+Ti.App.GLBL_color_scheme = ['Color scheme1', 'Color scheme2', 'Color scheme3'];
 
 Ti.App.GLBL_curr_hair_stlyes = 0;
 Ti.App.GLBL_curr_hair_color = 0;
@@ -24,11 +24,16 @@ Ti.App.GLBL_curr_face = 0;
 Ti.App.GLBL_curr_clothing = 0;
 Ti.App.GLBL_curr_color_scheme = 0;
 Ti.App.GLBL_character_created = false;
-
+function foo() {
+	randomnumber = Math.floor(Math.random() * 100);
+	Ti.API.info("random: " + randomnumber);
+}
 
 //ratioCalculation();
 //	var originalWinWidth = $(window).width();
 function removeAllContent() {
+		
+
 	win.remove(headerRowView);
 	win.remove(horizonRowCharactersView);
 	win.remove(horizonRowButtonView);
@@ -39,27 +44,27 @@ function removeAllContent() {
 	win.remove(tickBox);
 	win.remove(rememberPasswordLbl);
 	rememberPasswordLbl = null;
-	
+
 	signInStatusLbl = null;
 	tickBox = null;
-	
+
 	inputPasswordView.remove(passwordField);
 	passwordField = null;
-	
+
 	horizonRowCharactersView.remove(appLogoImageView);
 	appLogoImageView = null;
-	
+
 	inputemailView.remove(emailField);
 	emailField = null;
-	
+
 	headerRowView = null;
 	horizonRowCharactersView = null;
 	horizonRowButtonView = null;
 	inputemailView = null;
 	emailField = null;
-	signInButtonView = null;	
+	signInButtonView = null;
 	signInButton = null;
-	inputPasswordView = null; 
+	inputPasswordView = null;
 
 	win = null;
 
@@ -96,8 +101,8 @@ headerRowView.add(Titanium.UI.createLabel({
 	textAlign : "center"
 }));
 /*
- * Header Ends
- */
+* Header Ends
+*/
 
 //Horizontal row for male/female characters
 var horizonRowCharactersView = Titanium.UI.createView({
@@ -119,8 +124,6 @@ appLogoImageView.addEventListener('load', function() {
 
 // Add to the parent view.
 horizonRowCharactersView.add(appLogoImageView);
-
-
 
 //Horizontal row for male/female buttons
 var horizonRowButtonView = Titanium.UI.createView({
@@ -146,21 +149,19 @@ var signUpButton = Titanium.UI.createButton({
 });
 
 horizonRowButtonView.add(signUpButton);
-signUpButton.addEventListener("click",function(e){
+signUpButton.addEventListener("click", function(e) {
 	Titanium.UI.createWindow({
-		url : 'choose_your_class.js'
-		//url:'level2.js'
-	}).open();
-	removeAllContent();
+	 url : 'choose_your_class.js'
+	 //url:'level2.js'
+	 }).open();
+	 removeAllContent();
 });
-
-
 
 // Create a Label.
 var signInStatusLbl = Ti.UI.createLabel({
 	text : 'signInStatusLbl',
 	color : '#474747',
-	bottom : (getMarginNormal1()*4) + (buttonHeight()*3),
+	bottom : (getMarginNormal1() * 4) + (buttonHeight() * 3),
 	textAlign : 'center',
 	visible : false,
 	font : {
@@ -168,12 +169,10 @@ var signInStatusLbl = Ti.UI.createLabel({
 	}
 });
 
-
-
 //Horizontal row for Name Box
 var inputemailView = Titanium.UI.createView({
 	width : "100%",
-	bottom : (buttonHeight()*3),
+	bottom : (buttonHeight() * 3),
 	height : buttonHeight()
 });
 
@@ -192,11 +191,10 @@ var emailField = Titanium.UI.createTextField({
 });
 inputemailView.add(emailField);
 
-
 //Horizontal row for Name Box
 var inputPasswordView = Titanium.UI.createView({
 	width : "100%",
-	bottom : (buttonHeight()*2),
+	bottom : (buttonHeight() * 2),
 	height : buttonHeight()
 });
 
@@ -204,7 +202,7 @@ var inputPasswordView = Titanium.UI.createView({
 var passwordField = Titanium.UI.createTextField({
 	width : "80%",
 	height : buttonHeight(),
-	passwordMask:true,
+	passwordMask : true,
 	borderRadius : 7,
 	borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
 	hintText : "PASSWORD",
@@ -223,7 +221,7 @@ var tickBox = Ti.UI.createButton({
 	checkBok : "tick",
 	customValue : "use your custom value",
 	checked : false,
-	bottom : (buttonHeight()) + (getMarginNormal1()*2),
+	bottom : (buttonHeight()) + (getMarginNormal1() * 2),
 	left : "10%"
 });
 
@@ -244,8 +242,10 @@ tickBox.addEventListener('click', function(e) {
 var rememberPasswordLbl = Ti.UI.createLabel({
 	text : 'Remember email address and password?',
 	color : '#474747',
-	font : {fontSize:getNormalFontSize()},
-	bottom : (buttonHeight()) + (getMarginNormal1()*2),
+	font : {
+		fontSize : getNormalFontSize()
+	},
+	bottom : (buttonHeight()) + (getMarginNormal1() * 2),
 	textAlign : 'center'
 });
 
@@ -273,40 +273,45 @@ var signInButton = Titanium.UI.createButton({
 		fontFamily : Ti.App.GLBL_default_font
 	}
 });
-/*signInButton.addEventListener("click", function(e) {
-	Titanium.UI.createWindow({
+/*
+signInButton.addEventListener("click", function(e) {
+	Ti.App.GLBL_uid = '10000001';
+	Ti.App.Properties.setString('friend_request_uid','10000002');
+	var message_room = Titanium.UI.createWindow({
 		url : 'message_room.js'
-	}).open();
+	});
+	message_room.open();
+	removeAllContent();
 });
 */
 signInButton.addEventListener("click", function(e) {
 	var email = emailField.value;
 	var password = passwordField.value;
 	//alert("email : "+email+"\nPassword : "+password);
-	
-	var url = "http://justechinfo.com/kap_server/index.php?email="+email+"&password="+password+"";
+
+	var url = "http://justechinfo.com/kap_server/index.php?email=" + email + "&password=" + password + "";
 	var Record;
 	var xhr = Ti.Network.createHTTPClient({
 		onload : function() {
 			json = JSON.parse(this.responseText);
-			if(json.Record != undefined){
+			if (json.Record != undefined) {
 				Record = json.Record[0];
 				//alert("Successfully signed in!");
-				Ti.App.GLBL_uid = Record.UID; 
-				if(Record.GENDER == 'm'){
+				Ti.App.GLBL_uid = Record.UID;
+				if (Record.GENDER == 'm') {
 					setCharacterAsMale();
-					Ti.App.GLBL_gender = 'male'; 
-					Ti.App.GLBL_character_image = "images/hdpi_male_character_bad.png"; 
-				}
-				else{
+					Ti.App.GLBL_gender = 'male';
+					Ti.App.GLBL_character_image = "images/hdpi_male_character_bad.png";
+				} else {
 					setCharacterAsFemale();
 					Ti.App.GLBL_gender = 'female';
-					Ti.App.GLBL_character_image = "images/hdpi_female_character_bad.png"; 
+					Ti.App.GLBL_character_image = "images/hdpi_female_character_bad.png";
 				}
 
 				//remember email address and password
-				if(tickBox.checked == true){
+				if (tickBox.checked == true) {
 					//alert('checked');
+					Ti.App.GLBL_name = Record.NAME;
 					Ti.App.Properties.setString('email', email);
 					Ti.App.Properties.setString('password', password);
 					//alert(Ti.App.Properties.getString('email')+Ti.App.Properties.getString('password'));
@@ -321,27 +326,18 @@ signInButton.addEventListener("click", function(e) {
 				removeAllContent();
 				//window = null;
 
-			}
-			else if(json.Error != undefined)
-			{
-				if(json.Error.AuthException != undefined)
-				{
+			} else if (json.Error != undefined) {
+				if (json.Error.AuthException != undefined) {
 					alert(json.Error.AuthException);
-				}
-				else if (json.Error.Request) 
-				{
+				} else if (json.Error.Request) {
 					alert(json.Error.Request);
-				}
-				else
-				{
+				} else {
 					alert("Unknown error occured!");
 				}
-			}
-			else
-			{
+			} else {
 				alert("Something went wrong!");
 			}
-			
+
 		},
 		onerror : function(e) {
 			Ti.API.debug("STATUS: " + this.status);
@@ -353,7 +349,7 @@ signInButton.addEventListener("click", function(e) {
 	});
 	xhr.open("GET", url);
 	xhr.send();
-	
+
 });
 
 signInButtonView.add(signInButton);
@@ -371,8 +367,7 @@ win.addEventListener(Titanium.PAGE_LOADED, function() {
 	alert("loaded");
 }, false);
 win.open();
-	
-/*
 
+/*
 
  */

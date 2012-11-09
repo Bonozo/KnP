@@ -1,5 +1,8 @@
 function removeAllContent() {
 
+	if(timer != "0")
+		clearInterval(timer);
+
 	win = null;
 	winWidth = null;
 	winHeight = null;
@@ -516,6 +519,33 @@ sendButton.addEventListener("click", function(e) {
 	sendMessage(Ti.App.GLBL_uid,Ti.App.Properties.getString('friend_request_uid'),encoded_message)
 	scrollView.scrollTo(0, scrollView.getHeight());
 });
+var timer = "0";
+timer = setInterval(function(){
+	var url = "http://www.justechinfo.com/kap_server/get_unread_messages.php?sender_id="+Ti.App.Properties.getString('friend_request_uid')+"&receiver_id="+Ti.App.GLBL_uid+"";
+	var Record;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				for (var i = json.Record.length - 1; i > -1; i--) {
+					rec = json.Record[i];
+					friendMessage(rec.MESSAGE_TEXT);
+				}
+				//clientSocket.write(Ti.createBuffer("Hello"));
+				scrollView.scrollTo(0, scrollView.getHeight());
+			} else {
+	//			alert("No messages found!");
+			}
+		},
+		onerror : function(e) {
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send(); 
+
+},5000);
+
 function sendMessage(sender_id,receiver_id,message){
 var url = "http://justechinfo.com/kap_server/send_message.php?sender_id="+sender_id+"&receiver_id="+receiver_id+"&message="+message;
 // + Ti.App.GLBL_uid + "&receiver_id=10000002";//http://justechinfo.com/kap_server/friend_list.php?uid=" + Ti.App.GLBL_uid;
@@ -545,6 +575,7 @@ win.addEventListener('android:back', function(e) {
 		url : 'friend_vs_me_dashboard.js'
 	});
 	window.open();
+	removeAllContent();
 });
 
 win.open();

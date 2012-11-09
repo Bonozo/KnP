@@ -456,7 +456,7 @@ findFriendsView.add(myFriendsLbl);
 
 // Text field to enter knight's name
 var nameLbl = Ti.UI.createLabel({
-	text : 'LordAlmost',
+	text : Ti.App.Properties.getString('friend_name'),
 	left : myFriendsLbl.width + getMarginNormal1(),
 	font : {
 		fontSize : getHeadingFontSize()
