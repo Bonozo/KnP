@@ -129,45 +129,55 @@ var signInButton = Titanium.UI.createButton({
 signInButton.addEventListener("click", function(e) {
 	var email = emailField.value;
 	var password = passwordField.value;
-	//alert("email : "+email+"\nPassword : "+password);
-	var gender = (Ti.App.GLBL_gender == 'male')?'m':'f';
-	var url = "http://justechinfo.com/kap_server/sign_up.php?email="+email+"&password="+password+"&name="+Ti.App.GLBL_name+"&gender="+gender;
-	
-	//alert(Ti.App.GLBL_name);
-	//http://justechinfo.com/kap_server/sign_up.php?username="+username+"&password="+password+"&name="+name+"&email="+email+"&gender="+gender;
-	var Error,Message;
-	var xhr = Ti.Network.createHTTPClient({
-		onload : function() {
-			json = JSON.parse(this.responseText);
-			if(json.Message != undefined){
-				alert(json.Message);
-				Titanium.UI.createWindow({
-					url : 'level2.js'
-					//url:'level2.js'
-				}).open();
-				removeAllContent();
+	if(email== '' || password == ''){
+		alert("Email address and Password field is necessary for Sign Up!");
+	}
+	else{
 
-			}
-			else if(json.Error != undefined)
-			{
-				alert(json.Error);
-			}
-			else
-			{
-				alert("Something went wrong!");
-			}
-			
-		},
-		onerror : function(e) {
-			Ti.API.debug("STATUS: " + this.status);
-			Ti.API.debug("TEXT: " + this.responseText);
-			Ti.API.debug("ERROR: " + e.error);
-			alert('There was an error retrieving the remote data. Try again.');
-		},
-		timeout : 5000
-	});
-	xhr.open("GET", url);
-	xhr.send();
+		//alert("email : "+email+"\nPassword : "+password);
+		var gender = (Ti.App.GLBL_gender == 'male') ? 'm' : 'f';
+		var url = "http://justechinfo.com/kap_server/sign_up.php?email=" + email + "&password=" + password + "&name=" + Ti.App.GLBL_name + "&gender=" + gender;
+
+		//alert(Ti.App.GLBL_name);
+		//http://justechinfo.com/kap_server/sign_up.php?username="+username+"&password="+password+"&name="+name+"&email="+email+"&gender="+gender;
+		var Error, Message;
+		var xhr = Ti.Network.createHTTPClient({
+			onload : function() {
+
+				json = JSON.parse(this.responseText);
+				if (json.Message != undefined) {
+					//Record = json;
+					//alert("Successfully signed in!");
+					rec = json.Message[0];
+
+					Ti.App.GLBL_uid = rec.UID;
+
+					alert(rec.MESSAGE);
+					Titanium.UI.createWindow({
+						url : 'level2.js'
+						//url:'level2.js'
+					}).open();
+					removeAllContent();
+
+				} else if (json.Error != undefined) {
+					alert(json.Error);
+				} else {
+					alert("Something went wrong!");
+				}
+
+			},
+			onerror : function(e) {
+				Ti.API.debug("STATUS: " + this.status);
+				Ti.API.debug("TEXT: " + this.responseText);
+				Ti.API.debug("ERROR: " + e.error);
+				alert('There was an error retrieving the remote data. Try again.');
+			},
+			timeout : 5000
+		});
+		xhr.open("GET", url);
+		xhr.send(); 
+		
+	}
 	
 	
 });

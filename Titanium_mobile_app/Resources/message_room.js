@@ -525,11 +525,15 @@ timer = setInterval(function(){
 	var Record;
 	var xhr = Ti.Network.createHTTPClient({
 		onload : function() {
+			randomnumber = Math.floor(Math.random() * 100);
+			Ti.API.info("url: " + url);
+
 			json = JSON.parse(this.responseText);
 			if (json.Record != undefined) {
 				for (var i = json.Record.length - 1; i > -1; i--) {
 					rec = json.Record[i];
 					friendMessage(rec.MESSAGE_TEXT);
+					Ti.API.info("Message: " + rec.MESSAGE_TEXT);
 				}
 				//clientSocket.write(Ti.createBuffer("Hello"));
 				scrollView.scrollTo(0, scrollView.getHeight());
@@ -539,12 +543,12 @@ timer = setInterval(function(){
 		},
 		onerror : function(e) {
 		},
-		timeout : 5000
+		timeout : 1000
 	});
 	xhr.open("GET", url);
 	xhr.send(); 
 
-},5000);
+},1000);
 
 function sendMessage(sender_id,receiver_id,message){
 var url = "http://justechinfo.com/kap_server/send_message.php?sender_id="+sender_id+"&receiver_id="+receiver_id+"&message="+message;
