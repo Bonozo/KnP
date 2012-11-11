@@ -476,7 +476,6 @@ var footerView = Titanium.UI.createView({
 win.add(headingRow);
 win.add(table);
 win.add(headerView);
-win.add(summaryView);
 win.add(footerView);
 
 win.addEventListener('android:back', function(e) {
