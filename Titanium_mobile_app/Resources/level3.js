@@ -223,6 +223,14 @@ var lblMsgs = Titanium.UI.createLabel({
 });
 
 msgsView.add(lblMsgs);
+msgsView.addEventListener("click", function(e) {
+	var inbox = Titanium.UI.createWindow({
+		url : 'inbox.js'
+	});
+	inbox.open();
+	removeAllContent();
+
+});
 
 //Leadr View
 var leadrView = Titanium.UI.createView({
@@ -285,7 +293,7 @@ var lblfrnds = Titanium.UI.createLabel({
 });
 frndsView.addEventListener("click",function(e){
 	var window1 = Titanium.UI.createWindow({
-	    url:'knights_friend_home.js'
+	    url:'friend_interactions.js'
 	    //url:'level2.js'
 	});
 	window1.open();

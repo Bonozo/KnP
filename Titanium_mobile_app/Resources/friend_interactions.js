@@ -759,7 +759,7 @@ var messagesButton = Titanium.UI.createButton({
 });
 messagesButton.addEventListener("click",function(e){
 	var friend_vs_me_dashboard = Titanium.UI.createWindow({
-		url : 'friend_vs_me_dashboard.js'
+		url : 'inbox.js'
 	});
 	friend_vs_me_dashboard.open();
 	removeAllContent();
