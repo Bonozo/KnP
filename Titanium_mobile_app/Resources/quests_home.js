@@ -25,7 +25,6 @@ function removeAllContent() {
 	containerNotificationIconView.remove(containerNotification);
 	enabledWrapperView.remove(flowerIconView);
 	enabledWrapperView.remove(flowerNotificationIconView);
-	rewardsEarnedView.remove(rewardsEarnedLblView);
 	flowerNotificationIconView.remove(flowerNotification);
 	enabledWrapperView.remove(friendsIconView);
 	enabledWrapperView.remove(friendsNotificationIconView);

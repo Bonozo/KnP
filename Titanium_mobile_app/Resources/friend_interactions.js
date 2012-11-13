@@ -1,4 +1,6 @@
 function removeAllContent() {
+	if(timer != "0")
+		clearInterval(timer);
 	headerView.remove(headerAvatarHeaderIcon);
 	headerView.remove(nameOfCharacter);
 	levelView.remove(LVLlbl);
@@ -757,6 +759,20 @@ var messagesButton = Titanium.UI.createButton({
 	backgroundImage : 'images/message_icon.png',
 	width : getButtonWidth()/2
 });
+//New Message alert
+var msgAlertImageView = Ti.UI.createImageView({
+	image : 'images/warning_icon.png',
+	visible : false,
+	top : 0,
+	right : getMarginNormal1(),
+	height : 16,
+	width : 16,
+	zIndex : 10000
+});
+footerView.add(msgAlertImageView);
+
+//	image : 'images/warning_icon.png',
+
 messagesButton.addEventListener("click",function(e){
 	var friend_vs_me_dashboard = Titanium.UI.createWindow({
 		url : 'inbox.js'
@@ -765,6 +781,47 @@ messagesButton.addEventListener("click",function(e){
 	removeAllContent();
 });
 footerView.add(messagesButton);
+
+var timer = "0";
+var new_message_found = false;
+timer = setInterval(function(){
+	var url = "http://justechinfo.com/kap_server/get_notifications.php?uid="+Ti.App.GLBL_uid+"";
+	var Record;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			Ti.API.info("url: " + url);
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				if(rec.MESSAGE == "NEW_MESSAGE"){
+					Ti.API.info("rec.MESSAGE : Message found!");
+					if(new_message_found == false){
+						Ti.API.info("BEEEEP");
+						var sound = Titanium.Media.createSound({url:'sounds/message_bell.mp3'});
+						sound.play();
+						new_message_found = true;
+						msgAlertImageView.visible = true;
+						clearInterval(timer);
+					}
+				}
+				else{
+					Ti.API.info("rec.MESSAGE : No message!");
+					msgAlertImageView.visible = false;
+				}
+				
+			} else {
+	//			alert("No messages found!");
+			}
+		},
+		onerror : function(e) {
+		},
+		timeout : 1000
+	});
+	xhr.open("GET", url);
+	xhr.send(); 
+
+},1000);
+
 
 /*	
 //Knight Button

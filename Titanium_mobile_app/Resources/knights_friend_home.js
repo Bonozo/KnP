@@ -1,4 +1,6 @@
 function removeAllContent() {
+	if(timer != "0")
+		clearInterval(timer);
 	headerView.remove(headerAvatarHeaderIcon);
 	headerView.remove(nameOfCharacter);
 	levelView.remove(LVLlbl);
@@ -942,6 +944,59 @@ requestsButton.addEventListener("click", function(e) {
 	 myFriendsButton.borderColor = "none";
 	 */
 });
+//New Request alert
+var friendshipRequestAlertImageView = Ti.UI.createImageView({
+	image : 'images/warning_icon.png',
+	visible : false,
+	left : myFriendsButton.left + myFriendsButton.width + getMarginNormal1(),
+	height : 16,
+	width : 16,
+	zIndex : 10000
+});
+footerView.add(friendshipRequestAlertImageView);
+var timer = "0";
+var friend_request_found = false;
+timer = setInterval(function(){
+	var url = "http://justechinfo.com/kap_server/get_notifications.php?uid="+Ti.App.GLBL_uid+"";
+	var Record;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			Ti.API.info("url: " + url);
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				if(rec.REQUEST == "NEW_REQUEST"){
+					Ti.API.info("rec.REQUEST : Request found!");
+					if(friend_request_found == false){
+						Ti.API.info("BEEEEP");
+						var sound = Titanium.Media.createSound({url:'sounds/friendship_request_bell.mp3'});
+						sound.play();
+						friendshipRequestAlertImageView.visible = true;
+						friend_request_found = true;
+						clearInterval(timer);
+					}
+				}
+				else{
+					Ti.API.info("rec.REQUEST : No request!");
+					friendshipRequestAlertImageView.visible = false;
+				}
+				
+			} else {
+	//			alert("No messages found!");
+			}
+		},
+		onerror : function(e) {
+		},
+		timeout : 1000
+	});
+	xhr.open("GET", url);
+	xhr.send(); 
+
+},1000);
+
+
+
+
 
 win.add(findFriends);
 win.add(table);

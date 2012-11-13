@@ -271,7 +271,7 @@ headerView.add(headerAvatarHeaderIcon);
 
 //nameOfCharacter
 var nameOfCharacter = Titanium.UI.createLabel({
-	text : "asdas",//Ti.App.GLBL_name,
+	text : Ti.App.GLBL_name,
 	left : getAvatarHeaderIconHeight() + getMarginNormal1(),
 	color : "#FFFFFF",
 	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
@@ -367,9 +367,13 @@ var xhr = Ti.Network.createHTTPClient({
 						removeAllContent();
 						message_room.open();
 				});
-			
+				function getRowBGColor(){
+					if(rec.STATUS == "UNREAD")
+						return "#6F6F6F";
+					return "#3d3d3d";
+				}
 				var enabledWrapperView = Ti.UI.createView({
-					backgroundColor : '#3d3d3d',
+					backgroundColor : getRowBGColor(),
 					objName : 'enabledWrapperView',
 					rowID : i,
 					width : Ti.UI.FILL,
@@ -405,7 +409,7 @@ var xhr = Ti.Network.createHTTPClient({
 				// Create a Label.
 				var shortMessageLbl = Ti.UI.createLabel({
 					text : rec.MESSAGE_TEXT,
-					color : '#787878',
+					color : '#CCC',
 					font : {
 						fontSize : getNormalFontSize()
 					},

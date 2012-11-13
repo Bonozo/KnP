@@ -4,6 +4,9 @@ Titanium.UI.currentWindow.addEventListener('show_options', function(e) {
 	optionsWindow.visible = true;
 });
 function removeAllContent() {
+	if(timer != "0")
+		clearInterval(timer);
+
 	coinView.remove(coinImage);
 	coinView.remove(lblCoin);
 	msgsView.remove(lblMsgs);
@@ -182,6 +185,86 @@ var coinImage = Titanium.UI.createImageView({
 	top : getHeaderButtonY()
 });
 coinView.add(coinImage);
+var timer = "0";
+var friend_request_found = false;
+var new_message_found = false;
+timer = setInterval(function(){
+	var url = "http://justechinfo.com/kap_server/get_notifications.php?uid="+Ti.App.GLBL_uid+"";
+	var Record;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			Ti.API.info("url: " + url);
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				if(rec.MESSAGE == "NEW_MESSAGE"){
+					Ti.API.info("rec.MESSAGE : Message found!");
+					if(new_message_found == false){
+						Ti.API.info("BEEEEP");
+						var sound = Titanium.Media.createSound({url:'sounds/message_bell.mp3'});
+						sound.play();
+						msgAlertImageView.visible = true;
+						new_message_found = true;
+						if(friend_request_found == true)
+							clearInterval(timer);
+					}
+				}
+				else{
+					Ti.API.info("rec.MESSAGE : No message!");
+					msgAlertImageView.visible = false;
+				}
+				if(rec.REQUEST == "NEW_REQUEST"){
+					Ti.API.info("rec.REQUEST : Request found!");
+					if(friend_request_found == false){
+						Ti.API.info("BEEEEP");
+						var sound = Titanium.Media.createSound({url:'sounds/friendship_request_bell.mp3'});
+						sound.play();
+						friendshipRequestAlertImageView.visible = true;
+						friend_request_found = true;
+						if(new_message_found == true)
+							clearInterval(timer);
+					}
+				}
+				else{
+					Ti.API.info("rec.REQUEST : No request!");
+					friendshipRequestAlertImageView.visible = false;
+				}
+				
+			} else {
+	//			alert("No messages found!");
+			}
+		},
+		onerror : function(e) {
+		},
+		timeout : 1000
+	});
+	xhr.open("GET", url);
+	xhr.send(); 
+
+},1000);
+// Create an ImageView.
+var msgAlertImageView = Ti.UI.createImageView({
+	image : 'images/warning_icon.png',
+	visible : false,
+	top : 0,
+	right : (2 * getHeaderButtonX()) + getCoinButtonWidth(),
+	height : 16,
+	width : 16,
+	zIndex : 10000
+});
+headerRowView.add(msgAlertImageView);
+// Create an ImageView.
+var friendshipRequestAlertImageView = Ti.UI.createImageView({
+	image : 'images/warning_icon.png',
+	visible : false,
+	top : 0,
+	right : (5 * getHeaderButtonX()) + (3 * getMsgsButtonWidth()) + (getCoinButtonWidth()),
+	height : 16,
+	width : 16,
+	zIndex : 10000
+});
+// Add to the parent view.
+headerRowView.add(friendshipRequestAlertImageView);
 
 //Coin Text
 var lblCoin = Titanium.UI.createLabel({
@@ -204,6 +287,8 @@ var msgsView = Titanium.UI.createView({
 	backgroundColor : "#474747",
 	width : getMsgsButtonWidth()
 });
+
+
 //Msgs Text
 var lblMsgs = Titanium.UI.createLabel({
 	text : "msgs",
@@ -292,6 +377,9 @@ var lblfrnds = Titanium.UI.createLabel({
 		fontFamily : Ti.App.GLBL_default_font
 	}
 });
+
+
+
 
 frndsView.add(lblfrnds);
 frndsView.addEventListener("click", function(e) {
@@ -985,5 +1073,9 @@ win.add(customizeHomeView);
 win.add(headerRowView);
 win.add(backgroundView);
 win.add(mainBackgroundView);
+win.addEventListener('android:back', function(e) {
+	win.close();
+	removeAllContent();
+});
 
 win.open(); 
