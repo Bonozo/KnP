@@ -23,8 +23,6 @@ function removeAllContent() {
 	enabledWrapperView.remove(numberOfFriendsIconImage);
 	enabledWrapperView.remove(numberOfFriendsLbl);
 	bottomButtonView1.remove(assignQuests);
-	bottomButtonView1.remove(acceptRequestButton);
-	bottomButtonView1.remove(declineRequestButton);
 	win.remove(headerView);
 	win.remove(findFriends);
 	win.remove(enabledWrapperView);
@@ -85,8 +83,6 @@ function removeAllContent() {
 	messageField = null;
 	bottomButtonView1 = null;
 	assignQuests = null;
-	acceptRequestButton = null;
-	declineRequestButton = null;
 }
 
 var win = Titanium.UI.createWindow({
@@ -388,7 +384,7 @@ var backButton = Titanium.UI.createImageView({
 headerView.add(backButton);
 backButton.addEventListener("click", function(e) {
 	var inventory_win = Titanium.UI.createWindow({
-		url : 'request_friends.js'
+		url : 'friend_interactions.js'
 		//url:'level2.js'
 	});
 	inventory_win.open();
@@ -831,7 +827,6 @@ var assignQuests = Titanium.UI.createButton({
 	color : "#FFFFFF",
 	backgroundColor : "#474747",
 	title : "Assign Quests",
-	left : 0,
 	height : getButtonHeight(),
 	font : {
 		fontSize : getSmallFontSize()
@@ -855,14 +850,13 @@ assignQuests.addEventListener('click',function(e){
 			if (json.Record != undefined) {
 				Record = json.Record[0];
 				alert(Record.Message);
-				var window = Titanium.UI.createWindow({
-					url : 'friend_interactions.js'
-				});
-				window.open();
-
 			} else if (json.Error != undefined) {
 				if (json.Error.AuthException != undefined) {
 					alert(json.Error.AuthException);
+					var window = Titanium.UI.createWindow({
+						url : 'friend_interactions.js'
+					});
+					window.open();
 				} else if (json.Error.Request) {
 					alert(json.Error.Request);
 				} else {
@@ -887,109 +881,8 @@ assignQuests.addEventListener('click',function(e){
 });
 bottomButtonView1.add(assignQuests);
 
-//Assign Quests
-var acceptRequestButton = Titanium.UI.createButton({
-	color : "#FFFFFF",
-	backgroundColor : "#474747",
-	title : "Accept",
-	font : {
-		fontSize : getSmallFontSize()
-	},
-	height : getButtonHeight(),
-	width : getButtonWidth(),
-	borderRadius : 2
-});
-acceptRequestButton.addEventListener("click", function(e) {
-	var url = "http://justechinfo.com/kap_server/friendship_notifications_action.php?uid=" + Ti.App.Properties.getString('friend_request_uid') + "&friend_uid=" + Ti.App.GLBL_uid + "&action=FRIENDS";
-	var Record;
-	var xhr = Ti.Network.createHTTPClient({
-		onload : function() {
-			json = JSON.parse(this.responseText);
-			if (json.Record != undefined) {
-				Record = json.Record[0];
-				alert(Record);
-			} else if (json.Error != undefined) {
-				if (json.Error.AuthException != undefined) {
-					alert(json.Error.AuthException);
-				} else if (json.Error.Request) {
-					alert(json.Error.Request);
-				} else {
-					alert("Unknown error occured!");
-				}
-			} else {
-				alert("Something went wrong!");
-			}
 
-		},
-		onerror : function(e) {
-			Ti.API.debug("STATUS: " + this.status);
-			Ti.API.debug("TEXT: " + this.responseText);
-			Ti.API.debug("ERROR: " + e.error);
-			alert('There was an error retrieving the remote data. Try again.');
-		},
-		timeout : 5000
-	});
-	xhr.open("GET", url);
-	xhr.send();
-});
 
-bottomButtonView1.add(acceptRequestButton);
-
-//Accept Button
-var declineRequestButton = Titanium.UI.createButton({
-	color : "#FFFFFF",
-	backgroundColor : "#474747",
-	title : "Decline",
-	right : 0,
-	font : {
-		fontSize : getSmallFontSize()
-	},
-	height : getButtonHeight(),
-	width : getButtonWidth(),
-	borderRadius : 2
-});
-declineRequestButton.addEventListener("click", function(e) {
-	var url = "http://justechinfo.com/kap_server/friendship_notifications_action.php?uid=" + Ti.App.Properties.getString('friend_request_uid') + "&friend_uid=" + Ti.App.GLBL_uid + "&action=DENIED";
-	var Record;
-	var xhr = Ti.Network.createHTTPClient({
-		onload : function() {
-			json = JSON.parse(this.responseText);
-			if (json.Record != undefined) {
-				Record = json.Record[0];
-				alert(Record);
-				var request_friends = Titanium.UI.createWindow({
-					url : 'request_friends.js'
-					//url:'level2.js'
-				});
-
-				request_friends.open();
-				removeAllContent();
-			} else if (json.Error != undefined) {
-				if (json.Error.AuthException != undefined) {
-					alert(json.Error.AuthException);
-				} else if (json.Error.Request) {
-					alert(json.Error.Request);
-				} else {
-					alert("Unknown error occured!");
-				}
-			} else {
-				alert("Something went wrong!");
-			}
-
-		},
-		onerror : function(e) {
-			Ti.API.debug("STATUS: " + this.status);
-			Ti.API.debug("TEXT: " + this.responseText);
-			Ti.API.debug("ERROR: " + e.error);
-			alert('There was an error retrieving the remote data. Try again.');
-		},
-		timeout : 5000
-	});
-	xhr.open("GET", url);
-	xhr.send();
-});
-
-bottomButtonView1.add(declineRequestButton);
 
 win.add(headerView);
 win.add(findFriends);
@@ -1005,7 +898,7 @@ win.add(bottomButtonView1);
 
 win.addEventListener('android:back', function(e) {
 	var window = Titanium.UI.createWindow({
-		url : 'request_friends.js'
+		url : 'friend_interactions.js'
 	});
 	window.open();
 	removeAllContent();

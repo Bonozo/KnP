@@ -740,10 +740,6 @@ xhr.open("GET", url);
 xhr.send();
 
 
-function checkAlert(e) {
-	alert(tableData[e]);
-
-}
 
 //Summary
 var summaryView = Titanium.UI.createView({

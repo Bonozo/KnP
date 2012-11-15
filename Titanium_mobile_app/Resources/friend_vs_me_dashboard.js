@@ -624,12 +624,18 @@ var table = Ti.UI.createTableView({
 	top : friendsBtn.top+friendsBtn.height+getMarginNormal1()
 });
 
-for (var i = 0; i <= 2; i++) {
+for (var i = 0; i < 1; i++) {
 	var row = Ti.UI.createTableViewRow({
 		className : 'row',
 		objName : 'row',
 		touchEnabled : true,
 		height : getTableViewHeight()/3
+	});
+	row.addEventListener('click', function(e) {
+		var assign_quests = Titanium.UI.createWindow({
+		    url:'assign_quests.js'
+		});
+		assign_quests.open();
 	});
 
 	var enabledWrapperView1 = Ti.UI.createView({
@@ -645,14 +651,14 @@ for (var i = 0; i <= 2; i++) {
 		left : getMarginNormal1(),
 		width : getListImageWidth(),
 		height : getListImageWidth(),
-		backgroundImage : 'images/question_icon.png',
+		backgroundImage : 'images/quests_icon.png',
 		zIndex : 50
 	});
 	enabledWrapperView1.add(displayImage);
 
 	// Create a Qestion label.
 	var questTitleLbl = Ti.UI.createLabel({
-		text : 'Write Poem',
+		text : 'Assign Quests',
 		top : getMarginNormal1(),
 		color : '#FFFFFF',
 		font : {

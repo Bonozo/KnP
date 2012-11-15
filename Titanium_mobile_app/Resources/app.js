@@ -319,7 +319,7 @@ signInButton.addEventListener("click", function(e) {
 				Ti.App.GLBL_character_created = true;
 				Ti.App.GLBL_name = Record.NAME;
 				var window = Titanium.UI.createWindow({
-					url : 'level2.js'
+					url : 'quests_home.js'//'level2.js'
 				});
 				window.open();
 				//win.close();

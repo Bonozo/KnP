@@ -761,7 +761,7 @@ gameIconsView.add(archeryIconImage);
 
 //Painting Icon
 var paintingIconImage = Ti.UI.createImageView({
-	image : "images/painting_icon.png",
+	image : "images/Sonnet_icon.png",
 	left : archeryIconImage.left + archeryIconImage.width + getMarginNormal1(),
 	top : getMarginNormal1(),
 	height : getChallengeImageWidth(),

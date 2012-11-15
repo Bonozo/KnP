@@ -133,7 +133,6 @@ signInButton.addEventListener("click", function(e) {
 		alert("Email address and Password field is necessary for Sign Up!");
 	}
 	else{
-
 		//alert("email : "+email+"\nPassword : "+password);
 		var gender = (Ti.App.GLBL_gender == 'male') ? 'm' : 'f';
 		var url = "http://justechinfo.com/kap_server/sign_up.php?email=" + email + "&password=" + password + "&name=" + Ti.App.GLBL_name + "&gender=" + gender;
@@ -143,7 +142,6 @@ signInButton.addEventListener("click", function(e) {
 		var Error, Message;
 		var xhr = Ti.Network.createHTTPClient({
 			onload : function() {
-
 				json = JSON.parse(this.responseText);
 				if (json.Message != undefined) {
 					//Record = json;

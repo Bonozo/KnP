@@ -1,31 +1,15 @@
 function removeAllContent () {
-	  headerView.remove(headerAvatarHeaderIcon); 
-	headerView.remove(nameOfCharacter); 
 	levelView.remove(LVLlbl); 
 	headerView.remove(levelView); 
 	totalGoldView.remove(Goldlbl); 
 	headerView.remove(totalGoldView); 
 	headerView.remove(backButton); 
 	findFriends.remove(requestLbl);
-	enabledWrapperView.remove(myPicImage);
-	enabledWrapperView.remove(playerNameLbl);
-	enabledWrapperView.remove(avatarImage);
-	enabledWrapperView.remove(levelAndGoldView);
 	levelAndGoldView.remove(levelView);
 	levelView.remove(levelValueLbl); 
 	levelAndGoldView.remove(goldView);
-	enabledWrapperView.remove(levelLbl); 
-	enabledWrapperView.remove(levelValueLbl); 
 	goldView.remove(goldImageView);
 	goldView.remove(goldLbl);
-	enabledWrapperView.remove(numberOfFriendsIconImage);
-	enabledWrapperView.remove(numberOfFriendsLbl);
-	enabledWrapperView1.remove(craftImage);
-	enabledWrapperView1.remove(numberOfCrafts);
-	enabledWrapperView1.remove(winGameLbl);
-	enabledWrapperView1.remove(tapToChooseLbl);
-	enabledWrapperView1.remove(completedStatusLbl);
-	enabledWrapperView1.remove(tickBox);
 	currentRewardsView.remove(currentRewardsLbl);
 	currentRewardsView.remove(lineBreakView);
 	 currentRewardsView.remove(currentRewardsLbl);	
@@ -72,11 +56,6 @@ function removeAllContent () {
 	findFriends = null;
 	requestLbl = null;
 	lineBreak3View = null;
-	enabledWrapperView = null;
-	myPicImage = null;
-	playerNameLbl = null;
-	avatarImage = null;
-	levelAndGoldView = null;
 	levelView = null;
 	levelLbl = null;
 	levelValueLbl = null;
@@ -94,31 +73,6 @@ function removeAllContent () {
 	flowerNotification = null;
 	tableData = null;
 	table = null;
-	row = null;
-	enabledWrapperView1 = null;
-	craftImage = null;
-	numberOfCrafts = null;
-	winGameLbl = null;
-	tapToChooseLbl = null;
-	completedStatusLbl = null;
-	tickBox = null;
-	currentRewardsView = null;
-	currentRewardsLbl = null;
-	lineBreakView = null;
-	currentRewardsLbl = null;
-	collectionsContainerView = null;
-	daggerIconView = null;
-	daggerNotificationIconView = null;
-	daggerNotificationLbl = null;
-	containerIconView = null;
-	containerNotificationIconView = null;
-	containerNotificationLbl = null;
-	flowerIconView = null;
-	flowerNotificationIconView = null;
-	flowerNotificationLbl = null;
-	coinIconView = null;
-	coinNotificationIconView = null;
-	coinNotificationLbl = null;
 } 
 var win = Titanium.UI.createWindow({
 	title : "Incomplete Quests",
@@ -666,115 +620,164 @@ var table = Ti.UI.createTableView({
 	height : winHeight - lineBreak2View.top - 4 * getHeaderHeight(), // 100%-header_height-footer height
 	top : lineBreak2View.top + getMarginNormal1()
 });
-
-for (var i = 0; i <= 2; i++) {
-	var row = Ti.UI.createTableViewRow({
-		className : 'row',
-		objName : 'row',
-		touchEnabled : true,
-		height : 90
-	});
-
-	var enabledWrapperView1 = Ti.UI.createView({
-		backgroundColor : '#3d3d3d',
-		objName : 'enabledWrapperView1',
-		rowID : i,
-		width : Ti.UI.FILL,
-		height : '100%'
-	});
-
-	// Craft Image
-	var craftImage = Ti.UI.createView({
-		left : getMarginNormal1() * 5,
-		width : getCraftImageWidth(),
-		height : getCraftImageWidth(),
-		backgroundImage : 'images/question_icon.png',
-		zIndex : 50
-	});
-	enabledWrapperView1.add(craftImage);
-
-	// Number Of crafts.
-	var numberOfCrafts = Ti.UI.createLabel({
-		text : "Q" + (i + 1),
-		color : '#FFFFFF',
-		font : {
-			fontSize : getHeadingFontSize()
-		},
-		top : getMarginNormal1(),
-		left : getMarginNormal1(),
-		zIndex : 100
-	});
-
-	// Add to the parent view.
-	enabledWrapperView1.add(numberOfCrafts);
-
-	// Create a CraftItem.
-	var winGameLbl = Ti.UI.createLabel({
-		text : 'Win Game 1',
-		color : '#FFFFFF',
-		font : {
-			fontSize : getHeadingFontSize()
-		},
-		height : getHeadingFontSize() + getMarginNormal1()
-	});
-	enabledWrapperView1.add(winGameLbl);
-
-	// Create a CraftItem.
-	var tapToChooseLbl = Ti.UI.createLabel({
-		text : '(tap to choose)',
-		color : '#686868',
-		font : {
-			fontSize : getHeadingFontSize()
-		},
-		height : getHeadingFontSize() + getMarginNormal1(),
-		bottom : getMarginNormal1()
-	});
-	enabledWrapperView1.add(tapToChooseLbl);
-
-	// completedStatusLbl
-	var completedStatusLbl = Ti.UI.createLabel({
-		text : 'completed',
-		color : '#E2E2E2',
-		font : {
-			fontSize : getNormalFontSize()
-		},
-		top : 8 * getMarginNormal1(),
-		right : getMarginNormal1()
-	});
-	// Add to the parent view.
-	enabledWrapperView1.add(completedStatusLbl);
-
-	//Checkbox
-	var tickBox = Ti.UI.createButton({
-		backgroundImage : 'images/unchecked.png',
-		width : 28,
-		height : 28,
-		checkBok : "tick",
-		customValue : "use your custom value",
-		checked : false,
-		right : getMarginNormal1(),
-		zIndex : 4000
-	});
-
-	tickBox.addEventListener('click', function(e) {
-		if (e.source.checkBok) {
-			if (e.source.checked) {
-				e.source.backgroundImage = 'images/unchecked.png';
-				e.source.checked = false;
-			} else {
-				e.source.backgroundImage = 'images/checked.png';
-				e.source.checked = true;
-				//alert(e.source.customValue);
+//Ti.App.Properties.setString('assign_by_uid', e.source.assign_by_uid);
+var url = "http://justechinfo.com/kap_server/get_all_assigned_quests.php?assign_by="+Ti.App.Properties.getString('assign_by_uid')+"&assign_to="+Ti.App.GLBL_uid;
+var xhr = Ti.Network.createHTTPClient({
+	onload : function() {
+		json = JSON.parse(this.responseText);
+		if (json.Record != undefined) {
+			var response_result = "";
+			for (var i = 0; i < json.Record.length; i++) {
+				rec = json.Record[i];
+				var row = Ti.UI.createTableViewRow({
+					className : 'row',
+					objName : 'row',
+					touchEnabled : true,
+					height : 90
+				});
+			
+				var enabledWrapperView1 = Ti.UI.createView({
+					backgroundColor : '#3d3d3d',
+					objName : 'enabledWrapperView1',
+					rowID : i,
+					width : Ti.UI.FILL,
+					height : '100%'
+				});
+			
+				// Craft Image
+				var craftImage = Ti.UI.createView({
+					left : getMarginNormal1() * 5,
+					width : getCraftImageWidth(),
+					height : getCraftImageWidth(),
+					backgroundImage : 'images/'+rec.QUEST_NAME+'_icon.png',
+					zIndex : 50
+				});
+				enabledWrapperView1.add(craftImage);
+			
+				// Number Of crafts.
+				var numberOfCrafts = Ti.UI.createLabel({
+					text : "Q" + (i + 1),
+					color : '#FFFFFF',
+					font : {
+						fontSize : getHeadingFontSize()
+					},
+					top : getMarginNormal1(),
+					left : getMarginNormal1(),
+					zIndex : 100
+				});
+			
+				// Add to the parent view.
+				enabledWrapperView1.add(numberOfCrafts);
+			
+				// Create a CraftItem.
+				var winGameLbl = Ti.UI.createLabel({
+					text : rec.MESSAGE,
+					color : '#FFFFFF',
+					font : {
+						fontSize : getHeadingFontSize()
+					},
+					height : getHeadingFontSize() + getMarginNormal1()
+				});
+				enabledWrapperView1.add(winGameLbl);
+			
+				// Create a CraftItem.
+				var tapToChooseLbl = Ti.UI.createLabel({
+					text : '(tap to choose)',
+					color : '#686868',
+					font : {
+						fontSize : getHeadingFontSize()
+					},
+					height : getHeadingFontSize() + getMarginNormal1(),
+					bottom : getMarginNormal1()
+				});
+				enabledWrapperView1.add(tapToChooseLbl);
+			
+				// completedStatusLbl
+				var completedStatusLbl = Ti.UI.createLabel({
+					text : rec.STATUS,
+					color : '#E2E2E2',
+					font : {
+						fontSize : getNormalFontSize()
+					},
+					top : 8 * getMarginNormal1(),
+					right : getMarginNormal1()
+				});
+				// Add to the parent view.
+				enabledWrapperView1.add(completedStatusLbl);
+				
+				function getChecked(status){
+					if(status == "COMPLETE"){
+						return 'images/checked.png';
+					}
+					else{
+						return 'images/unchecked.png';
+					}
+					
+				}
+				//Checkbox
+				var tickBox = Ti.UI.createButton({
+					backgroundImage : getChecked(rec.STATUS),
+					width : 28,
+					height : 28,
+					checkBok : "tick",
+					customValue : "use your custom value",
+					checked : false,
+					status : rec.STATUS,
+					assign_quest_id : rec.ASSIGN_QUEST_ID,
+					right : getMarginNormal1(),
+					zIndex : 4000
+				});
+			
+				tickBox.addEventListener('click', function(e) {
+					if(e.source.status == 'INCOMPLETE'){
+						Ti.App.Properties.setString('assign_quest_id', e.source.assign_quest_id);
+						var window1 = Titanium.UI.createWindow({
+							url : 'play_quests.js'
+						});
+						window1.open();
+						removeAllContent();
+					}
+					else{
+						var window1 = Titanium.UI.createWindow({
+							url : 'quests_completed_info.js'
+						});
+						window1.open();
+					}
+						
+				});
+				enabledWrapperView1.add(tickBox);
+			
+				row.add(enabledWrapperView1);
+				tableData.push(row);
 			}
+			table.setData(tableData);
+		} else if (json.Error != undefined) {
+			if (json.Error.AuthException != undefined) {
+				alert(json.Error.AuthException);
+			} else if (json.Error.Request) {
+				alert(json.Error.Request);
+			} else {
+				alert("Unknown error occured!");
+			}
+		} else {
+			alert("You have no friends yet!");
 		}
-	});
-	enabledWrapperView1.add(tickBox);
 
-	row.add(enabledWrapperView1);
-	tableData.push(row);
-}
+	},
+	onerror : function(e) {
+		Ti.API.debug("STATUS: " + this.status);
+		Ti.API.debug("TEXT: " + this.responseText);
+		Ti.API.debug("ERROR: " + e.error);
+		alert('There was an error retrieving the remote data. Try again.');
+	},
+	timeout : 5000
+});
+xhr.open("GET", url);
+xhr.send();
 
-table.setData(tableData);
+
+
+
 /*TABLE VIEW ENED*/
 
 var currentRewardsView = Ti.UI.createView({
