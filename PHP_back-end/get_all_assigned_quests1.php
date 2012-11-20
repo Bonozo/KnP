@@ -8,7 +8,7 @@ $dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev
 if(isset($_GET))
 {
 	extract($_GET);
-	if(isset($uid))
+	if(isset($assign_by,$assign_to))
 	{
 		$name = "";
 		$num_of_friends = "";
@@ -16,40 +16,50 @@ if(isset($_GET))
 		$is_completed = "";
 		
 		$query = "
-					SELECT 
-					`QUEST_ID`, `ASSIGN_BY_UID`, `MESSAGE`
-					FROM
-					`KNP_ASSIGN_QUESTS`
-					WHERE
-					`ASSIGN_TO_UID` = :uid
-					GROUP BY `ASSIGN_BY_UID`
-				";
+			SELECT 
+				kaq.ASSIGN_QUEST_ID, 
+				kqm.QUEST_NAME,
+				kaq.MESSAGE, 
+				GROUP_CONCAT(kiim.NAME, CONCAT(':',kqr.UNIT)) AS 'REWARDS', 
+				kaq.STARTED_TIME,
+				kaq.STATUS
+			FROM 
+				KNP_ASSIGN_QUESTS kaq, 
+				KNP_QUESTS_MAIN kqm, 
+				KNP_QUESTS_REWARDS kqr, 
+				KNP_INVENTORY_ITEMS_MAIN kiim
+			WHERE 
+				kaq.ASSIGN_BY_UID = :assign_by AND 
+				kaq.ASSIGN_TO_UID = :assign_to AND 
+				kqm.QUEST_ID = kaq.QUEST_ID AND
+				kqr.QUEST_ID = kaq.QUEST_ID AND
+				kiim.INVENTORY_ID = kqr.INVENTORY_ID
+			GROUP BY
+				kaq.ASSIGN_QUEST_ID";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(
 		array(
-			':uid'=>$uid
+			':assign_by' => $assign_by,
+			':assign_to' => $assign_to
 			));
 		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
-		
-		if($res[0]['QUEST_ID'] == ""){
-			$records = array("Message" => "No Quests assigned to you!");
-		}
-		else
-		{	
-			//"http://justechinfo.com/kap_server/get_avatar_friend_count.php?uid=10000001";
-			$posts = array();
-			$counter = 0;
-			foreach($res as $post){
-				foreach($post as $key => $value){
-					$posts[$counter]["NAME"] = getAvatarName($posts[$counter]["ASSIGN_BY_UID"]);
-					$posts[$counter]["NUM_OF_FRIENDS"] = getNumberOfFriends($posts[$counter]["ASSIGN_BY_UID"]);
-					$posts[$counter][$key] = $value;
-					$posts[$counter]["IS_COMPLETED"] = isQuestCompleted($posts[$counter]["ASSIGN_BY_UID"], $uid);
-				}
-				$counter++;
+
+		$counter = 0;
+		foreach($res as $post){
+			$posts[$counter]['ASSIGN_QUEST_ID'] = $post['ASSIGN_QUEST_ID'];
+			$posts[$counter]['QUEST_NAME'] = $post['QUEST_NAME'];
+			$posts[$counter]['MESSAGE'] = $post['MESSAGE'];
+			$rewards = $post['REWARDS'];
+			$reward = explode(",",$rewards);
+			foreach($reward as $inventory){
+			  $key_value = explode(":",$inventory);
+			  $posts[$counter][$key_value[0]] = $key_value[1];
 			}
-			$records = $posts;
+			$posts[$counter]['STARTED_TIME'] = $post['STARTED_TIME'];
+			$posts[$counter]['STATUS'] = $post['STATUS'];
+			$counter ++;
 		}
+		$records = $posts;
 	}
 	else
 	{

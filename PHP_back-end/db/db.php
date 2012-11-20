@@ -60,7 +60,9 @@ class sdb
 	public function errorCode() {
 		return self::$PDOInstance->errorCode();
 	}
-		
+	public function rowCount(){
+		return self::$PDOInstance->rowCount();
+	}
 	/**
 	* Fetch extended error information associated with the last operation on the database handle
 	*
@@ -104,8 +106,8 @@ class sdb
 	* @param string $name Name of the sequence object from which the ID should be returned.
 	* @return string
 	*/
-	public function lastInsertId($name) {
-		return self::$PDOInstance->lastInsertId($name);
+	public function lastInsertId() {
+		return self::$PDOInstance->lastInsertId();
 	}
 			
 	/**

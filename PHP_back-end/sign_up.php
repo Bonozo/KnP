@@ -30,14 +30,15 @@ if(isset($_GET))
 			$query = "INSERT INTO `KAP_USER_MAIN`(`PASSWORD`,`NAME`,`EMAIL`,`GENDER`) 
 			VALUES ( :password,:name,:email,:gender);";
 			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-			$statement->execute(
+			$result = $statement->execute(
 			array(	':password'=>md5($password),
 					':name'=>$name,
 					':email'=>$email,
 					':gender'=>$gender
 				));
+			$post[] = array("UID"=>$dbObj->lastInsertId(),"MESSAGE"=>"Successfully registered with email address '".$email."'!");
 			
-			$records = array('Message'=>"Successfully registered with email address '".$email."'!");
+			$records = array('Message'=>$post);
 		}
 
 	}

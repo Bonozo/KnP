@@ -16,10 +16,27 @@ if(isset($_GET))
 		$is_completed = "";
 		
 		$query = "
-				SELECT kaq.ASSIGN_QUEST_ID, kqm.QUEST_NAME,kaq.MESSAGE, kqm.COIN,kqm.CONTAINER,kqm.FLOWER,kqm.KNIFE, kaq.STATUS 
-				FROM KNP_ASSIGN_QUESTS kaq, KNP_QUESTS_MAIN kqm
-				WHERE kaq.ASSIGN_BY_UID = :assign_by AND kaq.ASSIGN_TO_UID = :assign_to AND kqm.QUEST_ID = kaq.QUEST_ID
-				";
+			SELECT 
+				kaq.ASSIGN_QUEST_ID, 
+				kqm.QUEST_NAME,
+				kaq.MESSAGE, 
+				GROUP_CONCAT(kiim.NAME, CONCAT(':',kqr.UNIT)) AS 'REWARDS', 
+				kaq.STARTED_TIME,
+				kaq.EXPIRED_TIME,
+				kaq.STATUS
+			FROM 
+				KNP_ASSIGN_QUESTS kaq, 
+				KNP_QUESTS_MAIN kqm, 
+				KNP_QUESTS_REWARDS kqr, 
+				KNP_INVENTORY_ITEMS_MAIN kiim
+			WHERE 
+				kaq.ASSIGN_BY_UID = :assign_by AND 
+				kaq.ASSIGN_TO_UID = :assign_to AND 
+				kqm.QUEST_ID = kaq.QUEST_ID AND
+				kqr.QUEST_ID = kaq.QUEST_ID AND
+				kiim.INVENTORY_ID = kqr.INVENTORY_ID
+			GROUP BY
+				kaq.ASSIGN_QUEST_ID";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(
 		array(
@@ -27,23 +44,51 @@ if(isset($_GET))
 			':assign_to' => $assign_to
 			));
 		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
-		
-		if($res[0]['ASSIGN_QUEST_ID'] == ""){
-			$records = array("Message" => "No Quests assigned to you!");
-		}
-		else
-		{	
-			//"http://justechinfo.com/kap_server/get_avatar_friend_count.php?uid=10000001";
-			$posts = array();
-			$counter = 0;
-			foreach($res as $post){
-				foreach($post as $key => $value){
-					$posts[$counter][$key] = $value;
+
+		$counter = 0;
+		foreach($res as $post){
+			$posts[$counter]['ASSIGN_QUEST_ID'] = $post['ASSIGN_QUEST_ID'];
+			$status = "";
+			if((strcmp($post['STATUS'],'INCOMPLETE')) == 0){
+				$query = "
+				SELECT 
+					IF((
+					SELECT EXPIRED_TIME FROM KNP_ASSIGN_QUESTS WHERE ASSIGN_QUEST_ID = :assign_quest_id) > NOW(), 
+					'NOT_EXPIRED' ,
+					'EXPIRED')  AS 'STATUS';
+				";
+				$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+				$statement->execute(
+				array(
+					':assign_quest_id' => $post['ASSIGN_QUEST_ID']
+					));
+				$status = $statement->fetchAll(PDO::FETCH_ASSOC);
+				if($status[0]['STATUS'] == 'EXPIRED'){
+					$status = 'EXPIRED';
+					$query = "UPDATE `KNP_ASSIGN_QUESTS` SET `STATUS` = 'EXPIRED' WHERE `ASSIGN_QUEST_ID` = :assign_quest_id";
+					$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+					$statement->execute(
+					array(
+						':assign_quest_id' => $post['ASSIGN_QUEST_ID']
+						));
 				}
-				$counter++;
 			}
-			$records = $posts;
+			
+							
+			$posts[$counter]['QUEST_NAME'] = $post['QUEST_NAME'];
+			$posts[$counter]['MESSAGE'] = $post['MESSAGE'];
+			$rewards = $post['REWARDS'];
+			$reward = explode(",",$rewards);
+			foreach($reward as $inventory){
+			  $key_value = explode(":",$inventory);
+			  $posts[$counter][$key_value[0]] = $key_value[1];
+			}
+			$posts[$counter]['STARTED_TIME'] = $post['STARTED_TIME'];
+			$posts[$counter]['EXPIRED_TIME'] = $post['EXPIRED_TIME'];
+			$posts[$counter]['STATUS'] = ($status == 'EXPIRED')?'EXPIRED':$post['STATUS'];
+			$counter ++;
 		}
+		$records = $posts;
 	}
 	else
 	{

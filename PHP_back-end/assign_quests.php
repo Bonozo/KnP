@@ -1,5 +1,5 @@
 <?php
-//header('Content-type: application/json');
+header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
@@ -31,7 +31,7 @@ if(isset($_GET))
 				':message'=>$message
 				));
 		}
-		$posts[] = array("Message"=>"Updated!");
+		$posts[] = array("Message"=>"Quests Assigned!");
 		$records = $posts;
 	}
 	else
@@ -45,5 +45,5 @@ else
 }
 $records = array('Record'=>$records);
 
-//echo json_indent(json_encode($records));
+echo json_indent(json_encode($records));
 ?>

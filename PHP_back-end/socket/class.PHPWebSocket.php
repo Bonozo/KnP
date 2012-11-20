@@ -1,4 +1,5 @@
 <?php
+//NEW
 //wsClients[$clientID][12]
 function __autoload($class_name) {
     include $class_name . '.php';
@@ -130,7 +131,6 @@ class PHPWebSocket
 						// client socket changed
 						$buffer = '';
 						$bytes = @socket_recv($socket, $buffer, 4096, 0);
-						$this->log($bytes);
 
 						if ($bytes === false) {
 							// error on recv, remove client socket (will check to send close frame)
@@ -139,7 +139,6 @@ class PHPWebSocket
 						elseif ($bytes > 0) {
 							// process handshake or frame(s)
 							if (!$this->wsProcessClient($clientID, $buffer, $bytes)) {
-								$this->log("process handshake");
 								$this->wsSendClientClose($clientID, self::WS_STATUS_PROTOCOL_ERROR);
 							}
 						}
@@ -156,7 +155,7 @@ class PHPWebSocket
 							$clientIP = '';
 							$result = socket_getpeername($client, $clientIP);
 							$clientIP = ip2long($clientIP);
-							$this->log("fetch client IP : ".$clientIP);
+
 							if ($result !== false && $this->wsClientCount < self::WS_MAX_CLIENTS && (!isset($this->wsClientIPCount[$clientIP]) || $this->wsClientIPCount[$clientIP] < self::WS_MAX_CLIENTS_PER_IP)) {
 								$this->wsAddClient($client, $clientIP);
 							}
@@ -576,9 +575,6 @@ class PHPWebSocket
 			$parsed_message = new MessageParser($data,self::WS_HASH_CODE);
 			if(strcmp($parsed_message->getOperation(),self::WS_OP_OPEN) == 0){
 				$this->client_user_ids[$clientID] = $parsed_message->getUID();
-				
-				//FOR WEB TESTING ONLY
-				
 			}
 			
 			foreach($this->client_user_ids as $key => $value){
@@ -603,7 +599,6 @@ class PHPWebSocket
 	function wsProcessClientHandshake($clientID, &$buffer) {
 		// fetch headers and request line
 		$sep = strpos($buffer, "\r\n\r\n");
-		$this->log("headers : ".$buffer);
 		if (!$sep) return false;
 
 		$headers = explode("\r\n", substr($buffer, 0, $sep));

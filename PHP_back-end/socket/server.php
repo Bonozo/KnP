@@ -2,10 +2,11 @@
 //S83HSGGH5J
 include "db/db.php";
 include "functions/misc.php";
+include "MessageParser.php";
 ini_set('memory_limit', '256M');
-$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'root', '');
 // prevent the server from timing out
 set_time_limit(0);
+
 $client_user_ids = array();
 // include the web sockets server script (the server is started at the far bottom of this file)
 require 'class.PHPWebSocket.php';
@@ -23,19 +24,21 @@ function sendToAll($clientID,$message){
 }
 // when a client sends data to the server
 function wsOnMessage($clientID, $message, $messageLength, $binary) {
+	global $Server;
+	$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'root', '');
 	$Server->log( $message);
 	
 	$WS_OP_OPEN = "OPN";
 	$WS_OP_MESSAGE = "MSG";
 	$WS_HASH_CODE = "S83HSGGH5J";
 
-	global $Server;
 	$ip = long2ip( $Server->wsClients[$clientID][6] );
 	
-	if ($messageLength == 0) {
+	/*if ($messageLength == 0) {
 		$Server->wsClose($clientID);
 		return;
 	}
+	*/
 	//$Server->log( "$ip : " . $message);
 	
 	$parsed_message = new MessageParser($message,$WS_HASH_CODE);
@@ -46,7 +49,6 @@ function wsOnMessage($clientID, $message, $messageLength, $binary) {
 		sendToAll($clientID,$message);
 	}
 	elseif(strcmp($parsed_message->getOperation(),$WS_OP_MESSAGE) == 0){
-		$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
 		foreach($Server->client_user_ids as $key => $value){
 			$Server->log("[".$key."]:".$value);
 		}
@@ -163,6 +165,6 @@ $Server->bind('open', 'wsOnOpen');
 $Server->bind('close', 'wsOnClose');
 // for other computers to connect, you will probably need to change this to your LAN IP or external IP,
 // alternatively use: gethostbyaddr(gethostbyname($_SERVER['SERVER_NAME']))
-$Server->wsStartServer('192.168.1.4', 5000);
+$Server->wsStartServer('192.168.1.3', 5000);
 
 ?>

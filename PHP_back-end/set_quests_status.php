@@ -8,9 +8,9 @@ $dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev
 if(isset($_GET))
 {
 	extract($_GET);
-	if(isset($status,$assign_quest_id))
+	if(isset($status,$assign_quest_id,$completion_time))
 	{
-
+	//2012-11-19 07:39:01
 		$query = "
 				UPDATE `KNP_ASSIGN_QUESTS` SET `STATUS` = :status WHERE `ASSIGN_QUEST_ID`=:assign_quest_id;
 				";
