@@ -3,6 +3,7 @@ class MessageParser
 {
 	var $OPCODE_LENGTH = 3;
 	var $UID_LENGTH = 8;
+	var $THREADID_LENGTH = 8;
 	var $msg;
 	var $auth_hash_key;
 	function __construct($msg,$auth_hash_key){
@@ -32,14 +33,14 @@ class MessageParser
 			return substr($this->msg,strlen($this->auth_hash_key)+$this->OPCODE_LENGTH,$this->UID_LENGTH);
 		return "-1";
 	}
-	public function getRecieverId(){
-		if(strlen($this->msg) >= (strlen($this->auth_hash_key)+$this->OPCODE_LENGTH+$this->UID_LENGTH+$this->UID_LENGTH))
-			return substr($this->msg,strlen($this->auth_hash_key)+$this->OPCODE_LENGTH+$this->UID_LENGTH,$this->UID_LENGTH);
+	public function getThreadId(){
+		if(strlen($this->msg) >= (strlen($this->auth_hash_key)+$this->OPCODE_LENGTH+$this->UID_LENGTH+$this->THREADID_LENGTH))
+			return substr($this->msg,strlen($this->auth_hash_key)+$this->OPCODE_LENGTH+$this->UID_LENGTH,$this->THREADID_LENGTH);
 		return "-1";
 	}
 	public function getMessage(){
-		if(strlen($this->msg) >= (strlen($this->auth_hash_key)+$this->OPCODE_LENGTH+$this->UID_LENGTH+$this->UID_LENGTH))
-			return substr($this->msg,strlen($this->auth_hash_key)+$this->OPCODE_LENGTH+$this->UID_LENGTH+$this->UID_LENGTH);
+		if(strlen($this->msg) >= (strlen($this->auth_hash_key)+$this->OPCODE_LENGTH+$this->UID_LENGTH+$this->THREADID_LENGTH))
+			return substr($this->msg,strlen($this->auth_hash_key)+$this->OPCODE_LENGTH+$this->UID_LENGTH+$this->THREADID_LENGTH);
 		return "-1";
 	}
 }

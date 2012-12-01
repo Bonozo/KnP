@@ -3,20 +3,11 @@ function removeAllConetent() {
 	headerView.remove(nameOfCharacter);
 	levelView.remove(LVLlbl);
 	headerView.remove(levelView);
-	totalGoldView.remove(Goldlbl);
+	//totalGoldView.remove(Goldlbl);
 	headerView.remove(totalGoldView);
 	headerView.remove(backButton);
 	headingRow.remove(storeLbl);
 	headingRow.remove(lineBreak3View);
-	enabledWrapperView.remove(storeImage);
-	enabledWrapperView.remove(storeItemNameLbl);
-	enabledWrapperView.remove(storeItemDescriptionLbl);
-	storeItemInfo.remove(coin_icon);
-	storeItemInfo.remove(storeIconWorth);
-	storeItemInfo.remove(buyButton);
-	storeItemInfo.remove(unlockButton);
-	storeItemInfo.remove(lockedItemIconImage);
-	enabledWrapperView.remove(storeItemInfo);
 	summaryView.remove(getGoldButton);
 	footerView.remove(lblSortBy);
 	footerView.remove(giftsButton);
@@ -39,7 +30,7 @@ function removeAllConetent() {
 	levelView = null;
 	LVLlbl = null;
 	totalGoldView = null;
-	Goldlbl = null;
+	//Goldlbl = null;
 	backButton = null;
 	headingRow = null;
 	storeLbl = null;
@@ -48,16 +39,6 @@ function removeAllConetent() {
 	tableData = null;
 	table = null;
 	enabledWrapperView = null;
-	row = null;
-	storeImage = null;
-	storeItemNameLbl = null;
-	storeItemDescriptionLbl = null;
-	storeItemInfo = null;
-	coin_icon = null;
-	storeIconWorth = null;
-	buyButton = null;
-	unlockButton = null;
-	lockedItemIconImage = null;
 	summaryView = null;
 	getGoldButton = null;
 	footerView = null;
@@ -78,13 +59,14 @@ var win = Titanium.UI.createWindow({
 	exitOnClose : true,
 	zIndex : 0
 });
-win.orientationModes = [Ti.UI.PORTRAIT];
+win.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
 
 function getCoinIcon(goldRequired)//"images/listview_coin_icon.png",
 {
-	if (goldRequired >= 110) {
+	num_of_golds = getGold();
+	if (goldRequired >= num_of_golds) {
 		return "images/listview_coin_blur_icon.png";
 	} else {
 		return "images/listview_coin_icon.png";
@@ -92,7 +74,7 @@ function getCoinIcon(goldRequired)//"images/listview_coin_icon.png",
 }
 
 function getLockedIconVisibility(goldRequired) {
-	if (goldRequired >= 110) {
+	if (goldRequired >= num_of_golds) {
 		return true;
 	} else {
 		return false;
@@ -340,16 +322,47 @@ var levelView = Titanium.UI.createView({
 	width : 2 * getHeaderHeight()
 });
 //LVLlbl
-var LVLlbl = Titanium.UI.createLabel({
-	text : "LVL: 4",
-	color : "#FFFFFF",
-	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	font : {
-		fontSize : getFontSizeNormal1()
-	}
+var LVLlbl;
+function getLevel(callback){
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_level.php?uid="+Ti.App.GLBL_uid;
+	var rec;//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				callback(rec.LEVEL);
+			}
+			else{
+				alert('Some error occured!');
+			}
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+//numberOfFriends
+var numberOfFriends; 
+getLevel(function(level){
+	LVLlbl = Titanium.UI.createLabel({
+		text : "LVL: "+level,
+		color : "#FFFFFF",
+		textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+		font : {
+			fontSize : getFontSizeNormal1()
+		}
+	});
+	levelView.add(LVLlbl);
+	headerView.add(levelView);
 });
-levelView.add(LVLlbl);
-headerView.add(levelView);
 
 /*
 * Number of Golds remaining
@@ -362,19 +375,108 @@ var totalGoldView = Titanium.UI.createView({
 	width : 3 * getHeaderHeight()
 });
 //Goldlbl
-var Goldlbl = Titanium.UI.createLabel({
-	text : "Gold:  250",
-	color : "#FFFFFF",
-	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	font : {
-		fontSize : getFontSizeNormal1()
-	}
-});
-totalGoldView.add(Goldlbl);
 headerView.add(totalGoldView);
+
+var gold_updated = false;
+function purchaseInventory(uid,inv_id,req_golds){
+	var url = "http://justechinfo.com/kap_server/purchase_inventory.php?uid="+uid+"&inv_id="+inv_id+"&req_golds="+req_golds+"";
+	var rec;//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record;
+					alert(rec.Message);
+					
+					getGold(function(gold){
+						Goldlbl.setText('Gold: '+(gold_value - parseInt(req_golds)));
+						gold_value = gold;
+						gold_value = parseInt(gold_value);
+
+						
+						StoreItemHTTPClient.open("GET", url);
+						StoreItemHTTPClient.send();
+						
+					});
+
+				//alert(rec.TOTAL_UNIT);
+				//Goldlbl.setText = rec.TOTAL_UNIT;
+
+			}
+			else{
+				alert('Some error occured!');
+			}
+	
+			
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+function getGold(callback){
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_golds.php?uid="+Ti.App.GLBL_uid;
+	var rec;//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				//alert(rec.TOTAL_UNIT);
+				//Goldlbl.setText = rec.TOTAL_UNIT;
+				num_of_golds = rec.TOTAL_UNIT;
+				
+				callback(rec.TOTAL_UNIT);
+
+			}
+			else{
+				alert('Some error occured!');
+			}
+	
+			
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+var Goldlbl;
+var gold_value = 0;
+getGold(function(gold){
+	gold_value = gold;
+	gold_value = parseInt(gold_value);
+	Goldlbl = Titanium.UI.createLabel({
+		text : "Gold: "+gold,
+		color : "#FFFFFF",
+		textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+		font : {
+			fontSize : getFontSizeNormal1()
+		}
+	});
+	totalGoldView.add(Goldlbl);
+	
+	StoreItemHTTPClient.open("GET", url);
+	StoreItemHTTPClient.send();
+	
+});
+
 
 /*
 * Back Button
+* 
 */
 //backButton
 var backButton = Titanium.UI.createImageView({
@@ -425,159 +527,193 @@ headingRow.add(lineBreak3View);
 var tableData = [];
 var table = Ti.UI.createTableView({
 	objName : 'inventort_craft',
-	height : winHeight - getHeaderHeight() - 2 * getHeaderHeight() + headingRow.height, // 100%-header_height-footer height
+	height : winHeight - getHeaderHeight() - 2 * getHeaderHeight() - getHeaderHeight() - getHeaderHeight(), // 100%-header_height-footer height
 	top : getHeaderHeight() + headingRow.height
 });
 
-for (var i = 0; i < 4; i++) {
-	var row = Ti.UI.createTableViewRow({
-		className : 'row',
-		objName : 'row',
-		touchEnabled : true,
-		height : getRawDefaultHeight(),
-		top : 0,
-		expanded : false
-	});
+var url = "http://justechinfo.com/kap_server/get_store_inventories.php";
+var rec;//,UID;
+var StoreItemHTTPClient = Ti.Network.createHTTPClient({
+	onload : function() {
+		json = JSON.parse(this.responseText);
+		if (json.Record != undefined) {
+			var response_result = "";
+			for (var i = 0; i < json.Record.length; i++) {
+				rec = json.Record[i];
+				rec.REQ_GOLD = parseInt(rec.REQ_GOLD);
+				
+				var row = Ti.UI.createTableViewRow({
+					objName : 'buy',
+					className : 'buy',
+					touchEnabled : true,
+					height : getRawDefaultHeight(),
+					top : 0,
+					expanded : false
+				});
 
-	var enabledWrapperView = Ti.UI.createView({
-		backgroundColor : '#3d3d3d',
-		objName : 'enabledWrapperView',
-		rowID : i,
-		width : Ti.UI.FILL,
-		top : 0,
-		height : getRawDefaultHeight()
-	});
+				var enabledWrapperView = Ti.UI.createView({
+					backgroundColor : '#3d3d3d',
+					objName : 'enabledWrapperView',
+					rowID : i,
+					width : Ti.UI.FILL,
+					top : 0,
+					height : getRawDefaultHeight()
+				});
+			
+				// Store Image
+				var storeImage = Ti.UI.createView({
+					top : getMarginNormal1(),
+					left : getMarginNormal1(),
+					width : getAvatarImageWidthHeight(),
+					height : getAvatarImageWidthHeight(),
+					backgroundImage : 'images/'+rec.IMAGE+'.png',
+					zIndex : 50
+				});
+				enabledWrapperView.add(storeImage);
+			
+				// Create a storeItemNameLbl Label.
+				var storeItemNameLbl = Ti.UI.createLabel({
+					text : rec.NAME,
+					color : '#FFFFFF',
+					font : {
+						fontSize : getNormalFontSize(),
+						fontWeight : 'bold'
+					},
+					top : getMarginNormal1(),
+					left : storeImage.left + storeImage.width + getMarginNormal1(),
+					textAlign : 'center'
+				});
+				enabledWrapperView.add(storeItemNameLbl);
+			
+				// Create a Label.
+				var storeItemDescriptionLbl = Ti.UI.createLabel({
+					text : rec.DESCRIPTION,
+					color : '#787878',
+					font : {
+						fontSize : getNormalFontSize()
+					},
+					left : storeImage.left + storeImage.width + getMarginNormal1(),
+					textAlign : 'center'
+				});
+				enabledWrapperView.add(storeItemDescriptionLbl);
+			
+				var storeItemInfo = Ti.UI.createView({
+					right : 0,
+					width : getStoreItemInfoWidth(),
+					height : "100%"
+			
+				});
+			
+				var coin_icon = Ti.UI.createImageView({
+					image :  "images/listview_coin_icon.png",//getCoinIcon((i * 2) + (i + 2) + (i + 1) + 100),
+					right : (getMarginNormal1() * 3),
+					top : getMarginNormal1(),
+					width : 50,
+					height : 23
+				});
+				storeItemInfo.add(coin_icon);
+			
+				// Create a Label.
+				var storeIconWorth = Ti.UI.createLabel({
+					text : rec.REQ_GOLD,//(i * 2) + (i + 2) + (i + 1) + 100,
+					color : '#FFFFFF',
+					font : {
+						fontSize : getNormalFontSize(),
+						fontWeight : 'bold'
+					},
+					top : coin_icon.top + coin_icon.height,
+					width : 50,
+					right : (getMarginNormal1() * 3),
+					textAlign : 'center'
+				});
+				storeItemInfo.add(storeIconWorth);
+			
+				// Create a Button.
+				var buyButton = Ti.UI.createButton({
+					inv_id : rec.INVENTORY_ID,
+					req_gold : rec.REQ_GOLD,
 
-	// Store Image
-	var storeImage = Ti.UI.createView({
-		top : getMarginNormal1(),
-		left : getMarginNormal1(),
-		width : getAvatarImageWidthHeight(),
-		height : getAvatarImageWidthHeight(),
-		backgroundImage : 'images/store_image.png',
-		zIndex : 50
-	});
-	enabledWrapperView.add(storeImage);
+					visible : (gold_value >= rec.REQ_GOLD)?'true':'false',//!getLockedIconVisibility(getGold()),
+					title : 'BUY',
+					height : getButtonHeight(),
+					width : getButtonWidth(),
+					bottom : getMarginNormal1(),
+					right : getMarginNormal1(),
+					font : {
+						fontSize : getNormalFontSize()
+					},
+					backgroundColor : "#38B414",
+					color : "#FFFFFF"
+				});
+				buyButton.addEventListener('click', function(e) {
+					purchaseInventory(Ti.App.GLBL_uid,e.source.inv_id,e.source.req_gold);
+					/*if () {
+						e.row.height = getRawDefaultHeight();
+						e.row.expanded = false;
+					} else {
+						e.row.height = 300;
+						e.row.expanded = true;
+					}*/
+				});
+			
+				// Listen for click events.
+				storeItemInfo.add(buyButton);
+			
+				// Create a Button.
+				var unlockButton = Ti.UI.createButton({
+					visible : (gold_value >= rec.REQ_GOLD)?'false':'true',  //getLockedIconVisibility(getGold()),
+					title : 'UNLOCK',
+					height : getButtonHeight(),
+					font : {
+						fontSize : getNormalFontSize()
+					},
+					width : getButtonWidth(),
+					bottom : getMarginNormal1(),
+					right : getMarginNormal1(),
+					backgroundColor : "#33B5E6",
+					color : "#FFFFFF"
+				});
+			
+				// Listen for click events.
+				unlockButton.addEventListener('click', function() {
+					Titanium.UI.createWindow({
+					 url : 'store_get_gold.js'
+					 //url:'level2.js'
+					 }).open();
+					 removeAllContent();
+				});
+				storeItemInfo.add(unlockButton);
+			
+				// Create an ImageView.
+				var lockedItemIconImage = Ti.UI.createImageView({
+					visible : (gold_value >= rec.REQ_GOLD)?'false':'true',//getLockedIconVisibility(getGold()),
+					image : 'images/lock_icon.png',
+					width : 42,
+					height : 50,
+					left : getMarginNormal1()
+				});
+				lockedItemIconImage.addEventListener('load', function() {
+					Ti.API.info('Image loaded!');
+				});
+				storeItemInfo.add(lockedItemIconImage);
+			
+				enabledWrapperView.add(storeItemInfo);
+			
+				row.add(enabledWrapperView);
+				tableData.push(row);
+			}
+			table.setData(tableData);
+		}
+	},
+	onerror : function(e) {
+		Ti.API.debug("STATUS: " + this.status);
+		Ti.API.debug("TEXT: " + this.responseText);
+		Ti.API.debug("ERROR: " + e.error);
+		alert('There was an error retrieving the remote data. Try again.');
+	},
+	timeout : 5000
+});
 
-	// Create a storeItemNameLbl Label.
-	var storeItemNameLbl = Ti.UI.createLabel({
-		text : 'Yellow Rose',
-		color : '#FFFFFF',
-		font : {
-			fontSize : getNormalFontSize(),
-			fontWeight : 'bold'
-		},
-		top : getMarginNormal1(),
-		left : storeImage.left + storeImage.width + getMarginNormal1(),
-		textAlign : 'center'
-	});
-	enabledWrapperView.add(storeItemNameLbl);
-
-	// Create a Label.
-	var storeItemDescriptionLbl = Ti.UI.createLabel({
-		text : 'Signifies friendship; "I care"',
-		color : '#787878',
-		font : {
-			fontSize : getNormalFontSize()
-		},
-		left : storeImage.left + storeImage.width + getMarginNormal1(),
-		textAlign : 'center'
-	});
-	enabledWrapperView.add(storeItemDescriptionLbl);
-
-	var storeItemInfo = Ti.UI.createView({
-		right : 0,
-		width : getStoreItemInfoWidth(),
-		height : "100%"
-
-	});
-
-	var coin_icon = Ti.UI.createImageView({
-		image : getCoinIcon((i * 2) + (i + 2) + (i + 1) + 100), //"images/listview_coin_icon.png",
-		right : (getMarginNormal1() * 3),
-		top : getMarginNormal1(),
-		width : 50,
-		height : 23
-	});
-	storeItemInfo.add(coin_icon);
-
-	// Create a Label.
-	var storeIconWorth = Ti.UI.createLabel({
-		text : (i * 2) + (i + 2) + (i + 1) + 100,
-		color : '#FFFFFF',
-		font : {
-			fontSize : getNormalFontSize(),
-			fontWeight : 'bold'
-		},
-		top : coin_icon.top + coin_icon.height,
-		width : 50,
-		right : (getMarginNormal1() * 3),
-		textAlign : 'center'
-	});
-	storeItemInfo.add(storeIconWorth);
-
-	// Create a Button.
-	var buyButton = Ti.UI.createButton({
-		visible : !getLockedIconVisibility((i * 2) + (i + 2) + (i + 1) + 100),
-		title : 'BUY',
-		height : getButtonHeight(),
-		width : getButtonWidth(),
-		bottom : getMarginNormal1(),
-		right : getMarginNormal1(),
-		font : {
-			fontSize : getNormalFontSize()
-		},
-		backgroundColor : "#38B414",
-		color : "#FFFFFF"
-	});
-
-	// Listen for click events.
-	buyButton.addEventListener('click', function() {
-		alert('\'buyButton\' was clicked!');
-	});
-	storeItemInfo.add(buyButton);
-
-	// Create a Button.
-	var unlockButton = Ti.UI.createButton({
-		visible : getLockedIconVisibility((i * 2) + (i + 2) + (i + 1) + 100),
-		title : 'UNLOCK',
-		height : getButtonHeight(),
-		font : {
-			fontSize : getNormalFontSize()
-		},
-		width : getButtonWidth(),
-		bottom : getMarginNormal1(),
-		right : getMarginNormal1(),
-		backgroundColor : "#33B5E6",
-		color : "#FFFFFF"
-	});
-
-	// Listen for click events.
-	unlockButton.addEventListener('click', function() {
-		alert('\'unlockButton\' was clicked!');
-	});
-	storeItemInfo.add(unlockButton);
-
-	// Create an ImageView.
-	var lockedItemIconImage = Ti.UI.createImageView({
-		visible : getLockedIconVisibility((i * 2) + (i + 2) + (i + 1) + 100),
-		image : 'images/lock_icon.png',
-		width : 42,
-		height : 50,
-		left : getMarginNormal1()
-	});
-	lockedItemIconImage.addEventListener('load', function() {
-		Ti.API.info('Image loaded!');
-	});
-	storeItemInfo.add(lockedItemIconImage);
-
-	enabledWrapperView.add(storeItemInfo);
-
-	row.add(enabledWrapperView);
-	tableData.push(row);
-}
-
-table.setData(tableData);
 //Summary
 var summaryView = Titanium.UI.createView({
 	backgroundColor : "#3D3D3D",
@@ -767,7 +903,7 @@ win.add(footerView);
 
 win.addEventListener('android:back', function(e) {
 	var window = Titanium.UI.createWindow({
-		url : 'level2.js'
+		url : 'inventory.js'
 	});
 	window.open();
 	removeAllConetent();

@@ -54,13 +54,12 @@ input, textarea {
 
 		$(document).ready(function() {
 			log('Connecting...');
-			Server = new FancyWebSocket('ws://192.168.1.3:5000');	
+			Server = new FancyWebSocket('ws://192.168.0.101:5000');	
 
 			$('#message').keypress(function(e) {
 				if ( e.keyCode == 13 && this.value ) {
 					log( 'You: ' + this.value );
-					var rcvr_id = $("#uids option:selected").val();
-					send('S83HSGGH5JMSG<?php echo $_POST['userid']; ?>'+rcvr_id+ this.value );
+					send('S83HSGGH5JMSG'+ this.value );
 
 					$(this).val('');
 				}
@@ -79,21 +78,7 @@ input, textarea {
 
 			//Log any messages sent from server
 			Server.bind('message', function( payload ) {
-				var str = payload ;
-				
-				var new_check = "NEW";
-				//str = str.substring(0,3);
-				if (str.substring(0,3).localeCompare(new_check) == 0){
-					$('#uids')
-					 .append($("<option></option>")
-					 .attr("value",str.substring(3))
-					 .text(str.substring(3))); 
-					
-					//str = "HELLLOOOO";
-					//alert('NEW');
-				}
-				
-				log( str);//payload );
+				log( payload );
 			});
 
 			Server.connect();
@@ -101,17 +86,11 @@ input, textarea {
 	</script>
 	</head>
 
-	<body>
+	<body>a
     <div id='body'>
       <textarea id='log' name='log' readonly='readonly'></textarea>
       <br/>
-      <input type='text' id='message' name='message' /><br>
-		<br/>
-        <select id="uids">
-        
-        </select>
-        
+      <input type='text' id='message' name='message' />
     </div>
-    <div></div>
 </body>
 </html>

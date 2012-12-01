@@ -31,7 +31,7 @@ var win = Titanium.UI.createWindow({
 	backgroundColor : "#D0C8B0",
 	exitOnClose : true
 });
-win.orientationModes = [Ti.UI.PORTRAIT];
+win.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 
 //Header view
 

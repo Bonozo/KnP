@@ -128,10 +128,11 @@ if(isset($_GET))
 					));
 				
 			}
+			$posts = array('Message'=> "Successfully purchased!");
 
 		}
 		else{
-			$posts = array('Error'=> "Insufficient gold to purchase this inventory!");
+			$posts = array('Message'=> "Insufficient gold to purchase this inventory!");
 		}
 		$records = $posts;
 	}

@@ -150,7 +150,7 @@ var win = Titanium.UI.createWindow({
 		fontFamily : Ti.App.GLBL_default_font
 	}
 });
-win.orientationModes = [Ti.UI.PORTRAIT];
+win.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 //Background
 var mainBackgroundView = Titanium.UI.createView({
 	width : "100%",
@@ -170,12 +170,72 @@ var headerRowView = Titanium.UI.createView({
 	zIndex : 2
 });
 
+var timer = "0";
+var friend_request_found = false;
+var new_message_found = false;
+timer = setInterval(function() {
+	var url = "http://justechinfo.com/kap_server/get_notifications.php?uid=" + Ti.App.GLBL_uid + "";
+	var Record;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			Ti.API.info("url: " + url);
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				if (rec.MESSAGE == "NEW_MESSAGE") {
+					Ti.API.info("rec.MESSAGE : Message found!");
+					if (new_message_found == false) {
+						Ti.API.info("BEEEEP");
+						var sound = Titanium.Media.createSound({
+							url : 'sounds/message_bell.mp3'
+						});
+						sound.play();
+						msgAlertImageView.visible = true;
+						new_message_found = true;
+						if (friend_request_found == true)
+							clearInterval(timer);
+					}
+				} else {
+					Ti.API.info("rec.MESSAGE : No message!");
+					msgAlertImageView.visible = false;
+				}
+				if (rec.REQUEST == "NEW_REQUEST") {
+					Ti.API.info("rec.REQUEST : Request found!");
+					if (friend_request_found == false) {
+						Ti.API.info("BEEEEP");
+						var sound = Titanium.Media.createSound({
+							url : 'sounds/friendship_request_bell.mp3'
+						});
+						sound.play();
+						friendshipRequestAlertImageView.visible = true;
+						friend_request_found = true;
+						if (new_message_found == true)
+							clearInterval(timer);
+					}
+				} else {
+					Ti.API.info("rec.REQUEST : No request!");
+					friendshipRequestAlertImageView.visible = false;
+				}
+
+			} else {
+				//			alert("No messages found!");
+			}
+		},
+		onerror : function(e) {
+		},
+		timeout : 1000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+
+}, 1000);
+
 //Coin View
 var coinView = Titanium.UI.createView({
 	top : 0,
-	right : getHeaderButtonX(),
+	right : (getMarginNormal1() / 2),
 	backgroundColor : "#474747",
-	width : getCoinButtonWidth()
+	width : getMsgsButtonWidth()
 });
 
 //Coin Image
@@ -185,110 +245,69 @@ var coinImage = Titanium.UI.createImageView({
 	top : getHeaderButtonY()
 });
 coinView.add(coinImage);
-var timer = "0";
-var friend_request_found = false;
-var new_message_found = false;
-timer = setInterval(function(){
-	var url = "http://justechinfo.com/kap_server/get_notifications.php?uid="+Ti.App.GLBL_uid+"";
-	var Record;
+
+
+
+function getGold(callback){
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_golds.php?uid="+Ti.App.GLBL_uid;
+	var rec;//,UID;
 	var xhr = Ti.Network.createHTTPClient({
 		onload : function() {
-			Ti.API.info("url: " + url);
 			json = JSON.parse(this.responseText);
 			if (json.Record != undefined) {
 				rec = json.Record[0];
-				if(rec.MESSAGE == "NEW_MESSAGE"){
-					Ti.API.info("rec.MESSAGE : Message found!");
-					if(new_message_found == false){
-						Ti.API.info("BEEEEP");
-						var sound = Titanium.Media.createSound({url:'sounds/message_bell.mp3'});
-						sound.play();
-						msgAlertImageView.visible = true;
-						new_message_found = true;
-						if(friend_request_found == true)
-							clearInterval(timer);
-					}
-				}
-				else{
-					Ti.API.info("rec.MESSAGE : No message!");
-					msgAlertImageView.visible = false;
-				}
-				if(rec.REQUEST == "NEW_REQUEST"){
-					Ti.API.info("rec.REQUEST : Request found!");
-					if(friend_request_found == false){
-						Ti.API.info("BEEEEP");
-						var sound = Titanium.Media.createSound({url:'sounds/friendship_request_bell.mp3'});
-						sound.play();
-						friendshipRequestAlertImageView.visible = true;
-						friend_request_found = true;
-						if(new_message_found == true)
-							clearInterval(timer);
-					}
-				}
-				else{
-					Ti.API.info("rec.REQUEST : No request!");
-					friendshipRequestAlertImageView.visible = false;
-				}
+				//alert(rec.TOTAL_UNIT);
+				//Goldlbl.setText = rec.TOTAL_UNIT;
+				//num_of_golds = rec.TOTAL_UNIT;
 				
-			} else {
-	//			alert("No messages found!");
+				callback(rec.TOTAL_UNIT);
+
 			}
+			else{
+				alert('Some error occured!');
+			}
+	
+			
 		},
 		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
 		},
-		timeout : 1000
+		timeout : 5000
 	});
 	xhr.open("GET", url);
-	xhr.send(); 
+	xhr.send();
+}
+var lblCoin ;
+getGold(function(gold){
+	lblCoin = Titanium.UI.createLabel({
+		text : gold,
+		bottom : getCoinTextY(),
+		color : "#FFFFFF",
+		textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+		font : {
+			fontSize : getButtonTextSize()
+		}
+	});
+	coinView.add(lblCoin);
+});
 
-},1000);
-// Create an ImageView.
-var msgAlertImageView = Ti.UI.createImageView({
-	image : 'images/warning_icon.png',
-	visible : false,
-	top : 0,
-	right : (2 * getHeaderButtonX()) + getCoinButtonWidth(),
-	height : 16,
-	width : 16,
-	zIndex : 10000
-});
-headerRowView.add(msgAlertImageView);
-// Create an ImageView.
-var friendshipRequestAlertImageView = Ti.UI.createImageView({
-	image : 'images/warning_icon.png',
-	visible : false,
-	top : 0,
-	right : (5 * getHeaderButtonX()) + (3 * getMsgsButtonWidth()) + (getCoinButtonWidth()),
-	height : 16,
-	width : 16,
-	zIndex : 10000
-});
-// Add to the parent view.
-headerRowView.add(friendshipRequestAlertImageView);
+
+
 
 //Coin Text
-var lblCoin = Titanium.UI.createLabel({
-	text : "250",
-	bottom : getCoinTextY(),
-	color : "#FFFFFF",
-	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	font : {
-		fontSize : getButtonTextSize(),
-		fontFamily : Ti.App.GLBL_default_font
-	}
-});
-coinView.add(lblCoin);
 
 //Msgs View
 var msgsView = Titanium.UI.createView({
 	top : 0,
 	height : "65%",
-	right : (2 * getHeaderButtonX()) + getCoinButtonWidth(),
+	right : coinView.width + coinView.right + (getMarginNormal1() / 2),
 	backgroundColor : "#474747",
 	width : getMsgsButtonWidth()
 });
-
-
 //Msgs Text
 var lblMsgs = Titanium.UI.createLabel({
 	text : "msgs",
@@ -296,7 +315,7 @@ var lblMsgs = Titanium.UI.createLabel({
 	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
 	font : {
 		fontSize : getButtonTextSize(),
-		fontFamily : Ti.App.GLBL_default_font
+		fontFamily : "MagicalMedieval"
 	}
 });
 
@@ -314,7 +333,7 @@ msgsView.addEventListener("click", function(e) {
 var leadrView = Titanium.UI.createView({
 	top : 0,
 	height : "65%",
-	right : (3 * getHeaderButtonX()) + getMsgsButtonWidth() + (getCoinButtonWidth()),
+	right : msgsView.right + msgsView.width + (getMarginNormal1() / 2),
 	backgroundColor : "#474747",
 	width : getMsgsButtonWidth()
 });
@@ -325,7 +344,7 @@ var lblLeadr = Titanium.UI.createLabel({
 	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
 	font : {
 		fontSize : getButtonTextSize(),
-		fontFamily : Ti.App.GLBL_default_font
+		fontFamily : "MagicalMedieval"
 	}
 });
 
@@ -335,18 +354,18 @@ leadrView.add(lblLeadr);
 var questsView = Titanium.UI.createView({
 	top : 0,
 	height : "65%",
-	right : (4 * getHeaderButtonX()) + (2 * getMsgsButtonWidth()) + (getCoinButtonWidth()),
+	right : leadrView.right + leadrView.width + (getMarginNormal1() / 2),
 	backgroundColor : "#474747",
 	width : getMsgsButtonWidth()
 });
 //quests Text
 var lblQuests = Titanium.UI.createLabel({
-	text : "quests!",
+	text : "quests",
 	color : "#FFFFFF",
 	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
 	font : {
 		fontSize : getButtonTextSize(),
-		fontFamily : Ti.App.GLBL_default_font
+		fontFamily : "MagicalMedieval"
 	}
 });
 
@@ -359,11 +378,12 @@ questsView.addEventListener("click", function(e) {
 	removeAllContent();
 
 });
+
 //frnds View
 var frndsView = Titanium.UI.createView({
 	top : 0,
 	height : "65%",
-	right : (5 * getHeaderButtonX()) + (3 * getMsgsButtonWidth()) + (getCoinButtonWidth()),
+	right : questsView.right + questsView.width + (getMarginNormal1() / 2),
 	backgroundColor : "#474747",
 	width : getMsgsButtonWidth()
 });
@@ -374,36 +394,38 @@ var lblfrnds = Titanium.UI.createLabel({
 	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
 	font : {
 		fontSize : getButtonTextSize(),
-		fontFamily : Ti.App.GLBL_default_font
+		fontFamily : "MagicalMedieval"
 	}
 });
 
-
-
-
 frndsView.add(lblfrnds);
 frndsView.addEventListener("click", function(e) {
-	var window1 = Titanium.UI.createWindow({
-		url : 'friend_interactions.js'
-		//url:'level2.js'
-	});
-	window1.open();
-	removeAllContent();
+	
+	if(friendshipRequestAlertImageView){
+		Titanium.UI.createWindow({
+			url : 'request_friends.js'
+		}).open();
+		removeAllContent();
+	}
+	else{
+		Titanium.UI.createWindow({
+			url : 'friend_interactions.js'
+		}).open();
+		removeAllContent();
+	}
 });
 //Inv. View
 var invView = Titanium.UI.createView({
 	top : 0,
 	height : "65%",
-	right : (6 * getHeaderButtonX()) + (4 * getMsgsButtonWidth()) + (getCoinButtonWidth()),
+	right : frndsView.right + frndsView.width + (getMarginNormal1() / 2),
 	backgroundColor : "#474747",
 	width : getMsgsButtonWidth()
 });
 invView.addEventListener("click", function(e) {
-	var inventory_win = Titanium.UI.createWindow({
+	Titanium.UI.createWindow({
 		url : 'inventory.js'
-		//url:'level2.js'
-	});
-	inventory_win.open();
+	}).open();
 	removeAllContent();
 });
 //inv. Text
@@ -413,16 +435,17 @@ var lblInv = Titanium.UI.createLabel({
 	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
 	font : {
 		fontSize : getButtonTextSize(),
-		fontFamily : Ti.App.GLBL_default_font
+		fontFamily : "MagicalMedieval"
 	}
 });
+
 
 invView.add(lblInv);
 //Status View
 var statusView = Titanium.UI.createView({
 	top : 0,
 	height : "65%",
-	right : (7 * getHeaderButtonX()) + (5 * getMsgsButtonWidth()) + (getCoinButtonWidth()),
+	right : invView.right + invView.width + (getMarginNormal1() / 2),
 	backgroundColor : "#474747",
 	width : getMsgsButtonWidth()
 });
@@ -433,7 +456,7 @@ var lblStatus = Titanium.UI.createLabel({
 	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
 	font : {
 		fontSize : getButtonTextSize(),
-		fontFamily : Ti.App.GLBL_default_font
+		fontFamily : "MagicalMedieval"
 	}
 });
 statusView.addEventListener("click", function(e) {
@@ -447,6 +470,37 @@ statusView.addEventListener("click", function(e) {
 
 statusView.add(lblStatus);
 
+/////////////////////////////////////////////////////////////////
+//Store View
+var storeView = Titanium.UI.createView({
+	top : 0,
+	height : "65%",
+	right : statusView.right + statusView.width + (getMarginNormal1() / 2),
+	backgroundColor : "#474747",
+	width : getMsgsButtonWidth()
+});
+//Store Text
+var lblStore = Titanium.UI.createLabel({
+	text : "store",
+	color : "#FFFFFF",
+	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+	font : {
+		fontSize : getButtonTextSize(),
+		fontFamily : "MagicalMedieval"
+	}
+});
+storeView.addEventListener("click", function(e) {
+	var store_home = Titanium.UI.createWindow({
+		url : 'store_home.js'
+		//url:'level2.js'
+	});
+	store_home.open();
+	removeAllContent();
+});
+
+storeView.add(lblStore);
+
+headerRowView.add(storeView);
 headerRowView.add(questsView);
 headerRowView.add(frndsView);
 headerRowView.add(invView);
@@ -454,6 +508,31 @@ headerRowView.add(statusView);
 headerRowView.add(leadrView);
 headerRowView.add(msgsView);
 headerRowView.add(coinView);
+
+// Create an ImageView.
+var msgAlertImageView = Ti.UI.createImageView({
+	image : 'images/warning_icon.png',
+	visible : false,
+	top : 0,
+	right : coinView.width + coinView.right + (getMarginNormal1() / 2),
+	height : 16,
+	width : 16,
+	zIndex : 10000
+});
+headerRowView.add(msgAlertImageView);
+// Create an ImageView.
+var friendshipRequestAlertImageView = Ti.UI.createImageView({
+	image : 'images/warning_icon.png',
+	visible : false,
+	top : 0,
+	right : questsView.right + questsView.width + (getMarginNormal1() / 2),
+	height : 16,
+	width : 16,
+	zIndex : 10000
+});
+// Add to the parent view.
+headerRowView.add(friendshipRequestAlertImageView);
+
 /**************************************************************************************/
 /*********************************HEADER COMPLETED*************************************/
 /**************************************************************************************/

@@ -18,7 +18,7 @@ var win = Titanium.UI.createWindow({
 	exitOnClose : true,
 	zIndex : 0
 });
-win.orientationModes = [Ti.UI.PORTRAIT];
+win.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
 

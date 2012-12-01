@@ -3,7 +3,9 @@ header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
-$dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+//$dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+include "config.php";
+$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 //$union = array_unique(array_merge($a, $b));
 if(isset($_GET))
 {
@@ -18,6 +20,7 @@ if(isset($_GET))
 		$query = "
 			SELECT 
 				kaq.ASSIGN_QUEST_ID, 
+				kqm.QUEST_ID,
 				kqm.QUEST_NAME,
 				kaq.MESSAGE, 
 				GROUP_CONCAT(kiim.NAME, CONCAT(':',kqr.UNIT)) AS 'REWARDS', 
@@ -75,6 +78,7 @@ if(isset($_GET))
 			}
 			
 							
+			$posts[$counter]['QUEST_ID'] = $post['QUEST_ID'];
 			$posts[$counter]['QUEST_NAME'] = $post['QUEST_NAME'];
 			$posts[$counter]['MESSAGE'] = $post['MESSAGE'];
 			$rewards = $post['REWARDS'];

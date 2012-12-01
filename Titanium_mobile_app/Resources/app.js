@@ -78,7 +78,7 @@ var win = Titanium.UI.createWindow({
 	backgroundColor : "#D0C8B0",
 	exitOnClose : true
 });
-win.orientationModes = [Ti.UI.PORTRAIT];
+win.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 
 //Header view
 
@@ -289,7 +289,8 @@ signInButton.addEventListener("click", function(e) {
 	var password = passwordField.value;
 	//alert("email : "+email+"\nPassword : "+password);
 
-	var url = "http://justechinfo.com/kap_server/index.php?email=" + email + "&password=" + password + "";
+	//var url = "http://justechinfo.com/kap_server/index.php?email=" + email + "&password=" + password + "";
+	var url = "http://justechinfo.com/kap_server/?email=" + email + "&password=" + password + "";
 	var Record;
 	var xhr = Ti.Network.createHTTPClient({
 		onload : function() {
@@ -319,7 +320,7 @@ signInButton.addEventListener("click", function(e) {
 				Ti.App.GLBL_character_created = true;
 				Ti.App.GLBL_name = Record.NAME;
 				var window = Titanium.UI.createWindow({
-					url : 'quests_home.js'//'level2.js'
+					url : 'inventory.js'
 				});
 				window.open();
 				//win.close();

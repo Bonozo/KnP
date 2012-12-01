@@ -4,41 +4,55 @@ header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
+include "config.php";
+$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
+
 if(isset($_GET))
 {
 	extract($_GET);
 	if(isset($email) && isset($password))
 	{
-		$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
-		if($dbObj->beginTransaction()){
-			$query = "SELECT `UID`,`NAME`,`GENDER` FROM KAP_USER_MAIN WHERE 
-			`EMAIL` = '".$email."' AND `PASSWORD` = '".md5($password)."'";
-			//echo "BEGIN!";
-			$result = $dbObj->queryFetchAllAssoc($query);
-			foreach($result as $post){
-			  $posts[] = $post;
-			}
-			if($posts == NULL)
-			{
-				$posts = array("AuthException"=>"Email address or password is invalid!");
-				$records = array('Error'=>$posts);
-			}
-			else
-			{
-				$records = array('Record'=>$posts);//$records = array('Error'=>$posts);
-			}
+		//$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+		$query = "SELECT `UID`,`NAME`,`GENDER` FROM KAP_USER_MAIN WHERE 
+		`EMAIL` = :email AND `PASSWORD` = :password";
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(
+		array(
+			':email' => $email,
+			':password' => md5($password)			
+			));
+		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+		foreach($res as $post){
+		  $posts[] = $post;
+		}
+		if($posts == NULL)
+		{
+			$posts = array("AuthException"=>"Email address or password is invalid!");
+			$records = array('Error'=>$posts);
+			$query1 = "UPDATE `KAP_USER_MAIN` SET LOGIN_ATTEMPTS = LOGIN_ATTEMPTS+1,LAST_LOGIN_ATTEMPT = NOW() WHERE `email`= :email";
+			$statement1 = $dbObj->prepare($query1, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement1->execute(array(
+				':email'=>$email
+			));
+		}
+		else
+		{
 			
-			//print_r($result );
-			/*for($post = mysql_fetch_assoc($result)) {
-			  $posts[] = array('post'=>$post);
-			}*/
-			//   echo json_indent(json_encode(array('posts'=>$posts)));
-			//$result = $dbObj->queryFetchAllAssoc("SELECT * FROM KAP_USER_MAIN");
-		//	print_r($result);
+			$query1 = "UPDATE `KAP_USER_MAIN` SET `LAST_LOGIN`=NOW(), `LOGIN_ATTEMPTS` = '0' WHERE `email`= :email";
+			$statement1 = $dbObj->prepare($query1, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement1->execute(array(
+				':email'=>$email
+			));
+			$records = array('Record'=>$posts);//$records = array('Error'=>$posts);
 		}
-		else{
-			$records = array('Error'=>"Cannot connect to server");
-		}
+		
+		//print_r($result );
+		/*for($post = mysql_fetch_assoc($result)) {
+		  $posts[] = array('post'=>$post);
+		}*/
+		//   echo json_indent(json_encode(array('posts'=>$posts)));
+		//$result = $dbObj->queryFetchAllAssoc("SELECT * FROM KAP_USER_MAIN");
+	//	print_r($result);
 	}
 	else
 	{

@@ -4,6 +4,8 @@ include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
 $dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+//include "config.php";
+//$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 //$union = array_unique(array_merge($a, $b));
 if(isset($_GET))
 {
@@ -26,20 +28,20 @@ if(isset($_GET))
 			));
 			
 		$query = "
-				SELECT 
-					TOTAL_UNIT 
-				FROM 
-					KNP_INVENTORY_TRANSACTION_SUMMARY 
-				WHERE
-					UID = :uid AND 
-					INV_ID = '10004';";
+			UPDATE 
+				`KNP_INVENTORY_TRANSACTION_SUMMARY` 
+			SET 
+				`TOTAL_UNIT`= TOTAL_UNIT + ".$num_of_golds." 
+			WHERE 
+				`UID`=:uid AND 
+				`INV_ID`='10004'";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(
 		array(
 			':uid' => $uid
 			));
-		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
-		if(sizeof($res) == 0){
+		if($statement->rowCount() == 0){
+		//if(sizeof($res) == 0){
 			$query = "
 			INSERT INTO 
 				`KNP_INVENTORY_TRANSACTION_SUMMARY`
@@ -53,27 +55,8 @@ if(isset($_GET))
 				':num_of_golds' => $num_of_golds
 				));
 		}
-		else{
-			$golds = intval($res[0]['TOTAL_UNIT']);
-			$golds = $golds + $num_of_golds;
-			$query = "
-			UPDATE 
-				`KNP_INVENTORY_TRANSACTION_SUMMARY` 
-			SET 
-				`TOTAL_UNIT`=:golds 
-			WHERE 
-				`UID`=:uid AND 
-				`INV_ID`='10004'"; 
-			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-			$updated_gold = (int)$golds + (int)$num_of_gold;
-			$statement->execute(
-			array(
-				':uid' => $uid,
-				':golds' => $golds
-				));
-		}
 
-		$records = $posts;
+		$records = array("Message"=>"Successfully purchased!");//$posts;
 	}
 	else
 	{

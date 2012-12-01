@@ -12,7 +12,7 @@ if(isset($_GET))
 	{
 		$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
 		$query =   
-		   "SELECT `UID`,`NAME`,`EMAIL`,`GENDER` FROM KAP_USER_MAIN 
+		   "SELECT `UID`,`NAME`,`EMAIL`,`GENDER`,DATE_FORMAT(`LAST_LOGIN`,'%b %d %Y, %h:%i %p') AS LAST_LOGIN FROM KAP_USER_MAIN 
 			WHERE 
 			`UID` IN (
 			SELECT FRIEND_UID FROM `FRIENDSHIP_MAIN` M WHERE M.UID = :uid AND M.STATUS = 'FRIENDS' AND friend_uid <> :uid

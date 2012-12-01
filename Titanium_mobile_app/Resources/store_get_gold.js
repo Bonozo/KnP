@@ -3,7 +3,6 @@ function removeAllContent () {
 	headerView.remove(nameOfCharacter); 
 	levelView.remove(LVLlbl); 
 	headerView.remove(levelView); 
-	totalGoldView.remove(Goldlbl); 
 	headerView.remove(totalGoldView); 
 	headerView.remove(backButton); 
 	headingRow.remove(storeLbl); 
@@ -15,7 +14,6 @@ function removeAllContent () {
 	storeItemInfo.remove(storeIconWorth);
 	storeItemInfo.remove(buyButton);
 	enabledWrapperView.remove(storeItemInfo);
-	summaryView.remove(getGoldButton);
 	footerView.remove(lblSortBy);
 	footerView.remove(giftsButton);
 	footerView.remove(suppliesButton);
@@ -37,7 +35,6 @@ function removeAllContent () {
 	levelView = null;
 	LVLlbl = null;	
 	totalGoldView = null;
-	Goldlbl = null;
 	backButton = null;
 	headingRow = null;
 	storeLbl = null;
@@ -54,7 +51,6 @@ function removeAllContent () {
 	storeIconWorth
 	buyButton = null;
 	summaryView = null;
-	getGoldButton = null;
 	footerView = null;
 	lblSortBy = null;
 	giftsButton = null;
@@ -71,10 +67,33 @@ var win = Titanium.UI.createWindow({
 	exitOnClose : true,
 	zIndex : 0
 });
-win.orientationModes = [Ti.UI.PORTRAIT];
+win.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
 
+function purchaseGold(num_of_golds){
+	var url = "http://justechinfo.com/kap_server/purchase_gold.php?uid="+Ti.App.GLBL_uid+"&num_of_golds="+num_of_golds;
+	var rec;//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			alert(num_of_golds+' Golds purchased!');
+
+			getGold(function(gold){
+				Goldlbl.setText('Gold: '+gold);
+			});
+
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
 function getStoreItemInfoWidth() {
 	//480×800
 	if (winWidth >= 480 && winHeight >= 800) {
@@ -276,7 +295,45 @@ function getBorderWidth() {
 		return 2;
 	}
 }
-
+function getGold(callback){
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_golds.php?uid="+Ti.App.GLBL_uid;
+	var rec;//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				num_of_golds = rec.TOTAL_UNIT;
+				callback(rec.TOTAL_UNIT);
+			}
+			else{
+				alert('Some error occured!');
+			}
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+var Goldlbl;
+getGold(function(gold){
+	Goldlbl = Titanium.UI.createLabel({
+		text : "Gold: "+gold,
+		color : "#FFFFFF",
+		textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+		font : {
+			fontSize : getFontSizeNormal1()
+		}
+	});
+	totalGoldView.add(Goldlbl);
+});
 //headerView
 var headerView = Titanium.UI.createView({
 	top : 0,
@@ -316,16 +373,48 @@ var levelView = Titanium.UI.createView({
 	width : 2 * getHeaderHeight()
 });
 //LVLlbl
-var LVLlbl = Titanium.UI.createLabel({
-	text : "LVL: 4",
-	color : "#FFFFFF",
-	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	font : {
-		fontSize : getFontSizeNormal1()
-	}
+//LVLlbl
+var LVLlbl;
+function getLevel(callback){
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_level.php?uid="+Ti.App.GLBL_uid;
+	var rec;//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				callback(rec.LEVEL);
+			}
+			else{
+				alert('Some error occured!');
+			}
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+//numberOfFriends
+var numberOfFriends; 
+getLevel(function(level){
+	LVLlbl = Titanium.UI.createLabel({
+		text : "LVL: "+level,
+		color : "#FFFFFF",
+		textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+		font : {
+			fontSize : getFontSizeNormal1()
+		}
+	});
+	levelView.add(LVLlbl);
+	headerView.add(levelView);
 });
-levelView.add(LVLlbl);
-headerView.add(levelView);
 
 /*
 * Number of Golds remaining
@@ -338,15 +427,6 @@ var totalGoldView = Titanium.UI.createView({
 	width : 3 * getHeaderHeight()
 });
 //Goldlbl
-var Goldlbl = Titanium.UI.createLabel({
-	text : "Gold:  250",
-	color : "#FFFFFF",
-	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	font : {
-		fontSize : getFontSizeNormal1()
-	}
-});
-totalGoldView.add(Goldlbl);
 headerView.add(totalGoldView);
 
 /*
@@ -404,8 +484,9 @@ var table = Ti.UI.createTableView({
 	height : winHeight - getHeaderHeight() - 2 * getHeaderHeight() + headingRow.height, // 100%-header_height-footer height
 	top : getHeaderHeight() + headingRow.height
 });
-
-for (var i = 0; i < 4; i++) {
+var num_of_golds = ['100','400','1000','10000'];
+var prices = ['$0.99','$1.99','$2.99','$4.99'];
+for (var i = 0; i < num_of_golds.length; i++) {
 	var row = Ti.UI.createTableViewRow({
 		className : 'row',
 		objName : 'row',
@@ -448,7 +529,7 @@ for (var i = 0; i < 4; i++) {
 	
 	// Create a Label.
 	var numberOfGoldsLbl = Ti.UI.createLabel({
-		text : (i*2)+(i+2)+(i+1) + 100,
+		text : num_of_golds[i],//(i*2)+(i+2)+(i+1) + 100,
 		color : '#FFFFFF',
 		font : {fontSize:getNormalFontSize(), fontWeight : 'bold'},
 		bottom : getMarginNormal1(),
@@ -478,7 +559,7 @@ for (var i = 0; i < 4; i++) {
 	
 	// Create a Label.
 	var storeIconWorth = Ti.UI.createLabel({
-		text : 'USD\n$'+(i+0.99),
+		text : 'USD\n'+prices[i],
 		color : '#FFFFFF',
 		font : {fontSize:getNormalFontSize(), fontWeight : 'bold'},
 		top : getMarginNormal1(),
@@ -492,6 +573,7 @@ for (var i = 0; i < 4; i++) {
 	// Create a Button.
 	var buyButton = Ti.UI.createButton({
 		title : 'BUY',
+		num_of_golds : num_of_golds[i],
 		height : getButtonHeight(),
 		width : getButtonWidth(),
 		bottom : getMarginNormal1(),
@@ -504,8 +586,8 @@ for (var i = 0; i < 4; i++) {
 	});
 	
 	// Listen for click events.
-	buyButton.addEventListener('click', function() {
-		alert('\'buyButton\' was clicked!');
+	buyButton.addEventListener('click', function(e) {
+		purchaseGold(e.source.num_of_golds);		
 	});
 	storeItemInfo.add(buyButton);
 	
@@ -523,23 +605,6 @@ var summaryView = Titanium.UI.createView({
 	width : "100%",
 	bottom : getHeaderHeight()
 });
-
-
-// Create a Button.
-var getGoldButton = Ti.UI.createButton({
-	color : "#FFFFFF",
-	title : "GET GOLD",
-	backgroundColor : "#474747",
-	borderColor : "#333333",
-	font : {
-		fontSize : getSmallFontSize()
-	},
-	height : getSmallButtonHeight(),
-	width : getButtonWidth(),
-	borderRadius : 2
-});
-// Add to the parent view.
-summaryView.add(getGoldButton);
 
 
 //footerView

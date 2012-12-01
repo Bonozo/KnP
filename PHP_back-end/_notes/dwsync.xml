@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="get_thread_messages.php" server="www.justechinfo.com//public_html/kap_server/" local="129969701010684401" remote="129969342000000000" Dst="0" />
-<file name="get_unread_messages.php" server="www.justechinfo.com//public_html/kap_server/" local="129969782082629813" remote="129969421800000000" Dst="0" />
-<file name="send_message.php" server="www.justechinfo.com//public_html/kap_server/" local="129970470538002666" remote="129970110600000000" Dst="0" />
-<file name="sign_up.php" server="www.justechinfo.com//public_html/kap_server/" local="129969903881419055" remote="129969543600000000" Dst="0" />
-<file name="get_inbox_messages.php" server="www.justechinfo.com//public_html/kap_server/" local="129970707761609395" remote="129970347600000000" Dst="0" />
-<file name="get_notifications.php" server="www.justechinfo.com//public_html/kap_server/" local="129972256477549277" remote="129971896200000000" Dst="0" />
-<file name="friends_list.php" server="www.justechinfo.com//public_html/kap_server/" local="129973900649877566" remote="129973540200000000" Dst="0" />
-<file name="get_avatar_friend_count.php" server="www.justechinfo.com//public_html/kap_server/" local="129973901672588007" remote="129973541400000000" Dst="0" />
-<file name="set_quests_status.php" server="www.justechinfo.com//public_html/kap_server/" local="129973926535481207" remote="129973566600000000" Dst="0" />
-<file name="assign_quests.php" server="www.justechinfo.com//public_html/kap_server/" local="129974573100367912" remote="129974212800000000" Dst="0" />
-<file name="get_all_assigned_quests.php" server="www.justechinfo.com//public_html/kap_server/" local="129978096063008091" remote="129977737800000000" Dst="0" />
-<file name="get_assigned_quests_by_player.php" server="www.justechinfo.com//public_html/kap_server/" local="129973921505029093" remote="129973740600000000" Dst="0" />
-<file name="get_all_quests.php" server="www.justechinfo.com//public_html/kap_server/" local="129974128779627549" remote="129973768800000000" Dst="0" />
-<file name="ge_quests_rewards.php" server="www.justechinfo.com//public_html/kap_server/" local="129977503175463801" remote="129977143200000000" Dst="0" />
-<file name="get_all_inventories.php" server="www.justechinfo.com//public_html/kap_server/" local="129978308591410053" remote="129977948400000000" Dst="0" />
-<file name="get_craft_ingredients.php" server="www.justechinfo.com//public_html/kap_server/" local="129977591444346449" remote="129977231400000000" Dst="0" />
-<file name="get_quests_rewards.php" server="www.justechinfo.com//public_html/kap_server/" local="129977597102753044" remote="129977236800000000" Dst="0" />
-<file name="get_all_assigned_quests1.php" server="www.justechinfo.com//public_html/kap_server/" local="129977601537428118" remote="129977241000000000" Dst="0" />
-<file name="purchase_gold.php" server="www.justechinfo.com//public_html/kap_server/" local="129978442450663570" remote="129978082200000000" Dst="0" />
-<file name="create_craft.php" server="www.justechinfo.com//public_html/kap_server/" local="129978538051476269" remote="129978178200000000" Dst="0" />
-<file name="purchase_inventory.php" server="www.justechinfo.com//public_html/kap_server/" local="129978439241031261" remote="129978079200000000" Dst="0" />
+<file name="get_all_inventories.php" server="www.justechinfo.com//public_html/kap_server/" local="129986279889475134" remote="129985920000000000" Dst="0" />
+<file name="send_gift.php" server="www.justechinfo.com//public_html/kap_server/" local="129984694063545164" remote="129984334200000000" Dst="0" />
+<file name="create_craft.php" server="www.justechinfo.com//public_html/kap_server/" local="129980909705290380" remote="129984293400000000" Dst="0" />
+<file name="friends_list.php" server="www.justechinfo.com//public_html/kap_server/" local="129985280845919363" remote="129984920400000000" Dst="0" />
+<file name="index.php" server="www.justechinfo.com//public_html/kap_server/" local="129987286355675567" remote="129986926200000000" Dst="0" />
+<file name="config.php" server="www.justechinfo.com//public_html/kap_server/" local="129987269075327187" remote="129986908800000000" Dst="0" />
+<file name="get_level.php" server="www.justechinfo.com//public_html/kap_server/" local="129987309192523424" remote="129986949600000000" Dst="0" />
+<file name="get_assigned_quests_by_player.php" server="www.justechinfo.com//public_html/kap_server/" local="129987320268876955" remote="129986960400000000" Dst="0" />
+<file name="get_all_assigned_quests.php" server="www.justechinfo.com//public_html/kap_server/" local="129987449471196094" remote="129987089400000000" Dst="0" />
+<file name="get_quests_rewards.php" server="www.justechinfo.com//public_html/kap_server/" local="129980909559742124" remote="129987264000000000" Dst="0" />
+<file name="set_quests_status.php" server="www.justechinfo.com//public_html/kap_server/" local="129988267940287738" remote="129987907800000000" Dst="0" />
+<file name="get_avatar_info.php" server="www.justechinfo.com//public_html/kap_server/" local="129988307391922693" remote="129987947400000000" Dst="0" />
 </dwsync>

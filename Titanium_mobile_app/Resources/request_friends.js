@@ -84,7 +84,7 @@ var win = Titanium.UI.createWindow({
 	exitOnClose : true,
 	zIndex : 0
 });
-win.orientationModes = [Ti.UI.PORTRAIT];
+win.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
 
@@ -338,16 +338,50 @@ var totalGoldView = Titanium.UI.createView({
 	right : getHeaderHeight() + getMarginNormal1(),
 	width : 3 * getHeaderHeight()
 });
-//Goldlbl
-var Goldlbl = Titanium.UI.createLabel({
-	text : "Gold:  250",
-	color : "#FFFFFF",
-	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	font : {
-		fontSize : getFontSizeNormal1()
-	}
+
+function getGold(callback){
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_golds.php?uid="+Ti.App.GLBL_uid;
+	var rec;//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				
+				callback(rec.TOTAL_UNIT);
+
+			}
+			else{
+				alert('Some error occured!');
+			}
+	
+			
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+var Goldlbl;
+getGold(function(gold){
+	Goldlbl = Titanium.UI.createLabel({
+		text : "Gold: "+gold,
+		color : "#FFFFFF",
+		textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+		font : {
+			fontSize : getFontSizeNormal1()
+		}
+	});
+	totalGoldView.add(Goldlbl);
 });
-totalGoldView.add(Goldlbl);
+
 headerView.add(totalGoldView);
 
 /*
@@ -439,16 +473,6 @@ var xhr = Ti.Network.createHTTPClient({
 					make_friend_request.open();
 					removeAllContent();
 					 
-//					in showWin.js:
-					 
-//					Ti.API.info('myID = ' + showWin.myID);
-					/*if (e.row.expanded) {
-						e.row.height = getRawDefaultHeight();
-						e.row.expanded = false;
-					} else {
-						e.row.height = 300;
-						e.row.expanded = true;
-					}*/
 				});
 
 				var enabledWrapperView = Ti.UI.createView({

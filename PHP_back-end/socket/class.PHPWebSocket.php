@@ -1,5 +1,4 @@
 <?php
-//NEW
 //wsClients[$clientID][12]
 function __autoload($class_name) {
     include $class_name . '.php';

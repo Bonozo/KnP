@@ -3,7 +3,10 @@ header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
-$dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+error_reporting(0);
+//$dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+include "config.php";
+$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 //$union = array_unique(array_merge($a, $b));
 if(isset($_GET))
 {
@@ -41,7 +44,9 @@ if(isset($_GET))
 			$counter = 0;
 			foreach($res as $post){
 				foreach($post as $key => $value){
-					$posts[$counter]["NAME"] = getAvatarName($posts[$counter]["ASSIGN_BY_UID"]);
+					$avatar_info = getAvatarInfo($posts[$counter]["ASSIGN_BY_UID"]);
+					$posts[$counter]["NAME"] = $avatar_info['NAME'];
+					$posts[$counter]["LEVEL"] = $avatar_info['LEVEL'];
 					$posts[$counter]["NUM_OF_FRIENDS"] = getNumberOfFriends($posts[$counter]["ASSIGN_BY_UID"]);
 					$posts[$counter][$key] = $value;
 					$posts[$counter]["IS_COMPLETED"] = isQuestCompleted($posts[$counter]["ASSIGN_BY_UID"], $uid);
@@ -113,10 +118,10 @@ function getNumberOfFriends($uid){
 	
 	return $res[0]['NUM_OF_FRIENDS'];
 }
-function getAvatarName($uid){
+function getAvatarInfo($uid){
 	global $dbObj;
 	$query = "
-			SELECT `NAME` FROM KAP_USER_MAIN WHERE UID = :uid 
+			SELECT `NAME`,`LEVEL` FROM KAP_USER_MAIN WHERE UID = :uid 
 			";
 	$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	$statement->execute(
@@ -125,7 +130,7 @@ function getAvatarName($uid){
 		));
 	$res = $statement->fetchAll(PDO::FETCH_ASSOC);
 	
-	return $res[0]['NAME'];
+	return $res[0];
 }
 
 ?>

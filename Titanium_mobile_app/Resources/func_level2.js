@@ -15,6 +15,13 @@ function getBGName()
 	return bg_images[curr_bg_image]; 
 }
 
+function getMarginNormal1() {
+	if (winWidth >= 480 && winHeight >= 800) {
+		return 8;
+	} else if (winWidth < 480 && winHeight < 800) {
+		return 4;
+	}
+}
 function getCraftItemVisibility(craftItem)
 {
 	if(Ti.App.GLBL_gender == 'male')

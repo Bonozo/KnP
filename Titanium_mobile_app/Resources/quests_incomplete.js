@@ -83,7 +83,7 @@ var win = Titanium.UI.createWindow({
 	exitOnClose : true,
 	zIndex : 0
 });
-win.orientationModes = [Ti.UI.PORTRAIT];
+win.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
 
@@ -335,16 +335,48 @@ var levelView = Titanium.UI.createView({
 	width : 2 * getHeaderHeight()
 });
 //LVLlbl
-var LVLlbl = Titanium.UI.createLabel({
-	text : "LVL: 4",
-	color : "#FFFFFF",
-	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	font : {
-		fontSize : getFontSizeNormal1()
-	}
+//LVLlbl
+var LVLlbl;
+function getLevel(callback){
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_level.php?uid="+Ti.App.GLBL_uid;
+	var rec;//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				callback(rec.LEVEL);
+			}
+			else{
+				alert('Some error occured!');
+			}
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+//numberOfFriends
+var numberOfFriends; 
+getLevel(function(level){
+	LVLlbl = Titanium.UI.createLabel({
+		text : "LVL: "+level,
+		color : "#FFFFFF",
+		textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+		font : {
+			fontSize : getFontSizeNormal1()
+		}
+	});
+	levelView.add(LVLlbl);
+	headerView.add(levelView);
 });
-levelView.add(LVLlbl);
-headerView.add(levelView);
 
 /*
 * Number of Golds remaining
@@ -356,16 +388,49 @@ var totalGoldView = Titanium.UI.createView({
 	right : getHeaderHeight() + getMarginNormal1(),
 	width : 3 * getHeaderHeight()
 });
-//Goldlbl
-var Goldlbl = Titanium.UI.createLabel({
-	text : "Gold:  250",
-	color : "#FFFFFF",
-	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	font : {
-		fontSize : getFontSizeNormal1()
-	}
+
+function getGold(callback){
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_golds.php?uid="+Ti.App.GLBL_uid;
+	var rec;//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				
+				callback(rec.TOTAL_UNIT);
+
+			}
+			else{
+				alert('Some error occured!');
+			}
+	
+			
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+var Goldlbl;
+getGold(function(gold){
+	Goldlbl = Titanium.UI.createLabel({
+		text : "Gold: "+gold,
+		color : "#FFFFFF",
+		textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+		font : {
+			fontSize : getFontSizeNormal1()
+		}
+	});
+	totalGoldView.add(Goldlbl);
 });
-totalGoldView.add(Goldlbl);
 headerView.add(totalGoldView);
 
 /*
@@ -622,6 +687,7 @@ var table = Ti.UI.createTableView({
 });
 //Ti.App.Properties.setString('assign_by_uid', e.source.assign_by_uid);
 var url = "http://justechinfo.com/kap_server/get_all_assigned_quests.php?assign_by="+Ti.App.Properties.getString('assign_by_uid')+"&assign_to="+Ti.App.GLBL_uid;
+
 var xhr = Ti.Network.createHTTPClient({
 	onload : function() {
 		json = JSON.parse(this.responseText);
@@ -724,25 +790,34 @@ var xhr = Ti.Network.createHTTPClient({
 					checked : false,
 					status : rec.STATUS,
 					assign_quest_id : rec.ASSIGN_QUEST_ID,
+					quest_id : rec.QUEST_ID,
 					right : getMarginNormal1(),
 					zIndex : 4000
 				});
 			
 				tickBox.addEventListener('click', function(e) {
 					if(e.source.status == 'INCOMPLETE'){
+						
 						Ti.App.Properties.setString('assign_quest_id', e.source.assign_quest_id);
+						Ti.App.Properties.setString('quest_id', e.source.quest_id);
+						Ti.App.Properties.setString('quest_name', rec.QUEST_NAME);
+						
 						var window1 = Titanium.UI.createWindow({
 							url : 'play_quests.js'
 						});
 						window1.open();
 						removeAllContent();
 					}
-					else{
+					else if(e.source.status == 'COMPLETE'){
 						var window1 = Titanium.UI.createWindow({
 							url : 'quests_completed_info.js'
 						});
 						window1.open();
 					}
+					else if(e.source.status == 'EXPIRED'){
+						alert('This quest has been expired!');
+					}
+					
 						
 				});
 				enabledWrapperView1.add(tickBox);

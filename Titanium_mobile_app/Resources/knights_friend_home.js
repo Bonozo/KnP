@@ -81,7 +81,7 @@ var win = Titanium.UI.createWindow({
 	exitOnClose : true,
 	zIndex : 0
 });
-win.orientationModes = [Ti.UI.PORTRAIT];
+win.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 var winWidth = Ti.Platform.displayCaps.platformWidth;
 var winHeight = Ti.Platform.displayCaps.platformHeight;
 
@@ -317,16 +317,48 @@ var levelView = Titanium.UI.createView({
 	width : 2 * getHeaderHeight()
 });
 //LVLlbl
-var LVLlbl = Titanium.UI.createLabel({
-	text : "LVL: 4",
-	color : "#FFFFFF",
-	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	font : {
-		fontSize : getFontSizeNormal1()
-	}
+//LVLlbl
+var LVLlbl;
+function getLevel(callback){
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_level.php?uid="+Ti.App.GLBL_uid;
+	var rec;//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				callback(rec.LEVEL);
+			}
+			else{
+				alert('Some error occured!');
+			}
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+//numberOfFriends
+var numberOfFriends; 
+getLevel(function(level){
+	LVLlbl = Titanium.UI.createLabel({
+		text : "LVL: "+level,
+		color : "#FFFFFF",
+		textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+		font : {
+			fontSize : getFontSizeNormal1()
+		}
+	});
+	levelView.add(LVLlbl);
+	headerView.add(levelView);
 });
-levelView.add(LVLlbl);
-headerView.add(levelView);
 
 /*
 * Number of Golds remaining
@@ -338,16 +370,49 @@ var totalGoldView = Titanium.UI.createView({
 	right : getHeaderHeight() + getMarginNormal1(),
 	width : 3 * getHeaderHeight()
 });
-//Goldlbl
-var Goldlbl = Titanium.UI.createLabel({
-	text : "Gold:  250",
-	color : "#FFFFFF",
-	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-	font : {
-		fontSize : getFontSizeNormal1()
-	}
+
+function getGold(callback){
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_golds.php?uid="+Ti.App.GLBL_uid;
+	var rec;//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				
+				callback(rec.TOTAL_UNIT);
+
+			}
+			else{
+				alert('Some error occured!');
+			}
+	
+			
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+var Goldlbl;
+getGold(function(gold){
+	Goldlbl = Titanium.UI.createLabel({
+		text : "Gold: "+gold,
+		color : "#FFFFFF",
+		textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+		font : {
+			fontSize : getFontSizeNormal1()
+		}
+	});
+	totalGoldView.add(Goldlbl);
 });
-totalGoldView.add(Goldlbl);
 headerView.add(totalGoldView);
 
 /*
@@ -827,17 +892,6 @@ var knightButton = Titanium.UI.createButton({
 });
 footerView.add(knightButton);
 knightButton.addEventListener("click", function(e) {
-	/*
-	 knightButton.backgroundColor = "#3eaed6";
-	 knightButton.borderColor = "#6992a8";
-
-	 princessesButton.backgroundColor = "#474747";
-	 princessesButton.borderColor = "none";
-	 myFriendsButton.backgroundColor = "#474747";
-	 myFriendsButton.borderColor = "none";
-	 requestsButton.backgroundColor = "#474747";
-	 requestsButton.borderColor = "none";
-	 */
 });
 
 //Princesses Button
@@ -861,17 +915,6 @@ princessesButton.addEventListener("click", function(e) {
 	});
 	princesses_friend_home.open();
 	removeAllContent();
-	/*
-	 princessesButton.backgroundColor = "#3eaed6";
-	 princessesButton.borderColor = "#6992a8";
-
-	 knightButton.backgroundColor = "#474747";
-	 knightButton.borderColor = "none";
-	 myFriendsButton.backgroundColor = "#474747";
-	 myFriendsButton.borderColor = "none";
-	 requestsButton.backgroundColor = "#474747";
-	 requestsButton.borderColor = "none";
-	 */
 });
 
 //MyFriends Button
@@ -894,17 +937,6 @@ myFriendsButton.addEventListener("click", function(e) {
 	});
 	friend_interactions.open();
 	removeAllContent();
-	/*
-	 myFriendsButton.backgroundColor = "#3eaed6";
-	 myFriendsButton.borderColor = "#6992a8";
-
-	 knightButton.backgroundColor = "#474747";
-	 knightButton.borderColor = "none";
-	 princessesButton.backgroundColor = "#474747";
-	 princessesButton.borderColor = "none";
-	 requestsButton.backgroundColor = "#474747";
-	 requestsButton.borderColor = "none";
-	 */
 });
 
 //Requests Button
