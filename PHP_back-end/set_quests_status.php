@@ -79,6 +79,57 @@ if(isset($_GET))
 				':uid' => $uid
 				));
 			$query = "
+				SELECT XP FROM KAP_USER_MAIN WHERE UID = :uid;
+					";
+			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement->execute(
+			array(
+				':uid' => $uid
+				));
+			$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+			if(($res[0]['XP'] % 1000) == 0){
+				$query = "
+					UPDATE 
+						`KAP_USER_MAIN` 
+					SET 
+						`LEVEL`= LEVEL + 1
+					WHERE 
+						`UID`=:uid";
+				$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+				$statement->execute(
+				array(
+					':uid' => $uid
+					));
+			}
+			else{
+				$query = "
+					SELECT (XP/1000) AS `LEVEL` FROM KAP_USER_MAIN WHERE UID = :uid;
+						";
+				$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+				$statement->execute(
+				array(
+					':uid' => $uid
+					));
+				$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+				$level = substr($res[0]['LEVEL'],0,strpos($res[0]['LEVEL'],"."));
+				$query = "
+					UPDATE 
+						`KAP_USER_MAIN` 
+					SET 
+						`LEVEL`=:level,
+						`ENERGY` = ENERGY - 100
+					WHERE 
+						`UID`=:uid";
+				$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+				$statement->execute(
+				array(
+					':uid' => $uid,
+					':level' => $level
+					));
+			}
+
+			
+			$query = "
 					UPDATE `KNP_ASSIGN_QUESTS` SET `STATUS` = :status, COMPLETION_TIME = NOW() WHERE `ASSIGN_QUEST_ID`=:assign_quest_id;
 					";
 			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));

@@ -29,20 +29,21 @@ if(isset($_GET))
 		
 		////////////////////////////////////////////////////////////
 		$query1 = "
-			SELECT `UID`, `NAME`, `LAST_LOGIN`, `LEVEL`, `XP` FROM `KAP_USER_MAIN` WHERE UID = :uid
+			SELECT `UID`, `NAME`, `LAST_LOGIN`, `LEVEL`, `XP`,`ENERGY` FROM `KAP_USER_MAIN` WHERE UID = :uid
 				";
 		$statement1 = $dbObj->prepare($query1, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement1->execute(array(':uid'=>$uid));
 		$res1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
 		
-		$posts['NUM_OF_FRIENDS'] = $res[0]['NUM_OF_FRIENDS'];
-		$posts['UID'] = $res1[0]['UID'];
-		$posts['NAME'] = $res1[0]['NAME'];
-		$posts['LAST_LOGIN'] = $res1[0]['LAST_LOGIN'];
-		$posts['LEVEL'] = $res1[0]['LEVEL'];
-		$posts['XP'] = $res1[0]['XP'];
+		$posts[0]['NUM_OF_FRIENDS'] = $res[0]['NUM_OF_FRIENDS'];
+		$posts[0]['UID'] = $res1[0]['UID'];
+		$posts[0]['NAME'] = $res1[0]['NAME'];
+		$posts[0]['LAST_LOGIN'] = $res1[0]['LAST_LOGIN'];
+		$posts[0]['LEVEL'] = $res1[0]['LEVEL'];
+		$posts[0]['XP'] = $res1[0]['XP'];
+		$posts[0]['ENERGY'] = $res1[0]['ENERGY'];
 		
-		$records = array('Record'=>$posts);//$records = array('Error'=>$posts);
+		$records = array('Record'=>$posts);//$records = array('Error'=>$posts[0]);
 
 	}
 	else

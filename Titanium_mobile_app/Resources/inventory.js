@@ -171,7 +171,7 @@ timer = setInterval(function() {
 	var Record;
 	var get_notifications_xhr = Ti.Network.createHTTPClient({
 		onload : function() {
-			Ti.API.info("url: " + get_notifications_);
+			Ti.API.info("url: " + get_notifications_url);
 			json = JSON.parse(this.responseText);
 			if (json.Record != undefined) {
 				rec = json.Record[0];
@@ -239,12 +239,11 @@ var coinImage = Titanium.UI.createImageView({
 });
 coinView.add(coinImage);
 
-
-
-function getGold(callback){
+function getGold(callback) {
 	//alert('Enter!');
-	var url = "http://justechinfo.com/kap_server/get_golds.php?uid="+Ti.App.GLBL_uid;
-	var rec;//,UID;
+	var url = "http://justechinfo.com/kap_server/get_golds.php?uid=" + Ti.App.GLBL_uid;
+	var rec;
+	//,UID;
 	var xhr = Ti.Network.createHTTPClient({
 		onload : function() {
 			json = JSON.parse(this.responseText);
@@ -253,15 +252,13 @@ function getGold(callback){
 				//alert(rec.TOTAL_UNIT);
 				//Goldlbl.setText = rec.TOTAL_UNIT;
 				//num_of_golds = rec.TOTAL_UNIT;
-				
+
 				callback(rec.TOTAL_UNIT);
 
-			}
-			else{
+			} else {
 				alert('Some error occured!');
 			}
-	
-			
+
 		},
 		onerror : function(e) {
 			Ti.API.debug("STATUS: " + this.status);
@@ -274,8 +271,9 @@ function getGold(callback){
 	xhr.open("GET", url);
 	xhr.send();
 }
-var lblCoin ;
-getGold(function(gold){
+
+var lblCoin;
+getGold(function(gold) {
 	lblCoin = Titanium.UI.createLabel({
 		text : gold,
 		bottom : getCoinTextY(),
@@ -287,9 +285,6 @@ getGold(function(gold){
 	});
 	coinView.add(lblCoin);
 });
-
-
-
 
 //Coin Text
 
@@ -393,14 +388,13 @@ var lblfrnds = Titanium.UI.createLabel({
 
 frndsView.add(lblfrnds);
 frndsView.addEventListener("click", function(e) {
-	
-	if(friendshipRequestAlertImageView.visible){
+
+	if (friendshipRequestAlertImageView.visible) {
 		Titanium.UI.createWindow({
 			url : 'request_friends.js'
 		}).open();
 		removeAllContent();
-	}
-	else{
+	} else {
 		Titanium.UI.createWindow({
 			url : 'friend_interactions.js'
 		}).open();
@@ -594,9 +588,41 @@ var xpFuelView = Titanium.UI.createView({
 	top : (getHeaderButtonY()) + (getHeaderHeight() * 3 / 2) - getAvatarHeight() - (getHeaderButtonY() / 2),
 	height : (getHeaderButtonY() * 2),
 	width : (winWidth * 95 / 100) - (getHeaderButtonY() + (2 * getAvatarWidth())) - ((getHeaderHeight() * 3 / 2) - getAvatarHeight() - (getHeaderButtonY() / 2)), //getHeaderButtonY()+(2*getAvatarWidth())
-	backgroundImage : "images/xp_fuel_63.png"
+	backgroundColor : "#4d4d4d"
 	//left:"10%"
 });
+var xpFuelFilledView = Titanium.UI.createView({
+	left : 0,
+	top : 0,
+	height : "100%",
+	width : "0%",
+	backgroundColor : "#FE1D25"
+	//left:"10%"
+});
+xpFuelView.add(xpFuelFilledView);
+
+// Create a Label.
+var xpFuelPercentLbl = Ti.UI.createLabel({
+	text : '',
+	color : '#FFFFFF',
+	font : {
+		fontSize : 12
+	},
+	textAlign : 'center'
+});
+xpFuelView.add(xpFuelPercentLbl);
+
+// Create a Label.
+var xpFuelLbl = Ti.UI.createLabel({
+	text : 'XP',
+	color : '#FFFFFF',
+	right : 8,
+	font : {
+		fontSize : 12
+	},
+	textAlign : 'center'
+});
+xpFuelView.add(xpFuelLbl);
 
 //energyFuelView
 var energyFuelView = Titanium.UI.createView({
@@ -604,8 +630,79 @@ var energyFuelView = Titanium.UI.createView({
 	top : (getHeaderButtonY()) + (getHeaderHeight() * 3 / 2) - getAvatarHeight() - (getHeaderButtonY() / 2) + ((getHeaderButtonY() * 2)) + (getHeaderButtonY()),
 	height : (getHeaderButtonY() * 2),
 	width : (winWidth * 95 / 100) - (getHeaderButtonY() + (2 * getAvatarWidth())) - ((getHeaderHeight() * 3 / 2) - getAvatarHeight() - (getHeaderButtonY() / 2)),
-	backgroundImage : "images/energy_fuel.png"
+	backgroundColor : "#4d4d4d"
 	//left:"10%"
+});
+
+var energyFuelFilledView = Titanium.UI.createView({
+	left : 0,
+	top : 0,
+	height : "100%",
+	width : "0%",
+	backgroundColor : "#C001FF"
+	//left:"10%"
+});
+energyFuelView.add(energyFuelFilledView);
+
+// Create a Label.
+var energyFuelPercentLbl = Ti.UI.createLabel({
+	text : '',
+	color : '#FFFFFF',
+	font : {
+		fontSize : 12
+	},
+	textAlign : 'center'
+});
+energyFuelView.add(energyFuelPercentLbl);
+
+// Create a Label.
+var energyFuelLbl = Ti.UI.createLabel({
+	text : 'Energy',
+	color : '#FFFFFF',
+	right : 8,
+	font : {
+		fontSize : 12
+	},
+	textAlign : 'center'
+});
+energyFuelView.add(energyFuelLbl);
+
+function getXPAndEnergy(callback) {
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + Ti.App.GLBL_uid;
+	var rec;
+	//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				callback(rec.XP, rec.ENERGY, rec.LEVEL);
+			} else {
+				alert('Some error occured!');
+			}
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+
+//numberOfFriends
+var numberOfFriends;
+getXPAndEnergy(function(xp_val, energy_val, level_val) {
+	var xp_max_val = level_val * 1000, energy_max_val = level_val * 1000;
+	xpFuelFilledView.width = "" + ((xp_val / xp_max_val) * 100) + "%";
+	xpFuelPercentLbl.text = xp_val + "/" + xp_max_val;
+	energyFuelFilledView.width = "" + ((energy_val / energy_max_val) * 100) + "%";
+	energyFuelPercentLbl.text = "" + ((energy_val / energy_max_val) * 100) + "%";
+
 });
 
 //groupStatusLastRow
@@ -625,27 +722,20 @@ var firendsIconImage = Titanium.UI.createImageView({
 });
 groupStatusLastRow.add(firendsIconImage);
 
-function getNumberOfFriends(callback){
+function getNumberOfFriends(callback) {
 	//alert('Enter!');
-	var url = "http://justechinfo.com/kap_server/get_avatar_friend_count.php?uid="+Ti.App.GLBL_uid;
-	var rec;//,UID;
+	var url = "http://justechinfo.com/kap_server/get_avatar_friend_count.php?uid=" + Ti.App.GLBL_uid;
+	var rec;
+	//,UID;
 	var xhr = Ti.Network.createHTTPClient({
 		onload : function() {
 			json = JSON.parse(this.responseText);
 			if (json.Record != undefined) {
 				rec = json.Record[0];
-				//alert(rec.TOTAL_UNIT);
-				//Goldlbl.setText = rec.TOTAL_UNIT;
-				//num_of_golds = rec.TOTAL_UNIT;
-				
 				callback(rec.NUM_OF_FRIENDS);
-
-			}
-			else{
+			} else {
 				alert('Some error occured!');
 			}
-	
-			
 		},
 		onerror : function(e) {
 			Ti.API.debug("STATUS: " + this.status);
@@ -658,9 +748,10 @@ function getNumberOfFriends(callback){
 	xhr.open("GET", url);
 	xhr.send();
 }
+
 //numberOfFriends
-var numberOfFriends; 
-getNumberOfFriends(function(num_of_friends){
+var numberOfFriends;
+getNumberOfFriends(function(num_of_friends) {
 	numberOfFriends = Titanium.UI.createLabel({
 		left : getFirendsIconWidth() + getHeaderButtonY(),
 		font : {
@@ -668,14 +759,11 @@ getNumberOfFriends(function(num_of_friends){
 			fontFamily : "MagicalMedieval"
 		},
 		color : "#FFFFFF",
-		text : num_of_friends+" friends"
+		text : num_of_friends + " friends"
 	});
-	
+
 	groupStatusLastRow.add(numberOfFriends);
 });
-
-
-
 
 //completedRequests
 var completedRequests = Titanium.UI.createLabel({
@@ -724,18 +812,18 @@ var characterPointsImage = Titanium.UI.createView({
 });
 //lblCharacterPoints
 var lblCharacterPoints;
-function getLevel(callback){
+function getLevel(callback) {
 	//alert('Enter!');
-	var url = "http://justechinfo.com/kap_server/get_level.php?uid="+Ti.App.GLBL_uid;
-	var rec;//,UID;
+	var url = "http://justechinfo.com/kap_server/get_level.php?uid=" + Ti.App.GLBL_uid;
+	var rec;
+	//,UID;
 	var xhr = Ti.Network.createHTTPClient({
 		onload : function() {
 			json = JSON.parse(this.responseText);
 			if (json.Record != undefined) {
 				rec = json.Record[0];
 				callback(rec.LEVEL);
-			}
-			else{
+			} else {
 				alert('Some error occured!');
 			}
 		},
@@ -750,9 +838,10 @@ function getLevel(callback){
 	xhr.open("GET", url);
 	xhr.send();
 }
+
 //numberOfFriends
-var numberOfFriends; 
-getLevel(function(level){
+var numberOfFriends;
+getLevel(function(level) {
 	lblCharacterPoints = Titanium.UI.createLabel({
 		text : level,
 		font : {
@@ -1008,7 +1097,7 @@ inventoryItemsView.add(itemDescriptionView);
 var lblItemNumberDescription = Titanium.UI.createLabel({
 	top : getHeaderButtonY(),
 	left : getHeaderButtonY(),
-	text : '',//(selected_item_index + 1),
+	text : '', //(selected_item_index + 1),
 	font : {
 		fontSize : getButtonTextSize(),
 		fontFamily : "MagicalMedieval"
@@ -1019,7 +1108,7 @@ itemDescriptionView.add(lblItemNumberDescription);
 
 //selectedItemIcon
 var selectedItemIcon = Titanium.UI.createImageView({
-	image :'',// "images/" + Ti.App.GLBL_items_image[selected_item_index] + "_" + Ti.App.GLBL_skin_color + ".png", //"images/K_ChestPlate_bad_crop.png",
+	image : '', // "images/" + Ti.App.GLBL_items_image[selected_item_index] + "_" + Ti.App.GLBL_skin_color + ".png", //"images/K_ChestPlate_bad_crop.png",
 	top : getHeaderButtonY(),
 	left : 4 * getHeaderButtonY(),
 	width : (getThumbImageWidth(Ti.App.GLBL_items_image[selected_item_index]) * 2),
@@ -1031,7 +1120,7 @@ itemDescriptionView.add(selectedItemIcon);
 var lblItemName = Titanium.UI.createLabel({
 	top : getHeaderButtonY(),
 	left : 5 * getHeaderButtonY() + getHeaderHeight() * (3 / 4),
-	text : 'N/A',//Ti.App.GLBL_items_title[selected_item_index],
+	text : 'N/A', //Ti.App.GLBL_items_title[selected_item_index],
 	font : {
 		fontSize : getButtonTextSize()
 	},
@@ -1043,7 +1132,7 @@ itemDescriptionView.add(lblItemName);
 var lblItemValue = Titanium.UI.createLabel({
 	top : (2 * getHeaderButtonY()) + getButtonTextSize(),
 	left : 5 * getHeaderButtonY() + getHeaderHeight() * (3 / 4),
-	text : '',//"Value : " + Ti.App.GLBL_items_value[0] + " gold", //"Value : 3 gold",
+	text : '', //"Value : " + Ti.App.GLBL_items_value[0] + " gold", //"Value : 3 gold",
 	font : {
 		fontSize : getCompletedRequestsFontSize()
 	},
@@ -1055,7 +1144,7 @@ itemDescriptionView.add(lblItemValue);
 var lblItemDescription = Titanium.UI.createLabel({
 	top : getHeaderButtonY() + getHeaderHeight() * (3 / 4),
 	left : 3 * getHeaderButtonY(),
-	text : '',//Ti.App.GLBL_items_description[selected_item_index], //"makes a great gift, can be combined with _____ in crafting to increase its value",
+	text : '', //Ti.App.GLBL_items_description[selected_item_index], //"makes a great gift, can be combined with _____ in crafting to increase its value",
 	font : {
 		fontSize : getButtonTextSize(),
 		fontFamily : "MagicalMedieval"
@@ -1081,10 +1170,9 @@ var giftButton = Titanium.UI.createButton({
 });
 giftButton.addEventListener("click", function(e) {
 
-	if(active_inventory_cat == '' || active_inventory_id == ''){
+	if (active_inventory_cat == '' || active_inventory_id == '') {
 		alert('Please select some inventory first!');
-	}
-	else{
+	} else {
 		Ti.App.Properties.setString('active_inventory_cat', active_inventory_cat);
 		Ti.App.Properties.setString('active_inventory_id', active_inventory_id);
 
@@ -1183,7 +1271,7 @@ function renderInventoryPerPage(page_no) {
 	var rec_inventory;
 	var inv_icon_views = [];
 	var inv_icon_buttons = [];
-	var gridItem1Icon ;
+	var gridItem1Icon;
 	var inv_index = 0;
 	var active_inv_set = false;
 	for (var i = 0; i < 3; i++) {
@@ -1198,7 +1286,7 @@ function renderInventoryPerPage(page_no) {
 				rec_inventory = json_inventories.Record[counter];
 				//alert(rec);
 			}
-			if(active_inv_set){
+			if (active_inv_set) {
 				lblItemName.text = rec_inventory.NAME;
 				lblItemValue.text = "Value : " + rec_inventory.REQ_GOLD + " gold";
 				lblItemNumberDescription.text = rec_inventory.TOTAL_UNIT;
@@ -1208,7 +1296,6 @@ function renderInventoryPerPage(page_no) {
 				active_inventory_id = rec_inventory.ID;
 				active_inventory_cat = rec_inventory.CATEGORY;
 			}
-
 
 			inv_icon_views[inv_index] = Titanium.UI.createView({
 				left : (j + 1) * getHeaderButtonY() + j * getMsgsButtonWidth(),
@@ -1221,38 +1308,36 @@ function renderInventoryPerPage(page_no) {
 				height : getMsgsButtonWidth()
 			});
 			inv_icon_buttons[inv_index] = Titanium.UI.createButton({
-				width : 50, 
+				width : 50,
 				height : 50,
 				backgroundImage : getThumbImage(rec_inventory.IMAGE),
 				id : rec_inventory.ID,
-				name : rec_inventory.NAME, 
+				name : rec_inventory.NAME,
 				category : rec_inventory.CATEGORY,
 				image : rec_inventory.IMAGE,
-				req_gold : rec_inventory.REQ_GOLD, 
+				req_gold : rec_inventory.REQ_GOLD,
 				description : rec_inventory.DESCRIPTION,
 				qty : rec_inventory.TOTAL_UNIT
 			});
-			
-			inv_icon_views[inv_index].add(inv_icon_buttons[inv_index]);
-			
-			(function(inv_item) {
-				inv_item.addEventListener("click", function(e) {
-					if (Ti.App.GLBL_items_image[counter] != "") {
-						lblItemName.text = e.source.name;
-						lblItemValue.text = "Value : " + e.source.req_gold + " gold";
-						lblItemNumberDescription.text = e.source.qty;
-						selectedItemIcon.image = getThumbImage(e.source.image);
-						lblItemDescription.text = e.source.description;
-						active_inventory_cat = e.source.category;
-						active_inventory_id = e.source.id;
-					}
-				});
-			}(inv_icon_buttons[inv_index]));
-			
+
+			inv_icon_views[inv_index].add(inv_icon_buttons[inv_index]); ( function(inv_item) {
+					inv_item.addEventListener("click", function(e) {
+						if (Ti.App.GLBL_items_image[counter] != "") {
+							lblItemName.text = e.source.name;
+							lblItemValue.text = "Value : " + e.source.req_gold + " gold";
+							lblItemNumberDescription.text = e.source.qty;
+							selectedItemIcon.image = getThumbImage(e.source.image);
+							lblItemDescription.text = e.source.description;
+							active_inventory_cat = e.source.category;
+							active_inventory_id = e.source.id;
+						}
+					});
+				}(inv_icon_buttons[inv_index]));
+
 			//gridItem1Icon
 			gridItem1Icon = Titanium.UI.createImageView({
 				image : getThumbImage(rec_inventory.IMAGE),
-				width : 50, 
+				width : 50,
 				height : 50
 			});
 			//inv_icon_views[inv_index].add(gridItem1Icon);
@@ -1346,11 +1431,11 @@ var craftingButton = Titanium.UI.createButton({
 craftingButton.addEventListener("click", function(e) {
 	alert('Screen is under construction!');
 	/*var window = Titanium.UI.createWindow({
-		url : 'craft_home.js'
-	});
-	window.open();
-	removeAllContent();
-	*/
+	 url : 'craft_home.js'
+	 });
+	 window.open();
+	 removeAllContent();
+	 */
 });
 
 itemsGridView.add(craftingButton);
