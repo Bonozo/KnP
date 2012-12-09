@@ -13,6 +13,18 @@ if(isset($_GET))
 	extract($_GET);
 	if(isset($uid))
 	{
+
+		
+		$query = "SELECT COUNT(uid) AS NUM_OF_INV FROM KNP_INVENTORY_TRANSACTION_SUMMARY WHERE uid = :uid";
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(array(':uid'=>$uid));
+		$num_of_inv = $statement->fetchAll(PDO::FETCH_ASSOC);
+		
+		$query = "SELECT COUNT(ASSIGN_TO_UID) AS NUM_OF_QUESTS FROM KNP_ASSIGN_QUESTS WHERE ASSIGN_TO_UID = :uid";
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(array(':uid'=>$uid));
+		$num_of_quests = $statement->fetchAll(PDO::FETCH_ASSOC);
+		
 		$query =   
 			"SELECT 
 				COUNT(M.UID) AS `NUM_OF_FRIENDS` 
@@ -25,23 +37,28 @@ if(isset($_GET))
 			";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(array(':uid'=>$uid));
-		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+		$num_of_friends = $statement->fetchAll(PDO::FETCH_ASSOC);
 		
 		////////////////////////////////////////////////////////////
 		$query1 = "
-			SELECT `UID`, `NAME`, `LAST_LOGIN`, `LEVEL`, `XP`,`ENERGY` FROM `KAP_USER_MAIN` WHERE UID = :uid
+			SELECT `UID`, `NAME`, `GENDER`, `MARITIAL_STATUS`,  `LAST_LOGIN`, `LEVEL`, `XP`,`ENERGY` FROM `KAP_USER_MAIN` WHERE UID = :uid
 				";
 		$statement1 = $dbObj->prepare($query1, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement1->execute(array(':uid'=>$uid));
 		$res1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
 		
-		$posts[0]['NUM_OF_FRIENDS'] = $res[0]['NUM_OF_FRIENDS'];
 		$posts[0]['UID'] = $res1[0]['UID'];
 		$posts[0]['NAME'] = $res1[0]['NAME'];
+		$posts[0]['GENDER'] = (strcmp($res1[0]['GENDER'],'m') == 0)?'KNIGHT':'PRINCESS';
+		$posts[0]['MARITIAL_STATUS'] = $res1[0]['MARITIAL_STATUS'];
 		$posts[0]['LAST_LOGIN'] = $res1[0]['LAST_LOGIN'];
 		$posts[0]['LEVEL'] = $res1[0]['LEVEL'];
 		$posts[0]['XP'] = $res1[0]['XP'];
 		$posts[0]['ENERGY'] = $res1[0]['ENERGY'];
+		$posts[0]['NUM_OF_QUESTS'] = $num_of_quests[0]['NUM_OF_QUESTS'];
+		$posts[0]['NUM_OF_FRIENDS'] = $num_of_friends[0]['NUM_OF_FRIENDS'];
+		$posts[0]['NUM_OF_INV'] = $num_of_inv[0]['NUM_OF_INV'];
+		
 		
 		$records = array('Record'=>$posts);//$records = array('Error'=>$posts[0]);
 

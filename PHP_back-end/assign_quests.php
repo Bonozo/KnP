@@ -23,6 +23,7 @@ if(isset($_GET))
 						(:quest_id,:assign_by_uid,:assign_to_uid,:message,'0000-00-00 00:00:00','INCOMPLETE');
 					";
 			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement->bindParam(':assign_by_uid', $assign_by_uid, PDO::PARAM_INT);
 			$statement->execute(
 			array(
 				':quest_id' => $quest_id,
@@ -31,7 +32,10 @@ if(isset($_GET))
 				':message'=>$message
 				));
 		}
-		$posts[] = array("Message"=>"Quests Assigned!");
+		
+
+		$lastid = $dbObj->lastInsertId();
+		$posts[] = array("Message"=>"Quests Assigned!", "assign_quest_id"=>"$lastid");
 		$records = $posts;
 	}
 	else
