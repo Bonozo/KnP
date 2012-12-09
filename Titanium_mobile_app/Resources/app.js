@@ -1,5 +1,6 @@
 // Ti.include('jsonrpc.js');
 //Ti.App.GLBL_
+Ti.include('status_main.js');
 Ti.include('func_app.js');
 Ti.App.GLBL_default_font = 'MagicMedieval';
 Ti.App.GLBL_gender = "";
@@ -273,17 +274,7 @@ var signInButton = Titanium.UI.createButton({
 		fontFamily : Ti.App.GLBL_default_font
 	}
 });
-/*
-signInButton.addEventListener("click", function(e) {
-	Ti.App.GLBL_uid = '10000001';
-	Ti.App.Properties.setString('friend_request_uid','10000002');
-	var message_room = Titanium.UI.createWindow({
-		url : 'message_room.js'
-	});
-	message_room.open();
-	removeAllContent();
-});
-*/
+
 signInButton.addEventListener("click", function(e) {
 	var email = emailField.value;
 	var password = passwordField.value;
@@ -319,10 +310,7 @@ signInButton.addEventListener("click", function(e) {
 				}
 				Ti.App.GLBL_character_created = true;
 				Ti.App.GLBL_name = Record.NAME;
-				var window = Titanium.UI.createWindow({
-					url : 'inventory.js'
-				});
-				window.open();
+				StatusMain("param").open();
 				//win.close();
 				removeAllContent();
 				//window = null;

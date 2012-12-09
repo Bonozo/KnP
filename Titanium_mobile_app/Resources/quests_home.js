@@ -896,6 +896,7 @@ var freePlayView = Ti.UI.createView({
 	bottom : getHeaderHeight()
 });
 
+
 // Free PlayLabel.
 var freePlayLbl = Ti.UI.createLabel({
 	text : 'Free Play',
@@ -927,6 +928,7 @@ var gameIconsView = Ti.UI.createView({
 });
 freePlayView.add(gameIconsView);
 
+//justechinfo.com/kap_server/assign_quests.php?assign_by_uid=10000001&assign_to_uid=10000001&quest_ids=,80000001,80000002&message=helloooooo
 //Horse Riding Icon
 var horseRidingIconImage = Ti.UI.createImageView({
 	image : "images/quests_icon.png",
@@ -936,6 +938,39 @@ var horseRidingIconImage = Ti.UI.createImageView({
 	width : getChallengeImageWidth()
 });
 gameIconsView.add(horseRidingIconImage);
+horseRidingIconImage.addEventListener('click',function(){
+	var url = "http://justechinfo.com/kap_server/assign_quests.php?assign_by_uid="+Ti.App.GLBL_uid+"&assign_to_uid="+Ti.App.GLBL_uid+"&quest_ids=80000003&message=Single Player Game";
+	
+	var Record;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				Ti.App.Properties.setString('assign_quest_id', rec.assign_quest_id);
+				Ti.App.Properties.setString('quest_id', "80000003");
+				Ti.App.Properties.setString('quest_name', "Joust");
+				removeAllContent();
+				Titanium.UI.createWindow({
+					url : 'play_quests.js'
+				}).open();
+			} else {
+				alert('Some error occured!');
+			}
+			
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+	
+});
 
 //Archery Icon
 var archeryIconImage = Ti.UI.createImageView({
@@ -947,6 +982,39 @@ var archeryIconImage = Ti.UI.createImageView({
 });
 				
 gameIconsView.add(archeryIconImage);
+archeryIconImage.addEventListener('click',function(){
+	var url = "http://justechinfo.com/kap_server/assign_quests.php?assign_by_uid="+Ti.App.GLBL_uid+"&assign_to_uid="+Ti.App.GLBL_uid+"&quest_ids=80000001&message=Single Player Game";
+	
+	var Record;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				Ti.App.Properties.setString('assign_quest_id', rec.assign_quest_id);
+				Ti.App.Properties.setString('quest_id', "80000001");
+				Ti.App.Properties.setString('quest_name', "Archery");
+				removeAllContent();
+				Titanium.UI.createWindow({
+					url : 'play_quests.js'
+				}).open();
+			} else {
+				alert('Some error occured!');
+			}
+			
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+	
+});
 
 //Painting Icon
 var paintingIconImage = Ti.UI.createImageView({
@@ -957,6 +1025,39 @@ var paintingIconImage = Ti.UI.createImageView({
 	width : getChallengeImageWidth()
 });
 gameIconsView.add(paintingIconImage);
+paintingIconImage.addEventListener('click',function(){
+	var url = "http://justechinfo.com/kap_server/assign_quests.php?assign_by_uid="+Ti.App.GLBL_uid+"&assign_to_uid="+Ti.App.GLBL_uid+"&quest_ids=80000002&message=Single Player Game";
+	
+	var Record;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				Ti.App.Properties.setString('assign_quest_id', rec.assign_quest_id);
+				Ti.App.Properties.setString('quest_id', "80000002");
+				Ti.App.Properties.setString('quest_name', "Sonnet");
+				removeAllContent();
+				Titanium.UI.createWindow({
+					url : 'play_quests.js'
+				}).open();
+			} else {
+				alert('Some error occured!');
+			}
+			
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+	
+});
 
 //Cooking Icon
 var cookingIconImage = Ti.UI.createImageView({

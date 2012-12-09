@@ -1,7 +1,6 @@
 function removeAllContent() {
 	headerView.remove(headerAvatarHeaderIcon);
 	headerView.remove(nameOfCharacter);
-	levelView.remove(LVLlbl);
 	headerView.remove(levelView);
 	totalGoldView.remove(Goldlbl);
 	headerView.remove(totalGoldView);
@@ -64,7 +63,6 @@ function removeAllContent() {
 	headerAvatarHeaderIcon = null;
 	nameOfCharacter = null;
 	levelView = null;
-	LVLlbl = null;
 	totalGoldView = null;
 	Goldlbl = null;
 	backButton = null;
@@ -416,9 +414,6 @@ var levelView = Titanium.UI.createView({
 	right : getHeaderHeight() + 2 * getMarginNormal1() + 3 * getHeaderHeight(),
 	width : 2 * getHeaderHeight()
 });
-//LVLlbl
-//LVLlbl
-var LVLlbl;
 function getLevel(callback){
 	//alert('Enter!');
 	var url = "http://justechinfo.com/kap_server/get_level.php?uid="+Ti.App.GLBL_uid;
@@ -448,16 +443,7 @@ function getLevel(callback){
 //numberOfFriends
 var numberOfFriends; 
 getLevel(function(level){
-	LVLlbl = Titanium.UI.createLabel({
-		text : "LVL: "+level,
-		color : "#FFFFFF",
-		textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
-		font : {
-			fontSize : getFontSizeNormal1()
-		}
-	});
-	levelView.add(LVLlbl);
-	headerView.add(levelView);
+	levelValueLbl.text = level;
 });
 
 /*
@@ -597,43 +583,21 @@ var congratsMessageLbl = Ti.UI.createLabel({
 enabledWrapperView.add(congratsMessageLbl);
 
 // Create a Label.
-var playerNameLbl;
-function getLevel(callback){
-	var url = "http://justechinfo.com/kap_server/set_quests_status.php?assign_quest_id=" + Ti.App.Properties.getString('assign_quest_id') + "&status=COMPLETE";
-	var xhr = Ti.Network.createHTTPClient({
-		onload : function() {
-			callback();
-		},
-		onerror : function(e) {
-			Ti.API.debug("STATUS: " + this.status);
-			Ti.API.debug("TEXT: " + this.responseText);
-			Ti.API.debug("ERROR: " + e.error);
-			alert('There was an error retrieving the remote data. Try again.');
-		},
-		timeout : 5000
-	});
-	xhr.open("GET", url);
-	xhr.send();
-}
-//numberOfFriends
-var numberOfFriends; 
-getLevel(function(){
-	playerNameLbl = Ti.UI.createLabel({
-		text : Ti.App.Properties.getString('assign_by_uid'),
-		color : '#FFFFFF',
-		font : {
-			fontSize : getHeadingFontSize()
-		},
-		top : getMarginNormal1(),
-		left : myPicImage.left + myPicImage.width + getMarginNormal1(),
-		textAlign : 'left'
-	});
+var playerNameLbl = Ti.UI.createLabel({
+	text : Ti.App.GLBL_name,
+	color : '#FFFFFF',
+	font : {
+		fontSize : getHeadingFontSize()
+	},
+	top : getMarginNormal1(),
+	left : myPicImage.left + myPicImage.width + getMarginNormal1(),
+	textAlign : 'left'
 });
+enabledWrapperView.add(playerNameLbl);
 
 
 
 // Add to the parent view.
-enabledWrapperView.add(playerNameLbl);
 
 // Level And Gold View
 var levelAndGoldView = Ti.UI.createView({
@@ -668,7 +632,7 @@ var levelLbl = Ti.UI.createLabel({
 levelView.add(levelLbl);
 
 var levelValueLbl = Ti.UI.createLabel({
-	text : '4',
+	text : '',
 	color : '#FFE801',
 	font : {
 		fontSize : getNormalFontSize()
@@ -698,11 +662,14 @@ goldView.add(goldImageView);
 
 var goldLbl = Ti.UI.createLabel({
 	height : "50%",
-	text : "600",
+	text : "",
 	color : '#FFE801',
 	bottom : 0
 });
 goldView.add(goldLbl);
+getGold(function(num_of_golds){
+	goldLbl.text = num_of_golds;
+});
 
 // Online Status Icon
 var onlineStatusIcon = Ti.UI.createView({
@@ -759,7 +726,7 @@ enabledWrapperView.add(numberOfFriendsIconImage);
 
 // numberOfFriendsLbl
 var numberOfFriendsLbl = Ti.UI.createLabel({
-	text : '32 friends',
+	text : '',
 	color : '#FFFFFF',
 	font : {
 		fontSize : getSmallFontSize()
@@ -767,6 +734,35 @@ var numberOfFriendsLbl = Ti.UI.createLabel({
 	top : myPicImage.height + 3 * getMarginNormal1(),
 	left : getMarginNormal1() * 5,
 	textAlign : 'center'
+});
+function getNumberOfFriends(callback) {
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_avatar_friend_count.php?uid=" + Ti.App.GLBL_uid;
+	var rec;
+	//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				callback(rec.NUM_OF_FRIENDS);
+			} else {
+				alert('Some error occured!');
+			}
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+getNumberOfFriends(function(num_of_friends){
+	numberOfFriendsLbl.text = num_of_friends + " friends";
 });
 
 // Add to the parent view.
@@ -925,7 +921,7 @@ collectionsContainerView.add(daggerNotificationIconView);
 
 // Dagger Notification
 var daggerNotificationLbl = Ti.UI.createLabel({
-	text : '2',
+	text : '',
 	color : '#FFFFFF',
 	font : {
 		fontSize : getSmallFontSize()
@@ -956,7 +952,7 @@ collectionsContainerView.add(containerNotificationIconView);
 
 // container Notification
 var containerNotificationLbl = Ti.UI.createLabel({
-	text : '1',
+	text : '',
 	color : '#FFFFFF',
 	font : {
 		fontSize : getSmallFontSize()
@@ -986,7 +982,7 @@ collectionsContainerView.add(flowerNotificationIconView);
 
 // flower Notification
 var flowerNotificationLbl = Ti.UI.createLabel({
-	text : '1',
+	text : '',
 	color : '#FFFFFF',
 	font : {
 		fontSize : getSmallFontSize()
@@ -1017,7 +1013,7 @@ collectionsContainerView.add(coinNotificationIconView);
 
 // coin Notification
 var coinNotificationLbl = Ti.UI.createLabel({
-	text : '1',
+	text : '',
 	color : '#F7F705',
 	font : {
 		fontSize : getSmallFontSize()
@@ -1025,6 +1021,67 @@ var coinNotificationLbl = Ti.UI.createLabel({
 	textAlign : 'center'
 });
 coinNotificationIconView.add(coinNotificationLbl);
+
+function getNumberOfFriends(callback) {
+	//alert('Enter!');
+	var url = "http://justechinfo.com/kap_server/get_quests_rewards.php?assign_quest_id=" + Ti.App.Properties.getString('assign_quest_id');
+	var rec;
+	//,UID;
+	var xhr = Ti.Network.createHTTPClient({
+		onload : function() {
+			json = JSON.parse(this.responseText);
+			if (json.Record != undefined) {
+				rec = json.Record[0];
+				var knife,flower, gold, vase;
+
+				if(rec.KNIFE != undefined){
+					knife = rec.KNIFE ;
+				}
+				else{
+					knife = 0;
+				}
+				if(rec.FLOWER != undefined){
+					flower  = rec.FLOWER;
+				}
+				else{
+					flower  = 0;
+				}
+				if(rec.GOLD != undefined){
+					gold = rec.GOLD;
+				}
+				else{
+					gold = 0;
+				}
+				if(rec.VASE != undefined){
+					vase= rec.VASE ;
+				}
+				else{
+					vase= 0;
+				}
+				
+				callback(knife,flower, gold, vase);
+			} else {
+				alert('Some error occured!');
+			}
+		},
+		onerror : function(e) {
+			Ti.API.debug("STATUS: " + this.status);
+			Ti.API.debug("TEXT: " + this.responseText);
+			Ti.API.debug("ERROR: " + e.error);
+			alert('There was an error retrieving the remote data. Try again.');
+		},
+		timeout : 5000
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+getNumberOfFriends(function(knife,flower, gold, vase){
+	daggerNotificationLbl.text = knife;
+	containerNotificationLbl.text = vase;
+	flowerNotificationLbl.text = flower;
+	coinNotificationLbl.text = gold;
+	
+});
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 

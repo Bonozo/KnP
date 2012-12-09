@@ -697,7 +697,7 @@ function getXPAndEnergy(callback) {
 //numberOfFriends
 var numberOfFriends;
 getXPAndEnergy(function(xp_val, energy_val, level_val) {
-	var xp_max_val = level_val * 1000, energy_max_val = level_val * 1000;
+	var xp_max_val = level_val * 1000 + 1000, energy_max_val = level_val * 1000;
 	xpFuelFilledView.width = "" + ((xp_val / xp_max_val) * 100) + "%";
 	xpFuelPercentLbl.text = xp_val + "/" + xp_max_val;
 	energyFuelFilledView.width = "" + ((energy_val / energy_max_val) * 100) + "%";
