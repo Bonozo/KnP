@@ -1,5 +1,4 @@
-function StatusMain(param){
-	Ti.include('inventory_main.js');
+function InventoryMain(param){
 	var self = Ti.UI.createWindow({
 		navBarHidden : true,
 		backgroundColor : '#CCC'
@@ -12,8 +11,12 @@ function StatusMain(param){
 	self.add(backgroundView);
 	// Create an ImageView.
 	var characterImageView = Ti.UI.createImageView({
+		left : 240,
+		top : 60,
 		image : 'images/hdpi_female_character_gray.png',
-		width : "95%"
+		width : "70%",
+		height : "70%",
+		zIndex : 10
 	});
 	characterImageView.addEventListener('load', function() {
 		Ti.API.info('Image loaded!');
@@ -33,7 +36,8 @@ function StatusMain(param){
 	
 	// Create a Label.
 	var statusLabel = Ti.UI.createLabel({
-		text : 'STATUS',
+		text : 'INVENTORY',
+		zIndex : 50,
 		color : '#5AFF9D',
 		font : {fontSize:20,fontFamily : Ti.App.GLBL_default_font},
 		top : current_top,
@@ -44,6 +48,7 @@ function StatusMain(param){
 	
 	var crownImageView = Ti.UI.createImageView({
 		image : 'images/status/iconStatus.png',
+		zIndex : 50,
 		left : 2,
 		top : current_top,
 		width : "100%",
@@ -52,21 +57,27 @@ function StatusMain(param){
 	leftBarView.add(crownImageView);
 	current_top += 100;
 	
+/*
 	var inventoryImageView = Ti.UI.createImageView({
 		image : 'images/status/iconInventory.png',
+		zIndex : 50,
 		top : current_top,
 		left : 5,
 		width : 54,
 		height : 54
 	});
 	inventoryImageView.addEventListener('click',function(e){
-		InventoryMain("param").open();
+		Titanium.UI.createWindow({
+			url : 'inventory.js'
+		}).open();
 	});
 	leftBarView.add(inventoryImageView);
 	current_top += 60;
+*/
 
 	var friendsImageView = Ti.UI.createImageView({
 		image : 'images/status/iconFriends.png',
+		zIndex : 50,
 		top : current_top,
 		left : 5,
 		width : 54,
@@ -84,6 +95,7 @@ function StatusMain(param){
 		image : 'images/status/iconQuests.png',
 		top : current_top,
 		left : 5,
+		zIndex : 50,
 		width : 54,
 		height : 54
 	});
@@ -97,6 +109,7 @@ function StatusMain(param){
 
 	var leaderBoardImageView = Ti.UI.createImageView({
 		image : 'images/status/iconLeaderboards.png',
+		zIndex : 50,
 		top : current_top,
 		left : 5,
 		width : 54,
@@ -107,6 +120,7 @@ function StatusMain(param){
 
 	var customizeBackgroundImageView = Ti.UI.createImageView({
 		image : 'images/status/iconCustomizeBackground.png',
+		zIndex : 50,
 		top : current_top,
 		left : 5,
 		width : 54,
@@ -122,12 +136,25 @@ function StatusMain(param){
 
 	var optionsImageView = Ti.UI.createImageView({
 		image : 'images/status/iconOptions.png',
+		zIndex : 50,
 		top : current_top,
 		left : 5,
 		width : 54,
 		height : 54
 	});
 	leftBarView.add(optionsImageView);
+	current_top += 60;
+	
+
+	var crownImageView = Ti.UI.createImageView({
+		image : 'images/status/iconStatus.png',
+		zIndex : 50,
+		top : current_top,
+		left : 5,
+		width : 54,
+		height : 54
+	});
+	leftBarView.add(crownImageView);
 	current_top += 60;
 	
 	current_top = 115;
@@ -199,47 +226,76 @@ function StatusMain(param){
 	leftBarView.add(optionLabel);
 	
 	current_top += 2*60;
-	var requiredQuest = Ti.UI.createView({
-		backgroundColor : '#000000',
-		top : current_top,
-		opacity : 0.5,
-		height : 20,
-		left : 0,
-		width : 240 
-	});
-	var reuquireQuestsLbl = Ti.UI.createLabel({
-		text : '12 QUESTS TO NEXT LEVEL',
-		color : '#5aff9d',
-		font : {fontSize:12,fontFamily : Ti.App.GLBL_default_font}
-	});
-	
-	requiredQuest.add(reuquireQuestsLbl);
-	self.add(requiredQuest);
-	
-	current_top += 50;
-	var requiredFriends = Ti.UI.createView({
-		backgroundColor : '#000000',
-		top : current_top,
-		opacity : 0.5,
-		height : 20,
-		left : 0,
-		width : 240 
-	});
-	var requiredFriendsLbl = Ti.UI.createLabel({
-		text : '12 FRIENDSTO NEXT LEVEL',
-		opacity : 0.9,
-		color : '#5aff9d',
-		font : {fontSize:12,fontFamily : Ti.App.GLBL_default_font}
-	}); 
-	requiredFriends.add(requiredFriendsLbl);
-	self.add(requiredFriends);
-	current_top += 50;
-	
+	current_top -= 200;
 
+/*
+	var footerView = Ti.UI.createView({
+		backgroundImage : 'images/inventory/chest.png',
+		height : 80,
+		zIndex : 200,
+		bottom : 0		
+	});
+	self.add(footerView);
+
+	// Create an ImageView.
+	var boxImageView = Ti.UI.createView({
+		backgroundImage : 'images/inventory/chest.png',
+		width : 450,
+		height : 450,
+		zIndex : 30,
+		top : current_top
+	});
+	self.add(boxImageView);
+
+*/
+	// Create an ImageView.
+	var boxImageView = Ti.UI.createImageView({
+		image : 'images/inventory/chest.png',
+		width : 450,
+		height : 450,
+		zIndex : 30,
+		top : current_top
+	});
+	self.add(boxImageView);
+
+	current_top += 200;
+
+
+	var linearGradient = Ti.UI.createView({
+		zIndex : 40,
+		top : current_top,
+		width : "100%",
+		backgroundGradient : {
+			type : 'linear',
+			startPoint : {
+				x : '50%',
+				y : '0%'
+			},
+			endPoint : {
+				x : '50%',
+				y : '100%'
+			},
+			colors : [{
+				color : '#FFFFFF',
+				opacity : 0,
+				offset : 0.0
+			}, {
+				color : '#FFFFFF',
+				opacity : 100,
+				offset : 0.25
+			}],
+		}
+	}); 
+	//self.add(linearGradient);
+	current_top += 50;
+	current_top += 50;
+	
+	
 	var GoldView = Ti.UI.createView({
 		top : current_top,
 		left : 0,
 		height : 65,
+		zIndex : 100,
 		width : 130
 	});
 	self.add(GoldView);
@@ -247,6 +303,7 @@ function StatusMain(param){
 	var goldImageView = Ti.UI.createImageView({
 		left : 5,
 		image : "images/status/iconGold.png",
+		zIndex : 50,
 		width : 60,
 		height : 60
 	});
@@ -255,7 +312,7 @@ function StatusMain(param){
 
 function getGold(callback) {
 	//alert('Enter!');
-	var url = "http://justechinfo.com/kap_server/get_golds.php?uid=" + Ti.App.GLBL_uid;
+	var url = "http://justechinfo.com/kap_server/get_golds.php?uid=" + "10000001";//Ti.App.GLBL_uid;
 	var rec;
 	//,UID;
 	var xhr = Ti.Network.createHTTPClient({
@@ -285,15 +342,16 @@ function getGold(callback) {
 	xhr.open("GET", url);
 	xhr.send();
 }
+var goldImageLbl = Ti.UI.createLabel({
+	color : '#ECB936',
+	font : {fontSize:22,fontFamily : Ti.App.GLBL_default_font},
+	zIndex : 1000,
+	left : 75,
+	textAlign : 'center',
+});
+GoldView.add(goldImageLbl);
 getGold(function(num_of_golds){
-	var goldImageLbl = Ti.UI.createLabel({
-		text : num_of_golds,
-		color : '#ECB936',
-		font : {fontSize:22,fontFamily : Ti.App.GLBL_default_font},
-		left : 75,
-		textAlign : 'center'
-	});
-	GoldView.add(goldImageLbl);
+	goldImageLbl.text = num_of_golds;
 });
 
 
@@ -301,11 +359,13 @@ getGold(function(num_of_golds){
 		top : current_top,
 		right : 0,
 		height : 65,
+		zIndex : 50,
 		width : 220
 	});
 	var calendarImageView = Ti.UI.createImageView({
 		image : "images/status/overlayCalendar.png",
 		right : 5,
+		zIndex : 50,
 		width : 60,
 		height : 60
 	});
@@ -318,6 +378,7 @@ getGold(function(num_of_golds){
 		font : {
 			fontSize : 24
 		},
+		zIndex : 50,
 		right : 25,
 		bottom : 10,
 		textAlign : 'center'
@@ -328,6 +389,7 @@ getGold(function(num_of_golds){
 		image : "images/status/iconMarriageSingle.png",
 		right : 70,
 		width : 50,
+		zIndex : 50,
 		height : 50
 	});
 	calendatView.add(maritialImageView); 
@@ -337,6 +399,7 @@ getGold(function(num_of_golds){
 		color : '#5AFF9D',
 		font : {fontSize:20,fontFamily : Ti.App.GLBL_default_font},
 		right : 120,
+		zIndex : 50,
 		textAlign : 'center'
 	});
 	
@@ -351,6 +414,7 @@ getGold(function(num_of_golds){
 		top : current_top,
 		left : 0,
 		height : 40,
+		zIndex : 50,
 		width : "100%"
 	});
 	self.add(NameView);
@@ -359,6 +423,7 @@ getGold(function(num_of_golds){
 		left : 5,
 		image : "images/status/iconFemaleAvatarName.png",
 		width : 40,
+		zIndex : 50,
 		height : 40
 	});
 	NameView.add(avatarImageView);
@@ -367,6 +432,7 @@ getGold(function(num_of_golds){
 		color : '#5AFF9D',
 		font : {fontSize:20},
 		left : 50,
+		zIndex : 50,
 		textAlign : 'center'
 	});
 	NameView.add(nameLbl);
@@ -374,28 +440,20 @@ getGold(function(num_of_golds){
 	var genderLbl = Ti.UI.createLabel({
 		color : '#5AFF9D',
 		font : {fontSize:20},
+		zIndex : 50,
 		right : 5,
 		textAlign : 'left'
 	});
 	NameView.add(genderLbl);
 
 	current_top = 115;
-	for(var i = 0; i < 7; i++){
-		self.add(Ti.UI.createImageView({
-			image : "images/status/iconBlank.png",
-			top : current_top,
-			right : 5,
-			width : 55,
-			height : 55
-		}));
-		current_top += 65;
-	}
 	/*
 	 * Footer
 	 */
 	var footerView = Ti.UI.createView({
 		backgroundImage : 'images/status/overlayPlayerInfo.png',
 		height : 80,
+		zIndex : 100,
 		bottom : 0		
 	});
 	self.add(footerView);
@@ -496,7 +554,7 @@ getGold(function(num_of_golds){
 
 	function getAvatarInfo() {
 	//alert('Enter!');
-	var url = "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + Ti.App.GLBL_uid;
+	var url = "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + "10000001";//Ti.App.GLBL_uid;
 	var rec;
 	//,UID;
 	var xhr = Ti.Network.createHTTPClient({
@@ -510,8 +568,9 @@ getGold(function(num_of_golds){
 				maritialStatusView.text = rec.MARITIAL_STATUS;
 				nameLbl.text = rec.NAME;
 				genderLbl.text = rec.GENDER;
-				inventoryLabel.text = rec.NUM_OF_INV;
-				// alert(JSON.stringify(json));				//callback(rec.NUM_OF_FRIEND,rec.NUM_OF_QUESTS,'maritialImageView.image',rec.MARITIAL_STATUS,rec.NAME,rec.GENDER);
+				// inventoryLabel.text = rec.NUM_OF_INV;
+				// alert(JSON.stringify(json));
+				//callback(rec.NUM_OF_FRIEND,rec.NUM_OF_QUESTS,'maritialImageView.image',rec.MARITIAL_STATUS,rec.NAME,rec.GENDER);
 			} else {
 				alert('Some error occured!');
 			}
@@ -532,7 +591,7 @@ getAvatarInfo();
 
 function getXPAndEnergy(callback) {
 	//alert('Enter!');
-	var url = "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + Ti.App.GLBL_uid;
+	var url = "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + "10000001";//Ti.App.GLBL_uid;
 	var rec;
 	//,UID;
 	var xhr = Ti.Network.createHTTPClient({

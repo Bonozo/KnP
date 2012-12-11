@@ -276,6 +276,8 @@ var signInButton = Titanium.UI.createButton({
 });
 
 signInButton.addEventListener("click", function(e) {
+//	StatusMain("param").open();
+
 	var email = emailField.value;
 	var password = passwordField.value;
 	//alert("email : "+email+"\nPassword : "+password);
@@ -338,6 +340,7 @@ signInButton.addEventListener("click", function(e) {
 	});
 	xhr.open("GET", url);
 	xhr.send();
+
 
 });
 
