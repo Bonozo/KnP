@@ -1,0 +1,540 @@
+Logfile initialized
+[INFO] logfile = C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build.log
+[DEBUG] C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\builder.py simulator KnightsAndPrincesses D:\android-sdk_r16-windows\android-sdk-windows C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses com.bonozo.knp 19 WVGA854
+[INFO] Building KnightsAndPrincesses for Android ... one moment
+[INFO] Titanium SDK version: 2.1.4 (11/09/12 12:46 51f2c64)
+[DEBUG] Waiting for device to be ready ...
+[TRACE] adb devices returned 1 devices/emulators
+[DEBUG] Device connected... (waited 0 seconds)
+[DEBUG] waited 0.028000 seconds on emulator to get ready
+[DEBUG] com.bonozo.knp installed? True
+[INFO] Fastdev server running, deploying in Fastdev mode
+[INFO] Copying CommonJS modules...
+[INFO] Copying project resources..
+[INFO] Detected change in tiapp.xml, or assets deleted. Forcing full re-build...
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\appicon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\appicon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\default.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\default.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\app.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\app.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\assign_quests.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\assign_quests.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\choose_your_class.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\choose_your_class.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\craft_home.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\craft_home.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\fonts\MagicMedieval.ttf => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\fonts\MagicMedieval.ttf
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\friends_list.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\friends_list.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\friend_interactions.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\friend_interactions.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\friend_vs_me_dashboard.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\friend_vs_me_dashboard.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\func_app.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\func_app.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\func_inventory.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\func_inventory.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\func_level1.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\func_level1.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\func_level2.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\func_level2.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\func_level3.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\func_level3.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\add_friend_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\add_friend_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\appLogo.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\appLogo.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\app_logo.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\app_logo.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\archery_game.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\archery_game.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\Archery_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\Archery_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\armed_man.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\armed_man.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\arm_chest_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\arm_chest_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\arm_foots_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\arm_foots_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\arm_hands_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\arm_hands_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\arm_head_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\arm_head_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\arm_legs_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\arm_legs_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\arm_magic_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\arm_magic_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\arm_weapon_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\arm_weapon_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\avatar_small_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\avatar_small_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\back_button.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\back_button.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\boy_dp.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\boy_dp.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\boy_fuel.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\boy_fuel.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\btn_dice.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\btn_dice.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\btn_done.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\btn_done.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\btn_friends.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\btn_friends.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\character_points.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\character_points.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\chat_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\chat_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\checked.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\checked.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\checked_brown.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\checked_brown.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\coin_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\coin_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\container_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\container_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\cooking_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\cooking_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\customize_home_cross.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\customize_home_cross.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\dagger_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\dagger_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\deco_1.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\deco_1.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\deco_2.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\deco_2.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\deco_3.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\deco_3.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\energy_fuel.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\energy_fuel.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\female.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\female.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\female_character.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\female_character.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\find_by_names.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\find_by_names.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\flower.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\flower.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\flower_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\flower_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\friends_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\friends_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\friend_avatar_small_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\friend_avatar_small_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\girl_dp.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\girl_dp.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\girl_fuel.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\girl_fuel.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\hdpi_female.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\hdpi_female.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\hdpi_female_character.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\hdpi_female_character.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\hdpi_female_character_bad.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\hdpi_female_character_bad.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\hdpi_female_character_gray.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\hdpi_female_character_gray.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\hdpi_male.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\hdpi_male.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\hdpi_male_character_bad.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\hdpi_male_character_bad.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\hdpi_male_character_good.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\hdpi_male_character_good.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\hdpi_male_character_gray.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\hdpi_male_character_gray.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\hdpi_male_character_old.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\hdpi_male_character_old.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\hdpi_male_character_red.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\hdpi_male_character_red.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\hdpi_male_character_rotated.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\hdpi_male_character_rotated.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\home_image_1.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\home_image_1.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\home_image_2.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\home_image_2.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\home_image_3.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\home_image_3.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconControlArrow.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconControlArrow.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconCustomizeBackground.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconCustomizeBackground.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconFriends.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconFriends.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconHighlight.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconHighlight.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconInventory.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconInventory.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconLeaderboards.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconLeaderboards.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconMarriageEngaged.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconMarriageEngaged.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconMarriageMarried.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconMarriageMarried.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconMarriageSingle.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconMarriageSingle.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconNextArrow.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconNextArrow.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconOptions.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconOptions.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconQuests.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconQuests.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\iconStatus.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\iconStatus.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\inventory\chest.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\inventory\chest.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\inventory\chest1.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\inventory\chest1.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\inventory\inventorySlot_empty.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\inventory\inventorySlot_empty.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\inventory\inventorySlot_filled.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\inventory\inventorySlot_filled.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\inventory\inventorySlot_selected.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\inventory\inventorySlot_selected.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\inventory_grid_items_down_arrow.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\inventory_grid_items_down_arrow.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\inventory_grid_items_up_arrow.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\inventory_grid_items_up_arrow.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\item_image.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\item_image.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\joust_game.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\joust_game.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\Joust_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\Joust_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\knife.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\knife.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\k_chestplate_bad_crop_gray.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\k_chestplate_bad_crop_gray.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\k_chestplate_bad_crop_red.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\k_chestplate_bad_crop_red.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\K_Feet_bad_crop_gray.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\K_Feet_bad_crop_gray.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\K_Feet_bad_crop_red.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\K_Feet_bad_crop_red.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\K_Gloves_bad_crop_gray.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\K_Gloves_bad_crop_gray.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\K_Gloves_bad_crop_red.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\K_Gloves_bad_crop_red.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\K_Helmet_bad_crop_gray.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\K_Helmet_bad_crop_gray.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\K_Helmet_bad_crop_red.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\K_Helmet_bad_crop_red.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\K_Legs_bad_crop_gray.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\K_Legs_bad_crop_gray.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\K_Legs_bad_crop_red.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\K_Legs_bad_crop_red.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\LargeScroll.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\LargeScroll.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\left_arrow.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\left_arrow.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\line.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\line.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\line_break_big.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\line_break_big.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\listview_coin_blur_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\listview_coin_blur_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\listview_coin_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\listview_coin_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\lock_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\lock_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\lock_img.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\lock_img.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\magic_potion.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\magic_potion.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\magic_strength.jpg => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\magic_strength.jpg
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\male.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\male.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\male_character.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\male_character.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\male_trans.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\male_trans.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\message_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\message_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\message_small_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\message_small_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\my_avatar.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\my_avatar.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\my_avatar_pink.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\my_avatar_pink.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\notification_black.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\notification_black.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\notification_black_square.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\notification_black_square.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\offline_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\offline_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\online_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\online_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\orange_rose.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\orange_rose.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\other_avatar.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\other_avatar.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\overlayCalendar.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\overlayCalendar.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\overlayNameScroll.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\overlayNameScroll.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\overlayPlayerInfo.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\overlayPlayerInfo.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\overlayProgressNotification.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\overlayProgressNotification.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\overlayTitleStarCurtains.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\overlayTitleStarCurtains.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\pink_rose.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\pink_rose.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\purple_rose.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\purple_rose.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\P_flower_gray.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\P_flower_gray.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\question_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\question_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\quests_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\quests_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\red_rose.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\red_rose.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\right_arrow.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\right_arrow.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\selected_inventory_item_pic.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\selected_inventory_item_pic.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\sonnet_game.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\sonnet_game.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\Sonnet_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\Sonnet_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\Bar_Backdrop.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\Bar_Backdrop.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\ENERGYBar.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\ENERGYBar.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconBlank.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconBlank.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconCustomizeBackground.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconCustomizeBackground.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconFemaleAvatarName.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconFemaleAvatarName.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconFriends.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconFriends.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconGold.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconGold.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconHighlight.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconHighlight.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconInventory.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconInventory.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconLeaderboards.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconLeaderboards.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconMarriageEngaged.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconMarriageEngaged.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconMarriageMarried.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconMarriageMarried.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconMarriageSingle.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconMarriageSingle.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconOptions.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconOptions.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconQuests.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconQuests.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconReturn.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconReturn.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\iconStatus.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\iconStatus.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\overlayCalendar.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\overlayCalendar.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\overlayDay.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\overlayDay.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\overlayPlayerInfo.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\overlayPlayerInfo.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\status\XPBar.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\status\XPBar.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\store_image.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\store_image.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\unchecked.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\unchecked.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\unchecked_brown.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\unchecked_brown.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\vase.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\vase.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\vase_of_rose.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\vase_of_rose.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\warning_icon.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\warning_icon.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\white_rose.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\white_rose.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\xp_fuel_63.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\xp_fuel_63.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\images\yellow_rose.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\images\yellow_rose.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\inbox.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\inbox.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\inventory.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\inventory.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\inventory_main.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\inventory_main.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\jsonrpc.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\jsonrpc.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\knights_friend_home.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\knights_friend_home.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\KS_nav_ui.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\KS_nav_ui.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\KS_nav_views.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\KS_nav_views.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\level1.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\level1.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\level2.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\level2.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\level3.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\level3.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\make_friend_request.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\make_friend_request.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\message_room.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\message_room.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\play_quests.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\play_quests.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\princesses_friend_home.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\princesses_friend_home.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\quests_completed_info.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\quests_completed_info.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\quests_home.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\quests_home.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\quests_incomplete.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\quests_incomplete.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\request_friends.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\request_friends.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\sign_up.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\sign_up.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\status_main.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\status_main.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\store_get_gold.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\store_get_gold.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\store_home.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\store_home.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\ui\common\CurtainHeader.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\ui\common\CurtainHeader.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\ui\common\FirstView.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\ui\common\FirstView.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\ui\common\globals.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\ui\common\globals.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\ui\handheld\android\ClassSelection.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\ui\handheld\android\ClassSelection.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\ui\handheld\android\SignIn.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\ui\handheld\android\SignIn.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\ui\handheld\android\StatusMain.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\ui\handheld\android\StatusMain.js
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\ui\KS_nav_ui.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\ui\KS_nav_ui.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\ui\KS_nav_views.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\ui\KS_nav_views.png
+[TRACE] COPYING CREATED FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\ui\tablet\ApplicationWindow.js => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\ui\tablet\ApplicationWindow.js
+[TRACE] Generating Java Classes
+[DEBUG] Processing Android resource drawables
+[TRACE] COPYING FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-land-hdpi\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-long-land-hdpi\default_d44e27d97b.png
+[TRACE] COPYING FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-land-ldpi\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-long-land-ldpi\default_d44e27d97b.png
+[TRACE] COPYING FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-port-hdpi\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-long-port-hdpi\default_d44e27d97b.png
+[TRACE] COPYING FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-port-ldpi\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-long-port-ldpi\default_d44e27d97b.png
+[TRACE] COPYING FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-land-hdpi\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-land-hdpi\default_d44e27d97b.png
+[TRACE] COPYING FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-land-ldpi\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-land-ldpi\default_d44e27d97b.png
+[TRACE] COPYING FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-land-mdpi\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-land-mdpi\default_d44e27d97b.png
+[TRACE] COPYING FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-port-hdpi\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-port-hdpi\default_d44e27d97b.png
+[TRACE] COPYING FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-port-ldpi\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-port-ldpi\default_d44e27d97b.png
+[TRACE] COPYING FILE: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-port-mdpi\default.png => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-port-mdpi\default_d44e27d97b.png
+[DEBUG] app stylesheet => C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\gen\com\bonozo\knp\ApplicationStylesheet.java
+[DEBUG] copying app icon: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\appicon.png
+[DEBUG] generating theme.xml
+[DEBUG] found drawable-long-land-hdpi splash screen at C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-land-hdpi\default.png
+[DEBUG] copying C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-land-hdpi\default.png splash screen to C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-long-land-hdpi\background.png
+[DEBUG] found drawable-long-land-ldpi splash screen at C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-land-ldpi\default.png
+[DEBUG] copying C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-land-ldpi\default.png splash screen to C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-long-land-ldpi\background.png
+[DEBUG] found drawable-long-port-hdpi splash screen at C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-port-hdpi\default.png
+[DEBUG] copying C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-port-hdpi\default.png splash screen to C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-long-port-hdpi\background.png
+[DEBUG] found drawable-long-port-ldpi splash screen at C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-port-ldpi\default.png
+[DEBUG] copying C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-long-port-ldpi\default.png splash screen to C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-long-port-ldpi\background.png
+[DEBUG] found drawable-notlong-land-hdpi splash screen at C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-land-hdpi\default.png
+[DEBUG] copying C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-land-hdpi\default.png splash screen to C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-land-hdpi\background.png
+[DEBUG] found drawable-notlong-land-ldpi splash screen at C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-land-ldpi\default.png
+[DEBUG] copying C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-land-ldpi\default.png splash screen to C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-land-ldpi\background.png
+[DEBUG] found drawable-notlong-land-mdpi splash screen at C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-land-mdpi\default.png
+[DEBUG] copying C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-land-mdpi\default.png splash screen to C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-land-mdpi\background.png
+[DEBUG] found drawable-notlong-port-hdpi splash screen at C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-port-hdpi\default.png
+[DEBUG] copying C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-port-hdpi\default.png splash screen to C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-port-hdpi\background.png
+[DEBUG] found drawable-notlong-port-ldpi splash screen at C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-port-ldpi\default.png
+[DEBUG] copying C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-port-ldpi\default.png splash screen to C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-port-ldpi\background.png
+[DEBUG] found drawable-notlong-port-mdpi splash screen at C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-port-mdpi\default.png
+[DEBUG] copying C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\Resources\android\images\res-notlong-port-mdpi\default.png splash screen to C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\res\drawable-notlong-port-mdpi\background.png
+[DEBUG] found splash screen at C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\assets\Resources\default.png
+[TRACE] Writing out AndroidManifest.xml
+[DEBUG] adding C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\gen\com\bonozo\knp\ApplicationStylesheet.java to javac build list
+[DEBUG] adding C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\gen\com\bonozo\knp\KnightsandprincessesActivity.java to javac build list
+[DEBUG] adding C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\gen\com\bonozo\knp\KnightsandprincessesAppInfo.java to javac build list
+[DEBUG] adding C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\gen\com\bonozo\knp\KnightsandprincessesApplication.java to javac build list
+[DEBUG] adding C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\gen\com\bonozo\knp\R.java to javac build list
+[DEBUG] Building Java Sources: "C:\\Users\\Mohsin\\My Documents\\Titanium_Studio_Workspace\\KnightsAndPrincesses\\build\\android\\gen\\com\\bonozo\\knp\\ApplicationStylesheet.java" "C:\\Users\\Mohsin\\My Documents\\Titanium_Studio_Workspace\\KnightsAndPrincesses\\build\\android\\gen\\com\\bonozo\\knp\\KnightsandprincessesActivity.java" "C:\\Users\\Mohsin\\My Documents\\Titanium_Studio_Workspace\\KnightsAndPrincesses\\build\\android\\gen\\com\\bonozo\\knp\\KnightsandprincessesAppInfo.java" "C:\\Users\\Mohsin\\My Documents\\Titanium_Studio_Workspace\\KnightsAndPrincesses\\build\\android\\gen\\com\\bonozo\\knp\\KnightsandprincessesApplication.java" "C:\\Users\\Mohsin\\My Documents\\Titanium_Studio_Workspace\\KnightsAndPrincesses\\build\\android\\gen\\com\\bonozo\\knp\\R.java"
+[INFO] Waiting for SDCard to become available..
+[INFO] Compiling Android Resources... This could take some time
+[DEBUG] Android classes.dex built
+[DEBUG] creating unsigned apk: C:\Users\Mohsin\My Documents\Titanium_Studio_Workspace\KnightsAndPrincesses\build\android\bin\app-unsigned.apk
+[DEBUG] from resource zip => assets/Resources/fonts/MagicMedieval.ttf
+[DEBUG] from resource zip => assets/Resources/images/inventory/chest.png
+[DEBUG] from resource zip => assets/Resources/images/inventory/chest1.png
+[DEBUG] from resource zip => assets/Resources/images/inventory/inventorySlot_empty.png
+[DEBUG] from resource zip => assets/Resources/images/inventory/inventorySlot_filled.png
+[DEBUG] from resource zip => assets/Resources/images/inventory/inventorySlot_selected.png
+[DEBUG] from resource zip => assets/Resources/images/status/Bar_Backdrop.png
+[DEBUG] from resource zip => assets/Resources/images/status/ENERGYBar.png
+[DEBUG] from resource zip => assets/Resources/images/status/XPBar.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconBlank.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconCustomizeBackground.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconFemaleAvatarName.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconFriends.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconGold.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconHighlight.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconInventory.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconLeaderboards.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconMarriageEngaged.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconMarriageMarried.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconMarriageSingle.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconOptions.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconQuests.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconReturn.png
+[DEBUG] from resource zip => assets/Resources/images/status/iconStatus.png
+[DEBUG] from resource zip => assets/Resources/images/status/overlayCalendar.png
+[DEBUG] from resource zip => assets/Resources/images/status/overlayDay.png
+[DEBUG] from resource zip => assets/Resources/images/status/overlayPlayerInfo.png
+[DEBUG] from resource zip => assets/Resources/images/Archery_icon.png
+[DEBUG] from resource zip => assets/Resources/images/Joust_icon.png
+[DEBUG] from resource zip => assets/Resources/images/K_Feet_bad_crop_gray.png
+[DEBUG] from resource zip => assets/Resources/images/K_Feet_bad_crop_red.png
+[DEBUG] from resource zip => assets/Resources/images/K_Gloves_bad_crop_gray.png
+[DEBUG] from resource zip => assets/Resources/images/K_Gloves_bad_crop_red.png
+[DEBUG] from resource zip => assets/Resources/images/K_Helmet_bad_crop_gray.png
+[DEBUG] from resource zip => assets/Resources/images/K_Helmet_bad_crop_red.png
+[DEBUG] from resource zip => assets/Resources/images/K_Legs_bad_crop_gray.png
+[DEBUG] from resource zip => assets/Resources/images/K_Legs_bad_crop_red.png
+[DEBUG] from resource zip => assets/Resources/images/LargeScroll.png
+[DEBUG] from resource zip => assets/Resources/images/P_flower_gray.png
+[DEBUG] from resource zip => assets/Resources/images/Sonnet_icon.png
+[DEBUG] from resource zip => assets/Resources/images/add_friend_icon.png
+[DEBUG] from resource zip => assets/Resources/images/appLogo.png
+[DEBUG] from resource zip => assets/Resources/images/app_logo.png
+[DEBUG] from resource zip => assets/Resources/images/archery_game.png
+[DEBUG] from resource zip => assets/Resources/images/arm_chest_icon.png
+[DEBUG] from resource zip => assets/Resources/images/arm_foots_icon.png
+[DEBUG] from resource zip => assets/Resources/images/arm_hands_icon.png
+[DEBUG] from resource zip => assets/Resources/images/arm_head_icon.png
+[DEBUG] from resource zip => assets/Resources/images/arm_legs_icon.png
+[DEBUG] from resource zip => assets/Resources/images/arm_magic_icon.png
+[DEBUG] from resource zip => assets/Resources/images/arm_weapon_icon.png
+[DEBUG] from resource zip => assets/Resources/images/armed_man.png
+[DEBUG] from resource zip => assets/Resources/images/avatar_small_icon.png
+[DEBUG] from resource zip => assets/Resources/images/back_button.png
+[DEBUG] from resource zip => assets/Resources/images/boy_dp.png
+[DEBUG] from resource zip => assets/Resources/images/boy_fuel.png
+[DEBUG] from resource zip => assets/Resources/images/btn_dice.png
+[DEBUG] from resource zip => assets/Resources/images/btn_done.png
+[DEBUG] from resource zip => assets/Resources/images/btn_friends.png
+[DEBUG] from resource zip => assets/Resources/images/character_points.png
+[DEBUG] from resource zip => assets/Resources/images/chat_icon.png
+[DEBUG] from resource zip => assets/Resources/images/checked.png
+[DEBUG] from resource zip => assets/Resources/images/checked_brown.png
+[DEBUG] from resource zip => assets/Resources/images/coin_icon.png
+[DEBUG] from resource zip => assets/Resources/images/container_icon.png
+[DEBUG] from resource zip => assets/Resources/images/cooking_icon.png
+[DEBUG] from resource zip => assets/Resources/images/customize_home_cross.png
+[DEBUG] from resource zip => assets/Resources/images/dagger_icon.png
+[DEBUG] from resource zip => assets/Resources/images/deco_1.png
+[DEBUG] from resource zip => assets/Resources/images/deco_2.png
+[DEBUG] from resource zip => assets/Resources/images/deco_3.png
+[DEBUG] from resource zip => assets/Resources/images/default.png
+[DEBUG] from resource zip => assets/Resources/images/energy_fuel.png
+[DEBUG] from resource zip => assets/Resources/images/female.png
+[DEBUG] from resource zip => assets/Resources/images/female_character.png
+[DEBUG] from resource zip => assets/Resources/images/find_by_names.png
+[DEBUG] from resource zip => assets/Resources/images/flower.png
+[DEBUG] from resource zip => assets/Resources/images/flower_icon.png
+[DEBUG] from resource zip => assets/Resources/images/friend_avatar_small_icon.png
+[DEBUG] from resource zip => assets/Resources/images/friends_icon.png
+[DEBUG] from resource zip => assets/Resources/images/girl_dp.png
+[DEBUG] from resource zip => assets/Resources/images/girl_fuel.png
+[DEBUG] from resource zip => assets/Resources/images/hdpi_female.png
+[DEBUG] from resource zip => assets/Resources/images/hdpi_female_character.png
+[DEBUG] from resource zip => assets/Resources/images/hdpi_female_character_bad.png
+[DEBUG] from resource zip => assets/Resources/images/hdpi_female_character_gray.png
+[DEBUG] from resource zip => assets/Resources/images/hdpi_male.png
+[DEBUG] from resource zip => assets/Resources/images/hdpi_male_character_bad.png
+[DEBUG] from resource zip => assets/Resources/images/hdpi_male_character_good.png
+[DEBUG] from resource zip => assets/Resources/images/hdpi_male_character_gray.png
+[DEBUG] from resource zip => assets/Resources/images/hdpi_male_character_old.png
+[DEBUG] from resource zip => assets/Resources/images/hdpi_male_character_red.png
+[DEBUG] from resource zip => assets/Resources/images/hdpi_male_character_rotated.png
+[DEBUG] from resource zip => assets/Resources/images/home_image_1.png
+[DEBUG] from resource zip => assets/Resources/images/home_image_2.png
+[DEBUG] from resource zip => assets/Resources/images/home_image_3.png
+[DEBUG] from resource zip => assets/Resources/images/iconControlArrow.png
+[DEBUG] from resource zip => assets/Resources/images/iconCustomizeBackground.png
+[DEBUG] from resource zip => assets/Resources/images/iconFriends.png
+[DEBUG] from resource zip => assets/Resources/images/iconHighlight.png
+[DEBUG] from resource zip => assets/Resources/images/iconInventory.png
+[DEBUG] from resource zip => assets/Resources/images/iconLeaderboards.png
+[DEBUG] from resource zip => assets/Resources/images/iconMarriageEngaged.png
+[DEBUG] from resource zip => assets/Resources/images/iconMarriageMarried.png
+[DEBUG] from resource zip => assets/Resources/images/iconMarriageSingle.png
+[DEBUG] from resource zip => assets/Resources/images/iconNextArrow.png
+[DEBUG] from resource zip => assets/Resources/images/iconOptions.png
+[DEBUG] from resource zip => assets/Resources/images/iconQuests.png
+[DEBUG] from resource zip => assets/Resources/images/iconStatus.png
+[DEBUG] from resource zip => assets/Resources/images/inventory_grid_items_down_arrow.png
+[DEBUG] from resource zip => assets/Resources/images/inventory_grid_items_up_arrow.png
+[DEBUG] from resource zip => assets/Resources/images/item_image.png
+[DEBUG] from resource zip => assets/Resources/images/joust_game.png
+[DEBUG] from resource zip => assets/Resources/images/k_chestplate_bad_crop_gray.png
+[DEBUG] from resource zip => assets/Resources/images/k_chestplate_bad_crop_red.png
+[DEBUG] from resource zip => assets/Resources/images/knife.png
+[DEBUG] from resource zip => assets/Resources/images/left_arrow.png
+[DEBUG] from resource zip => assets/Resources/images/line.png
+[DEBUG] from resource zip => assets/Resources/images/line_break_big.png
+[DEBUG] from resource zip => assets/Resources/images/listview_coin_blur_icon.png
+[DEBUG] from resource zip => assets/Resources/images/listview_coin_icon.png
+[DEBUG] from resource zip => assets/Resources/images/lock_icon.png
+[DEBUG] from resource zip => assets/Resources/images/lock_img.png
+[DEBUG] from resource zip => assets/Resources/images/magic_potion.png
+[DEBUG] from resource zip => assets/Resources/images/magic_strength.jpg
+[DEBUG] from resource zip => assets/Resources/images/male.png
+[DEBUG] from resource zip => assets/Resources/images/male_character.png
+[DEBUG] from resource zip => assets/Resources/images/male_trans.png
+[DEBUG] from resource zip => assets/Resources/images/message_icon.png
+[DEBUG] from resource zip => assets/Resources/images/message_small_icon.png
+[DEBUG] from resource zip => assets/Resources/images/my_avatar.png
+[DEBUG] from resource zip => assets/Resources/images/my_avatar_pink.png
+[DEBUG] from resource zip => assets/Resources/images/notification_black.png
+[DEBUG] from resource zip => assets/Resources/images/notification_black_square.png
+[DEBUG] from resource zip => assets/Resources/images/offline_icon.png
+[DEBUG] from resource zip => assets/Resources/images/online_icon.png
+[DEBUG] from resource zip => assets/Resources/images/orange_rose.png
+[DEBUG] from resource zip => assets/Resources/images/other_avatar.png
+[DEBUG] from resource zip => assets/Resources/images/overlayCalendar.png
+[DEBUG] from resource zip => assets/Resources/images/overlayNameScroll.png
+[DEBUG] from resource zip => assets/Resources/images/overlayPlayerInfo.png
+[DEBUG] from resource zip => assets/Resources/images/overlayProgressNotification.png
+[DEBUG] from resource zip => assets/Resources/images/overlayTitleStarCurtains.png
+[DEBUG] from resource zip => assets/Resources/images/pink_rose.png
+[DEBUG] from resource zip => assets/Resources/images/purple_rose.png
+[DEBUG] from resource zip => assets/Resources/images/question_icon.png
+[DEBUG] from resource zip => assets/Resources/images/quests_icon.png
+[DEBUG] from resource zip => assets/Resources/images/red_rose.png
+[DEBUG] from resource zip => assets/Resources/images/right_arrow.png
+[DEBUG] from resource zip => assets/Resources/images/selected_inventory_item_pic.png
+[DEBUG] from resource zip => assets/Resources/images/sonnet_game.png
+[DEBUG] from resource zip => assets/Resources/images/store_image.png
+[DEBUG] from resource zip => assets/Resources/images/unchecked.png
+[DEBUG] from resource zip => assets/Resources/images/unchecked_brown.png
+[DEBUG] from resource zip => assets/Resources/images/vase.png
+[DEBUG] from resource zip => assets/Resources/images/vase_of_rose.png
+[DEBUG] from resource zip => assets/Resources/images/warning_icon.png
+[DEBUG] from resource zip => assets/Resources/images/white_rose.png
+[DEBUG] from resource zip => assets/Resources/images/xp_fuel_63.png
+[DEBUG] from resource zip => assets/Resources/images/yellow_rose.png
+[DEBUG] from resource zip => assets/Resources/ui/common/CurtainHeader.js
+[DEBUG] from resource zip => assets/Resources/ui/common/FirstView.js
+[DEBUG] from resource zip => assets/Resources/ui/common/globals.js
+[DEBUG] from resource zip => assets/Resources/ui/handheld/android/ClassSelection.js
+[DEBUG] from resource zip => assets/Resources/ui/handheld/android/SignIn.js
+[DEBUG] from resource zip => assets/Resources/ui/handheld/android/StatusMain.js
+[DEBUG] from resource zip => assets/Resources/ui/tablet/ApplicationWindow.js
+[DEBUG] from resource zip => assets/Resources/ui/KS_nav_ui.png
+[DEBUG] from resource zip => assets/Resources/ui/KS_nav_views.png
+[DEBUG] from resource zip => assets/Resources/KS_nav_ui.png
+[DEBUG] from resource zip => assets/Resources/KS_nav_views.png
+[DEBUG] from resource zip => assets/Resources/app.js
+[DEBUG] from resource zip => assets/Resources/appicon.png
+[DEBUG] from resource zip => assets/Resources/assign_quests.js
+[DEBUG] from resource zip => assets/Resources/choose_your_class.js
+[DEBUG] from resource zip => assets/Resources/craft_home.js
+[DEBUG] from resource zip => assets/Resources/default.png
+[DEBUG] from resource zip => assets/Resources/friend_interactions.js
+[DEBUG] from resource zip => assets/Resources/friend_vs_me_dashboard.js
+[DEBUG] from resource zip => assets/Resources/friends_list.js
+[DEBUG] from resource zip => assets/Resources/func_app.js
+[DEBUG] from resource zip => assets/Resources/func_inventory.js
+[DEBUG] from resource zip => assets/Resources/func_level1.js
+[DEBUG] from resource zip => assets/Resources/func_level2.js
+[DEBUG] from resource zip => assets/Resources/func_level3.js
+[DEBUG] from resource zip => assets/Resources/inbox.js
+[DEBUG] from resource zip => assets/Resources/inventory.js
+[DEBUG] from resource zip => assets/Resources/inventory_main.js
+[DEBUG] from resource zip => assets/Resources/jsonrpc.js
+[DEBUG] from resource zip => assets/Resources/knights_friend_home.js
+[DEBUG] from resource zip => assets/Resources/level1.js
+[DEBUG] from resource zip => assets/Resources/level2.js
+[DEBUG] from resource zip => assets/Resources/level3.js
+[DEBUG] from resource zip => assets/Resources/make_friend_request.js
+[DEBUG] from resource zip => assets/Resources/message_room.js
+[DEBUG] from resource zip => assets/Resources/play_quests.js
+[DEBUG] from resource zip => assets/Resources/princesses_friend_home.js
+[DEBUG] from resource zip => assets/Resources/quests_completed_info.js
+[DEBUG] from resource zip => assets/Resources/quests_home.js
+[DEBUG] from resource zip => assets/Resources/quests_incomplete.js
+[DEBUG] from resource zip => assets/Resources/request_friends.js
+[DEBUG] from resource zip => assets/Resources/sign_up.js
+[DEBUG] from resource zip => assets/Resources/status_main.js
+[DEBUG] from resource zip => assets/Resources/store_get_gold.js
+[DEBUG] from resource zip => assets/Resources/store_home.js
+[DEBUG] from resource zip => assets/Resources/ti.cloud.js
+[DEBUG] from resource zip => assets/app.json
+[DEBUG] from resource zip => assets/index.json
+[DEBUG] from resource zip => assets/tiapp.xml
+[DEBUG] from resource zip => res/drawable/appicon.png
+[DEBUG] from resource zip => res/drawable/background.png
+[DEBUG] from resource zip => res/drawable/close.png
+[DEBUG] from resource zip => res/drawable/facebook_login.png
+[DEBUG] from resource zip => res/drawable/facebook_login_down.png
+[DEBUG] from resource zip => res/drawable/facebook_login_wide.png
+[DEBUG] from resource zip => res/drawable/facebook_login_wide_down.png
+[DEBUG] from resource zip => res/drawable/facebook_logout.png
+[DEBUG] from resource zip => res/drawable/facebook_logout_down.png
+[DEBUG] from resource zip => res/layout/titanium_tabgroup.xml
+[DEBUG] from resource zip => AndroidManifest.xml
+[DEBUG] from resource zip => resources.arsc
+[DEBUG] from resource zip => res/drawable-hdpi/close.png
+[DEBUG] from resource zip => res/drawable-ldpi/close.png
+[DEBUG] from resource zip => res/drawable-long-land-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-long-land-hdpi/default_d44e27d97b.png
+[DEBUG] from resource zip => res/drawable-long-land-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-long-land-ldpi/default_d44e27d97b.png
+[DEBUG] from resource zip => res/drawable-long-port-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-long-port-hdpi/default_d44e27d97b.png
+[DEBUG] from resource zip => res/drawable-long-port-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-long-port-ldpi/default_d44e27d97b.png
+[DEBUG] from resource zip => res/drawable-notlong-land-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-land-hdpi/default_d44e27d97b.png
+[DEBUG] from resource zip => res/drawable-notlong-land-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-land-ldpi/default_d44e27d97b.png
+[DEBUG] from resource zip => res/drawable-notlong-land-mdpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-land-mdpi/default_d44e27d97b.png
+[DEBUG] from resource zip => res/drawable-notlong-port-hdpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-port-hdpi/default_d44e27d97b.png
+[DEBUG] from resource zip => res/drawable-notlong-port-ldpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-port-ldpi/default_d44e27d97b.png
+[DEBUG] from resource zip => res/drawable-notlong-port-mdpi/background.png
+[DEBUG] from resource zip => res/drawable-notlong-port-mdpi/default_d44e27d97b.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\modules\titanium-facebook.jar => ti/modules/titanium/facebook/LICENSE
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/build.properties
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/background.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/btn_check_buttonless_on.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/btn_check_buttonless_on_18.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/btn_check_buttonless_on_48.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/btn_more.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/btn_more_18.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/btn_more_48.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/btn_picker_normal.9.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/btn_picker_pressed.9.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/btn_picker_selected.9.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/default_icon.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\titanium.jar => org/appcelerator/titanium/res/drawable/photoDefault.png
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\modules\titanium-ui.jar => ti/modules/titanium/ui/widget/webview/binding.js
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\modules\titanium-ui.jar => ti/modules/titanium/ui/widget/webview/binding.min.js
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\modules\titanium-ui.jar => ti/modules/titanium/ui/widget/webview/json2.js
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\modules\titanium-ui.jar => ti/modules/titanium/ui/widget/webview/polling.js
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\modules\titanium-ui.jar => ti/modules/titanium/ui/widget/webview/polling.min.js
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\thirdparty.jar => org/apache/Commons-NOTICE.txt
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\thirdparty.jar => org/apache/HttpComponents-NOTICE.txt
+[DEBUG] from JAR C:\Users\Mohsin\AppData\Roaming\Titanium\mobilesdk\win32\2.1.4.GA\android\thirdparty.jar => org/apache/mime4j-NOTICE.txt
+[DEBUG] installing native SDK libs
+[DEBUG] Waiting for device to be ready ...
+[TRACE] adb devices returned 1 devices/emulators
+[DEBUG] Device connected... (waited 0 seconds)
+[DEBUG] waited 0.227000 seconds on emulator to get ready
+[INFO] Installing application on emulator
+[ERROR] Failed installing com.bonozo.knp: 	pkg: /data/local/tmp/app.apk
+Failure [INSTALL_FAILED_INSUFFICIENT_STORAGE]
+
