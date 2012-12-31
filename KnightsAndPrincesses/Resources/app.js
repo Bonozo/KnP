@@ -1,29 +1,6 @@
-Ti.App.GLBL_default_font = 'MagicMedieval';
-Ti.App.GLBL_gender = "";
-Ti.App.GLBL_name = "";
-Ti.App.GLBL_character_image = "";
-Ti.App.GLBL_uid = "";
-
-Ti.App.GLBL_skin_color = 'gray';
-
-Ti.App.GLBL_hair_stlyes = ['Style1', 'Style2', 'Style3'];
-Ti.App.GLBL_hair_color = ['gray', 'red'];
-Ti.App.GLBL_hair_color_image_name = ['hdpi_male_character_bad.png', 'hdpi_male_character_good.png'];
-Ti.App.GLBL_skin_tone = ['Tone1', 'Tone2', 'Tone3'];
-Ti.App.GLBL_face = ['face1', 'face2', 'face3'];
-Ti.App.GLBL_clothing = ['clothing1', 'clothing2', 'clothing3'];
-Ti.App.GLBL_color_scheme = ['Color scheme1', 'Color scheme2', 'Color scheme3'];
-
-Ti.App.GLBL_curr_hair_stlyes = 0;
-Ti.App.GLBL_curr_hair_color = 0;
-Ti.App.GLBL_curr_skin_tone = 0;
-Ti.App.GLBL_curr_face = 0;
-Ti.App.GLBL_curr_clothing = 0;
-Ti.App.GLBL_curr_color_scheme = 0;
-Ti.App.GLBL_character_created = false;
 /*
- * Knights and Princesses:
- * Social application.
+ * Single Window Application Template:
+ * A basic starting point for your application.  Mostly a blank canvas.
  * 
  * In app.js, we generally take care of a few things:
  * - Bootstrap the application with any data we need
@@ -50,20 +27,22 @@ if (Ti.version < 1.8 ) {
 	var isTablet = osname === 'ipad' || (osname === 'android' && (width > 899 || height > 899));
 	
 	var Window;
-		/*	if (isTablet) {
-				Window = require('ui/tablet/ApplicationWindow');
-			}
-			else {
-		*/
-		// Android uses platform-specific properties to create windows.
-		// All other platforms follow a similar UI pattern.
-	if (osname === 'android') {
-		Window = require('ui/handheld/android/SignIn');
+	if (isTablet) {
+		Window=require('ui/handheld/android/LoginWindow');
 	}
 	else {
-		Window = require('ui/handheld/SignIn');
+		// Android uses platform-specific properties to create windows.
+		// All other platforms follow a similar UI pattern.
+		if (osname === 'android') {
+			Window = require('ui/handheld/android/LoginWindow');
+			//Window=require('ui/common/MenuScreen/inventorycrafting');
+			//Window=require('ui/common/MenuScreen/FreindInfo');
+		}
+		else {
+			//Window = require('ui/handheld/LoginWindow');
+			Window=require('ui/common/MenuScreen/OptionsScreen.js');
+		}
 	}
-	
-//	}
-	new Window().open();
+	var win1 = new Window();
+	win1.open();
 })();
