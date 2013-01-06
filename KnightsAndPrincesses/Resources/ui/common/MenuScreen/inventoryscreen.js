@@ -1,32 +1,44 @@
-function inventoryscreen(userinfojson,coininfo)
+function Inventoryscreen(userinfo)
 {
+	var view = Ti.UI.createView({
+		width : '100%',
+		height : '100%',
+
+	});
+
 	var view=Titanium.UI.createView({
 		top:"23%",
 		height:"78%",
-		width:"100%",
-		backgroundImage:'/assets/inventoryBackground.png'
+		width:"100%"
 		
 	});
-	/*var topbar=require('ui/common/TopBar/ProgressBar');
-	var bar=new topbar();
-	view.add(bar);*/
-/*	var buttonbar=require('ui/common/ButtonBar/bar');
-	var button=new buttonbar();
-	view.add(button);
-	
-	var botombar=require('ui/common/BottomBar/bottom');
-	var bottom=new botombar();
-	view.add(bottom);*/
+
+	var iconbg_view = Titanium.UI.createImageView({
+		url : '/assets/iconHighlight.png',
+		height : '10%',
+		width : '14.2%',
+		top : '0%',
+		left : '15%',
+		zIndex : 50
+	});
+	iconbg_view.addEventListener('load', function(e) {
+		 ////hideLoader();	});
+
+	//view.add(iconbg_view);
 	var selected_menu_label = Titanium.UI.createLabel({
-		text:'INVENTORY',
-		top:'0%',
-		left:'15.0%',
-		textAlign:'center',
-		color:'#5afd9b',
-		font:{fontSize:'12dip'}
-		
-	});
+		text : 'INVENTORY',
+		top : '0%',
+		left : '15.0%',
+		textAlign : 'center',
+		color : '#5afd9b',
+		font : {
+			fontSize : '12dip'
+		}
+
+	}); 
 	view.add(selected_menu_label);	
+
+
 	var goldValue_label = Titanium.UI.createLabel({
 		text:'229',
 		bottom:'1.1%',
@@ -46,6 +58,10 @@ function inventoryscreen(userinfojson,coininfo)
 		right:'0%'
 	});
 	view.add(character_imageview);		
+	character_imageview.addEventListener('load', function(e) {
+		 ////hideLoader();
+	});
+
 	
 	var center_view = Ti.UI.createView({
 		backgroundColor:'#175c35',
@@ -59,9 +75,6 @@ function inventoryscreen(userinfojson,coininfo)
 		borderColor:'#113825'
 	});
 	view.add(center_view);
-	
-	
-	
 	
 	var textat_label = Titanium.UI.createLabel({
 		text:'Briar Rose \nCan be combined with Vase \nQuantity 3',
@@ -108,7 +121,7 @@ function inventoryscreen(userinfojson,coininfo)
 	view.add(crafting_button);
 	crafting_button.addEventListener('click',function(e){
 			var inventorycrafting=require('ui/common/MenuScreen/inventorycrafting');
-			var inventory=new inventorycrafting(userinfojson,coininfo);
+			var inventory=new inventorycrafting(userinfo);
 			inventory.open({modal: true});
 	});
 	var chest_imageview = Titanium.UI.createImageView({
@@ -127,8 +140,12 @@ function inventoryscreen(userinfojson,coininfo)
 		bottom:'20%',
 		left:'16%'
 	});
+	grid_imageview.addEventListener('load', function(e) {
+		 //hideLoader();
+	});
+
 	//view.add(grid_imageview);
-		var ScreenWidth = Titanium.Platform.displayCaps.platformWidth;
+	var ScreenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var tableviewwidth_percent = 80;
 	var view_per_row = 4;
 	
@@ -160,13 +177,12 @@ function inventoryscreen(userinfojson,coininfo)
 		}
 		tableviewData.push(tablerowview);
 	}
-	
+		
 	var tableview = Ti.UI.createTableView({
 		data:tableviewData,
 		separatorColor:'transparent',
 		width:tableviewwidth_percent +'%',
 		height:'35%',
-		//width:'68%',
 		bottom:'20%',
 		left:'16%'
 	});
@@ -176,10 +192,14 @@ function inventoryscreen(userinfojson,coininfo)
 	var flower_imageview = Titanium.UI.createImageView({
 		image:'/assets/Rose.png',
 		height:'20%',
-		width:'33.1%',
+		width:'24.1%',
 		top:'10.1%',
 		left:'9%'
 	});
+	flower_imageview.addEventListener('load', function(e) {
+		 //hideLoader();
+	});
+
 	view.add(flower_imageview);
 	var arrowUP_imageview = Titanium.UI.createImageView({
 		url:'/assets/iconControlArrowUp.png',
@@ -200,7 +220,11 @@ function inventoryscreen(userinfojson,coininfo)
 		
 	});
 	view.add(arrowDown_imageview);
-	
+	arrowDown_imageview.addEventListener('load', function(e) {
+		 //hideLoader();
+	});
+
+
 	return view;
 };
-module.exports=inventoryscreen;
+module.exports=Inventoryscreen;
