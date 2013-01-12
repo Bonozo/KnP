@@ -1,5 +1,17 @@
 function ProgressBar(userinfo_json) {
 	//alert(userinfo_json.LEVEL);
+	function updateEnergyAndXP(userinfo_json){
+		var xp_max_val = userinfo_json.Record[0].LEVEL * 1000 + 1000, energy_max_val = userinfo_json.Record[0].LEVEL * 1000;
+		var XPBar = ((userinfo_json.Record[0].XP / xp_max_val) * 100);
+		XPBar_imageview.width = "" + ((XPBar / 100) * 45) + "%";
+		xp_label.text = parseInt(userinfo_json.Record[0].XP) + "/" + xp_max_val;
+		//var EnergyBar = "" + ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
+		var EnergyBar = ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100);
+		EnergyBar_imageview.width = "" + ((EnergyBar / 100) * 45) + "%";
+		//alert("" + ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%");
+		energyscore_label.text = "" + parseInt((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
+		level_label.text = 'LVL ' + userinfo_json.Record[0].LEVEL;
+	}
 	var view = Titanium.UI.createView({
 		top : '0%',
 		height : '12.4%',
@@ -15,7 +27,7 @@ function ProgressBar(userinfo_json) {
 		color : '#5afd9b',
 		font : {
 			fontWeight : 'bold',
-			fontSize : '12dip'
+			fontSize : '10dip'
 		}
 	});
 	view.add(name_label);
@@ -28,7 +40,7 @@ function ProgressBar(userinfo_json) {
 		textAlign : 'right',
 		color : '#5afd9b',
 		font : {
-			fontSize : '12dip'
+			fontSize : '10dip'
 		}
 
 	});
@@ -86,7 +98,7 @@ function ProgressBar(userinfo_json) {
 	});
 	view.add(statusmsg_label);
 
-	var levelscore_label = Titanium.UI.createLabel({
+	var xp_label = Titanium.UI.createLabel({
 		text : '1000/1000',
 		top : '30.9%',
 		right : '7%',
@@ -97,7 +109,7 @@ function ProgressBar(userinfo_json) {
 		}
 
 	});
-	view.add(levelscore_label);
+	view.add(xp_label);
 
 	var energyscore_label = Titanium.UI.createLabel({
 		text : '1000/1000',
@@ -140,16 +152,33 @@ function ProgressBar(userinfo_json) {
 
 	});
 	view.add(energy_label);
+	
+/*
 	var xp_max_val = userinfo_json.Record[0].LEVEL * 1000 + 1000, energy_max_val = userinfo_json.Record[0].LEVEL * 1000;
 	var XPBar = ((userinfo_json.Record[0].XP / xp_max_val) * 100);
 	XPBar_imageview.width = "" + ((XPBar / 100) * 45) + "%";
-	levelscore_label.text = userinfo_json.Record[0].XP + "/" + xp_max_val;
+	xp_label.text = parseInt(userinfo_json.Record[0].XP) + "/" + xp_max_val;
 	//var EnergyBar = "" + ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
 	var EnergyBar = ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100);
 	EnergyBar_imageview.width = "" + ((EnergyBar / 100) * 45) + "%";
 	//alert("" + ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%");
-	energyscore_label.text = "" + ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
-
+	energyscore_label.text = "" + parseInt((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
+*/
+	updateEnergyAndXP(userinfo_json);
+	
+	Ti.App.addEventListener('update_xp', function(data){
+		var httpclientt = require('/ui/common/Functions/function');
+		
+		httpclientt.requestServer({
+			success : function(e) {
+				var userinfojson = JSON.parse(this.responseText);
+				updateEnergyAndXP(userinfojson);
+			},
+			method : 'GET',
+			contentType : 'text/xml',
+			url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + userinfo_json.Record[0].UID + "",
+		});
+	});
 	return view;
 };
 

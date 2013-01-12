@@ -5,8 +5,8 @@ function crafting(userinfojson) {
 		navBarHidden : true
 
 	});
-	var botombar = require('ui/common/BottomBar/bottom');
-	var bottom = new botombar(userinfojsonuserinfojson);
+	var botombar = require('ui/common/menus/Footer');
+	var bottom = new botombar(userinfojson);
 	view.add(bottom);
 	var top_imageview = Titanium.UI.createImageView({
 		image : '/assets/overlayPlayerInfoCroped.png',
@@ -65,8 +65,7 @@ function crafting(userinfojson) {
 				//alert(user_info_json.Record[0])
 				var rowViewHeight = screenWidth * 0.136;
 				var tabledata = [];
-				alert(items_length);
-				for (var i = 0; i < items_json.Record.length; i++) {
+				// alert(items_length);				for (var i = 0; i < items_json.Record.length; i++) {
 					var rowView = Ti.UI.createTableViewRow({
 						height : rowViewHeight
 					});

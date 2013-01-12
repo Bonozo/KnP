@@ -1,4 +1,17 @@
 function ChooseClass() {
+	var gender = 'm';
+	var images_counter = 0;
+	function hideLoader(){
+		images_counter++;
+		if(images_counter >= 4){
+			actInd.hide();
+		}
+	}
+
+	var actInd = Titanium.UI.createActivityIndicator();
+	actInd.message = 'Loading...';//message will only shows in android.
+	actInd.show();
+	
 	var chooseclass_win = Ti.UI.createWindow({
 		backgroundGradient : {
 			type : 'linear',
@@ -22,6 +35,9 @@ function ChooseClass() {
 		image : '/assets/overlayTitleStarCurtains.png'
 	});
 	SignUpScreen.header = top_header;
+	top_header.addEventListener('load',function(e){
+		hideLoader();
+	});
 	
 	chooseclass_win.add(top_header);
 
@@ -45,26 +61,35 @@ function ChooseClass() {
 		image : '/assets/K_fullbody_bad.png',
 		//height:"85%"
 	});
+	male_image.addEventListener('load',function(e){
+		hideLoader();
+	});
+	
 	chooseclass_win.add(male_image);
-	var right_arrow = Titanium.UI.createButton({
+	var right_arrow = Titanium.UI.createImageView({
 		top : "35%",
 		left : "60%",
 		width : "25%",
 		height : "20%",
-		backgroundImage : "/assets/iconControlArrowLeft.png"
+		image : "/assets/iconControlArrowLeft.png"
 	});
 	chooseclass_win.add(right_arrow);
+	right_arrow.addEventListener('load',function(e){
+		hideLoader();
+	});
+	
 
-	var next_arrow = Titanium.UI.createButton({
+	var next_arrow = Titanium.UI.createImageView({
 		bottom : '0%',
 		right : '0%',
-		backgroundImage : '/assets/iconNextArrow.png',
+		image : '/assets/iconNextArrow.png',
 		height : '10%',
 		width : '35%'
 	});
 	chooseclass_win.add(next_arrow);
-
-
+	next_arrow.addEventListener('load',function(e){
+		hideLoader();
+	});
 
 	var namescroll = Titanium.UI.createImageView({
 		left : "10%",
@@ -131,16 +156,20 @@ function ChooseClass() {
 		right : 0,
 		image : '/assets/hdpi_female_character.png',
 	});
-	var left_arrow = Titanium.UI.createButton({
+	var left_arrow = Titanium.UI.createImageView({
 		top : "40%",
 		left : "10%",
 		visible : false,
 		width : "25%",
 		height : "20%",
-		backgroundImage : "/assets/iconControlArrowRight.png"
+		image : "/assets/iconControlArrowRight.png"
+	});
+	left_arrow.addEventListener('load',function(e){
+		hideLoader();
 	});
 	right_arrow.addEventListener('click', function(e) {
 		male_image.image = '/assets/hdpi_female_character.png';
+		gender = 'f';
 		right_arrow.hide();
 		left_arrow.show();
 
@@ -150,6 +179,7 @@ function ChooseClass() {
 	chooseclass_win.add(right_arrow);
 	left_arrow.addEventListener('click', function(e) {
 		male_image.image = '/assets/K_fullbody_bad.png';
+		gender = 'm';
 		left_arrow.hide();
 		right_arrow.show();
 	});
@@ -191,7 +221,7 @@ function ChooseClass() {
 				},
 				method : 'GET',
 				contentType : 'text/xml',
-			 url : "http://justechinfo.com/kap_server/sign_up.php?email="+email_text.value +"&password="+password_text.value +"&name="+name_text.value +"&gender=m"
+				url :"http://justechinfo.com/kap_server/sign_up.php?email=" + email_text.value + "&password=" + password_text.value + "&name=" + name_text.value + "&gender=" + gender
 				//param : '<Device xmlns="http://schemas.datacontract.org/2004/07/CalendarConnect.Model">' + '<culture>' + Titanium.Platform.locale + '</culture>' + '<deviceToken>Have to Do</deviceToken>' + '<deviceType>' + deviceType + '</deviceType>' + '<modelDescription>' + Titanium.Platform.model + '</modelDescription>' + '<osVersion>' + Titanium.Platform.version + '</osVersion></Device>'
 			});
 			

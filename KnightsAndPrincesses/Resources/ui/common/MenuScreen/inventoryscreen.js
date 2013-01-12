@@ -120,9 +120,9 @@ function Inventoryscreen(userinfo)
 	});
 	view.add(crafting_button);
 	crafting_button.addEventListener('click',function(e){
-			var inventorycrafting=require('ui/common/MenuScreen/inventorycrafting');
-			var inventory=new inventorycrafting(userinfo);
-			inventory.open({modal: true});
+		var inventorycrafting=require('ui/common/MenuScreen/inventorycrafting');
+		var inventory=new inventorycrafting(userinfo);
+		inventory.open({modal: true});
 	});
 	var chest_imageview = Titanium.UI.createImageView({
 		image:'/assets/Chest.png',

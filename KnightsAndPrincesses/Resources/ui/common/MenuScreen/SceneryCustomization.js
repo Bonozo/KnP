@@ -213,7 +213,7 @@ function SceneryCustomization(userinfo) {
 
 	kandptore.addEventListener('click', function(e) {
 		var kandpwindow = require('ui/common/MenuScreen/KandPscreen');
-		var kandpp = new kandpwindow();
+		var kandpp = new kandpwindow(userinfo);
 		kandpp.open();
 		//alert("Kaisa");
 	});

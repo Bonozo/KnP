@@ -1,4 +1,4 @@
-function kandp()
+function kandp(userinfo)
 {	var view = Ti.UI.createWindow({ 
 		orientation:Ti.UI.PORTRAIT,
 		backgroundImage:'/assets/inventoryBackground.png',
@@ -232,8 +232,8 @@ function kandp()
 	view.addEventListener('android:back',function(e){
 		view.close();
 	});
-	var botombar=require('ui/common/BottomBar/bottom');
-	var bottom=new botombar();
+	var botombar=require('ui/common/menus/Footer');
+	var bottom=new botombar(userinfo);
 	view.add(bottom);
 	return view;
 };

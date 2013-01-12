@@ -1,7 +1,7 @@
 function LoginWindow() {
 	//load component dependencies
 	var chooseClass;
-
+	var remember = false;
 	var actInd = Titanium.UI.createActivityIndicator();
 	actInd.message = 'Loading Main Screen...';
 	//message will only shows in android.
@@ -53,7 +53,7 @@ function LoginWindow() {
 		height : 'auto',
 		hintText : "Email",
 		width : "75%",
-		value : "mohsin.mr@gmail.com",
+		value : Ti.App.Properties.getString('knp_email'),//"robot1@email.com",
 		left : "15%",
 		top : "63%"
 	});
@@ -61,7 +61,7 @@ function LoginWindow() {
 	var passwordField = Titanium.UI.createTextField({
 		height : 'auto',
 		hintText : "Password",
-		value : "test",
+		value : Ti.App.Properties.getString('knp_password'),//'test',
 		width : "75%",
 		left : "15%",
 		top : "73%",
@@ -76,6 +76,9 @@ function LoginWindow() {
 		value : false
 	});
 	win.add(rememberCheckBox);
+	rememberCheckBox.addEventListener("change", function(e){
+	    remember = e.value;
+	});	
 	var rememberlabel = Ti.UI.createLabel({
 		top : "83%",
 		text : "Remember email address and password?",
@@ -93,39 +96,49 @@ function LoginWindow() {
 		backgroundImage : "/assets/overlayItemList.png"
 	});
 	win.add(signInButton);
+	signInButton.addEventListener('touchstart', function(e) {
+		// signInButton.color = "black";
+	});
+	
+	signInButton.addEventListener('touchend', function(e) {
+		// signInButton.color = "white";
+	});
+
 	signInButton.addEventListener('click', function(e) {
-		var httpclientt = require('/ui/common/Functions/function');
-		httpclientt.requestServer({
-			success : function(e) {
-				var json = JSON.parse(this.responseText);
-				if (json.Record != undefined) {
-					var MainMenuScreen = require('/ui/common/MenuScreen/MainMenuScreen');
-					MainMenu = new MainMenuScreen(json);
-					MainMenu.open();
-
-					var Record = json.Record[0];
-					if (Record.GENDER == 'm') {
-
-					} else {
-						//do something for female
+		if(emailField.value == "" && passwordField.value == ""){
+			alert('All fields are required!');
+		}
+		else{
+			var httpclientt = require('/ui/common/Functions/function');
+			httpclientt.requestServer({
+				success : function(e) {
+					var json = JSON.parse(this.responseText);
+					if (json.Record != undefined) {
+						if (remember) {
+							Ti.App.Properties.setString('knp_email', emailField.value);
+							Ti.App.Properties.setString('knp_password', passwordField.value);
+						}
+						var MainMenuScreen = require('/ui/common/MenuScreen/MainMenuScreen');
+						MainMenu = new MainMenuScreen(json);
+						MainMenu.open();
+						
+	
+					} else if (json.Error != undefined) {
+						if (json.Error.AuthException != undefined) {
+							alert(json.Error.AuthException);
+						} else if (json.Error.Request) {
+							alert(json.Error.Request);
+						} else {
+							alert("Unknown error occured!");
+						}
 					}
-
-				} else if (json.Error != undefined) {
-					if (json.Error.AuthException != undefined) {
-						alert(json.Error.AuthException);
-					} else if (json.Error.Request) {
-						alert(json.Error.Request);
-					} else {
-						alert("Unknown error occured!");
-					}
-				}
-
-			},
-			method : 'GET',
-			contentType : 'text/xml',
-			url : "http://justechinfo.com/kap_server/?email=" + emailField.value + "&password=" + passwordField.value + "",
-			//param : '<Device xmlns="http://schemas.datacontract.org/2004/07/CalendarConnect.Model">' + '<culture>' + Titanium.Platform.locale + '</culture>' + '<deviceToken>Have to Do</deviceToken>' + '<deviceType>' + deviceType + '</deviceType>' + '<modelDescription>' + Titanium.Platform.model + '</modelDescription>' + '<osVersion>' + Titanium.Platform.version + '</osVersion></Device>'
-		});
+				},
+				method : 'GET',
+				contentType : 'text/xml',
+				url : "http://justechinfo.com/kap_server/?email=" + emailField.value + "&password=" + passwordField.value + "",
+				//param : '<Device xmlns="http://schemas.datacontract.org/2004/07/CalendarConnect.Model">' + '<culture>' + Titanium.Platform.locale + '</culture>' + '<deviceToken>Have to Do</deviceToken>' + '<deviceType>' + deviceType + '</deviceType>' + '<modelDescription>' + Titanium.Platform.model + '</modelDescription>' + '<osVersion>' + Titanium.Platform.version + '</osVersion></Device>'
+			});
+		}
 	});
 	actInd.hide();
 
@@ -149,15 +162,13 @@ function LoginWindow() {
 		if (data.screen_name == 'choose_your_class' && chooseClass != null) {
 			chooseClass.close();
 			chooseClass = null;
-		}
-		else{
+		} else {
 			var activity = Titanium.Android.currentActivity;
 			activity.finish();
 		}
 	});
 
 	win.addEventListener('android:back', function(e) {
-		// alert('Login back!');
 		var activity = Titanium.Android.currentActivity;
 		activity.finish();
 	});

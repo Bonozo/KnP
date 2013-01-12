@@ -1,4 +1,17 @@
 function Customization(json,name) {
+	
+	var images_counter = 0;
+	function hideLoader(){
+		images_counter++;
+		if(images_counter >= 8){
+			actInd.hide();
+		}
+	}
+
+	var actInd = Titanium.UI.createActivityIndicator();
+	actInd.message = 'Loading...';//message will only shows in android.
+	actInd.show();
+	
 	var customization_win = Ti.UI.createWindow({
 		backgroundGradient : {
 			type : 'linear',
@@ -30,6 +43,9 @@ function Customization(json,name) {
 		top : '0%'
 	});
 	customization_win.add(curtain_image);
+	curtain_image.addEventListener('load',function(e){
+		hideLoader();
+	});
 
 	var label_title = Titanium.UI.createLabel({
 		text : 'CUSTOMIZATION',
@@ -65,12 +81,18 @@ function Customization(json,name) {
 		bottom : '0%'
 	});
 	customization_win.add(character_image);
+	character_image.addEventListener('load',function(e){
+		hideLoader();
+	});
 	var namescroll = Titanium.UI.createImageView({
 		left : "10%",
 		top : "75%",
 		width : "80%",
 		height : "15%",
 		image : '/assets/overlayNameScroll.png'
+	});
+	namescroll.addEventListener('load',function(e){
+		hideLoader();
 	});
 	var name_text = Titanium.UI.createLabel({
 		left : "25%",
@@ -101,6 +123,9 @@ function Customization(json,name) {
 		url : '/assets/iconControlArrowRight.png'
 
 	});
+	left_arrow_image.addEventListener('load',function(e){
+		hideLoader();
+	});
 	customization_win.add(left_arrow_image);
 	left_arrow_image.addEventListener('click', function(e) {
 		alert("Left Arrow Clicked");
@@ -114,6 +139,9 @@ function Customization(json,name) {
 
 	});
 	customization_win.add(right_arrow_image);
+	right_arrow_image.addEventListener('load',function(e){
+		hideLoader();
+	});
 	right_arrow_image.addEventListener('click', function(e) {
 		alert("Right Arrow Clicked");
 	});
@@ -126,6 +154,9 @@ function Customization(json,name) {
 
 	});
 	customization_win.add(top_arrow_image);
+	top_arrow_image.addEventListener('load',function(e){
+		hideLoader();
+	});
 	top_arrow_image.addEventListener('click', function(e) {
 		alert("top Arrow Clicked");
 	});
@@ -138,16 +169,22 @@ function Customization(json,name) {
 		url : '/assets/iconControlArrowDown.png'
 
 	});
+	down_arrow_image.addEventListener('load',function(e){
+		hideLoader();
+	});
 	customization_win.add(down_arrow_image);
 	down_arrow_image.addEventListener('click', function(e) {
 		alert("down arrow clicked")
 	});
-	var next_arrow_image = Titanium.UI.createButton({
+	var next_arrow_image = Titanium.UI.createImageView({
 		bottom : '0%',
 		right : '0%',
-		backgroundImage : '/assets/iconNextArrow.png',
+		image : '/assets/iconNextArrow.png',
 		height : '10%',
 		width : '35%'
+	});
+	next_arrow_image.addEventListener('load',function(e){
+		hideLoader();
 	});
 
 	customization_win.add(next_arrow_image);
@@ -165,6 +202,9 @@ function Customization(json,name) {
 		right : '6.5%',
 		top : '14.6%',
 		url : '/assets/iconDiceRandom.png'
+	});
+	coins_image.addEventListener('load',function(e){
+		hideLoader();
 	});
 	customization_win.add(coins_image);
 	coins_image.addEventListener('click', function(e) {
