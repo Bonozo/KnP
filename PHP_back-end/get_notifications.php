@@ -12,30 +12,42 @@ if(isset($_GET))
 	{
 		$query = "
 				SELECT 
-					IF((
-						SELECT 
-							COUNT(`MESSAGE_ID`)
-						FROM 
-							`KNP_MESSAGE_MAIN` 
-						WHERE 
-							`RECEIVER_UID` = :uid AND 
-							`STATUS` = 'UNREAD') > 0,
-						'NEW_MESSAGE',
-						'NO_MESSAGE')
-					AS 
-						'MESSAGE', 
-					IF((
-						SELECT 
-							COUNT(`STATUS`)
-						FROM
-							`FRIENDSHIP_MAIN`
-						WHERE
-							`FRIEND_UID` = :uid	AND
-							`STATUS` = 'REQUEST_PENDING')>0,
-							'NEW_REQUEST',
-							'NO_REQUEST') 
-					AS 
-						'REQUEST'
+IF((
+SELECT 
+COUNT(`MESSAGE_ID`)
+FROM 
+`KNP_MESSAGE_MAIN` 
+WHERE 
+`RECEIVER_UID` = :uid AND 
+`STATUS` = 'UNREAD') > 0,
+'NEW_MESSAGE',
+'NO_MESSAGE')
+AS 
+'MESSAGE', 
+IF((
+SELECT 
+COUNT(`STATUS`)
+FROM
+`FRIENDSHIP_MAIN`
+WHERE
+`FRIEND_UID` = :uid	AND
+`STATUS` = 'REQUEST_PENDING')>0,
+'NEW_REQUEST',
+'NO_REQUEST') 
+AS 
+'REQUEST',
+IF((
+SELECT 
+COUNT(`STATUS`)
+FROM
+`KNP_ASSIGN_QUESTS`
+WHERE
+`ASSIGN_TO_UID` = :uid	AND
+`STATUS` = 'INCOMPLETE')>0,
+'NEW_QUEST',
+'NO_QUEST') 
+AS 
+'QUEST_ASSIGN'
 				";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(array(':uid'=>$uid));

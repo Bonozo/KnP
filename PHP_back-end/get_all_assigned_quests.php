@@ -22,6 +22,7 @@ if(isset($_GET))
 				kaq.ASSIGN_QUEST_ID, 
 				kqm.QUEST_ID,
 				kqm.QUEST_NAME,
+				kqm.QUEST_IMAGE,
 				kaq.MESSAGE, 
 				GROUP_CONCAT(kiim.NAME, CONCAT(':',kqr.UNIT)) AS 'REWARDS', 
 				kaq.STARTED_TIME,
@@ -80,6 +81,7 @@ if(isset($_GET))
 							
 			$posts[$counter]['QUEST_ID'] = $post['QUEST_ID'];
 			$posts[$counter]['QUEST_NAME'] = $post['QUEST_NAME'];
+			$posts[$counter]['QUEST_IMAGE'] = $post['QUEST_IMAGE'];
 			$posts[$counter]['MESSAGE'] = $post['MESSAGE'];
 			$rewards = $post['REWARDS'];
 			$reward = explode(",",$rewards);

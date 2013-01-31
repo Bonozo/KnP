@@ -107,7 +107,7 @@ if(isset($_GET))
 							VALUES 
 								(:sender_id,
 								 :receiver_id,
-								 'Gift received!',
+								 'YOUR FREIND HAS RECEIVED GIFT!',
 								 'UNREAD') 
 						";
 						$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -206,7 +206,7 @@ if(isset($_GET))
 							VALUES 
 								(:sender_id,
 								 :receiver_id,
-								 'Gift received!',
+								 'YOUR FREIND HAS RECEIVED GIFT!',
 								 'UNREAD') 
 						";
 						$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));

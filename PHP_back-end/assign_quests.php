@@ -20,7 +20,7 @@ if(isset($_GET))
 					`KNP_ASSIGN_QUESTS`
 						(`QUEST_ID`,`ASSIGN_BY_UID`,`ASSIGN_TO_UID`,`MESSAGE`,`EXPIRED_TIME`,`STATUS`) 
 					VALUES 
-						(:quest_id,:assign_by_uid,:assign_to_uid,:message,'0000-00-00 00:00:00','INCOMPLETE');
+						(:quest_id,:assign_by_uid,:assign_to_uid,:message,'2013-12-12 00:00:00','INCOMPLETE');
 					";
 			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$statement->bindParam(':assign_by_uid', $assign_by_uid, PDO::PARAM_INT);

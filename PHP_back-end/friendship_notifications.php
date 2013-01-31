@@ -22,7 +22,7 @@ if(isset($_GET))
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(array(':uid'=>$uid));
 		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+		$posts = array();
 		foreach($res as $post){
 		  $posts[] = $post;
 		}

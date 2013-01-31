@@ -8,26 +8,29 @@ ini_set('memory_limit', '256M');
 if(isset($_GET))
 {
 	extract($_GET);
-	if(isset($uid))
+	if(isset($uid1,$uid2))
 	{
 		$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
 		$query =   
-		   "SELECT `UID`,`NAME`,`EMAIL`,`GENDER`,DATE_FORMAT(`LAST_LOGIN`,'%b %d %Y, %h:%i %p') AS LAST_LOGIN FROM KAP_USER_MAIN 
-			WHERE 
-			`UID` IN (
-			SELECT FRIEND_UID FROM `FRIENDSHIP_MAIN` M WHERE M.UID = :uid AND M.STATUS = 'FRIENDS' AND friend_uid <> :uid
-			) 
-			OR `UID` IN (
-			SELECT UID FROM `FRIENDSHIP_MAIN` M WHERE M.FRIEND_UID = :uid AND M.STATUS = 'FRIENDS'
-			)
-			AND UID <>:uid";
-		
+			"SELECT `STATUS` FROM `FRIENDSHIP_MAIN` WHERE (UID = :uid1 AND FRIEND_UID = :uid2) OR (UID = :uid2 AND FRIEND_UID = :uid1) 
+			";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-		$statement->execute(array(':uid'=>$uid));
+		$statement->execute(
+		array(
+			':uid1' => $uid1,
+			':uid2' => $uid2
+		));
 		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
-		$posts = array();
-		foreach($res as $post){
-		  $posts[] = $post;
+		if(sizeof($res) > 0){
+			if($res[0]['STATUS'] == 'FRIENDS'){
+				$posts = "true";
+			}
+			else{
+				$posts = "false";
+			}
+		}
+		else{
+			$posts = "false";
 		}
 		$records = array('Record'=>$posts);//$records = array('Error'=>$posts);
 

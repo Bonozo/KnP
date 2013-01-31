@@ -12,6 +12,7 @@ if(isset($_GET))
 	extract($_GET);
 	if(isset($email) && isset($password))
 	{
+		$email = strtolower($email);
 		//$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
 		$query = "SELECT `UID`,`NAME`,`GENDER` FROM KAP_USER_MAIN WHERE 
 		`EMAIL` = :email AND `PASSWORD` = :password";

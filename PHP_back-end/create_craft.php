@@ -138,7 +138,7 @@ if(isset($_GET))
 					':craft_id' => $craft_id
 					));
 			}
-			
+			$posts = array('Message'=> "Craft created successfully!");
 			
 		}
 		else{

@@ -48,8 +48,14 @@ if(isset($_GET))
 			}
 			
 			if($error_code == ""){
-				$posts = NULL;
-				$posts[] = "Successfully added to your friendlist!";
+				if($action == 'DENIED'){
+					$posts = NULL;
+					$posts[] = "Request denied!";
+				}
+				else{
+					$posts = NULL;
+					$posts[] = "Successfully added to your friendlist!";
+				}
 			}
 		}
 		else{

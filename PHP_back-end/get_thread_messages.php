@@ -14,8 +14,8 @@ if(isset($_GET))
 		SELECT `SENDER_UID`,`RECEIVER_UID`,`MESSAGE_TEXT`,DATE_FORMAT(`TIMESTAMP`,'%b %d %Y %h: %i %p') AS DATETIME 
 		FROM KNP_MESSAGE_MAIN 
 		WHERE 
-		(SENDER_UID = :sender_id AND RECEIVER_UID = :receiver_id) OR 
-		(SENDER_UID = :receiver_id AND RECEIVER_UID = :sender_id) ORDER BY `TIMESTAMP` DESC
+		(SENDER_UID = :sender_id AND RECEIVER_UID = :receiver_id ) OR 
+		(SENDER_UID = :receiver_id AND RECEIVER_UID = :sender_id ) AND `STATUS` = 'READ' ORDER BY `TIMESTAMP` DESC
 		";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(array(':sender_id'=>$sender_id,':receiver_id'=>$receiver_id));
@@ -23,7 +23,7 @@ if(isset($_GET))
 
 		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-		$query = "
+/*		$query = "
 		UPDATE `KNP_MESSAGE_MAIN` SET `STATUS`='READ' WHERE `SENDER_UID` = :sender_id AND `RECEIVER_UID` = :receiver_id
 		";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -31,7 +31,7 @@ if(isset($_GET))
 		array(	':sender_id'=>$sender_id,
 				':receiver_id'=>$receiver_id
 			));
-		
+*/		$posts = array();
 		foreach($result as $post){
 		$posts[] = $post;
 		}

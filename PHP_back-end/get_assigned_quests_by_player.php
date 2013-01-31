@@ -50,6 +50,8 @@ if(isset($_GET))
 					$posts[$counter]["NUM_OF_FRIENDS"] = getNumberOfFriends($posts[$counter]["ASSIGN_BY_UID"]);
 					$posts[$counter][$key] = $value;
 					$posts[$counter]["IS_COMPLETED"] = isQuestCompleted($posts[$counter]["ASSIGN_BY_UID"], $uid);
+					$posts[$counter]["NUM_OF_QUESTS"] = getNumberOfQuests($posts[$counter]["ASSIGN_BY_UID"], $uid);
+					$posts[$counter]["GENDER"] = $avatar_info['GENDER'];
 				}
 				$counter++;
 			}
@@ -68,6 +70,18 @@ else
 $records = array('Record'=>$records);
 
 echo json_indent(json_encode($records));
+function getNumberOfQuests($assigned_by_uid, $assigned_to_uid){
+	global $dbObj;
+	$query = "SELECT COUNT(QUEST_ID) AS `NUM_OF_QUESTS` FROM KNP_ASSIGN_QUESTS WHERE ASSIGN_BY_UID = :assigned_by_uid AND ASSIGN_TO_UID = :assigned_to_uid ";
+	$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+	$statement->execute(
+	array(
+		':assigned_by_uid'=>$assigned_by_uid,
+		':assigned_to_uid'=>$assigned_to_uid
+		));
+	$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+	return $res[0]['NUM_OF_QUESTS'];
+}
 function isQuestCompleted($assigned_by_uid, $assigned_to_uid){
 	global $dbObj;
 	
@@ -121,7 +135,7 @@ function getNumberOfFriends($uid){
 function getAvatarInfo($uid){
 	global $dbObj;
 	$query = "
-			SELECT `NAME`,`LEVEL` FROM KAP_USER_MAIN WHERE UID = :uid 
+			SELECT `NAME`,`LEVEL`,`GENDER` FROM KAP_USER_MAIN WHERE UID = :uid 
 			";
 	$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	$statement->execute(

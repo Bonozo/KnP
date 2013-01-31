@@ -13,7 +13,7 @@ if(isset($_GET))
 		$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
 		$query =   
 		   "SELECT 
-				'INV' AS 'CATEGORY', kits.INV_ID AS 'ID', kii.NAME,kii.DESCRIPTION, kii.REQ_GOLD,kii.IMAGE,kii.TYPE,kii.STATUS,kits.TOTAL_UNIT
+				'INVENTORY' AS 'CATEGORY', kits.INV_ID AS 'ID', kii.NAME,kii.DESCRIPTION, kii.REQ_GOLD,kii.IMAGE,kii.TYPE,kii.STATUS,kits.TOTAL_UNIT
 			FROM 
 				KNP_INVENTORY_TRANSACTION_SUMMARY kits,KAP_USER_MAIN kum, KNP_INVENTORY_ITEMS_MAIN kii 
 			WHERE
@@ -24,7 +24,7 @@ if(isset($_GET))
 				kits.UID = :uid
 			UNION
 			SELECT 
-				'CRFT' AS 'CATEGORY', kcts.CRAFT_ID AS 'ID',
+				'CRAFT' AS 'CATEGORY', kcts.CRAFT_ID AS 'ID',
 				kcm.CRAFT_NAME AS 'NAME', kcm.CRAFT_DESCRIPTION AS 'DESCRIPTION', 'N/A' AS 'REQ_GOLD',kcm.IMAGE, 
 				kcm.TYPE, kcm.STATUS, kcts.TOTAL_UNIT 
 			FROM 

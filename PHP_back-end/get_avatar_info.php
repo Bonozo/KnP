@@ -38,7 +38,18 @@ if(isset($_GET))
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(array(':uid'=>$uid));
 		$num_of_friends = $statement->fetchAll(PDO::FETCH_ASSOC);
+		////////////////////////////////////////////////////////////
+		$query =   
+			"SELECT TOTAL_UNIT FROM KNP_INVENTORY_TRANSACTION_SUMMARY WHERE UID = :uid AND INV_ID = '10004'";
 		
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(array(':uid'=>$uid));
+		$res5 = $statement->fetchAll(PDO::FETCH_ASSOC);
+		
+		if(sizeof($res5) == 0){
+			$res5[] = array("TOTAL_UNIT" => "0");
+		}
+
 		////////////////////////////////////////////////////////////
 		$query1 = "
 			SELECT `UID`, `NAME`, `GENDER`, `MARITIAL_STATUS`,  `LAST_LOGIN`, `LEVEL`, `XP`,`ENERGY` FROM `KAP_USER_MAIN` WHERE UID = :uid
@@ -58,6 +69,7 @@ if(isset($_GET))
 		$posts[0]['NUM_OF_QUESTS'] = $num_of_quests[0]['NUM_OF_QUESTS'];
 		$posts[0]['NUM_OF_FRIENDS'] = $num_of_friends[0]['NUM_OF_FRIENDS'];
 		$posts[0]['NUM_OF_INV'] = $num_of_inv[0]['NUM_OF_INV'];
+		$posts[0]['NUM_OF_GOLDS'] = $res5[0]['TOTAL_UNIT'];
 		
 		
 		$records = array('Record'=>$posts);//$records = array('Error'=>$posts[0]);

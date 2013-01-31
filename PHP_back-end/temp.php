@@ -1,36 +1,61 @@
-<?php
+<?php 
 header('Content-type: application/json');
-/*function lossless_array_merge() {
-  $arrays = func_get_args();
-  $data = array();
-  foreach ($arrays as $a) {
-      $data[$k][] = $v;
-  }
-  return $data;
+
+include "db/db.php";
+include "functions/misc.php";
+ini_set('memory_limit', '256M');
+
+if(isset($_GET))
+{
+	extract($_GET);
+	if(isset($uid))
+	{
+		/*
+		
+10000005, 10000006, 10000009,10000010,10000011,10000012,10000013,
+10000024, 10000025,10000026,10000027,10000029,10000030,10000031,10000032
+10000035, 10000038, 10000039, 10000042, 10000043,10000044 ,10000045
+		*/
+		$arr = array(
+		10000005, 10000006, 10000009, 10000010, 10000011, 10000012, 10000013, 
+		10000024, 10000025, 10000026, 10000027, 10000029, 10000030, 10000031,
+		10000032, 10000035, 10000038, 10000039, 10000042, 10000043, 10000044);
+		
+		$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+		foreach($arr as $value){
+		$query =   
+		   "
+			INSERT INTO KNP_INVENTORY_TRANSACTION_SUMMARY 
+				(UID, 
+				INV_ID, 
+				TOTAL_UNIT, 
+				CONSUMED_UNIT
+				
+				)
+				VALUES
+				(".$value.", 
+				'10004', 
+				'0', 
+				'0'
+				
+				);
+		   ";
+		   
+			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement->execute();
+		}
+
+		
+		
+
+	}
+	else
+	{
+		$records = array('Error'=>"Bad Request!");
+	}
+	echo json_indent(json_encode($records));
+
 }
 
-$a = array(1,2,3);
-$b = array(1,7,8,9,10);
-$union = array_unique(array_merge($a, $b));
-print_r($union);
-*/
 
-?> 
-<?php
-$count = 0; 
-echo ++$count;
-
-echo "Here we'll see how to create a multi-dimensional array.\n";
-$a=array('fruits'=>array('a'=>'orange',
-                      'b'=>'grape',c=>'apple'),
-            'numbers'=>array(1,2,3,4,5,6),
-            'holes'=>array('first',5=>'second',
-                                                          'third')
-            );
-foreach($a as $list=>$things){
-	echo $things."\n\n\n";
-    foreach($things as $newlist=>$counter){
-    echo $counter."\n";
-    }
-}
 ?>
