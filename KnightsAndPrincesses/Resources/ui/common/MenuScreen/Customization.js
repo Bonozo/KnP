@@ -1,17 +1,18 @@
-function Customization(json,name) {
-	
+function Customization(json, name) {
+
 	var images_counter = 0;
-	function hideLoader(){
+	function hideLoader() {
 		images_counter++;
-		if(images_counter >= 8){
+		if (images_counter >= 8) {
 			actInd.hide();
 		}
 	}
 
 	var actInd = Titanium.UI.createActivityIndicator();
-	actInd.message = 'Loading...';//message will only shows in android.
+	actInd.message = 'Loading...';
+	//message will only shows in android.
 	actInd.show();
-	
+
 	var customization_win = Ti.UI.createWindow({
 		backgroundGradient : {
 			type : 'linear',
@@ -43,7 +44,7 @@ function Customization(json,name) {
 		top : '0%'
 	});
 	customization_win.add(curtain_image);
-	curtain_image.addEventListener('load',function(e){
+	curtain_image.addEventListener('load', function(e) {
 		hideLoader();
 	});
 
@@ -81,7 +82,7 @@ function Customization(json,name) {
 		bottom : '0%'
 	});
 	customization_win.add(character_image);
-	character_image.addEventListener('load',function(e){
+	character_image.addEventListener('load', function(e) {
 		hideLoader();
 	});
 	var namescroll = Titanium.UI.createImageView({
@@ -91,14 +92,14 @@ function Customization(json,name) {
 		height : "15%",
 		image : '/assets/overlayNameScroll.png'
 	});
-	namescroll.addEventListener('load',function(e){
+	namescroll.addEventListener('load', function(e) {
 		hideLoader();
 	});
 	var name_text = Titanium.UI.createLabel({
 		left : "25%",
 		top : "73%",
 		//width:"70%",
-		text : name+" \n Level 1",
+		text : name + " \n Level 1",
 		height : "15%",
 		textAlign : 'centre',
 		backgroundColor : 'transparent',
@@ -123,7 +124,7 @@ function Customization(json,name) {
 		url : '/assets/iconControlArrowRight.png'
 
 	});
-	left_arrow_image.addEventListener('load',function(e){
+	left_arrow_image.addEventListener('load', function(e) {
 		hideLoader();
 	});
 	customization_win.add(left_arrow_image);
@@ -139,7 +140,7 @@ function Customization(json,name) {
 
 	});
 	customization_win.add(right_arrow_image);
-	right_arrow_image.addEventListener('load',function(e){
+	right_arrow_image.addEventListener('load', function(e) {
 		hideLoader();
 	});
 	right_arrow_image.addEventListener('click', function(e) {
@@ -154,7 +155,7 @@ function Customization(json,name) {
 
 	});
 	customization_win.add(top_arrow_image);
-	top_arrow_image.addEventListener('load',function(e){
+	top_arrow_image.addEventListener('load', function(e) {
 		hideLoader();
 	});
 	top_arrow_image.addEventListener('click', function(e) {
@@ -169,7 +170,7 @@ function Customization(json,name) {
 		url : '/assets/iconControlArrowDown.png'
 
 	});
-	down_arrow_image.addEventListener('load',function(e){
+	down_arrow_image.addEventListener('load', function(e) {
 		hideLoader();
 	});
 	customization_win.add(down_arrow_image);
@@ -183,7 +184,7 @@ function Customization(json,name) {
 		height : '10%',
 		width : '35%'
 	});
-	next_arrow_image.addEventListener('load',function(e){
+	next_arrow_image.addEventListener('load', function(e) {
 		hideLoader();
 	});
 
@@ -193,7 +194,7 @@ function Customization(json,name) {
 		var MainMenuScreen = require('/ui/common/MenuScreen/MainMenuScreen');
 		MainMenu = new MainMenuScreen(json);
 		MainMenu.open();
-		
+
 	});
 
 	var coins_image = Titanium.UI.createImageView({
@@ -203,16 +204,16 @@ function Customization(json,name) {
 		top : '14.6%',
 		url : '/assets/iconDiceRandom.png'
 	});
-	coins_image.addEventListener('load',function(e){
+	coins_image.addEventListener('load', function(e) {
 		hideLoader();
 	});
 	customization_win.add(coins_image);
 	coins_image.addEventListener('click', function(e) {
 		//alert("coins clicked");
 	});
-	customization_win.addEventListener('android:back', function(){
+	customization_win.addEventListener('android:back', function() {
 		Ti.App.fireEvent('customization', {});
-	}); 
+	});
 
 	return customization_win;
 }

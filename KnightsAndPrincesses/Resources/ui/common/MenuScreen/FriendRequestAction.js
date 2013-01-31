@@ -1,8 +1,7 @@
 function FriendRequestAction(userinfo, friendJson) {
-	if(friendJson.GENDER == 'f'){
+	if (friendJson.GENDER == 'f') {
 		var bg_image = '/assets/row_view_bg_female.png'
-	}
-	else{
+	} else {
 		var bg_image = '/assets/row_view_bg_male.png'
 	}
 
@@ -45,14 +44,11 @@ function FriendRequestAction(userinfo, friendJson) {
 		backgroundImage : '/assets/button_small_UP.png'
 	});
 	add_friend_view.add(accept_button);
-	accept_button.addEventListener('click',function(e){
-
+	accept_button.addEventListener('click', function(e) {
 		var actInd = Titanium.UI.createActivityIndicator();
-		actInd.message = 'Loading...';//message will only shows in android.
+		actInd.message = 'Loading...';
 		actInd.show();
-		var _url = 
-		"http://justechinfo.com/kap_server/friendship_notifications_action.php?uid="+friendJson.UID+"&friend_uid="+userinfo.Record[0].UID+"&action=FRIENDS";//&="+friendJson.UID+"";
-		//
+		var _url = "http://justechinfo.com/kap_server/friendship_notifications_action.php?uid=" + friendJson.UID + "&friend_uid=" + userinfo.Record[0].UID + "&action=FRIENDS";
 		var items_json = "";
 		var items_length = 0;
 		var httpclientt = require('/ui/common/Functions/function');
@@ -65,6 +61,7 @@ function FriendRequestAction(userinfo, friendJson) {
 						activeScreen : 'AvatarByLevel'
 					});
 					alert(items_json.Record[0]);
+					send_window.close();
 				}
 			},
 			method : 'GET',
@@ -83,13 +80,14 @@ function FriendRequestAction(userinfo, friendJson) {
 		left : '10%',
 		backgroundImage : '/assets/button_small_UP.png'
 	});
-	decline_button.addEventListener('click',function(e){
+	decline_button.addEventListener('click', function(e) {
 
 		var actInd = Titanium.UI.createActivityIndicator();
-		actInd.message = 'Loading...';//message will only shows in android.
+		actInd.message = 'Loading...';
+		//message will only shows in android.
 		actInd.show();
-		var _url = 
-		"http://justechinfo.com/kap_server/friendship_notifications_action.php?uid="+friendJson.UID+"&friend_uid="+userinfo.Record[0].UID+"&action=DENIED";//&="+friendJson.UID+"";
+		var _url = "http://justechinfo.com/kap_server/friendship_notifications_action.php?uid=" + friendJson.UID + "&friend_uid=" + userinfo.Record[0].UID + "&action=DENIED";
+		//&="+friendJson.UID+"";
 		var items_json = "";
 		var items_length = 0;
 		var httpclientt = require('/ui/common/Functions/function');
@@ -113,4 +111,5 @@ function FriendRequestAction(userinfo, friendJson) {
 
 	return send_window;
 }
-module.exports = FriendRequestAction;
+
+module.exports = FriendRequestAction; 

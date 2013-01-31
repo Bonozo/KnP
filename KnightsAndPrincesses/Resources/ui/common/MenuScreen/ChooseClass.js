@@ -1,17 +1,18 @@
 function ChooseClass() {
 	var gender = 'm';
 	var images_counter = 0;
-	function hideLoader(){
+	function hideLoader() {
 		images_counter++;
-		if(images_counter >= 4){
+		if (images_counter >= 4) {
 			actInd.hide();
 		}
 	}
 
 	var actInd = Titanium.UI.createActivityIndicator();
-	actInd.message = 'Loading...';//message will only shows in android.
+	actInd.message = 'Loading...';
+	//message will only shows in android.
 	actInd.show();
-	
+
 	var chooseclass_win = Ti.UI.createWindow({
 		backgroundGradient : {
 			type : 'linear',
@@ -35,10 +36,10 @@ function ChooseClass() {
 		image : '/assets/overlayTitleStarCurtains.png'
 	});
 	SignUpScreen.header = top_header;
-	top_header.addEventListener('load',function(e){
+	top_header.addEventListener('load', function(e) {
 		hideLoader();
 	});
-	
+
 	chooseclass_win.add(top_header);
 
 	var header_label = Titanium.UI.createLabel({
@@ -53,7 +54,7 @@ function ChooseClass() {
 		height : '4.9%'
 	});
 	SignUpScreen.header_label = header_label;
-	
+
 	chooseclass_win.add(header_label);
 
 	var male_image = Titanium.UI.createImageView({
@@ -61,10 +62,10 @@ function ChooseClass() {
 		image : '/assets/K_fullbody_bad.png',
 		//height:"85%"
 	});
-	male_image.addEventListener('load',function(e){
+	male_image.addEventListener('load', function(e) {
 		hideLoader();
 	});
-	
+
 	chooseclass_win.add(male_image);
 	var right_arrow = Titanium.UI.createImageView({
 		top : "35%",
@@ -74,10 +75,9 @@ function ChooseClass() {
 		image : "/assets/iconControlArrowLeft.png"
 	});
 	chooseclass_win.add(right_arrow);
-	right_arrow.addEventListener('load',function(e){
+	right_arrow.addEventListener('load', function(e) {
 		hideLoader();
 	});
-	
 
 	var next_arrow = Titanium.UI.createImageView({
 		bottom : '0%',
@@ -87,7 +87,7 @@ function ChooseClass() {
 		width : '35%'
 	});
 	chooseclass_win.add(next_arrow);
-	next_arrow.addEventListener('load',function(e){
+	next_arrow.addEventListener('load', function(e) {
 		hideLoader();
 	});
 
@@ -102,15 +102,13 @@ function ChooseClass() {
 		left : "25%",
 		top : "56%",
 		width : "70%",
-		hintText:"Name",
+		hintText : "Name",
 		height : "15%",
 		paddingLeft : '3',
 		backgroundColor : 'transparent'
 	});
 	chooseclass_win.add(namescroll);
 	chooseclass_win.add(name_text);
-
-
 
 	var emailscroll = Titanium.UI.createImageView({
 		left : "10%",
@@ -123,14 +121,13 @@ function ChooseClass() {
 		left : "25%",
 		top : "65.5%",
 		width : "70%",
-		hintText:"Email",
+		hintText : "Email",
 		height : "15%",
 		paddingLeft : '3',
 		backgroundColor : 'transparent'
 	});
 	chooseclass_win.add(emailscroll);
 	chooseclass_win.add(email_text);
-
 
 	var passwordscroll = Titanium.UI.createImageView({
 		left : "10%",
@@ -143,7 +140,7 @@ function ChooseClass() {
 		left : "25%",
 		top : "75%",
 		width : "70%",
-		hintText:"Password",
+		hintText : "Password",
 		height : "15%",
 		paddingLeft : '3',
 		passwordMask : true,
@@ -164,7 +161,7 @@ function ChooseClass() {
 		height : "20%",
 		image : "/assets/iconControlArrowRight.png"
 	});
-	left_arrow.addEventListener('load',function(e){
+	left_arrow.addEventListener('load', function(e) {
 		hideLoader();
 	});
 	right_arrow.addEventListener('click', function(e) {
@@ -185,51 +182,48 @@ function ChooseClass() {
 	});
 	var Customization = require('/ui/common/MenuScreen/Customization');
 	var customizationscreen = null;
-	
+
 	var alertDialog = Titanium.UI.createAlertDialog({
-    title: 'Login Failed',
-    message: 'User not found.',
-    buttonNames: ['OK']
+		title : 'Login Failed',
+		message : 'User not found.',
+		buttonNames : ['OK']
 	});
-	 
-	alertDialog.addEventListener('click', function(e){
-	            alertDialog.close();
-	        }
-	); 
+
+	alertDialog.addEventListener('click', function(e) {
+		alertDialog.close();
+	});
 	/////////////////////
 	next_arrow.addEventListener('click', function(e) {
-		if(email_text.value == "" || password_text.value == "" || name_text.value == ""){
+		if (email_text.value == "" || password_text.value == "" || name_text.value == "") {
 			alert('All fields are required!');
-		}
-		else{
+		} else {
 			var httpclientt = require('/ui/common/Functions/function');
 			httpclientt.requestServer({
 				success : function(e) {
 					var json = JSON.parse(this.responseText);
 					if (json.Record != undefined) {
-						customizationscreen = new Customization(json,name_text.value);
+						customizationscreen = new Customization(json, name_text.value);
 						customizationscreen.open();
-	
+
 						var Record = json.Record[0];
-						
+
 					} else if (json.Error != undefined) {
 						alert(json.Error);
 					} else {
 						alert("Something went wrong!");
 					}
-	
+
 				},
 				method : 'GET',
 				contentType : 'text/xml',
-				url :"http://justechinfo.com/kap_server/sign_up.php?email=" + email_text.value + "&password=" + password_text.value + "&name=" + name_text.value + "&gender=" + gender
+				url : "http://justechinfo.com/kap_server/sign_up.php?email=" + email_text.value + "&password=" + password_text.value + "&name=" + name_text.value + "&gender=" + gender
 				//param : '<Device xmlns="http://schemas.datacontract.org/2004/07/CalendarConnect.Model">' + '<culture>' + Titanium.Platform.locale + '</culture>' + '<deviceToken>Have to Do</deviceToken>' + '<deviceType>' + deviceType + '</deviceType>' + '<modelDescription>' + Titanium.Platform.model + '</modelDescription>' + '<osVersion>' + Titanium.Platform.version + '</osVersion></Device>'
 			});
-			
+
 		}
 
-
 	});
-	chooseclass_win.addEventListener('android:back',  function(e) {
+	chooseclass_win.addEventListener('android:back', function(e) {
 		Ti.App.fireEvent('close_screen', {
 			screen_name : 'choose_your_class'
 		});
@@ -238,17 +232,15 @@ function ChooseClass() {
 		if (customizationscreen != null) {
 			customizationscreen.close();
 			customizationscreen = null;
-		}
-		else{
+		} else {
 			Ti.App.fireEvent('close_screen', {
 				screen_name : 'choose_your_class'
 			});
 		}
 	});
 
-
 	return chooseclass_win;
 }
 
 //make constructor function the public component interface
-module.exports = ChooseClass; 
+module.exports = ChooseClass;

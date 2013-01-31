@@ -167,4 +167,4 @@ function OptionsScreen(userinfo) {
 	return view;
 };
 
-module.exports = OptionsScreen; 
+module.exports = OptionsScreen;

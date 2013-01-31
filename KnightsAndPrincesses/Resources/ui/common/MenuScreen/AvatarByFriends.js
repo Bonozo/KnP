@@ -1,6 +1,7 @@
-function AvatarByFriends(userinfo, callback){
+function AvatarByFriends(userinfo, callback) {
 	var actInd = Titanium.UI.createActivityIndicator();
-	actInd.message = 'Loading...';//message will only shows in android.
+	actInd.message = 'Loading...';
+	//message will only shows in android.
 	actInd.show();
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var items_json = "";
@@ -15,13 +16,12 @@ function AvatarByFriends(userinfo, callback){
 				var tabledata = [];
 				var bg_image = '';
 				var avatar_image = "";
-				
+
 				for (var i = 0; i < items_json.Record.length; i++) {
-					if(items_json.Record[i].GENDER == 'f'){
+					if (items_json.Record[i].GENDER == 'f') {
 						bg_image = '/assets/row_view_bg_female.png'
 						avatar_image = "female_icon";
-					}
-					else{
+					} else {
 						bg_image = '/assets/row_view_bg_male.png'
 						avatar_image = "male_icon";
 					}
@@ -32,21 +32,20 @@ function AvatarByFriends(userinfo, callback){
 						backgroundImage : bg_image,
 						zIndex : 10
 					});
-/*
-					rowView.addEventListener('longclick', function(e) {
-						Titanium.Media.vibrate();
-						var SendFriendRequest = require('/ui/common/MenuScreen/SendFriendRequest');
-						var sendfriendrequest = new SendFriendRequest(userinfo, items_json.Record[e.row.index]);
-						sendfriendrequest.open({modal : true});
-					});
-*/
+					/*
+					 rowView.addEventListener('longclick', function(e) {
+					 Titanium.Media.vibrate();
+					 var SendFriendRequest = require('/ui/common/MenuScreen/SendFriendRequest');
+					 var sendfriendrequest = new SendFriendRequest(userinfo, items_json.Record[e.row.index]);
+					 sendfriendrequest.open({modal : true});
+					 });
+					 */
 					rowView.addEventListener('click', function(e) {
 						var FreindInfo = require('/ui/common/MenuScreen/FreindInfo');
 						var freindinfo = new FreindInfo(userinfo, e.row.uid);
 						freindinfo.open();
 					});
-					
-					
+
 					var return_imageview = Titanium.UI.createImageView({
 						image : '/assets/' + avatar_image + '.png',
 						width : '15%',
@@ -86,4 +85,4 @@ function AvatarByFriends(userinfo, callback){
 
 	});
 };
-module.exports = AvatarByFriends;
+module.exports = AvatarByFriends; 

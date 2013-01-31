@@ -152,50 +152,67 @@ function MenuIcons(active_screen) {
 		});
 
 	});
-
+	var new_request_beep = false, new_quest_beep = false;
 	Ti.App.addEventListener('NEW_REQUEST', function(data) {
-		if(data.status == "NEW"){
-			friend_alert_bg.visible = true;		
-			var sound = Titanium.Media.createSound({
-				url : '/sounds/message_bell.mp3'
-			});
-			sound.play();
-		}
-		else{
+		if (data.status == "NEW") {
+			friend_alert_bg.visible = true;
+			if (!new_request_beep) {
+				var sound = Titanium.Media.createSound({
+					url : '/sounds/message_bell.mp3'
+				});
+				sound.play();
+				new_request_beep = !new_request_beep;
+			}
+		} else {
+			new_request_beep = !new_request_beep;
 			friend_alert_bg.visible = false;
 		}
 	});
 	Ti.App.addEventListener('NEW_QUEST', function(data) {
-		// alert(data.status);
-		if(data.status == "NEW"){
+		// alert(data.status);
+		if (data.status == "NEW") {
 			quest_alert_bg.visible = true;
-			var sound = Titanium.Media.createSound({
-				url : '/sounds/message_bell.mp3'
-			});
-			sound.play();
-		}
-		else{
+			if (!new_quest_beep) {
+				var sound = Titanium.Media.createSound({
+					url : '/sounds/message_bell.mp3'
+				});
+				sound.play();
+				new_quest_beep = !new_quest_beep;
+			}
+		} else {
+			new_quest_beep = !new_quest_beep;
 			quest_alert_bg.visible = false;
 		}
-	}); 
+	});
 	Ti.App.addEventListener('service_notification', function(data) {
 
 		var httpclientt = require('/ui/common/Functions/function');
-		_url = "http://justechinfo.com/kap_server/get_notifications.php?uid=" + data.uid; 
+		_url = "http://justechinfo.com/kap_server/get_notifications.php?uid=" + data.uid;
 		httpclientt.requestServer({
 			success : function(e) {
 				items_json = JSON.parse(this.responseText);
 				if (items_json.Record != undefined) {
 					// alert(items_json.Record[0].REQUEST);
-					if(items_json.Record[0].REQUEST == 'NEW_REQUEST'){
-						// alert('TRUE');						Ti.App.fireEvent('NEW_REQUEST', {status:"NEW"});					}
-					else{
-						// alert('FALSE');						Ti.App.fireEvent('NEW_REQUEST', {status:""});					}
-					if(items_json.Record[0].QUEST_ASSIGN == 'NEW_QUEST'){
-						Ti.App.fireEvent('NEW_QUEST', {status:"NEW"});					}
-					else{
-						Ti.App.fireEvent('NEW_QUEST', {status:""});					}
-
+					if (items_json.Record[0].REQUEST == 'NEW_REQUEST') {
+						// alert('TRUE');
+						Ti.App.fireEvent('NEW_REQUEST', {
+							status : "NEW"
+						});
+					} else {
+						// alert('FALSE');
+						Ti.App.fireEvent('NEW_REQUEST', {
+							status : ""
+						});
+					}
+					if (items_json.Record[0].QUEST_ASSIGN == 'NEW_QUEST') {
+						Ti.App.fireEvent('NEW_QUEST', {
+							status : "NEW"
+						});
+					} else {
+						Ti.App.fireEvent('NEW_QUEST', {
+							status : ""
+						});
+					}
 				}
 				Ti.App.fireEvent('update_xp', {
 					clicked_item : 'StatusScreen'
@@ -208,7 +225,7 @@ function MenuIcons(active_screen) {
 
 		// alert(data.status);
 	});
-	
+
 	return view;
 }
 

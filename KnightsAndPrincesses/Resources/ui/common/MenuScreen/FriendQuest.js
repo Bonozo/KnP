@@ -61,6 +61,9 @@ function FriendQuest(userinfo, friend_uid) {
 		right : '3%'
 	});
 	view.add(return_imageview);
+	return_imageview.addEventListener('click', function(e) {
+		self.close();
+	});
 
 	var tabledata = [];
 	var ScreenHeight = Titanium.Platform.displayCaps.platformHeight;
@@ -127,7 +130,6 @@ function FriendQuest(userinfo, friend_uid) {
 
 					tabledata.push(rowView);
 				}
-				var tableviewheight = rowview_height * 3;
 
 				tableview = Ti.UI.createTableView({
 					data : tabledata,
@@ -155,19 +157,12 @@ function FriendQuest(userinfo, friend_uid) {
 
 	updateQuestsList();
 
-	Ti.App.addEventListener('update_xp', function(e) {
-		tabledata = [];
+	Ti.App.addEventListener('game_played', function(e) {
 		view.remove(tableview);
+		tabledata = [];
 		tableview = null;
 		updateQuestsList();
 	});
-	var male_character_imageview = Titanium.UI.createImageView({
-		image : '/assets/K_fullbody_bad.png',
-		height : '79.5%',
-		top : '12%',
-		right : '0%'
-	});
-	view.add(male_character_imageview);
 
 	httpclientt.requestServer({
 
@@ -250,7 +245,7 @@ function FriendQuest(userinfo, friend_uid) {
 				if (Messages_Thread.Record != undefined) {
 					//alert(Messages_Thread.Record[0].MESSAGE_TEXT);
 					var MessageScreen = require('/ui/common/MenuScreen/MessageScreen');
-					var messageScreen = new MessageScreen(Messages_Thread, userinfojson, friend_uid);
+					var messageScreen = new MessageScreen(Messages_Thread, userinfo, friend_uid);
 					messageScreen.open({
 						modal : true
 					});
@@ -261,12 +256,12 @@ function FriendQuest(userinfo, friend_uid) {
 				Ti.API.debug("STATUS: " + this.status);
 				Ti.API.debug("TEXT: " + this.responseText);
 				Ti.API.debug("ERROR: " + e.error);
-				Ti.API.debug("URL: " + "http://justechinfo.com/kap_server/get_thread_messages.php?sender_id=" + userinfojson.Record[0].UID + "&receiver_id=" + friend_uid);
+				Ti.API.debug("URL: " + "http://justechinfo.com/kap_server/get_thread_messages.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + friend_uid);
 				alert('There was an error retrieving the remote data. Try again.');
 			},
 			method : 'GET',
 			contentType : 'text/xml',
-			url : "http://justechinfo.com/kap_server/get_thread_messages.php?sender_id=" + userinfojson.Record[0].UID + "&receiver_id=" + friend_uid,
+			url : "http://justechinfo.com/kap_server/get_thread_messages.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + friend_uid,
 			//url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + 10000007 + "",
 
 		});
@@ -279,16 +274,6 @@ function FriendQuest(userinfo, friend_uid) {
 		left : '41.3%'
 	});
 	//view.add(Message_imageview);
-
-	return_imageview.addEventListener('load', function(e) {
-		hideLoader();
-	});
-	male_character_imageview.addEventListener('load', function(e) {
-		hideLoader();
-	});
-	Message_imageview.addEventListener('load', function(e) {
-		hideLoader();
-	});
 
 	var images_counter = 0;
 	function hideLoader() {
@@ -315,6 +300,25 @@ function FriendQuest(userinfo, friend_uid) {
 		contentType : 'text/xml',
 		url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + userinfo.Record[0].UID + "",
 	});
+
+	var male_character_imageview = Titanium.UI.createImageView({
+		right : '0%',
+		top : '12%',
+		height : '79.5%',
+		image : '/assets/K_fullbody_bad.png'
+	});
+	view.add(male_character_imageview);
+
+	return_imageview.addEventListener('load', function(e) {
+		hideLoader();
+	});
+	male_character_imageview.addEventListener('load', function(e) {
+		hideLoader();
+	});
+	Message_imageview.addEventListener('load', function(e) {
+		hideLoader();
+	});
+
 
 	var actInd = Titanium.UI.createActivityIndicator();
 	actInd.message = 'Loading...';

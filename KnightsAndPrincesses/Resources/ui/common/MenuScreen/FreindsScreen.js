@@ -2,10 +2,11 @@
 //http://justechinfo.com/kap_server/friendship_notifications_action.php?uid=10000005&friend_uid=10000007&action=FRIENDS
 function openNewTable(userinfojson, activeTable, callback) {
 	var TableView = require('ui/common/MenuScreen/' + activeTable);
-	TableView(userinfojson,function(Tableview){
+	TableView(userinfojson, function(Tableview) {
 		callback(Tableview);
 	});
 }
+
 function FreindsScreen(userinfo) {
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var activeTable = "AvatarByLevel";
@@ -47,7 +48,7 @@ function FreindsScreen(userinfo) {
 		width : '100%',
 		height : '100%'
 	});
-	openNewTable(userinfo, activeTable,function(tableview){
+	openNewTable(userinfo, activeTable, function(tableview) {
 		main_table_view = tableview;
 		view.add(main_table_view);
 	});
@@ -71,19 +72,19 @@ function FreindsScreen(userinfo) {
 		left : '44.4%'
 	});
 	view.add(down_imageview);
-/*
-	var search_byname = Titanium.UI.createTextField({
-		hintText : "Find By Name",
-		top : "58%",
-		left : "5%",
-		width : "30%",
-		font : {
-			fontSize : '9dip'
-		},
-		height : "8%"
-	});
-	view.add(search_byname);
-*/
+	/*
+	 var search_byname = Titanium.UI.createTextField({
+	 hintText : "Find By Name",
+	 top : "58%",
+	 left : "5%",
+	 width : "30%",
+	 font : {
+	 fontSize : '9dip'
+	 },
+	 height : "8%"
+	 });
+	 view.add(search_byname);
+	 */
 	var NewMail = Titanium.UI.createButton({
 		title : "New Mail",
 		backgroundImage : '/assets/button_smallLong_UP.png',
@@ -108,10 +109,10 @@ function FreindsScreen(userinfo) {
 		bottom : '15.1%'
 	});
 	view.add(request_button);
-	request_button.addEventListener('click',function(e){
+	request_button.addEventListener('click', function(e) {
 		view.remove(main_table_view);
 		activeTable = 'AvatarByRequest';
-		openNewTable(userinfo, activeTable,function(tableview){
+		openNewTable(userinfo, activeTable, function(tableview) {
 			main_table_view = tableview;
 			view.add(main_table_view);
 		});
@@ -129,10 +130,10 @@ function FreindsScreen(userinfo) {
 		bottom : '15.1%'
 	});
 	view.add(myfriend_button);
-	myfriend_button.addEventListener('click',function(e){
+	myfriend_button.addEventListener('click', function(e) {
 		view.remove(main_table_view);
 		activeTable = 'AvatarByFriends';
-		openNewTable(userinfo, activeTable,function(tableview){
+		openNewTable(userinfo, activeTable, function(tableview) {
 			main_table_view = tableview;
 			view.add(main_table_view);
 		});
@@ -149,6 +150,14 @@ function FreindsScreen(userinfo) {
 		bottom : '15.1%'
 	});
 	view.add(female_button);
+	female_button.addEventListener('click', function(e) {
+		view.remove(main_table_view);
+		activeTable = 'AvatarByFemale';
+		openNewTable(userinfo, activeTable, function(tableview) {
+			main_table_view = tableview;
+			view.add(main_table_view);
+		});
+	});
 
 	var male_button = Ti.UI.createButton({
 		backgroundImage : '/assets/button_smallLong_UP.png',
@@ -162,6 +171,14 @@ function FreindsScreen(userinfo) {
 		bottom : '15.1%'
 	});
 	view.add(male_button);
+	male_button.addEventListener('click', function(e) {
+		view.remove(main_table_view);
+		activeTable = 'AvatarByMale';
+		openNewTable(userinfo, activeTable, function(tableview) {
+			main_table_view = tableview;
+			view.add(main_table_view);
+		});
+	});
 
 	var online_button = Ti.UI.createButton({
 		backgroundImage : '/assets/button_smallLong_UP.png',
@@ -188,6 +205,14 @@ function FreindsScreen(userinfo) {
 		bottom : '21%'
 	});
 	view.add(coin_button);
+	coin_button.addEventListener('click', function(e) {
+		view.remove(main_table_view);
+		activeTable = 'AvatarByGold';
+		openNewTable(userinfo, activeTable, function(tableview) {
+			main_table_view = tableview;
+			view.add(main_table_view);
+		});
+	});
 
 	var level_button = Ti.UI.createButton({
 		backgroundImage : '/assets/button_smallLong_UP.png',
@@ -201,10 +226,10 @@ function FreindsScreen(userinfo) {
 		bottom : '21%'
 	});
 	view.add(level_button);
-	level_button.addEventListener('click',function(e){
+	level_button.addEventListener('click', function(e) {
 		view.remove(main_table_view);
 		activeTable = 'AvatarByLevel';
-		openNewTable(userinfo, activeTable,function(tableview){
+		openNewTable(userinfo, activeTable, function(tableview) {
 			main_table_view = tableview;
 			view.add(main_table_view);
 		});
@@ -221,10 +246,10 @@ function FreindsScreen(userinfo) {
 		}
 	});
 	view.add(sort_label);
-	Ti.App.addEventListener('update_friend_list',function(data){
+	Ti.App.addEventListener('update_friend_list', function(data) {
 		view.remove(main_table_view);
 		activeTable = data.activeScreen;
-		openNewTable(userinfo, activeTable,function(tableview){
+		openNewTable(userinfo, activeTable, function(tableview) {
 			main_table_view = tableview;
 			view.add(main_table_view);
 		});

@@ -26,4 +26,4 @@ function HeaderView() {
 	return self;
 }
 
-module.exports = HeaderView; 
+module.exports = HeaderView;

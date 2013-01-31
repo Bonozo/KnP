@@ -110,6 +110,7 @@ function SceneryCustomization(userinfo) {
 		backgroundImage : "/assets/button_smallLong_HIGHLIGHTED.png",
 		height : "8%",
 		right : "5%",
+		zIndex : 5000,
 		//size:"10dip",
 		title : "K&P Store",
 		width : "25%"
@@ -145,17 +146,19 @@ function SceneryCustomization(userinfo) {
 
 	var ScrolView_Image_left = 0;
 	var No_images = 8;
+	/*
 	for (var i = 0; i < No_images; i++) {
-		var ImageView_InScroll = Ti.UI.createImageView({
-			image : '/assets/' + i + '.png',
-			left : ScrolView_Image_left,
-			height : ScrolViewImageHeight + 'px',
-			width : ScrolViewImageHeight + 'px'
-		});
-		decoration_scrol_view.add(ImageView_InScroll);
+	var ImageView_InScroll = Ti.UI.createImageView({
+	image : '/assets/' + i + '.png',
+	left : ScrolView_Image_left,
+	height : ScrolViewImageHeight + 'px',
+	width : ScrolViewImageHeight + 'px'
+	});
+	decoration_scrol_view.add(ImageView_InScroll);
 
-		ScrolView_Image_left = ScrolView_Image_left + ScrolViewImageHeight;
+	ScrolView_Image_left = ScrolView_Image_left + ScrolViewImageHeight;
 	}
+	*/
 
 	///    Grid For decoration
 	///Grid For Style
@@ -171,17 +174,19 @@ function SceneryCustomization(userinfo) {
 
 	var ScrolView_Image_left = 0;
 	var No_images = 8;
+	/*
 	for (var i = 0; i < No_images; i++) {
-		var ImageView_InScroll = Ti.UI.createImageView({
-			image : '/assets/' + i + '.png',
-			left : ScrolView_Image_left,
-			height : ScrolViewImageHeight + 'px',
-			width : ScrolViewImageHeight + 'px'
-		});
-		style_scrol_view.add(ImageView_InScroll);
+	var ImageView_InScroll = Ti.UI.createImageView({
+	image : '/assets/' + i + '.png',
+	left : ScrolView_Image_left,
+	height : ScrolViewImageHeight + 'px',
+	width : ScrolViewImageHeight + 'px'
+	});
+	style_scrol_view.add(ImageView_InScroll);
 
-		ScrolView_Image_left = ScrolView_Image_left + ScrolViewImageHeight;
+	ScrolView_Image_left = ScrolView_Image_left + ScrolViewImageHeight;
 	}
+	*/
 	///Grid For Style
 
 	////Grid for Color Scheme
@@ -197,17 +202,19 @@ function SceneryCustomization(userinfo) {
 
 	var ScrolView_Image_left = 0;
 	var No_images = 8;
+	/*
 	for (var i = 0; i < No_images; i++) {
-		var ImageView_InScroll = Ti.UI.createImageView({
-			image : '/assets/' + i + '.png',
-			left : ScrolView_Image_left,
-			height : ScrolViewImageHeight + 'px',
-			width : ScrolViewImageHeight + 'px'
-		});
-		color_scrol_view.add(ImageView_InScroll);
+	var ImageView_InScroll = Ti.UI.createImageView({
+	image : '/assets/' + i + '.png',
+	left : ScrolView_Image_left,
+	height : ScrolViewImageHeight + 'px',
+	width : ScrolViewImageHeight + 'px'
+	});
+	color_scrol_view.add(ImageView_InScroll);
 
-		ScrolView_Image_left = ScrolView_Image_left + ScrolViewImageHeight;
+	ScrolView_Image_left = ScrolView_Image_left + ScrolViewImageHeight;
 	}
+	*/
 	////Grid for Color Scheme
 	////////// just for demo
 
@@ -219,4 +226,4 @@ function SceneryCustomization(userinfo) {
 	});
 	return view;
 };
-module.exports = SceneryCustomization; 
+module.exports = SceneryCustomization;

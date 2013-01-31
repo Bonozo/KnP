@@ -1,4 +1,4 @@
-function AvatarByRequest(userinfo, callback) {
+function AvatarByLevel(userinfo, callback) {
 	var actInd = Titanium.UI.createActivityIndicator();
 	actInd.message = 'Loading...';
 	//message will only shows in android.
@@ -34,9 +34,9 @@ function AvatarByRequest(userinfo, callback) {
 					});
 					rowView.addEventListener('longclick', function(e) {
 						Titanium.Media.vibrate();
-						var FriendRequestAction = require('/ui/common/MenuScreen/FriendRequestAction');
-						var friendrequestaction = new FriendRequestAction(userinfo, items_json.Record[e.row.index]);
-						friendrequestaction.open({
+						var SendFriendRequest = require('/ui/common/MenuScreen/SendFriendRequest');
+						var sendfriendrequest = new SendFriendRequest(userinfo, items_json.Record[e.row.index]);
+						sendfriendrequest.open({
 							modal : true
 						});
 					});
@@ -81,10 +81,10 @@ function AvatarByRequest(userinfo, callback) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://www.justechinfo.com/kap_server/friendship_notifications.php?uid=" + userinfo.Record[0].UID,
+		url : "http://justechinfo.com/kap_server/get_avatar_list.php?uid=" + userinfo.Record[0].UID +"&gender=m",
 
 	});
 
 }
 
-module.exports = AvatarByRequest; 
+module.exports = AvatarByLevel; 

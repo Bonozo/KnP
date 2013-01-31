@@ -7,6 +7,7 @@ function LoginWindow() {
 	//message will only shows in android.
 	actInd.show();
 
+
 	var HeaderView = require('ui/common/LoginScreen/HeaderView');
 	var viewstack = 0;
 	viewstack = Titanium.App.Properties.getString("viewstack");
@@ -16,6 +17,8 @@ function LoginWindow() {
 	//create component instance
 
 	var win = Ti.UI.createWindow({
+		backgroundImage : "/assets/inventoryBackground.png"
+		/*
 		backgroundGradient : {
 			type : 'linear',
 			colors : ['#3258ad', '#010f49'],
@@ -29,7 +32,6 @@ function LoginWindow() {
 			},
 			backFillStart : false
 		}
-		/*
 		 orientationModes: [
 		 Ti.UI.PORTRAIT,
 		 Ti.UI.UPSIDE_PORTRAIT
@@ -39,6 +41,14 @@ function LoginWindow() {
 	//construct UI
 	var headerView = new HeaderView();
 	win.add(headerView);
+/*
+	var bgimageView = Ti.UI.createImageView({
+		height : "100%",
+		width : "100%",
+		backgroundImage : "/assets/inventoryBackground.png"
+	});
+	win.add(bgimageView);
+*/
 
 	//creating mid image
 	var imageView = Ti.UI.createImageView({
@@ -109,10 +119,16 @@ function LoginWindow() {
 			alert('All fields are required!');
 		}
 		else{
+			var actInd = Titanium.UI.createActivityIndicator();
+			actInd.message = 'Signing In...';
+			//message will only shows in android.
+			actInd.show();
+
 			var httpclientt = require('/ui/common/Functions/function');
 			httpclientt.requestServer({
 				success : function(e) {
 					var json = JSON.parse(this.responseText);
+					//actInd.hide();
 					if (json.Record != undefined) {
 						if (remember) {
 							Ti.App.Properties.setString('knp_email', emailField.value);
@@ -121,6 +137,7 @@ function LoginWindow() {
 						var MainMenuScreen = require('/ui/common/MenuScreen/MainMenuScreen');
 						MainMenu = new MainMenuScreen(json);
 						MainMenu.open();
+						actInd.hide();
 						
 	
 					} else if (json.Error != undefined) {

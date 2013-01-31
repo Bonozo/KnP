@@ -1,16 +1,16 @@
 function QuestsHome(userinfo) {
 	var images_counter = 0;
-	function hideLoader(){
+	function hideLoader() {
 		images_counter++;
-		if(images_counter >= 2){
+		if (images_counter >= 2) {
 			actInd.hide();
 		}
 	}
-	
-	var actInd = Titanium.UI.createActivityIndicator();
-	actInd.message = 'Loading Main Screen...';//message will only shows in android.
-	actInd.show();
 
+	var actInd = Titanium.UI.createActivityIndicator();
+	actInd.message = 'Loading Main Screen...';
+	//message will only shows in android.
+	actInd.show();
 
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var view = Ti.UI.createView({
@@ -31,6 +31,10 @@ function QuestsHome(userinfo) {
 	});
 	view.add(selected_menu_label);
 
+	Ti.App.addEventListener('game_played', function(data) {
+		alert(data.status);
+	});
+
 	var rowview_friends_icon = Titanium.UI.createImageView({
 		image : '/assets/iconFriends.png'
 	});
@@ -50,20 +54,20 @@ function QuestsHome(userinfo) {
 			items_json = JSON.parse(this.responseText);
 			items_length = items_json.Record.length;
 			if (items_json.Record != undefined) {
-				
 				var tabledata = [];
 				for (var i = 0; i < items_json.Record.length; i++) {
 					var rowView = Ti.UI.createTableViewRow({
-						height : rowViewHeight//,
+						height : rowViewHeight,
+						backgroundColor : '#dbedbd',
+						opacity : (items_json.Record[i].IS_COMPLETED == 'true') ? '0' : '0.5'//,
 						//friend_uid : items_json.Record[i].ASSIGN_BY_UID
 					});
-					
-/*
-					rowView.addEventListener('click', function(e) {
-						alert("Next :"+e.row.friend_uid);
-					});
-*/
-					
+
+					/*
+					 rowView.addEventListener('click', function(e) {
+					 alert("Next :"+e.row.friend_uid);
+					 });
+					 */
 
 					var avatar_image = "";
 					if (items_json.Record[i].GENDER == 'm') {
@@ -90,8 +94,8 @@ function QuestsHome(userinfo) {
 					rowView.add(rowview_name);
 
 					var rowview_level = Ti.UI.createLabel({
-						text : 'LVL '+items_json.Record[i].LEVEL,
-						top : rowViewHeight * 35/100,
+						text : 'LVL ' + items_json.Record[i].LEVEL,
+						top : rowViewHeight * 35 / 100,
 						font : {
 							fontSize : '14dip'
 						},
@@ -100,14 +104,13 @@ function QuestsHome(userinfo) {
 						width : '45%'
 					});
 					rowView.add(rowview_level);
-					
+
 					rowview_friends_icon.left = '30%';
-					rowview_friends_icon.width = rowViewHeight/3.5;
-					rowview_friends_icon.height = rowViewHeight/3.5;
-					
+					rowview_friends_icon.width = rowViewHeight / 3.5;
+					rowview_friends_icon.height = rowViewHeight / 3.5;
+
 					rowView.add(rowview_friends_icon);
-					
-					
+
 					// Create a Label.
 					var num_of_friends = Ti.UI.createLabel({
 						text : items_json.Record[i].NUM_OF_FRIENDS,
@@ -115,19 +118,17 @@ function QuestsHome(userinfo) {
 						font : {
 							fontSize : '14dip'
 						},
-						top : rowViewHeight * 35/100,
+						top : rowViewHeight * 35 / 100,
 						left : '38%',
 						textAlign : 'center'
 					});
-					
+
 					// Add to the parent view.
 					rowView.add(num_of_friends);
-					
-					
-					
+
 					var rowview_message = Ti.UI.createLabel({
 						text : items_json.Record[i].MESSAGE,
-						bottom : rowViewHeight * 10/100,
+						bottom : rowViewHeight * 10 / 100,
 						font : {
 							fontSize : '14dip'
 						},
@@ -147,23 +148,22 @@ function QuestsHome(userinfo) {
 						right : '5%',
 						textAlign : 'center'
 					});
-					
+
 					// Add to the parent view.
 					rowView.add(questStatus);
-					
-					
+
 					// Create a Button.
 					var choosequests_btn = Ti.UI.createButton({
 						title : 'CHOOSE QUEST',
-						height : rowViewHeight/3,
-						top : rowViewHeight/3,
+						height : rowViewHeight / 3,
+						top : rowViewHeight / 3,
 						font : {
 							fontSize : '12dip'
 						},
 						right : '5px',
 						backgroundColor : '#C977A5',
 						borderColor : '#A62C77',
-						borderRadius : 5, 
+						borderRadius : 5,
 						borderWidth : 1,
 						friend_uid : items_json.Record[i].ASSIGN_BY_UID
 					});
@@ -173,8 +173,7 @@ function QuestsHome(userinfo) {
 						friendquest.open();
 					});
 					rowView.add(choosequests_btn);
-					
-					
+
 					// Create a Label.
 					var rewards_lbl = Ti.UI.createLabel({
 						text : 'REWARDS:',
@@ -182,15 +181,14 @@ function QuestsHome(userinfo) {
 						font : {
 							fontSize : '12dip'
 						},
-						bottom : rowViewHeight * 10/100,
+						bottom : rowViewHeight * 10 / 100,
 						right : '35%',
 						textAlign : 'center'
 					});
-					
+
 					// Add to the parent view.
 					rowView.add(rewards_lbl);
-					
-					
+
 					// Create a Label.
 					var num_of_quests_lbl = Ti.UI.createLabel({
 						text : items_json.Record[i].NUM_OF_QUESTS + ' QUEST(S)',
@@ -198,14 +196,13 @@ function QuestsHome(userinfo) {
 						font : {
 							fontSize : '12dip'
 						},
-						top : rowViewHeight/3,
+						top : rowViewHeight / 3,
 						right : '35%',
 						textAlign : 'center'
 					});
-					
+
 					// Add to the parent view.
 					rowView.add(num_of_quests_lbl);
-					
 
 					tabledata.push(rowView);
 				}//end of for loop
@@ -226,23 +223,23 @@ function QuestsHome(userinfo) {
 
 	});
 
-	
 	// Create a Label.
 	var freePlay_lbl = Ti.UI.createLabel({
 		text : 'FREE PLAY: ',
 		color : '#5afd9b',
-		font : {fontSize:'16dip'},
+		font : {
+			fontSize : '16dip'
+		},
 		top : '70%',
 		left : '5%',
 		textAlign : 'center'
 	});
-	
-	
+
 	// Create an ImageView.
 	var joustIcon = Ti.UI.createImageView({
 		image : '/assets/joust_icon.png',
-		width : rowViewHeight * (2/3),
-		height : rowViewHeight * (2/3),
+		width : rowViewHeight * (2 / 3),
+		height : rowViewHeight * (2 / 3),
 		top : '70%',
 		left : '35%'
 	});
@@ -250,60 +247,63 @@ function QuestsHome(userinfo) {
 		Ti.API.info('Image loaded!');
 	});
 	view.add(joustIcon);
-	joustIcon.addEventListener('click',function(e){
+	joustIcon.addEventListener('click', function(e) {
 		var SinglePlayGame = require('/ui/common/MenuScreen/SinglePlayGame');
-		var singleplaygame = new SinglePlayGame('joust_game',80000003,userinfo);
+		var singleplaygame = new SinglePlayGame('joust_game', 80000003, userinfo);
 		singleplaygame.open();
 	});
-	
+
 	// Create an ImageView.
 	var sonnetIcon = Ti.UI.createImageView({
 		image : '/assets/sonnet_icon.png',
-		width : rowViewHeight * (2/3),
-		height : rowViewHeight * (2/3),
+		width : rowViewHeight * (2 / 3),
+		height : rowViewHeight * (2 / 3),
 		top : '70%',
 		left : '52%'
 	});
 	sonnetIcon.addEventListener('click', function() {
 		var SinglePlayGame = require('/ui/common/MenuScreen/SinglePlayGame');
-		var singleplaygame = new SinglePlayGame('sonnet_game',80000002,userinfo);
+		var singleplaygame = new SinglePlayGame('sonnet_game', 80000002, userinfo);
 		singleplaygame.open();
 	});
 	view.add(sonnetIcon);
-	
+
 	// Create an ImageView.
 	var archeryIcon = Ti.UI.createImageView({
 		image : '/assets/archery_icon.png',
-		width : rowViewHeight * (2/3),
-		height : rowViewHeight * (2/3),
+		width : rowViewHeight * (2 / 3),
+		height : rowViewHeight * (2 / 3),
 		top : '70%',
 		left : '69%'
 	});
 	archeryIcon.addEventListener('click', function() {
 		var SinglePlayGame = require('/ui/common/MenuScreen/SinglePlayGame');
-		var singleplaygame = new SinglePlayGame('archery_game',80000001,userinfo);
+		var singleplaygame = new SinglePlayGame('archery_game', 80000001, userinfo);
+		actInd.show();
+		actInd.hide();
 		singleplaygame.open();
+
 	});
 	view.add(archeryIcon);
-	
+
 	// Create an ImageView.
 	var cookingIcon = Ti.UI.createImageView({
 		image : '/assets/cooking_icon.png',
-		width : rowViewHeight * (2/3),
-		height : rowViewHeight * (2/3),
+		width : rowViewHeight * (2 / 3),
+		height : rowViewHeight * (2 / 3),
 		top : '70%',
 		left : '85%'
 	});
 	cookingIcon.addEventListener('click', function() {
 		var SinglePlayGame = require('/ui/common/MenuScreen/SinglePlayGame');
-		var singleplaygame = new SinglePlayGame('cooking_game',80000004,userinfo);
+		var singleplaygame = new SinglePlayGame('cooking_game', 80000004, userinfo);
 		singleplaygame.open();
 	});
 	view.add(cookingIcon);
-	
+
 	// Add to the parent view.
 	view.add(freePlay_lbl);
-	
+
 	var UP_imageview = Titanium.UI.createImageView({
 		url : '/assets/iconControlArrowUp.png',
 		width : '12.5%',
@@ -326,4 +326,4 @@ function QuestsHome(userinfo) {
 	return view;
 }
 
-module.exports = QuestsHome; 
+module.exports = QuestsHome;

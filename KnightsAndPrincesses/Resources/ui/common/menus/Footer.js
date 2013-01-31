@@ -1,5 +1,5 @@
 function Footer(userinfojson) {
-	 
+
 	var view = Titanium.UI.createView({
 		bottom : '0%',
 		height : '10%',
@@ -64,7 +64,7 @@ function Footer(userinfojson) {
 		image : '/assets/iconMarrigeSingle.png',
 	});
 	view.add(bottom_coin);
-	
+
 	var days_label = Titanium.UI.createLabel({
 		backgroundImage : '/assets/overlayCalender.png',
 		text : "45\nDays",
@@ -75,4 +75,4 @@ function Footer(userinfojson) {
 	view.add(days_label);
 	return view;
 };
-module.exports = Footer; 
+module.exports = Footer;

@@ -1,6 +1,6 @@
 function ProgressBar(userinfo_json) {
 	//alert(userinfo_json.LEVEL);
-	function updateEnergyAndXP(userinfo_json){
+	function updateEnergyAndXP(userinfo_json) {
 		var xp_max_val = userinfo_json.Record[0].LEVEL * 1000 + 1000, energy_max_val = userinfo_json.Record[0].LEVEL * 1000;
 		var XPBar = ((userinfo_json.Record[0].XP / xp_max_val) * 100);
 		XPBar_imageview.width = "" + ((XPBar / 100) * 45) + "%";
@@ -12,6 +12,7 @@ function ProgressBar(userinfo_json) {
 		energyscore_label.text = "" + parseInt((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
 		level_label.text = 'LVL ' + userinfo_json.Record[0].LEVEL;
 	}
+
 	var view = Titanium.UI.createView({
 		top : '0%',
 		height : '12.4%',
@@ -152,23 +153,23 @@ function ProgressBar(userinfo_json) {
 
 	});
 	view.add(energy_label);
-	
-/*
-	var xp_max_val = userinfo_json.Record[0].LEVEL * 1000 + 1000, energy_max_val = userinfo_json.Record[0].LEVEL * 1000;
-	var XPBar = ((userinfo_json.Record[0].XP / xp_max_val) * 100);
-	XPBar_imageview.width = "" + ((XPBar / 100) * 45) + "%";
-	xp_label.text = parseInt(userinfo_json.Record[0].XP) + "/" + xp_max_val;
-	//var EnergyBar = "" + ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
-	var EnergyBar = ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100);
-	EnergyBar_imageview.width = "" + ((EnergyBar / 100) * 45) + "%";
-	//alert("" + ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%");
-	energyscore_label.text = "" + parseInt((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
-*/
+
+	/*
+	 var xp_max_val = userinfo_json.Record[0].LEVEL * 1000 + 1000, energy_max_val = userinfo_json.Record[0].LEVEL * 1000;
+	 var XPBar = ((userinfo_json.Record[0].XP / xp_max_val) * 100);
+	 XPBar_imageview.width = "" + ((XPBar / 100) * 45) + "%";
+	 xp_label.text = parseInt(userinfo_json.Record[0].XP) + "/" + xp_max_val;
+	 //var EnergyBar = "" + ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
+	 var EnergyBar = ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100);
+	 EnergyBar_imageview.width = "" + ((EnergyBar / 100) * 45) + "%";
+	 //alert("" + ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%");
+	 energyscore_label.text = "" + parseInt((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
+	 */
 	updateEnergyAndXP(userinfo_json);
-	
-	Ti.App.addEventListener('update_xp', function(data){
+
+	Ti.App.addEventListener('update_xp', function(data) {
 		var httpclientt = require('/ui/common/Functions/function');
-		
+
 		httpclientt.requestServer({
 			success : function(e) {
 				var userinfojson = JSON.parse(this.responseText);
@@ -182,4 +183,4 @@ function ProgressBar(userinfo_json) {
 	return view;
 };
 
-module.exports = ProgressBar; 
+module.exports = ProgressBar;

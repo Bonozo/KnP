@@ -1,8 +1,7 @@
 function SendFriendRequest(userinfo, friendJson) {
-	if(friendJson.GENDER == 'f'){
+	if (friendJson.GENDER == 'f') {
 		var bg_image = '/assets/row_view_bg_female.png'
-	}
-	else{
+	} else {
 		var bg_image = '/assets/row_view_bg_male.png'
 	}
 
@@ -17,10 +16,10 @@ function SendFriendRequest(userinfo, friendJson) {
 		height : '33%',
 		top : '33%'
 	});
-	//view.add(add_friend_view);
+
 	send_window.add(add_friend_view);
 	var addfriend_label = Ti.UI.createLabel({
-		text : 'ADD '+friendJson.NAME+' AS A FRIEND',
+		text : 'ADD ' + friendJson.NAME + ' AS A FRIEND',
 		font : {
 			fontSize : '12dip'
 		},
@@ -53,13 +52,12 @@ function SendFriendRequest(userinfo, friendJson) {
 		bottom : '03%',
 		height : '20%',
 		right : '10%',
-		backgroundImage : '/assets/button_small_UP.png'
+		backgroundImage : '/assets/button_small_UP.png',
+		zIndex : 100
 	});
 	add_friend_view.add(send_button);
-	send_button.addEventListener('click',function(e){
-		var _url = 
-		"http://justechinfo.com/kap_server/send_friend_request.php?uid="+userinfo.Record[0].UID+"&friend_uid="+friendJson.UID+"";
-		
+	send_button.addEventListener('click', function(e) {
+		var _url = "http://justechinfo.com/kap_server/send_friend_request.php?uid=" + userinfo.Record[0].UID + "&friend_uid=" + friendJson.UID + "";
 		var items_json = "";
 		var items_length = 0;
 		var httpclientt = require('/ui/common/Functions/function');
@@ -69,8 +67,9 @@ function SendFriendRequest(userinfo, friendJson) {
 				items_length = items_json.Record.length;
 				if (items_json.Record != undefined) {
 					// _assign_quest_id = items_json.Record[0].assign_quest_id;
-					// hideLoader();					alert(items_json.Record[0]);
-					// send_window.close();
+					// hideLoader();					
+					alert(items_json.Record[0]);
+					send_window.close();
 				}
 			},
 			method : 'GET',
@@ -89,11 +88,12 @@ function SendFriendRequest(userinfo, friendJson) {
 		left : '10%',
 		backgroundImage : '/assets/button_small_UP.png'
 	});
-	cancel_button.addEventListener('click',function(e){
+	cancel_button.addEventListener('click', function(e) {
 		send_window.close();
-		// alert(JSON.stringify(friendJson));	});
+		// alert(JSON.stringify(friendJson));
+	});
 	add_friend_view.add(cancel_button);
 
 	return send_window;
 };
-module.exports = SendFriendRequest; 
+module.exports = SendFriendRequest;

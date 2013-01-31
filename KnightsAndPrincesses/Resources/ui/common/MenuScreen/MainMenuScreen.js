@@ -25,16 +25,17 @@ function MainMenuScreen(userinfojson) {
 	//message will only shows in android.
 	actInd.show();
 
-
-	var SECONDS = 5; // every 5 seconds
+	var SECONDS = 5;
+	// every 5 seconds
 	var service_intent = Titanium.Android.createServiceIntent({
-	  url: 'services/notificationservice.js'
+		url : 'services/notificationservice.js'
 	});
-	service_intent.putExtra('interval', SECONDS * 1000); // Needs to be milliseconds
+	service_intent.putExtra('interval', SECONDS * 1000);
+	// Needs to be milliseconds
 	service_intent.putExtra('uid', userinfojson.Record[0].UID);
 	Titanium.Android.startService(service_intent);
 
-	// service_intent.putExtra('uid', userinfojson.Record[0].UID);
+	// service_intent.putExtra('uid', userinfojson.Record[0].UID);
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
 		success : function(e) {

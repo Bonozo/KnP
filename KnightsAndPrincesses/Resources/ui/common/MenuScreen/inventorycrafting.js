@@ -1,9 +1,15 @@
 function crafting(userinfojson) {
+
+	var actInd = Titanium.UI.createActivityIndicator();
+	actInd.message = 'Loading...';
+	//message will only shows in android.
+	actInd.show();
+
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var view = Titanium.UI.createWindow({
-		backgroundImage : '/assets/inventoryBackground.png',
-		navBarHidden : true
-
+		navBarHidden : true,
+		fullscreen : true,
+		backgroundImage : '/assets/inventoryBackground.png'
 	});
 	var botombar = require('ui/common/menus/Footer');
 	var bottom = new botombar(userinfojson);
@@ -53,6 +59,11 @@ function crafting(userinfojson) {
 
 	});
 	view.add(return_imageview);
+	return_imageview.addEventListener('click', function(e) {
+		view.close();
+	});
+
+
 	var items_json = "";
 	var items_length = 0;
 	var httpclientt = require('/ui/common/Functions/function');
@@ -65,7 +76,8 @@ function crafting(userinfojson) {
 				//alert(user_info_json.Record[0])
 				var rowViewHeight = screenWidth * 0.136;
 				var tabledata = [];
-				// alert(items_length);				for (var i = 0; i < items_json.Record.length; i++) {
+				// alert(items_length);
+				for (var i = 0; i < items_json.Record.length; i++) {
 					var rowView = Ti.UI.createTableViewRow({
 						height : rowViewHeight
 					});
@@ -119,9 +131,76 @@ function crafting(userinfojson) {
 					var craft_imageview = Titanium.UI.createImageView({
 						image : '/assets/buttonCraftEXAMPLE.png',
 						width : '10%',
+						craft_id : items_json.Record[i].CRAFT_ID,
+						craft_name : items_json.Record[i].CRAFT_NAME,
 						//height:'60px',
 						top : '15px',
 						left : '86%'
+					});
+					craft_imageview.addEventListener('click', function(e) {
+						var ConfirmationAlert = Titanium.UI.createAlertDialog({
+							title : 'Click \'Yes\' to create ' + e.source.craft_name + '.',
+							message : 'Sure?',
+							buttonNames : ['Yes', 'No'],
+							craft_id : e.source.craft_id,
+							cancel : 1
+						});
+
+						ConfirmationAlert.addEventListener('click', function(e) {
+							Titanium.API.info('e = ' + JSON.stringify(e));
+
+							//Clicked cancel, first check is for iphone, second for android
+							if (e.cancel === e.index || e.cancel === true) {
+								return;
+							}
+							//now you can use parameter e to switch/case
+							switch (e.index) {
+								case 0:
+									actInd.show();
+									var create_craft_url = "justechinfo.com/kap_server/create_craft.php?uid=" + userinfojson.Record[0].UID + "&craft_id=" + e.source.craft_id + "";
+
+									var httpclientt = require('/ui/common/Functions/function');
+									httpclientt.requestServer({
+										success : function(e) {
+											items_json = JSON.parse(this.responseText);
+											if (items_json.Record != undefined) {
+												if (items_json.Record.Message != undefined) {
+													alert(items_json.Record.Message);
+													Ti.App.fireEvent('update_inv_grid', {
+													});
+													actInd.hide();
+												}
+												else  if (items_json.Record.Error != undefined){
+													alert(items_json.Record.Error);
+													actInd.hide();
+												}
+											} else {
+												alert('Something went wrong, please try again later.');
+												actInd.hide();
+											}
+										},
+										method : 'GET',
+										contentType : 'text/xml',
+										url : create_craft_url,
+
+									});
+
+									break;
+
+								//This will never be reached, if you specified cancel for index 1
+								case 1:
+									// alert('Clicked button 1 (NO)');
+									break;
+
+								default:
+									break;
+
+							}
+
+						});
+
+						ConfirmationAlert.show();
+						//alert(e.source.craft_id);
 					});
 					rowView.add(craft_imageview);
 
@@ -135,8 +214,9 @@ function crafting(userinfojson) {
 					top : '15%'
 				});
 				view.add(tableview);
-
+				actInd.hide();
 			}
+
 		},
 		method : 'GET',
 		contentType : 'text/xml',
