@@ -28,7 +28,7 @@ if (Ti.version < 1.8 ) {
 	
 	var Window;
 	if (isTablet) {
-		Window=require('ui/handheld/android/LoginWindow');
+		Window = require('ui/handheld/android/LoginWindow');
 	}
 	else {
 		// Android uses platform-specific properties to create windows.
@@ -40,7 +40,7 @@ if (Ti.version < 1.8 ) {
 		}
 		else {
 			//Window = require('ui/handheld/LoginWindow');
-			Window=require('ui/common/MenuScreen/OptionsScreen.js');
+			Window = require('ui/handheld/android/LoginWindow');
 		}
 	}
 	var win1 = new Window();

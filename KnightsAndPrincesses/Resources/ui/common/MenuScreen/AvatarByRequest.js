@@ -3,6 +3,15 @@ function AvatarByRequest(userinfo, callback) {
 	actInd.message = 'Loading...';
 	//message will only shows in android.
 	actInd.show();
+	var gold_imageview = Titanium.UI.createImageView({
+		image : '/assets/miGoldWide_up.png',
+		width : '12%',
+		height : '40%',
+		zIndex : 500
+	});
+
+    var request_counter = 0;
+	
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var items_json = "";
 	var items_length = 0;
@@ -16,34 +25,44 @@ function AvatarByRequest(userinfo, callback) {
 				var tabledata = [];
 				var bg_image = '';
 				var avatar_image = "";
-
+				gold_imageview.right = '25%';
+					//rowView.add(gold_imageview);
 				for (var i = 0; i < items_json.Record.length; i++) {
+				    request_counter++;
+				    
+				    //alert(request_counter);
 					if (items_json.Record[i].GENDER == 'f') {
-						bg_image = '/assets/row_view_bg_female.png'
+						bg_image = '/assets/freind_request_male.png'
 						avatar_image = "female_icon";
 					} else {
-						bg_image = '/assets/row_view_bg_male.png'
+						bg_image = '/assets/freind_request_male.png'
 						avatar_image = "male_icon";
 					}
+					
 					var rowView = Ti.UI.createTableViewRow({
 						height : rowViewHeight,
 						uid : items_json.Record[i].UID,
 						index : i,
 						backgroundImage : bg_image,
-						zIndex : 10
+						zIndex : 10,
+						user_info : items_json.Record[i]
 					});
 					rowView.addEventListener('longclick', function(e) {
 						Titanium.Media.vibrate();
 						var FriendRequestAction = require('/ui/common/MenuScreen/FriendRequestAction');
 						var friendrequestaction = new FriendRequestAction(userinfo, items_json.Record[e.row.index]);
-						friendrequestaction.open({
-							modal : true
-						});
+						friendrequestaction.open();
 					});
 					rowView.addEventListener('click', function(e) {
+						var FriendRequestAction = require('/ui/common/MenuScreen/FriendRequestAction');
+						var friendrequestaction = new FriendRequestAction(userinfo, items_json.Record[e.row.index]);
+						friendrequestaction.open();
+
+/*
 						var FreindInfo = require('/ui/common/MenuScreen/FreindInfo');
 						var freindinfo = new FreindInfo(userinfo, e.row.uid);
 						freindinfo.open();
+*/
 					});
 
 					var return_imageview = Titanium.UI.createImageView({
@@ -53,7 +72,39 @@ function AvatarByRequest(userinfo, callback) {
 						right : '2px'
 					});
 					rowView.add(return_imageview);
+					var level_label = Ti.UI.createLabel({
+						text : 'LVL '+items_json.Record[i].LEVEL,
+						font : {
+							fontSize : '12dip'
+						},
+						color : '#b3fad0',
+						right : '20%',
+						top : '5%'
+					});
+					rowView.add(level_label);
 
+					
+					var gold_label = Ti.UI.createLabel({
+						text :items_json.Record[i].NUM_OF_GOLDS,
+						font : {
+							fontSize : '12dip'
+						},
+						color : '#b3fad0',
+						right : '20%',
+					});
+					rowView.add(gold_label);
+
+
+					var online_label = Ti.UI.createLabel({
+						text : 'ONLINE',
+						font : {
+							fontSize : '12dip'
+						},
+						color : '#b3fad0',
+						bottom : '5%',
+						right : '20%',
+					});
+					rowView.add(online_label);
 					var name_label = Ti.UI.createLabel({
 						text : items_json.Record[i].NAME,
 						font : {
@@ -61,10 +112,34 @@ function AvatarByRequest(userinfo, callback) {
 						},
 						color : '#b3fad0',
 						left : '8px',
-						top : '8px',
+						top : '5%',
 						width : '45%'
 					});
 					rowView.add(name_label);
+					var status_message_label = Ti.UI.createLabel({
+						text : items_json.Record[i].STATUS_MESSAGE,
+						font : {
+							fontSize : '11dip'
+						},
+						color : '#b3fad0',
+						left : '8px',
+						width : '45%'
+					});
+					rowView.add(status_message_label);
+
+
+					var request_label = Ti.UI.createLabel({
+						text : 'NEW FREIND REQUEST!',
+						font : {
+							fontSize : '12dip'
+						},
+						color : '#B3FAD0',
+						left : '12%',
+						bottom : '10%',
+						width : '45%'
+					});
+					rowView.add(request_label); 
+
 
 					tabledata.push(rowView);
 				}//end of for loop
@@ -84,6 +159,21 @@ function AvatarByRequest(userinfo, callback) {
 		url : "http://www.justechinfo.com/kap_server/friendship_notifications.php?uid=" + userinfo.Record[0].UID,
 
 	});
+    //if(request_counter >0){
+        Ti.App.addEventListener("request_check",function(){
+            request_counter--;
+            //alert(request_counter);
+            if(request_counter<=0)
+                sendCounterinfo();
+        }); 
+    //}
+    function sendCounterinfo(){
+        Ti.App.fireEvent('request_send', {
+            count : '0'
+        });
+        
+    }
+
 
 }
 

@@ -1,4 +1,4 @@
-function MessageScreen(userinfo, friend_uid) {
+function MessageScreen(userinfo, friend_uid, friend_gender,friend_name) {
 	var actInd = Titanium.UI.createActivityIndicator();
 	actInd.message = 'Loading...';
 	//message will only shows in android.
@@ -46,9 +46,12 @@ function MessageScreen(userinfo, friend_uid) {
 		}
 	});
 	view.add(name_label);
+    Ti.App.fireEvent("message_status",{
+       data :"null"
+    });
 
 	var menu_label = Titanium.UI.createLabel({
-		text : 'FRIENDS NAME 01 INFO',
+		text : friend_name,
 		top : '0',
 		height : '3.1%',
 		right : '15.6%',
@@ -86,6 +89,7 @@ function MessageScreen(userinfo, friend_uid) {
 	/*
 	 * Messages loading start
 	 */
+	var date_height = '';
 	var tableview;
 	var tabledata = [];
 	var httpclientt = require('/ui/common/Functions/function');
@@ -97,6 +101,9 @@ function MessageScreen(userinfo, friend_uid) {
 			if (Messages_Thread.Record != undefined) {
 
 				for (var i = Messages_Thread.Record.length - 1; i > -1; i--) {
+                    var rowView = Titanium.UI.createTableViewRow({
+                        //height : rowViewHeight
+                    });
 					
 					//sendMessage(Loggedin_id, friend_uid, text_feild.value, true);
 					//var i = 0;
@@ -104,36 +111,49 @@ function MessageScreen(userinfo, friend_uid) {
 					var message = Messages_Thread.Record[i].MESSAGE_TEXT
 					formatMessage(message, 30, function(message, num_of_lines) {
 						current_msg = message;
-						// line_height = line_no * 1.20;						line_height = num_of_lines * rowViewHeight + (rowViewHeight);
+						// line_height = line_no * 1.20;
+						date_height = num_of_lines * rowViewHeight * 100;
+						line_height = num_of_lines * rowViewHeight + (rowViewHeight);
+						rowView.height = line_height+ rowViewHeight;
+                      //date_height = line_height  * rowViewHeight + (rowViewHeight);
+
 					});
 					//current_msg = Messages_Thread.Record[i].MESSAGE_TEXT;
 
 					var dp;
 					var dp_left;
 					var chat_left;
-					if (Messages_Thread.Record[i].SENDER_UID == Loggedin_id) {
-						dp = '/assets/female_icon.png';
-						dp_left = '3%';
-						chat_left = '26%';
-					} else {
-						dp = '/assets/male_icon.png';
-						dp_left = '78%'
-						chat_left = '4%';
-					}
+                    if (Messages_Thread.Record[i].SENDER_UID == Loggedin_id) {/*If sender is me*/
+                        if (userinfo.Record[0].GENDER == 'm') {
+                            dp = '/assets/male_icon.png';
 
-					var rowView = Titanium.UI.createTableViewRow({
-						height : 'auto'
-					});
+                        } else if (userinfo.Record[0].GENDER == 'f') {
+                            dp = '/assets/female_icon.png';
+                        }
+                        dp_left = '3%';
+                        chat_left = '26%';
+                    }
+                    else{/*If sender is not me*/
+                        if (friend_gender == 'm') {
+                            dp = '/assets/male_icon.png';
 
-					var dp_imageview = Ti.UI.createImageView({
-						image : dp,
-						width : '20%',
-						left : dp_left,
-						height : 'auto',
-						top : '10%',
-						bottom : '10%'
-					});
-					rowView.add(dp_imageview);
+                        } else if (friend_gender == 'f') {
+                            dp = '/assets/female_icon.png';
+                        }
+                        dp_left = '78%'
+                        chat_left = '4%';
+                    }
+
+
+                    var dp_imageview = Ti.UI.createImageView({
+                        image : dp,
+                        width : '20%',
+                        left : dp_left,
+                        height : rowViewHeight*3,
+                        top : '10%',
+                        bottom : '10%'
+                    });
+                    rowView.add(dp_imageview);
 
 					var commentBg = Ti.UI.createView({
 						backgroundColor : '#72AE94',
@@ -156,28 +176,28 @@ function MessageScreen(userinfo, friend_uid) {
 						color : '#FFFFFF',
 						left : '4%',
 						top : '4%',
-						width : '92%'
 					});
 
 					// Create a Label.
-
-					/*
+					//alert(date_height);
 					 var dateTime = Ti.UI.createLabel({
-					 text : Messages_Thread.Record[i].DATETIME,
+					 text : '\n'+Messages_Thread.Record[i].DATETIME,
 					 color : '#d0f6d9',
 					 font : {
 					 fontSize : '12dip'
 					 },
-					 bottom : '0',
+					 //bottom : '1%',
+					 bottom : '1%',
 					 left : '4%',
+					 //width : '90%',
+					 //height: '10%',
 					 textAlign : 'left'
 					 });
 
 					 // Add to the parent view.
-					 commentBg.add(dateTime);
-					 */
-
-					commentBg.add(chat_msg_label);
+                    commentBg.add(chat_msg_label);
+                    commentBg.add(dateTime);
+					
 					rowView.add(commentBg);
 
 					tabledata.push(rowView);
@@ -214,8 +234,31 @@ function MessageScreen(userinfo, friend_uid) {
 	/*
 	 * Messages loading end
 	 */
-
-	function sendMessage(Loggedin_id, friend_uid, text_feild, is_send) {
+   var date = '';
+	function sendMessage(Loggedin_id, friend_uid, text_feild, is_send,date_time) {
+        date = date_time;
+        if (is_send) {
+            if(userinfo.Record[0].GENDER == 'm'){
+                dp = '/assets/male_icon.png';
+                
+            }
+            else if(userinfo.Record[0].GENDER == 'f'){
+                dp = '/assets/female_icon.png';
+            }
+            dp_left = '3%';
+            chat_left = '26%';
+        }
+        else{
+            if(friend_gender == 'm'){
+                dp = '/assets/male_icon.png';
+                
+            }
+            else if(friend_gender == 'f'){
+                dp = '/assets/female_icon.png';
+            }
+            dp_left = '78%'
+            chat_left = '4%';
+        }
 		if(is_send){
 			var Message_info;
 			var httpclientt = require('/ui/common/Functions/function');
@@ -224,19 +267,20 @@ function MessageScreen(userinfo, friend_uid) {
 				success : function(e) {
 					Message_info = JSON.parse(this.responseText);
 					if (Message_info.Message != undefined) {
+						date = Message_info.Message[0].DATETIME;
 						//alert("Sent Successfully");
 					}
 	
 				},
 				method : 'GET',
 				contentType : 'text/xml',
-				url : "http://justechinfo.com/kap_server/send_message.php?sender_id=" + Loggedin_id + "&receiver_id=" + friend_uid + "&message=" + text_feild + "",
+				url : "http://justechinfo.com/kap_server/send_message.php?sender_id=" + Loggedin_id + "&receiver_id=" + friend_uid + "&message=" + Ti.Network.encodeURIComponent(text_feild)+ "",
 	
 			});
 		}
 		
 		var rowView = Titanium.UI.createTableViewRow({
-			height : 'auto'
+			//height : 'auto'
 		});
 
 		var line_height = 0;
@@ -248,29 +292,18 @@ function MessageScreen(userinfo, friend_uid) {
 		var dp;
 		var dp_left;
 		var chat_left;
-		if (is_send) {
-			dp = '/assets/female_icon.png';
-			dp_left = '3%';
-			chat_left = '26%';
-		} else {
-			dp = '/assets/male_icon.png';
-			dp_left = '78%'
-			chat_left = '4%';
-		}
 
-		var rowView = Titanium.UI.createTableViewRow({
-			height : 'auto'
-		});
 
-		var dp_imageview = Ti.UI.createImageView({
-			image : dp,
-			width : '20%',
-			left : dp_left,
-			height : 'auto',
-			top : '10%',
-			bottom : '10%'
-		});
-		rowView.add(dp_imageview);
+
+        var dp_imageview = Ti.UI.createImageView({
+            image : dp,
+            width : '20%',
+            left : dp_left,
+            height : 'auto',
+            top : '10%',
+            bottom : '10%'
+        });
+        rowView.add(dp_imageview);
 
 		var commentBg = Ti.UI.createView({
 			backgroundColor : '#72AE94',
@@ -297,6 +330,22 @@ function MessageScreen(userinfo, friend_uid) {
 		});
 
 		commentBg.add(chat_msg_label);
+        
+        var dateTime = Ti.UI.createLabel({
+            text : date,
+            color : '#d0f6d9',
+            font : {
+                fontSize : '12dip'
+            },
+            //bottom : '1%',
+            bottom : '1%',
+            left : '4%',
+            //width : '90%',
+            //height: '10%',
+            textAlign : 'left'
+        });
+        commentBg.add(dateTime);
+		
 		rowView.add(commentBg);
 
 		tabledata.push(rowView);
@@ -312,7 +361,7 @@ function MessageScreen(userinfo, friend_uid) {
 		bottom : "0%",
 		height : "10%",
 		width : "80%",
-		left : "0%"
+		right : "0%"
 	});
 	view.add(text_feild);
 	text_feild.addEventListener('focus', function(e) {
@@ -320,19 +369,27 @@ function MessageScreen(userinfo, friend_uid) {
 	});
 	text_feild.addEventListener('return', function(e) {
 		if (text_feild.value != "")
-			sendMessage(Loggedin_id, friend_uid, text_feild.value, true);
+			sendMessage(Loggedin_id, friend_uid, text_feild.value, true,'');
+			text_feild.value = '';
 	});
 
-	var sendButton = Ti.UI.createButton({
-		title : 'SEND',
+	var sendButton = Ti.UI.createImageView({
+		image :  '/assets/iconGift.png',
 		height : '10%',
 		width : '20%',
 		bottom : '0%',
-		right : '0%'
+		left : '0%'
 	});
 	sendButton.addEventListener('click', function() {
+		var GiftFromMessage = require('ui/common/MenuScreen/GiftFromMessage');
+		var GiftFromMessage = new GiftFromMessage(userinfo,friend_uid);
+		GiftFromMessage.open({
+			modal : true
+		});
+/*
 		if (text_feild.value != "")
 			sendMessage(Loggedin_id, friend_uid, text_feild.value, true);
+*/
 	});
 	view.add(sendButton);
 	/*
@@ -352,7 +409,7 @@ function MessageScreen(userinfo, friend_uid) {
 				unreadmessages = JSON.parse(this.responseText);
 				if (unreadmessages.Record != undefined) {
 					for (var i = unreadmessages.Record.length - 1; i > -1; i--) {
-						sendMessage(Loggedin_id, friend_uid, unreadmessages.Record[i].MESSAGE_TEXT, false);
+						sendMessage(Loggedin_id, friend_uid, unreadmessages.Record[i].MESSAGE_TEXT, false,unreadmessages.Record[i].DATETIME);
 					}
 					//alert("return");
 				}
@@ -363,6 +420,7 @@ function MessageScreen(userinfo, friend_uid) {
 			url : "http://www.justechinfo.com/kap_server/get_unread_messages.php?sender_id=" + friend_uid + "&receiver_id=" + Loggedin_id + "",
 
 		});
+		
 
 	}, 1000);
 	/*
@@ -370,12 +428,18 @@ function MessageScreen(userinfo, friend_uid) {
 	 */
 
 /*
+    var activity = self.activity;
+    activity.addEventListener('destroy', function(e) {
+        clearInterval(timer);
+        timer = null;
+    }); 
+*/
+
 	var activity = self.activity;
-	activity.addEventListener('destroy', function(e) {
+	view.addEventListener('android:back', function(e) {
 		clearInterval(timer);
 		timer = null;
 	}); 
-*/
 	return self;
 };
 module.exports = MessageScreen;

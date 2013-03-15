@@ -11,6 +11,7 @@ function ProgressBar(userinfo_json) {
 		//alert("" + ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%");
 		energyscore_label.text = "" + parseInt((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
 		level_label.text = 'LVL ' + userinfo_json.Record[0].LEVEL;
+		statusmsg_label.text = userinfo_json.Record[0].STATUS_MESSAGE;
 	}
 
 	var view = Titanium.UI.createView({
@@ -32,9 +33,15 @@ function ProgressBar(userinfo_json) {
 		}
 	});
 	view.add(name_label);
+        var gender;
+        if(userinfo_json.Record[0].GENDER == 'm'){
+            gender = 'KNIGHT';
+        }
+        else 
+           gender = 'PRINCESS';
 
 	var charactertype_label = Titanium.UI.createLabel({
-		text : userinfo_json.Record[0].GENDER,
+		text : gender,
 		top : '0',
 		height : '30.1%',
 		right : '3%',
@@ -87,7 +94,7 @@ function ProgressBar(userinfo_json) {
 	view.add(EnergyBar_imageview);
 
 	var statusmsg_label = Titanium.UI.createLabel({
-		text : 'This is My Status Message',
+		text : userinfo_json.Record[0].STATUS_MESSAGE,
 		top : '80.1%',
 		right : '7.9%',
 		textAlign : 'right',

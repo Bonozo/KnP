@@ -9,16 +9,16 @@ function openNewTable(userinfojson, activeTable, callback) {
 
 function FreindsScreen(userinfo) {
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
-	var activeTable = "AvatarByLevel";
+	var activeTable = "AvatarByFriends";
 	var main_table_view;
 	var tableview;
 	var view = Titanium.UI.createView({
-		top : "23%",
+		top : "23.5%",
 		height : "78%",
 		width : "100%"
 	});
 	var selected_menu_label = Titanium.UI.createLabel({
-		text : 'Freinds',
+		text : 'Friends',
 		top : '0%',
 		left : '29.6%',
 		textAlign : 'center',
@@ -55,6 +55,7 @@ function FreindsScreen(userinfo) {
 
 	///////////////////////////////////////////////////////////////////////////////////
 
+/*
 	var UP_imageview = Titanium.UI.createImageView({
 		url : '/assets/iconControlArrowUp.png',
 		width : '12.5%',
@@ -64,6 +65,7 @@ function FreindsScreen(userinfo) {
 	});
 	view.add(UP_imageview);
 
+
 	var down_imageview = Titanium.UI.createButton({
 		backgroundImage : '/assets/iconControlArrowDown.png',
 		width : '12.5%',
@@ -72,6 +74,7 @@ function FreindsScreen(userinfo) {
 		left : '44.4%'
 	});
 	view.add(down_imageview);
+	*/
 	/*
 	 var search_byname = Titanium.UI.createTextField({
 	 hintText : "Find By Name",
@@ -89,7 +92,7 @@ function FreindsScreen(userinfo) {
 		title : "New Mail",
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		right : "2%",
-		top : "58%",
+		top : "65%",
 		font : {
 			fontSize : '9dip'
 		},
@@ -97,6 +100,44 @@ function FreindsScreen(userinfo) {
 		height : "8%"
 	});
 	view.add(NewMail);
+	var req_notification = '';
+	var new_request_imageview;
+    var get_notification_url = "http://justechinfo.com/kap_server/get_notifications.php?uid=" + userinfo.Record[0].UID;
+    var httpclientt = require('/ui/common/Functions/function');
+    httpclientt.requestServer({
+        success : function(e) {
+            items_json = JSON.parse(this.responseText);
+            if (items_json.Record != undefined) {
+                req_notification = items_json.Record[0].REQUEST;
+                if (req_notification == 'NEW_REQUEST') {
+                    new_request_imageview = Titanium.UI.createImageView({
+                        image : '/assets/message_alert.png',
+                        width : '4%',
+                        height : '4%',
+                        right : '2.7%',
+                        bottom : '16.4%',
+                        zIndex : 600
+                    });
+                    view.add(new_request_imageview);
+                    
+                }
+            }
+
+        },
+        method : 'GET',
+        contentType : 'text/xml',
+        url : get_notification_url
+    });
+    //if(req_notification == "NEW_REQUEST"){
+        Ti.App.addEventListener("request_send",function(){
+            alert('hear');
+            new_request_imageview.hide();
+            //req_notification = "NO_REQUEST";
+            
+        }); 
+    //}
+    
+	
 	var request_button = Ti.UI.createButton({
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
@@ -109,6 +150,7 @@ function FreindsScreen(userinfo) {
 		bottom : '15.1%'
 	});
 	view.add(request_button);
+
 	request_button.addEventListener('click', function(e) {
 		view.remove(main_table_view);
 		activeTable = 'AvatarByRequest';

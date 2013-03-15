@@ -224,6 +224,7 @@ function crafting(userinfojson) {
 
 	});
 
+/*
 	var UP_imageview = Titanium.UI.createImageView({
 		image : '/assets/iconControlArrowUp.png',
 		width : '12.5%',
@@ -241,6 +242,7 @@ function crafting(userinfojson) {
 		left : '44.4%'
 	});
 	view.add(down_imageview);
+*/
 	view.addEventListener('android:back', function(e) {
 		alert("asd")
 		view.close();

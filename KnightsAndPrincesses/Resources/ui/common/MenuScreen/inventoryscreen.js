@@ -52,18 +52,22 @@ function Inventoryscreen(userinfo) {
 	});
 	view.add(selected_menu_label);
 
+	var gender = userinfo.Record[0].GENDER;
 	var character_imageview = Titanium.UI.createImageView({
-		url : '/assets/hdpi_female_character.png',
 		height : '61.6%',
 		//width:'51.9%',
 		top : '2%',
-		right : '0%'
+		right : '0%',
+		image : (gender == 'm')?'/assets/K_fullbody_bad.png':'/assets/hdpi_female_character_Image2.png',
+		//height : '75%'
+		//zIndex : 500
 	});
 	view.add(character_imageview);
 	character_imageview.addEventListener('load', function(e) {
-		////hideLoader();
+		//hideLoader();
 	});
 
+/*
 	var center_view = Ti.UI.createView({
 		backgroundColor : '#175c35',
 		opacity : '0.7',
@@ -74,6 +78,17 @@ function Inventoryscreen(userinfo) {
 		borderRadius : 8,
 		borderWidth : 3,
 		borderColor : '#113825'
+	});
+	view.add(center_view);
+
+*/
+	var center_view = Ti.UI.createImageView({
+		image : '/assets/itemWindow_001.png',
+		opacity : '0.7',
+		width : '90%',
+		height : '25%',
+		left : '5%',
+		top : '10%',
 	});
 	view.add(center_view);
 
@@ -101,18 +116,7 @@ function Inventoryscreen(userinfo) {
 	});
 	view.add(value_label);
 
-	var gift_button = Titanium.UI.createButton({
-		backgroundImage : '/assets/button_small_UP.png',
-		title : 'Gift',
-		height : '6%',
-		width : '12.2%',
-		top : '26.2%',
-		right : '7.7%'
-	});
-	view.add(gift_button);
-	gift_button.addEventListener('click', function(e) {
-		alert("Gift Clicked")
-	});
+
 	var crafting_button = Titanium.UI.createButton({
 		backgroundImage : '/assets/button_small_UP.png',
 		title : 'Crafting',
@@ -157,7 +161,7 @@ function Inventoryscreen(userinfo) {
 	var tableViewWidth_Px = (tableviewwidth_percent / 100) * ScreenWidth;
 	var ViewWidth_In_rowView = tableViewWidth_Px / view_per_row;
 	//view inner rowview width in px
-
+	var selected_item = {};
 	function CreateInventoryGrid(TableviewCallback) {
 		var httpclientt = require('/ui/common/Functions/function');
 		_url = "http://justechinfo.com/kap_server/get_all_inventories.php?uid=" + userinfo.Record[0].UID + "", httpclientt.requestServer({
@@ -171,6 +175,9 @@ function Inventoryscreen(userinfo) {
 							textat_label.text = items_json.Record[inventory_index].NAME + "\n" + items_json.Record[inventory_index].DESCRIPTION + "\nQty : " + items_json.Record[inventory_index].TOTAL_UNIT;
 							value_label.text = 'Value: ' + items_json.Record[inventory_index].REQ_GOLD + ' Gold';
 							curr_inv_image.image = '/assets/' + items_json.Record[inventory_index].IMAGE + '.png';
+							selected_item.id = items_json.Record[inventory_index].ID;
+							selected_item.type = items_json.Record[inventory_index].CATEGORY;
+							selected_item.name = items_json.Record[inventory_index].NAME;
 						}
 						
 						var tablerowview = Titanium.UI.createTableViewRow({
@@ -196,12 +203,18 @@ function Inventoryscreen(userinfo) {
 								name : items_json.Record[inventory_index].NAME,
 								description : items_json.Record[inventory_index].DESCRIPTION,
 								req_gold : items_json.Record[inventory_index].REQ_GOLD,
-								total_unit : items_json.Record[inventory_index].TOTAL_UNIT
+								total_unit : items_json.Record[inventory_index].TOTAL_UNIT,
+								id : items_json.Record[inventory_index].ID,
+								type : items_json.Record[inventory_index].CATEGORY,
+                                //name : items_json.Record[inventory_index].NAME
 							});
 							imageview.addEventListener('click', function(e) {
 								textat_label.text = e.source.name + "\n" + e.source.description + "\nQty : " + e.source.total_unit;
 								value_label.text = 'Value: ' + e.source.req_gold + ' Gold';
 								curr_inv_image.image = e.source.image;
+								selected_item.id = e.source.id;
+								selected_item.type = e.source.type;
+                                selected_item.name = e.source.name;
 							});
 							tablerowview.add(imageview);
 							tablerowview.add(view_imageview);
@@ -224,6 +237,25 @@ function Inventoryscreen(userinfo) {
 					});
 					TableviewCallback(tableview);
 					//view.add(tableview);
+
+					var gift_button = Titanium.UI.createButton({
+						backgroundImage : '/assets/button_small_UP.png',
+						title : 'Gift',
+						height : '6%',
+						width : '12.2%',
+						top : '26.2%',
+						right : '7.7%'
+					});
+					view.add(gift_button);
+					gift_button.addEventListener('click', function(e) {
+						var inventorygifting = require('ui/common/MenuScreen/InventoryGifting');
+						var inventory = new inventorygifting(userinfo,selected_item);
+						inventory.open({
+							modal : true
+						});
+
+					}); 
+
 				}
 			},
 			method : 'GET',
@@ -260,6 +292,7 @@ function Inventoryscreen(userinfo) {
 	});
 
 	view.add(curr_inv_image);
+/*
 	var arrowUP_imageview = Titanium.UI.createImageView({
 		url : '/assets/iconControlArrowUp.png',
 		width : '10%',
@@ -282,6 +315,7 @@ function Inventoryscreen(userinfo) {
 	arrowDown_imageview.addEventListener('load', function(e) {
 		//hideLoader();
 	});
+*/
 
 	return view;
 };

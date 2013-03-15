@@ -1,22 +1,21 @@
 function Footer(userinfojson) {
+	function updateFooter(userinfojson) {
+	    var gender;
+	    if(userinfojson.Record[0].GENDER == 'm'){
+	        gender = 'KNIGHT';
+	    }
+	    else 
+	       gender = 'PRINCESS';
+		level_text.text = "LEVEL " + userinfojson.Record[0].LEVEL + "\n" + gender;
+		gold_quantity.text = userinfojson.Record[0].NUM_OF_GOLDS;
+		status_single.text = userinfojson.Record[0].MARITIAL_STATUS;
 
+	}
 	var view = Titanium.UI.createView({
 		bottom : '0%',
 		height : '10%',
 		width : '100%',
-		backgroundGradient : {
-			type : 'linear',
-			colors : [' #3e9663', '#2d6041'],
-			startPoint : {
-				x : '50%',
-				y : '100%'
-			},
-			endPoint : {
-				x : '50%',
-				y : '0%'
-			},
-			backFillStart : false
-		},
+		backgroundImage :'/assets/footerSlim_001.png',
 		zIndex : 100
 		//backgroundColor:"pink"
 	});
@@ -73,6 +72,22 @@ function Footer(userinfojson) {
 
 	});
 	view.add(days_label);
+	updateFooter(userinfojson);
+
+	Ti.App.addEventListener('update_footer', function(data) {
+		var httpclientt = require('/ui/common/Functions/function');
+
+		httpclientt.requestServer({
+			success : function(e) {
+				var userinfojson = JSON.parse(this.responseText);
+				updateFooter(userinfojson);
+			},
+			method : 'GET',
+			contentType : 'text/xml',
+			url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + userinfojson.Record[0].UID + "",
+		});
+	});
+
 	return view;
 };
 module.exports = Footer;

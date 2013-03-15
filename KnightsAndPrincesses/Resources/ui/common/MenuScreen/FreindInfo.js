@@ -1,4 +1,4 @@
-function FreindInfo(userinfo, friend_uid) {
+function FreindInfo(userinfo, friendinfo) {
 
 	var actInd = Titanium.UI.createActivityIndicator();
 	actInd.message = 'Loading...';
@@ -21,6 +21,7 @@ function FreindInfo(userinfo, friend_uid) {
 
 	});
 	self.add(view);
+	
 	var top_imageview = Titanium.UI.createImageView({
 		image : '/assets/overlayPlayerInfoCroped.png',
 		//height:'12.4%',
@@ -44,7 +45,7 @@ function FreindInfo(userinfo, friend_uid) {
 	view.add(name_label);
 
 	var menu_label = Titanium.UI.createLabel({
-		text : 'FRIENDS NAME 01 INFO',
+		text : friendinfo.NAME,
 		top : '0',
 		height : '3.1%',
 		right : '15.6%',
@@ -65,147 +66,183 @@ function FreindInfo(userinfo, friend_uid) {
 		right : '3%'
 	});
 	view.add(return_imageview);
+	
 	return_imageview.addEventListener('click', function(e) {
 		self.close();
 	});
 
-
+    var new_message_imageview;
 	var tabledata = [];
 	var ScreenHeight = Titanium.Platform.displayCaps.platformHeight;
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var rowViewHeight = screenWidth * 0.119;
 
-	var selected_item = [];
-	var httpclientt = require('/ui/common/Functions/function');
-	_url = "http://justechinfo.com/kap_server/get_all_quests.php";
-	httpclientt.requestServer({
-		success : function(e) {
-			items_json = JSON.parse(this.responseText);
-			if (items_json.Record != undefined) {
-				for (var i = 0; i < items_json.Record.length; i++) {
-					var rowView = Titanium.UI.createTableViewRow({
-						height : rowViewHeight + 'px',
-						backgroundImage : '/assets/rowview_bg.png',
-						quest_id : items_json.Record[i].QUEST_ID,
-						quest_name : items_json.Record[i].QUEST_NAME,
-						index : i,
-						selected : false
-					});
-					rowView.addEventListener('click', function(e) {
-
-						var ConfirmationAlert = Titanium.UI.createAlertDialog({
-							title : 'Click \'Yes\' to assign ' + e.row.quest_name + ' Quest.',
-							message : 'Sure?',
-							buttonNames : ['Yes', 'No'],
-							quest_id : e.row.quest_id,
-							cancel : 1
-						});
-
-						ConfirmationAlert.addEventListener('click', function(e) {
-							Titanium.API.info('e = ' + JSON.stringify(e));
-
-							//Clicked cancel, first check is for iphone, second for android
-							if (e.cancel === e.index || e.cancel === true) {
-								return;
-							}
-							//now you can use parameter e to switch/case
-							switch (e.index) {
-								case 0:
-									actInd.show();
-									var assign_quest_url = "http://justechinfo.com/kap_server/assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "" + "&assign_to_uid=" + friend_uid + "" + "&quest_ids=" + e.source.quest_id + "&message=N/A";
-									var httpclientt = require('/ui/common/Functions/function');
-									httpclientt.requestServer({
-										success : function(e) {
-											items_json = JSON.parse(this.responseText);
-											if (items_json.Record != undefined) {
-												if (items_json.Record[0].Message != '') {
-													alert('You have Successfully assigned Quest.');
-													actInd.hide();
-												}
-											}
-										},
-										method : 'GET',
-										contentType : 'text/xml',
-										url : assign_quest_url,
-
-									});
-									break;
-								//This will never be reached, if you specified cancel for index 1
-								case 1:
-									// alert('Clicked button 1 (NO)');									
-									break;
-								default:
-									break;
-
-							}
-
-						});
-
-						ConfirmationAlert.show();
-
-						// alert(e.row.quest_id);
-					});
-
-					var rowImg = Ti.UI.createImageView({
-						image : '/assets/iconThickBook.png',
-						height : rowViewHeight + 'px',
-						left : '0'
-					});
-					rowView.add(rowImg);
-
-					var questname_label = Ti.UI.createLabel({
-						text : items_json.Record[i].QUEST_NAME,
-						color : '#5AFD9B',
-						font : {
-							fontSize : '16dip'
-						},
-						top : '0'
-					});
-					rowView.add(questname_label);
-					var tap_to_choose_label = Ti.UI.createLabel({
-						text : '(TAP TO CHOOSE)',
-						color : '#5AFD9B',
-						font : {
-							fontSize : '12dip'
-						},
-						bottom : '0'
-					});
-					rowView.add(tap_to_choose_label);
-					tabledata.push(rowView);
-				}
-
-				var tableview = Ti.UI.createTableView({
-					data : tabledata,
-					width : '75%',
-					height : '28%',
-					left : '0',
-					top : '27.3%',
-					zIndex : 200
-				});
-				view.add(tableview);
-				actInd.hide();
-				/*
-				 if(items_json.Record[0].Message == 'Updated!'){
-				 alert('You have completed this quest.\nPress back button');
-				 }
-				 */
-			}
-			Ti.App.fireEvent('update_xp', {
-				clicked_item : 'StatusScreen'
-			});
-		},
-		method : 'GET',
-		contentType : 'text/xml',
-		url : _url,
+	var Infoview = Ti.UI.createView({
+		width : '55%',
+		top : '27%',
+		left : '0%',
+		height : rowViewHeight,
+		backgroundColor : '#53e990'
 
 	});
+
+	var imageview = Titanium.UI.createImageView({
+		backgroundImage : '/assets/rowview_bg.png',
+		height : '96%',
+		width : '100%'
+	});
+//	Infoview.add(imageview);
+
+	var icon_image = Titanium.UI.createImageView({
+		backgroundImage : '/assets/iconSonnet.png',
+		height : '96%',
+		left : '0%',
+		width : '20%'
+	});
+//	Infoview.add(icon_image);
+
+	var name_label = Titanium.UI.createLabel({
+		text : 'Sonnet \n (TAP To CHOOSE)',
+		textAlign : 'center',		
+		color : '#5afd9b',
+		font : {
+			fontSize : '14dip'
+		}
+
+	});
+//	Infoview.add(name_label);
+//	view.add(Infoview);
+
+
+	var giftTradeView = Ti.UI.createView({
+		width : '55%',
+		top : '37%',
+		left : '0%',
+		height : rowViewHeight,
+		backgroundColor : '#53e990'
+
+	});
+
+	var imageview = Titanium.UI.createImageView({
+		backgroundImage : '/assets/rowview_bg.png',
+		height : '96%',
+		width : '100%'
+	});
+	giftTradeView.add(imageview);
+	var icon_image_gift = Titanium.UI.createImageView({
+		backgroundImage : '/assets/iconGift.png',
+		height : '96%',
+		left : '0%',
+		width : '20%'
+	});
+	giftTradeView.add(icon_image_gift);
+
+	var name_label = Titanium.UI.createLabel({
+		text : 'GIFT OR TRADE \n (TAP To CHOOSE)',
+		textAlign : 'right',
+		color : '#5afd9b',
+		font : {
+			fontSize : '14dip'
+		}
+
+	});
+	name_label.addEventListener('click', function(e) {
+		var GiftFromFreindInfo = require('ui/common/MenuScreen/GiftFromMessage');
+		var GiftFromFreind = new GiftFromFreindInfo(userinfo,friendinfo.UID);
+		GiftFromFreind.open({
+			modal : true
+		});
+	});
+	giftTradeView.add(name_label);
+	view.add(giftTradeView);
+
+	var QuestView = Ti.UI.createView({
+		width : '55%',
+		top : '47%',
+		left : '0%',
+		height : rowViewHeight,
+		backgroundColor : '#53e990'
+
+	});
+
+	var imageview = Titanium.UI.createImageView({
+		backgroundImage : '/assets/rowview_bg.png',
+		height : '96%',
+		width : '100%'
+	});
+	
+	QuestView.add(imageview);
+	var icon_image_quest = Titanium.UI.createImageView({
+		backgroundImage : '/assets/iconThickBook.png',
+		height : '96%',
+		left : '0%',
+		width : '20%'
+	});
+	QuestView.add(icon_image_quest);
+
+
+	var assign_quest_label = Titanium.UI.createLabel({
+		text : 'ASSIGN QUESTS \n (TAP To CHOOSE)',
+		textAlign : 'right',
+		color : '#5afd9b',
+		font : {
+			fontSize : '14dip'
+		}
+
+	});
+
+	assign_quest_label.addEventListener('click', function(e) {
+		var FriendQuest = require('/ui/common/MenuScreen/FreindAssignQuest');
+		var friendquest = FriendQuest(userinfo, friendinfo.UID);
+		friendquest.open();
+		
+	});
+		QuestView.add(assign_quest_label);
+/*
+	var choosequests_btn = Ti.UI.createButton({
+		title : 'CHOOSE QUEST',
+		font : {
+			fontSize : '12dip'
+		},
+		backgroundColor : '#C977A5',
+		borderColor : '#A62C77',
+		borderRadius : 5,
+		borderWidth : 1,
+		friend_uid : friend_uid
+	});
+
+	choosequests_btn.addEventListener('click', function(e) {
+		var FriendQuest = require('/ui/common/MenuScreen/FreindAssignQuest');
+		var friendquest = FriendQuest(userinfo, friend_uid);
+		friendquest.open();
+	});
+	QuestView.add(choosequests_btn);
+*/
+	view.add(QuestView);
+	
+    var friend_status_lbl;
 	var gender;
+	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
 
 		success : function(e) {
 			var friend_json = JSON.parse(this.responseText);
+			friend_status_lbl = friend_json.Record[0].STATUS_MESSAGE+' \n LVL '+friend_json.Record[0].LEVEL;
+            var friendsstatus_label = Titanium.UI.createLabel({
+                text : friend_status_lbl,
+                top : '10.1%',
+                left : '4%',
+                textAlign : 'left',
+                color : '#5afd9b',
+                font : {
+                    fontSize : '10dip'
+                }
+        
+            });
+            view.add(friendsstatus_label);
+			
 			gender = friend_json.Record[0].GENDER;
-				if(gender == 'KNIGHT'){
+				if(gender == 'm'){
 					var male_character_imageview = Titanium.UI.createImageView({
 						top : '12%',
 						right : '0%',
@@ -215,7 +252,7 @@ function FreindInfo(userinfo, friend_uid) {
 					});
 					view.add(male_character_imageview);
 				}
-				else if(gender == 'PRINCESS'){
+				else if(gender == 'f'){
 					var female_character_imageview = Titanium.UI.createImageView({
 						top : '12%',
 						right : '0%',
@@ -226,6 +263,38 @@ function FreindInfo(userinfo, friend_uid) {
 					});
 					view.add(female_character_imageview);
 				}
+                var messages_button = Ti.UI.createButton({
+                    backgroundImage : '/assets/button_small_UP.png',
+                    top : '19.8%',
+                    left : '51.7%',
+                    width : '21.5%',
+                    height : '5%',
+                    title : 'Messages',
+                    zIndex : 510,
+                    font : {
+                        fontSize : '10dip'
+                    }
+                });
+                view.add(messages_button);
+                if(friendinfo.MESSAGE == 'NEW_MESSAGE'){
+                    new_message_imageview = Titanium.UI.createImageView({
+                        top : '18.8%',
+                        left : '49.5%',
+                        image : '/assets/message_alert.png',
+                        height : '4%',
+                        width : '6%',
+                        zIndex : 600
+                    });
+                    view.add(new_message_imageview);
+                    
+                }
+                messages_button.addEventListener('click', function(e) {
+                    var MessageScreen = require('/ui/common/MenuScreen/MessageScreen');
+                    var messageScreen = new MessageScreen(userinfo, friendinfo.UID, gender,friendinfo.NAME);
+                    messageScreen.open({
+                        modal : true
+                    });
+                });
 
 			var friendsname_label = Titanium.UI.createLabel({
 				text : friend_json.Record[0].NAME,
@@ -242,24 +311,24 @@ function FreindInfo(userinfo, friend_uid) {
 			var footer = new Footer(friend_json);
 			view.add(footer);
 
-			
+				actInd.hide();
 		},
 		onerror : function(e) {
 			Ti.API.debug("STATUS: " + this.status);
 			Ti.API.debug("TEXT: " + this.responseText);
 			Ti.API.debug("ERROR: " + e.error);
-			Ti.API.debug("URL: " + "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + friend_uid);
+			Ti.API.debug("URL: " + "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + friendinfo.UID);
 			alert('There was an error retrieving the remote data. Try again.');
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + friend_uid
+		url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + friendinfo.UID
 		//url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + 10000007 + "",
 
 	});
 
 	var friendsstatus_label = Titanium.UI.createLabel({
-		text : 'I M IN TO WIN \N LVL100',
+	    text : friend_status_lbl,
 		top : '10.1%',
 		left : '4%',
 		textAlign : 'left',
@@ -305,21 +374,69 @@ function FreindInfo(userinfo, friend_uid) {
 	});
 	//view.add(onlineStatus_label);
 
-	var viewFriends_button = Ti.UI.createButton({
+	var unFriends_button = Ti.UI.createButton({
 		backgroundImage : '/assets/button_small_UP.png',
 		top : '19.8%',
 		left : '10%',
 		width : '21.5%',
 		height : '5%',
-		title : 'View Freinds',
+		title : 'UnFreind',
 		font : {
 			fontSize : '10dip'
 		}
 	});
-	viewFriends_button.addEventListener('click', function(e) {
-		self.close();
+	unFriends_button.addEventListener('click', function(e) {
+	    
+        var ConfirmationAlert = Titanium.UI.createAlertDialog({
+            title : 'Do you want to Unfriend '+friendinfo.NAME +'?',
+            message : 'Are you Sure?',
+            buttonNames : ['Yes', 'No'],
+            cancel : 1
+        });
+        ConfirmationAlert.show();
+        ConfirmationAlert.addEventListener('click', function(e) {
+            Titanium.API.info('e = ' + JSON.stringify(e));
+
+            //Clicked cancel, first check is for iphone, second for android
+            if (e.cancel === e.index || e.cancel === true) {
+                return;
+            }
+            switch (e.index) {
+                case 0:
+                    actInd.show();
+                    var unfriend_url = "http://justechinfo.com/kap_server/unfriend_friend.php?uid=" + userinfo.Record[0].UID+'&friend_uid='+friendinfo.UID;
+                    var httpclientt = require('/ui/common/Functions/function');
+                    httpclientt.requestServer({
+                        success : function(e) {
+                            items_json = JSON.parse(this.responseText);
+                            if (items_json.Record != undefined) {
+                                if (items_json.Record[0].Message != '') {
+                                    alert(items_json.Record[0].Message);
+                                    actInd.hide();
+                                    self.close();
+                                }
+                            }
+
+                        },
+                        method : 'GET',
+                        contentType : 'text/xml',
+                        url : unfriend_url
+                    });
+
+                    break;
+                //This will never be reached, if you specified cancel for index 1
+                case 1:
+                    // alert('Clicked button 1 (NO)');
+                    break;
+                default:
+                    break;
+
+            }
+
+        });
+
 	});
-	view.add(viewFriends_button);
+	view.add(unFriends_button);
 
 	var isFriends = function(callback){
 			var httpclientt = require('/ui/common/Functions/function');
@@ -340,29 +457,10 @@ function FreindInfo(userinfo, friend_uid) {
 
 			});
 	}
+/*
 	isFriends(function(bool){
-		var messages_button = Ti.UI.createButton({
-			backgroundImage : '/assets/button_small_UP.png',
-			top : '19.8%',
-			left : '51.7%',
-			width : '21.5%',
-			height : '5%',
-			visible : bool,
-			title : 'Messages',
-			zIndex : 510,
-			font : {
-				fontSize : '10dip'
-			}
-		});
-		view.add(messages_button);
-		messages_button.addEventListener('click', function(e) {
-			var MessageScreen = require('/ui/common/MenuScreen/MessageScreen');
-			var messageScreen = new MessageScreen(userinfo, friend_uid);
-			messageScreen.open({
-				modal : true
-			});
-		});
 	});
+*/
 	var Message_imageview = Titanium.UI.createImageView({
 		url : '/assets/iconReturn.png',
 		height : '5.2%',
@@ -383,6 +481,27 @@ function FreindInfo(userinfo, friend_uid) {
 
 	});
 	view.add(friendship_meter_label);
+	if(friendinfo.MESSAGE == "NEW_MESSAGE"){
+        Ti.App.addEventListener("message_status",function(){
+           friendinfo.MESSAGE = "NO_MESSAGE";
+            new_message_imageview.hide();
+            NoMessage();
+     /*
+            Ti.App.fireEvent("message_read",{
+                gender : friendinfo.GENDER
+             });*/
+     
+    
+            
+        }); 
+	    
+	}
+	function NoMessage(){
+        Ti.App.fireEvent("message_read",{
+           //uid : friendinfo.UID
+        });
+	    
+	}
 
 	var friendship_meter_label = Titanium.UI.createLabel({
 		text : 'FREINDSHIP METER TRACKS HOW MUCH AND YOUR FRIEND HAVE INTERACTED WITH EACH OTHER.',

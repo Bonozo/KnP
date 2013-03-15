@@ -1,99 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <property name="acs-oauth-secret-production" type="string">vPqeJv3b05tU807CaaslqR2UKooQieO4</property>
-    <property name="acs-oauth-key-production" type="string">4YYa2c0TLgWC9A8j8Qt9l81Ff3InhDEi</property>
-    <property name="acs-api-key-production" type="string">e3gscD7y21GZki5Jh4RHLIyrk4PP5koz</property>
-    <property name="acs-oauth-secret-development" type="string">VGUosIXjFpKfWQ2mi8x00chOxVyw2KJu</property>
-    <property name="acs-oauth-key-development" type="string">1LIQsOtTmJiP7OaG3zCqe8F79Uh6bHFC</property>
-    <property name="acs-api-key-development" type="string">tGKQ62mVRFS3AvCxelxnoHjJI8vIBtbW</property>
-    <deployment-targets>
-        <target device="mobileweb">false</target>
-        <target device="iphone">false</target>
-        <target device="ipad">false</target>
-        <target device="android">true</target>
-        <target device="blackberry">false</target>
-    </deployment-targets>
-    <sdk-version>2.1.4.GA</sdk-version>
-    <id>com.bonozo.knp</id>
-    <name>Knights And Princesses</name>
-    <version>1.0</version>
-    <publisher>Mohsin</publisher>
-    <url>http://www.bonozo.com</url>
-    <description>not specified</description>
-    <copyright>2012 by Mohsin</copyright>
-    <icon>appicon.png</icon>
-    <persistent-wifi>false</persistent-wifi>
-    <prerendered-icon>false</prerendered-icon>
-    <statusbar-style>default</statusbar-style>
-    <statusbar-hidden>true</statusbar-hidden>
-    <fullscreen>true</fullscreen>
-    <navbar-hidden>true</navbar-hidden>
-    <analytics>true</analytics>
-    <guid>480ce5c2-8ca9-419d-a6c0-789675b7d6f0</guid>
-    <property name="ti.ui.defaultunit">system</property>
-    <property name="ti.android.fastdev" type="bool">true</property>
-    <iphone>
-        <orientations device="iphone">
-            <orientation>Ti.UI.PORTRAIT</orientation>
-        </orientations>
-        <orientations device="ipad">
-            <orientation>Ti.UI.PORTRAIT</orientation>
-            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
-            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
-        </orientations>
-    </iphone>
+	<property name="acs-oauth-secret-production" type="string">vPqeJv3b05tU807CaaslqR2UKooQieO4</property>
+	<property name="acs-oauth-key-production" type="string">4YYa2c0TLgWC9A8j8Qt9l81Ff3InhDEi</property>
+	<property name="acs-api-key-production" type="string">e3gscD7y21GZki5Jh4RHLIyrk4PP5koz</property>
+	<property name="acs-oauth-secret-development" type="string">VGUosIXjFpKfWQ2mi8x00chOxVyw2KJu</property>
+	<property name="acs-oauth-key-development" type="string">1LIQsOtTmJiP7OaG3zCqe8F79Uh6bHFC</property>
+	<property name="acs-api-key-development" type="string">tGKQ62mVRFS3AvCxelxnoHjJI8vIBtbW</property>
+	<property name="ti.android.threadstacksize" type="int">32768</property>
+	<deployment-targets>
+		<target device="mobileweb">true</target>
+		<target device="iphone">false</target>
+		<target device="ipad">false</target>
+		<target device="android">true</target>
+		<target device="blackberry">false</target>
+	</deployment-targets>
+	<sdk-version>2.1.4.GA</sdk-version>
+	<id>com.bonozo.knp</id>
+	<name>Knights And Princesses</name>
+	<version>1.0</version>
+	<publisher>Mohsin</publisher>
+	<url>http://www.bonozo.com</url>
+	<description>not specified</description>
+	<copyright>2012 by Mohsin</copyright>
+	<icon>appicon.png</icon>
+	<persistent-wifi>false</persistent-wifi>
+	<prerendered-icon>false</prerendered-icon>
+	<statusbar-style>default</statusbar-style>
+	<statusbar-hidden>true</statusbar-hidden>
+	<fullscreen>true</fullscreen>
+	<navbar-hidden>true</navbar-hidden>
+	<analytics>false</analytics>
+	<guid>480ce5c2-8ca9-419d-a6c0-789675b7d6f0</guid>
+	<property name="ti.ui.defaultunit">system</property>
+	<property name="ti.android.fastdev" type="bool">ture</property>
+	<iphone>
+		<orientations device="iphone">
+			<orientation>Ti.UI.PORTRAIT</orientation>
+		</orientations>
+		<orientations device="ipad">
+			<orientation>Ti.UI.PORTRAIT</orientation>
+			<orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
+			<orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
+			<orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
+		</orientations>
+	</iphone>
 	<android xmlns:android="http://schemas.android.com/apk/res/android">
-			<services>
-			  <service url="services/notificationservice.js" type="interval"/>
-			</services>
-			<!-- TI_MANIFEST -->
-		
-			<application android:icon="@drawable/appicon"
-				android:label="Hello" android:name="KnightsAndPrincessesApplication"
-				android:debuggable="false">
-				
-				<!-- TI_APPLICATION -->
-				
-				<activity android:name=".KnightsAndPrincessesActivity"
-					android:label="Hello" android:theme="@style/Theme.Titanium"
-					android:configChanges="keyboardHidden|orientation">
-					<intent-filter>
-						<action android:name="android.intent.action.MAIN" />
-						<category android:name="android.intent.category.LAUNCHER" />
-					</intent-filter>
-				</activity>
-				
-				<!-- TI_ACTIVITIES -->
-				
-				<activity android:name="org.appcelerator.titanium.TiActivity"
-					android:configChanges="keyboardHidden|orientation" />
-				<activity android:name="org.appcelerator.titanium.TiTranslucentActivity"
-					android:configChanges="keyboardHidden|orientation"
-					android:theme="@android:style/Theme.Translucent" />
-				<activity android:name="org.appcelerator.titanium.TiModalActivity"
-					android:configChanges="keyboardHidden|orientation"
-					android:theme="@android:style/Theme.Translucent" />
-				<activity android:name="ti.modules.titanium.ui.TiTabActivity"
-					android:configChanges="keyboardHidden|orientation" />
-				<activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" />
-		
-				<service android:name="org.appcelerator.titanium.analytics.TiAnalyticsService"
-					android:exported="false" />
-				<!-- TI_SERVICES -->
-		
-			</application>
-		
-			<!-- TI_PERMISSIONS -->
-		
-    </android>
-    <mobileweb>
-        <precache/>
-        <splash>
-            <enabled>true</enabled>
-            <inline-css-images>true</inline-css-images>
-        </splash>
-        <theme>default</theme>
-    </mobileweb>
-    <modules/>
+		<services>
+			<service url="services/notificationservice.js" type="interval"/>
+		</services>
+		<!-- TI_MANIFEST -->
+		<!--<manifest android:installLocation="preferExternal">
+			
+		</manifest>-->
+		<application android:icon="@drawable/appicon"
+		android:label="Hello" android:name="KnightsAndPrincessesApplication"
+		android:debuggable="false">
+
+			<!-- TI_APPLICATION -->
+
+			<activity android:name=".KnightsAndPrincessesActivity"
+			android:label="Hello" android:theme="@style/Theme.Titanium"
+			android:configChanges="keyboardHidden|orientation">
+				<intent-filter>
+					<action android:name="android.intent.action.MAIN" />
+					<category android:name="android.intent.category.LAUNCHER" />
+				</intent-filter>
+			</activity>
+
+			<!-- TI_ACTIVITIES -->
+			<activity android:name="org.appcelerator.titanium.TiActivity"
+			android:configChanges="keyboardHidden|orientation" />
+			<activity android:name="org.appcelerator.titanium.TiTranslucentActivity"
+			android:configChanges="keyboardHidden|orientation"
+			android:theme="@android:style/Theme.Translucent" />
+			<activity android:name="org.appcelerator.titanium.TiModalActivity"
+			android:configChanges="keyboardHidden|orientation"
+			android:theme="@android:style/Theme.Translucent" />
+			<activity android:name="ti.modules.titanium.ui.TiTabActivity"
+			android:configChanges="keyboardHidden|orientation" />
+			<activity android:name="ti.modules.titanium.ui.android.TiPreferencesActivity" />
+			<service android:name="org.appcelerator.titanium.analytics.TiAnalyticsService"
+			android:exported="false" />
+			<!-- TI_SERVICES -->
+
+		</application>
+
+		<!-- TI_PERMISSIONS -->
+
+	</android>
+	<mobileweb>
+		<precache/>
+		<splash>
+			<enabled>true</enabled>
+			<inline-css-images>true</inline-css-images>
+		</splash>
+		<theme>default</theme>
+	</mobileweb>
+	<modules>
+		<module version="1.3">com.googlecode.quicktigame2d</module>
+	</modules>
+	<modules>
+		<module platform="commonjs" version="2.3.0">ti.cloud</module>
+		<module platform="android" version="2.0.7">ti.cloudpush</module>
+	</modules>
+
 </ti:app>

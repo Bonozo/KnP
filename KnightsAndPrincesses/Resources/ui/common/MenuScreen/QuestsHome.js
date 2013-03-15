@@ -1,4 +1,19 @@
+function openNewTable(userinfojson, activeTable, callback) {
+	var TableView = require('ui/common/MenuScreen/' + activeTable);
+	TableView(userinfojson, function(Tableview) {
+		callback(Tableview);
+	});
+}
+
 function QuestsHome(userinfo) {
+	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
+	var activeTable = "MyQuest";
+	var main_table_view;
+	var tableview;
+
+	var actInd = Titanium.UI.createActivityIndicator();
+	actInd.message = 'Loading Main Screen...';
+
 	var images_counter = 0;
 	function hideLoader() {
 		images_counter++;
@@ -7,14 +22,12 @@ function QuestsHome(userinfo) {
 		}
 	}
 
-	var actInd = Titanium.UI.createActivityIndicator();
-	actInd.message = 'Loading Main Screen...';
 	//message will only shows in android.
-	actInd.show();
+	var rowViewHeight = screenWidth * 0.20;
 
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var view = Ti.UI.createView({
-		top : "23%",
+		top : "23.5%",
 		height : "78%",
 		width : "100%"
 	});
@@ -26,201 +39,35 @@ function QuestsHome(userinfo) {
 		color : '#5afd9b',
 		font : {
 			fontSize : '12dip'
-		}
-
+		},
+		zIndex : 500
 	});
 	view.add(selected_menu_label);
+	var subView = Ti.UI.createView({
+		zIndex : 200,
+		backgroundGradient : {
+			type : 'linear',
+			colors : ['#3258ad', '#010f49'],
+			startPoint : {
+				x : '50%',
+				y : '0%'
+			},
+			endPoint : {
+				x : '50%',
+				y : '100%'
+			},
+			backFillStart : false
+		},
+		width : '100%',
+		height : '100%'
+	});
+	openNewTable(userinfo, activeTable, function(tableview) {
+		main_table_view = tableview;
+		main_table_view.height = '53%';
+		view.add(main_table_view);
+	});
 
 	Ti.App.addEventListener('game_played', function(data) {
-		alert(data.status);
-	});
-
-	var rowview_friends_icon = Titanium.UI.createImageView({
-		image : '/assets/iconFriends.png'
-	});
-	var male_character_imageview = Titanium.UI.createImageView({
-		image : '/assets/male_icon.png'
-	});
-	var female_character_imageview = Titanium.UI.createImageView({
-		image : '/assets/female_icon.png'
-	});
-	///////////////////////////////////////////////////////////////////////////////////
-	var rowViewHeight = screenWidth * 0.20;
-	var items_json = "";
-	var items_length = 0;
-	var httpclientt = require('/ui/common/Functions/function');
-	httpclientt.requestServer({
-		success : function(e) {
-			items_json = JSON.parse(this.responseText);
-			items_length = items_json.Record.length;
-			if (items_json.Record != undefined) {
-				var tabledata = [];
-				for (var i = 0; i < items_json.Record.length; i++) {
-					var rowView = Ti.UI.createTableViewRow({
-						height : rowViewHeight,
-						backgroundColor : '#dbedbd',
-						opacity : (items_json.Record[i].IS_COMPLETED == 'true') ? '0' : '0.5'//,
-						//friend_uid : items_json.Record[i].ASSIGN_BY_UID
-					});
-
-					/*
-					 rowView.addEventListener('click', function(e) {
-					 alert("Next :"+e.row.friend_uid);
-					 });
-					 */
-
-					var avatar_image = "";
-					if (items_json.Record[i].GENDER == 'm') {
-						var return_imageview = male_character_imageview;
-					} else {
-						var return_imageview = female_character_imageview;
-					}
-					return_imageview.width = '13%';
-					return_imageview.top = '2px';
-					return_imageview.left = '5px';
-
-					rowView.add(return_imageview);
-
-					var rowview_name = Ti.UI.createLabel({
-						text : items_json.Record[i].NAME,
-						top : '2px',
-						font : {
-							fontSize : '16dip'
-						},
-						color : '#5afd9b',
-						left : '18%',
-						width : '45%'
-					});
-					rowView.add(rowview_name);
-
-					var rowview_level = Ti.UI.createLabel({
-						text : 'LVL ' + items_json.Record[i].LEVEL,
-						top : rowViewHeight * 35 / 100,
-						font : {
-							fontSize : '14dip'
-						},
-						color : '#5afd9b',
-						left : '18%',
-						width : '45%'
-					});
-					rowView.add(rowview_level);
-
-					rowview_friends_icon.left = '30%';
-					rowview_friends_icon.width = rowViewHeight / 3.5;
-					rowview_friends_icon.height = rowViewHeight / 3.5;
-
-					rowView.add(rowview_friends_icon);
-
-					// Create a Label.
-					var num_of_friends = Ti.UI.createLabel({
-						text : items_json.Record[i].NUM_OF_FRIENDS,
-						color : '#5afd9b',
-						font : {
-							fontSize : '14dip'
-						},
-						top : rowViewHeight * 35 / 100,
-						left : '38%',
-						textAlign : 'center'
-					});
-
-					// Add to the parent view.
-					rowView.add(num_of_friends);
-
-					var rowview_message = Ti.UI.createLabel({
-						text : items_json.Record[i].MESSAGE,
-						bottom : rowViewHeight * 10 / 100,
-						font : {
-							fontSize : '14dip'
-						},
-						color : '#5afd9b',
-						left : '18%',
-						width : '45%'
-					});
-					rowView.add(rowview_message);
-
-					// Create a Label.
-					var questStatus = Ti.UI.createLabel({
-						text : (items_json.Record[i].IS_COMPLETED == 'true') ? 'Completed' : 'Incomplete',
-						color : '#FFFFFF',
-						font : {
-							fontSize : '12dip'
-						},
-						right : '5%',
-						textAlign : 'center'
-					});
-
-					// Add to the parent view.
-					rowView.add(questStatus);
-
-					// Create a Button.
-					var choosequests_btn = Ti.UI.createButton({
-						title : 'CHOOSE QUEST',
-						height : rowViewHeight / 3,
-						top : rowViewHeight / 3,
-						font : {
-							fontSize : '12dip'
-						},
-						right : '5px',
-						backgroundColor : '#C977A5',
-						borderColor : '#A62C77',
-						borderRadius : 5,
-						borderWidth : 1,
-						friend_uid : items_json.Record[i].ASSIGN_BY_UID
-					});
-					choosequests_btn.addEventListener('click', function(e) {
-						var FriendQuest = require('/ui/common/MenuScreen/FriendQuest');
-						var friendquest = FriendQuest(userinfo, e.source.friend_uid);
-						friendquest.open();
-					});
-					rowView.add(choosequests_btn);
-
-					// Create a Label.
-					var rewards_lbl = Ti.UI.createLabel({
-						text : 'REWARDS:',
-						color : '#5afd9b',
-						font : {
-							fontSize : '12dip'
-						},
-						bottom : rowViewHeight * 10 / 100,
-						right : '35%',
-						textAlign : 'center'
-					});
-
-					// Add to the parent view.
-					rowView.add(rewards_lbl);
-
-					// Create a Label.
-					var num_of_quests_lbl = Ti.UI.createLabel({
-						text : items_json.Record[i].NUM_OF_QUESTS + ' QUEST(S)',
-						color : '#5afd9b',
-						font : {
-							fontSize : '12dip'
-						},
-						top : rowViewHeight / 3,
-						right : '35%',
-						textAlign : 'center'
-					});
-
-					// Add to the parent view.
-					rowView.add(num_of_quests_lbl);
-
-					tabledata.push(rowView);
-				}//end of for loop
-				actInd.hide();
-				var tableview = Ti.UI.createTableView({
-					data : tabledata,
-					width : '100%',
-					height : '40%',
-					top : '14%'
-				});
-				view.add(tableview);
-
-			}
-		},
-		method : 'GET',
-		contentType : 'text/xml',
-		url : "http://justechinfo.com/kap_server/get_assigned_quests_by_player.php?uid=" + userinfo.Record[0].UID,
-
 	});
 
 	// Create a Label.
@@ -230,7 +77,7 @@ function QuestsHome(userinfo) {
 		font : {
 			fontSize : '16dip'
 		},
-		top : '70%',
+		top : '65%',
 		left : '5%',
 		textAlign : 'center'
 	});
@@ -240,7 +87,7 @@ function QuestsHome(userinfo) {
 		image : '/assets/joust_icon.png',
 		width : rowViewHeight * (2 / 3),
 		height : rowViewHeight * (2 / 3),
-		top : '70%',
+		top : '65%',
 		left : '35%'
 	});
 	joustIcon.addEventListener('load', function() {
@@ -249,7 +96,7 @@ function QuestsHome(userinfo) {
 	view.add(joustIcon);
 	joustIcon.addEventListener('click', function(e) {
 		var SinglePlayGame = require('/ui/common/MenuScreen/SinglePlayGame');
-		var singleplaygame = new SinglePlayGame('joust_game', 80000003, userinfo);
+		var singleplaygame = new SinglePlayGame('joust_game', 'INCOMPLETE', 80000003, userinfo);
 		singleplaygame.open();
 	});
 
@@ -258,12 +105,12 @@ function QuestsHome(userinfo) {
 		image : '/assets/sonnet_icon.png',
 		width : rowViewHeight * (2 / 3),
 		height : rowViewHeight * (2 / 3),
-		top : '70%',
+		top : '65%',
 		left : '52%'
 	});
 	sonnetIcon.addEventListener('click', function() {
 		var SinglePlayGame = require('/ui/common/MenuScreen/SinglePlayGame');
-		var singleplaygame = new SinglePlayGame('sonnet_game', 80000002, userinfo);
+		var singleplaygame = new SinglePlayGame('sonnet_game', 'INCOMPLETE', 80000002, userinfo);
 		singleplaygame.open();
 	});
 	view.add(sonnetIcon);
@@ -273,14 +120,14 @@ function QuestsHome(userinfo) {
 		image : '/assets/archery_icon.png',
 		width : rowViewHeight * (2 / 3),
 		height : rowViewHeight * (2 / 3),
-		top : '70%',
+		top : '65%',
 		left : '69%'
 	});
 	archeryIcon.addEventListener('click', function() {
 		var SinglePlayGame = require('/ui/common/MenuScreen/SinglePlayGame');
-		var singleplaygame = new SinglePlayGame('archery_game', 80000001, userinfo);
-		actInd.show();
-		actInd.hide();
+		//game,quest_status, quest_id, userinfo,friend_uid,friend_quest_info
+		var singleplaygame = new SinglePlayGame('archery_game', 'INCOMPLETE', 80000001, userinfo);
+		//actInd.show();
 		singleplaygame.open();
 
 	});
@@ -291,12 +138,12 @@ function QuestsHome(userinfo) {
 		image : '/assets/cooking_icon.png',
 		width : rowViewHeight * (2 / 3),
 		height : rowViewHeight * (2 / 3),
-		top : '70%',
+		top : '65%',
 		left : '85%'
 	});
 	cookingIcon.addEventListener('click', function() {
 		var SinglePlayGame = require('/ui/common/MenuScreen/SinglePlayGame');
-		var singleplaygame = new SinglePlayGame('cooking_game', 80000004, userinfo);
+		var singleplaygame = new SinglePlayGame('cooking_game', 'INCOMPLETE', 80000004, userinfo);
 		singleplaygame.open();
 	});
 	view.add(cookingIcon);
@@ -304,26 +151,134 @@ function QuestsHome(userinfo) {
 	// Add to the parent view.
 	view.add(freePlay_lbl);
 
-	var UP_imageview = Titanium.UI.createImageView({
-		url : '/assets/iconControlArrowUp.png',
-		width : '12.5%',
-		height : "10%",
-		top : '3%',
-		left : '44.4%'
+	var sortby_lbl = Ti.UI.createLabel({
+		text : 'SORT BY: ',
+		color : '#5afd9b',
+		font : {
+			fontSize : '16dip'
+		},
+		bottom : '15.1%',
+		left : '2%',
+		textAlign : 'center'
 	});
-	view.add(UP_imageview);
 
-	var down_imageview = Titanium.UI.createButton({
-		backgroundImage : '/assets/iconControlArrowDown.png',
-		width : '12.5%',
-		top : '57%',
-		height : "10%",
-		left : '44.4%'
+	view.add(sortby_lbl);
+	var my_quest = Ti.UI.createButton({
+		backgroundGradient : {
+			type : 'linear',
+			colors : [' #A42B76', '#E39bc8'],
+			startPoint : {
+				x : '50%',
+				y : '100%'
+			},
+			endPoint : {
+				x : '50%',
+				y : '0%'
+			},
+			backFillStart : false
+		},
+		font : {
+			fontSize : '9dip'
+		},
+		borderColor : '#A42B76',
+		borderRadius : '2',
+		title : 'MY QUEST',
+		height : '6.5%',
+		right : '55%',
+		bottom : '15.1%'
 	});
-	view.add(down_imageview);
+	view.add(my_quest);
+	my_quest.addEventListener('click', function(e) {
+		view.remove(main_table_view);
+		activeTable = 'MyQuest';
+		openNewTable(userinfo, activeTable, function(tableview) {
+			main_table_view = tableview;
+			main_table_view.height = '53%';
+
+			view.add(main_table_view);
+		});
+	});
+
+	var freind_quest = Ti.UI.createButton({
+		backgroundGradient : {
+			type : 'linear',
+			colors : [' #A42B76', '#E39bc8'],
+			startPoint : {
+				x : '50%',
+				y : '100%'
+			},
+			endPoint : {
+				x : '50%',
+				y : '0%'
+			},
+			backFillStart : false
+		},
+		font : {
+			fontSize : '9dip'
+		},
+		borderColor : '#A42B76',
+		borderRadius : '2',
+		font : {
+			fontSize : '9dip'
+		},
+		title : 'FRIEND QUEST',
+		height : '6.5%',
+		right : '26.5%',
+		bottom : '15.1%'
+	});
+	view.add(freind_quest);
+	freind_quest.addEventListener('click', function(e) {
+		view.remove(main_table_view);
+		activeTable = 'FreindQuestTab';
+		openNewTable(userinfo, activeTable, function(tableview) {
+			main_table_view = tableview;
+			main_table_view.height = '53%';
+			view.add(main_table_view);
+		});
+	});
+
+	var quest_log = Ti.UI.createButton({
+		backgroundGradient : {
+			type : 'linear',
+			colors : [' #A42B76', '#E39bc8'],
+			startPoint : {
+				x : '50%',
+				y : '100%'
+			},
+			endPoint : {
+				x : '50%',
+				y : '0%'
+			},
+			backFillStart : false
+		},
+		font : {
+			fontSize : '9dip'
+		},
+		borderColor : '#A42B76',
+		borderRadius : '2',
+		font : {
+			fontSize : '9dip'
+		},
+		title : 'QUEST LOG',
+		height : '6.5%',
+		right : '2.7%',
+		bottom : '15.1%'
+	});
+	view.add(quest_log);
+	quest_log.addEventListener('click', function(e) {
+		view.remove(main_table_view);
+		activeTable = 'QuestLog';
+		openNewTable(userinfo, activeTable, function(tableview) {
+			main_table_view = tableview;
+			main_table_view.height = '60%';
+			view.add(main_table_view);
+		});
+	});
+
 	///////////////////////////////////////////////////////////////////////////////////
 
 	return view;
+
 }
 
 module.exports = QuestsHome;

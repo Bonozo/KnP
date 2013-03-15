@@ -15,9 +15,16 @@ function MainMenuScreen(userinfojson) {
 	var images_counter = 0;
 	function hideLoader() {
 		images_counter++;
-		if (images_counter >= 2) {
+		if (images_counter >= 3) {
 			actInd.hide();
+			if(userinfojson.Record[0].NAME == ''){
+				var ResetClass = require('/ui/common/MenuScreen/ResetClass');
+				var ResetClassscreen = new ResetClass(userinfojson);
+				ResetClassscreen.open();	
+			}	
+
 		}
+		
 	}
 
 	var actInd = Titanium.UI.createActivityIndicator();

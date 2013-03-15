@@ -57,6 +57,9 @@ function kandp(userinfo) {
 		right : '3%'
 	});
 	view.add(return_imageview);
+	return_imageview.addEventListener('click', function(e) {
+		view.close();
+	});
 
 	var httpclientt = require('/ui/common/Functions/function');
 	function getGold(callback) {
@@ -74,7 +77,7 @@ function kandp(userinfo) {
 
 		});
 	}
-
+	var selected_item = {};
 	getGold(function(my_gold) {
 		var _url = "http://justechinfo.com/kap_server/get_store_inventories.php";
 		httpclientt.requestServer({
@@ -133,6 +136,8 @@ function kandp(userinfo) {
 							font : {
 								fontSize : '11dip'
 							},
+							inv_id : items_json.Record[i].INVENTORY_ID,
+							req_gold : items_json.Record[i].REQ_GOLD,
 							//size:"12px",
 							//height:'40%',
 							bottom : '10%',
@@ -142,7 +147,7 @@ function kandp(userinfo) {
 							borderWidth : 1,
 							backgroundGradient : {
 								type : 'linear',
-								colors : [' #e49cc9', '#a52b76'],
+									colors : [' #e49cc9', '#a52b76'],
 								startPoint : {
 									x : '50%',
 									y : '100%'
@@ -155,9 +160,76 @@ function kandp(userinfo) {
 							}
 						});
 						rowView.add(buy_button);
+						//alert(items_json.Record[i].INVENTORY_ID);
+						buy_button.addEventListener('click', function(e) {
+							selected_item.invID = e.source.inv_id;
+							selected_item.req_gold = e.source.req_gold;
+							var ConfirmationAlert = Titanium.UI.createAlertDialog({
+								title : 'Click \'Yes\' to Purchase.',
+								message : 'Are you Sure?',
+								buttonNames : ['Yes', 'No'],
+								cancel : 1
+							});
+							ConfirmationAlert.show();
+	
+							ConfirmationAlert.addEventListener('click', function(e) {
+								Titanium.API.info('e = ' + JSON.stringify(e));
+	
+								//Clicked cancel, first check is for iphone, second for android
+								if (e.cancel === e.index || e.cancel === true) {
+									return;
+								}
+								switch (e.index) {
+								case 0:
+								
+									//alert(userinfo.Record[0].UID+"::"+selected_item.invID+"::"+selected_item.req_gold);
+
+									actInd.show();
+									var send_gift_url = "http://justechinfo.com/kap_server/purchase_inventory.php?uid=" + userinfo.Record[0].UID + "&inv_id=" + selected_item.invID + "&req_golds=" + selected_item.req_gold ;
+									var httpclientt = require('/ui/common/Functions/function');
+									
+									httpclientt.requestServer({
+										success : function(e) {
+
+											items_json = JSON.parse(this.responseText);
+											if (items_json.Record != undefined) {
+												alert(items_json.Record.Message);
+												Ti.App.fireEvent('update_inv_grid', {
+													clicked_item : 'KandPscreen'
+													
+												});
+					
+												Ti.App.fireEvent('update_footer', {
+													clicked_item : 'KandPscreen'
+												});
+					
+												
+												//alert(items_json.Message);
+												actInd.hide();
+											}
+
+										},
+										method : 'GET',
+										contentType : 'text/xml',
+										url : send_gift_url
+									});
+									break;
+								//This will never be reached, if you specified cancel for index 1
+								case 1:
+									// alert('Clicked button 1 (NO)');
+									break;
+								default:
+									break;
+							}
+
+								
+							});
+
+							
+						});
 
 						var qty_label = Ti.UI.createLabel({
-							text : '50',
+							text : items_json.Record[i].REQ_GOLD,//'50',
 							top : '10%',
 							left : '80%',
 							font : {
@@ -171,7 +243,7 @@ function kandp(userinfo) {
 							image : 'assets/iconGold.png',
 							top : '10%',
 							left : '90%',
-							width : '5%'
+							width : '5%',
 						});
 						rowView.add(minicoins_imageview);
 
@@ -196,6 +268,7 @@ function kandp(userinfo) {
 
 	});
 
+/*
 	var UP_imageview = Titanium.UI.createImageView({
 		url : '/assets/iconControlArrowUp.png',
 		width : '12.5%',
@@ -213,6 +286,7 @@ function kandp(userinfo) {
 		left : '44.4%'
 	});
 	view.add(down_imageview);
+*/
 
 	var spell_button = Ti.UI.createButton({
 		backgroundImage : '/assets/button_smallLong_UP.png',
@@ -291,6 +365,71 @@ function kandp(userinfo) {
 
 	});
 	view.add(getmore_button);
+	getmore_button.addEventListener('click', function(e) {
+	var ConfirmationAlert = Titanium.UI.createAlertDialog({
+		title : 'Click \'Yes\' to Purchase Gold.',
+		message : 'Are you Sure?',
+		buttonNames : ['Yes', 'No'],
+		cancel : 1
+	});
+	ConfirmationAlert.show();
+	ConfirmationAlert.addEventListener('click', function(e) {
+	Titanium.API.info('e = ' + JSON.stringify(e));
+
+	//Clicked cancel, first check is for iphone, second for android
+	if (e.cancel === e.index || e.cancel === true) {
+		return;
+	}
+	switch (e.index) {
+	case 0:
+	
+		//alert(userinfo.Record[0].UID+"::"+selected_item.invID+"::"+selected_item.req_gold);
+		
+
+		actInd.show();
+		var send_gift_url = "http://justechinfo.com/kap_server/purchase_gold.php?uid="+userinfo.Record[0].UID+"&num_of_golds=400";
+		var httpclientt = require('/ui/common/Functions/function');
+		
+		httpclientt.requestServer({
+			success : function(e) {
+
+				items_json = JSON.parse(this.responseText);
+				if (items_json.Message != '') {
+					alert('Successfully Purchased!');
+					Ti.App.fireEvent('update_inv_grid', {
+						clicked_item : 'KandPscreen'
+						
+					});
+
+					Ti.App.fireEvent('update_footer', {
+						clicked_item : 'KandPscreen'
+					});
+
+					
+					//alert(items_json.Message);
+					actInd.hide();
+				}
+
+			},
+			method : 'GET',
+			contentType : 'text/xml',
+			url : send_gift_url
+		});
+		break;
+	//This will never be reached, if you specified cancel for index 1
+	case 1:
+		// alert('Clicked button 1 (NO)');
+		break;
+	default:
+		break;
+}
+
+	
+});
+
+
+
+	});
 
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({

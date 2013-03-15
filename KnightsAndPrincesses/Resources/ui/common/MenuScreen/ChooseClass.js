@@ -1,17 +1,296 @@
 function ChooseClass() {
+    var admin_login = false;
 	var gender = 'm';
 	var images_counter = 0;
 	function hideLoader() {
 		images_counter++;
-		if (images_counter >= 4) {
+		if (images_counter >= 5) {
 			actInd.hide();
 		}
 	}
+    function CloudLogin(login_value, password_value, callback) {
+        Cloud.Users.login({
+            login : login_value,
+            password : password_value
+        }, function(e) {
+            if (e.success) {
+                var user = e.users[0];
+                callback(true, user.id);
+            } else {
+                callback(false, e.message);
+            }
+        });
+    }
+
+    function CloudLogout(callback) {
+        Cloud.Users.logout(function(e) {
+            if (e.success) {
+                callback(true, "Successfully logout");
+            } else {
+                callback(false, e.message);
+            }
+        });
+    }
+
+    function CloudCreateUser(email_value, first_name_value, last_name_value, password_value, callback) {
+/*
+        actInd.message = 'Try to Create User on Cloud...';
+*/
+        Cloud.Users.create({
+            email : email_value,
+            username : email_value,
+            password : password_value,
+            password_confirmation : password_value
+        }, function(e) {
+            if (e.success) {
+                var user = e.users[0];
+                callback(true, user.id);
+            } else {
+                callback(false, e.message);
+            }
+        });
+    }
+
+    function CloudSearchUser(email_value, callback) {
+        Cloud.Users.query({
+            page : 1,
+            per_page : 10,
+            where : {
+                email : email_value
+            }
+        }, function(e) {
+            if (e.success) {
+/*
+                alert("'"+email_value+"' "+JSON.stringify(e));
+*/
+                if (e.users.length > 0)
+                    callback(true, e.users[0].id);
+                else
+                    callback(true, "");
+            } else {
+                callback(false, e.message);
+            }
+        });
+    }
+
+    function CloudRemoveUser(callback) {
+/*
+        actInd.message = 'Try to Remove User...';
+*/
+        Cloud.Users.remove(function(e) {
+            if (e.success) {
+                callback(true, 'Successfully removed');
+            } else {
+                callback(false, e.message);
+            }
+        });
+    }
+
+    function CloudSubscribeUser(email_value, channel_value, token_value, callback) {
+        if (!admin_login) {
+/*
+            actInd.message = 'admin logging...';
+*/
+
+            CloudLogin('admin@bonozo.com', 'admin', function(success, admin_id) {
+
+                if(success){
+                    admin_login = true;
+/*
+                    actInd.message = 'Cloud Search User...';
+*/
+                    alert(email_value);
+
+                    CloudSearchUser(email_value, function(success, uid) {
+
+                        if (uid == "") {
+
+                            CloudCreateUser(email_value, "", "", "test", function(success, created_uid) {
+
+                                if (success) {
+                                    Cloud.PushNotifications.subscribe({
+                                        channel : channel_value,
+                                        device_token : token_value,
+                                        user_id : created_uid,
+                                        type : 'android'
+                                    }, function(e) {
+                                        if (e.success) {
+                                            callback(true, created_uid);
+                                        } else {
+                                           // actInd.hide();
+                                            callback(false, e.message);
+                                        }
+                                    });
+                                }
+                                else{
+                                    alert('created_uid='+created_uid);
+                                }
+                                });
+                        } else {
+                            Cloud.PushNotifications.subscribe({
+                                channel : channel_value,
+                                device_token : token_value,
+                                user_id : uid,
+                                type : 'android'
+                            }, function(e) {
+                                if (e.success) {
+                                    callback(true, uid);
+                                } else {
+                                    callback(false, e.message);
+                                }
+                            });
+                        }
+                    });
+                }
+                else{
+                    callback(false, admin_id);
+                }
+                
+            });
+        } else {
+            CloudSearchUser(email_value, function(success, uid) {
+                if (uid == "") {
+/*
+                    actInd.message = 'Creating Cloud User...';
+*/
+                    CloudCreateUser(email_value, "", "", "test", function(success, created_uid) {
+/*
+                        actInd.message = 'Subscribing Cloud User...'+created_uid;
+*/
+                        if (success) {
+                            Cloud.PushNotifications.subscribe({
+                                channel : channel_value,
+                                device_token : token_value,
+                                user_id : created_uid,
+                                type : 'android'
+                            }, function(e) {
+                                if (e.success) {
+                                    callback(true, created_uid);
+                                } else {
+                                    callback(false, e.message);
+                                }
+                            });
+                        }
+                        else{
+                            callback(false, created_uid);
+                        }
+                    });
+                }
+                else{
+                    Cloud.PushNotifications.subscribe({
+                        channel : channel_value,
+                        device_token : token_value,
+                        user_id : uid,
+                        type : 'android'
+                    }, function(e) {
+                        if (e.success) {
+                            callback(true, uid);
+                        } else {
+                            callback(false, e.message);
+                        }
+                    });
+
+                }
+            });
+        }
+    }
+
+    function CloudUnsubscribeUser(user_id_value, channel_value, token_value, callback) {
+        if (!admin_login) {
+/*
+            actInd.message = 'Admin Cloud Login For Unsubscribing...';
+*/
+            CloudLogin('admin@bonozo.com', 'admin', function(success, admin_id) {
+                admin_login = true;
+                Cloud.PushNotifications.unsubscribe({
+                    channel : channel_value,
+                    device_token : token_value,
+                    user_id : user_id_value
+                }, function(e) {
+                    if (e.success) {
+                        callback(true, 'Successfully unsubscribed');
+                    } else {
+                        callback(false, e.message);
+                    }
+                });
+            });
+        } else {
+/*
+            actInd.message = '<ALREADY SIGN IN>UnSubscribing for Push...';
+*/
+            Cloud.PushNotifications.unsubscribe({
+                channel : channel_value,
+                device_token : token_value,
+                user_id : user_id_value
+            }, function(e) {
+                if (e.success) {
+                    callback(true, 'Successfully unsubscribed');
+                } else {
+                    callback(false, e.message);
+                }
+            });
+        }
+    }
+    function ServerSignup(name_value, email_value, password_value, gender_value,device_token_value , callback) {
+        var httpclientt = require('/ui/common/Functions/function');
+        httpclientt.requestServer({
+            success : function(e) {
+                var json = JSON.parse(this.responseText);
+                if (json.Record != undefined) {
+                   // actInd.hide();
+                    callback(true, json.Record);
+
+
+                } else if (json.Error != undefined) {
+                    alert(json.Error);
+                } else {
+                    alert("Something went wrong!");
+                }
+
+            },
+            method : 'GET',
+            contentType : 'text/xml',
+            url : "http://justechinfo.com/kap_server/sign_up.php?email=" + email_value + "&password=" +password_value + "&name=" + name_value + "&gender=" + gender_value+"&device_token="+device_token_value
+        });
+    }
+    function InsertUidAndToken(email_value,uid,token,callback){
+        var httpclientt = require('/ui/common/Functions/function');
+        httpclientt.requestServer({
+            success : function(e) {
+                var json = JSON.parse(this.responseText);
+                if (json.Record[0] != undefined) {
+                    //alert(JSON.stringify(json.Record[0]));
+                    callback(true, json.Record[0]);
+                } else if (json.Error != undefined) {
+                    if (json.Error.AuthException != undefined) {
+                        callback(false, json.Error.AuthException);
+                    } else if (json.Error.Request) {
+                        callback(false, json.Error.Request);
+                    } else {
+                        callback(false, "Unknown error occured!");
+                    }
+                }
+            },
+            method : 'GET',
+            contentType : 'text/xml',
+            url : "http://justechinfo.com/kap_server/insert_uid_token.php?email=" + email_value + "&uid=" + uid + "&token=" + token
+        });
+    }
 
 	var actInd = Titanium.UI.createActivityIndicator();
 	actInd.message = 'Loading...';
 	//message will only shows in android.
 	actInd.show();
+	var CloudPush = require('ti.cloudpush');
+	CloudPush.debug = true;
+	CloudPush.enabled = true;
+	CloudPush.showTrayNotificationsWhenFocused = true;
+	CloudPush.focusAppOnPush = false;
+
+	var deviceToken;
+
+	var Cloud = require('ti.cloud');
+	Cloud.debug = true;
 
 	var chooseclass_win = Ti.UI.createWindow({
 		backgroundGradient : {
@@ -193,33 +472,95 @@ function ChooseClass() {
 		alertDialog.close();
 	});
 	/////////////////////
+    function getToken(callback) {
+        CloudPush.retrieveDeviceToken({
+            success : function deviceTokenSuccess(e) {
+                callback(true, e.deviceToken);
+            },
+            error : function deviceTokenError(e) {
+                callback(false, e.message);
+            }
+        });
+    }
+
+
 	next_arrow.addEventListener('click', function(e) {
 		if (email_text.value == "" || password_text.value == "" || name_text.value == "") {
 			alert('All fields are required!');
 		} else {
-			var httpclientt = require('/ui/common/Functions/function');
-			httpclientt.requestServer({
-				success : function(e) {
-					var json = JSON.parse(this.responseText);
-					if (json.Record != undefined) {
-						customizationscreen = new Customization(json, name_text.value);
-						customizationscreen.open();
-
-						var Record = json.Record[0];
-
-					} else if (json.Error != undefined) {
-						alert(json.Error);
-					} else {
-						alert("Something went wrong!");
-					}
-
-				},
-				method : 'GET',
-				contentType : 'text/xml',
-				url : "http://justechinfo.com/kap_server/sign_up.php?email=" + email_text.value + "&password=" + password_text.value + "&name=" + name_text.value + "&gender=" + gender
-				//param : '<Device xmlns="http://schemas.datacontract.org/2004/07/CalendarConnect.Model">' + '<culture>' + Titanium.Platform.locale + '</culture>' + '<deviceToken>Have to Do</deviceToken>' + '<deviceType>' + deviceType + '</deviceType>' + '<modelDescription>' + Titanium.Platform.model + '</modelDescription>' + '<osVersion>' + Titanium.Platform.version + '</osVersion></Device>'
+			actInd.show();
+			email_text.value = email_text.value.toLowerCase();
+			getToken(function(success, token) {
+			    if(success){
+			        actInd.message = 'Authentication...';
+			        ServerSignup(name_text.value,email_text.value, password_text.value,gender, token, function(success, json) {
+			            if(success){
+                            if (json[0].LAST_USER == "NULL") {
+/*
+                                actInd.message = 'Subscribing device for ' + email_text.value + '...';
+*/
+                                CloudSubscribeUser(email_text.value, 'alert', token, function(success, uid) {
+                                    if(success){
+                                        InsertUidAndToken(email_text.value,uid,token,function(success,message){
+                                            if(success){
+                                                CloudLogout(function(success,message){
+                                                    json = {Record:json};
+                                                    var Customization = require('/ui/common/MenuScreen/Customization');
+                                                    customization = new Customization(json);
+                                                    customization.open();
+                                                    actInd.hide();
+                                                });
+                                            }
+                                            else{
+                                                alert(message);
+                                            }
+                                        });
+                                    }
+                                    else{
+                                        alert(uid);
+                                    }
+                                });
+                            }
+                            else{
+                                CloudSearchUser(json[0].LAST_USER, function(success, last_user_id) {
+                                    var last_email = json[0].LAST_USER;
+                                    CloudUnsubscribeUser(last_user_id, 'alert', token, function(success, message) {
+                                        if (success) {
+                                            CloudSubscribeUser(email_text.value, 'alert', token, function(success, uid) {
+/*
+                                                insert uid and device token in database
+*/
+                                                InsertUidAndToken(email_text.value,uid,token,function(success,message){
+                                                    if(success){
+                                                        json = {Record:json};
+                                                        InsertUidAndToken(last_email,"","",function(success,message){
+                                                            if(success){
+                                                                var Customization = require('/ui/common/MenuScreen/Customization');
+                                                                customization = new Customization(json);
+                                                                customization.open();
+                                                                actInd.hide();
+                                                            }
+                                                            else{
+                                                                alert(message);
+                                                            }
+                                                        });
+                                                    }
+                                                    else{
+                                                        alert(message);
+                                                    }
+                                                });
+                                            });
+                                        }
+                                    });
+                                    //CloudUnsubscribeUser
+                                });
+                                //CloudSearchUser
+                            }			                
+			            }
+			        });
+			        
+			    }
 			});
-
 		}
 
 	});
@@ -237,6 +578,20 @@ function ChooseClass() {
 				screen_name : 'choose_your_class'
 			});
 		}
+	});
+	CloudPush.addEventListener('callback', function(evt) {
+		//alert(evt);
+		//alert(evt.payload);
+	});
+
+	CloudPush.addEventListener('trayClickLaunchedApp', function(evt) {
+		//Ti.API.info('Tray Click Launched App (app was not running)');
+		//alert('Tray Click Launched App (app was not running');
+	});
+
+	CloudPush.addEventListener('trayClickFocusedApp', function(evt) {
+		//Ti.API.info('Tray Click Focused App (app was already running)');
+		//alert('Tray Click Focused App (app was already running)');
 	});
 
 	return chooseclass_win;

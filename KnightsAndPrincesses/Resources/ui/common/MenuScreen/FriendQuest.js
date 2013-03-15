@@ -1,4 +1,15 @@
-function FriendQuest(userinfo, friend_uid) {
+function FriendQuest(userinfo, friend_uid,friend_quest_info,is_completed) {
+	var actInd = Titanium.UI.createActivityIndicator();
+	actInd.message = 'Loading...';
+	//message will only shows in android.
+	actInd.show();
+	function hideLoader() {
+		images_counter++;
+		if (images_counter >= 3) {
+			actInd.hide();
+		}
+	}
+	var my_timer = '';
 	var tableview;
 	var httpclientt = require('/ui/common/Functions/function');
 	var self = Ti.UI.createWindow({
@@ -17,6 +28,54 @@ function FriendQuest(userinfo, friend_uid) {
 
 	});
 	self.add(view);
+var countDown =  function(h, m , s, fn_tick, fn_end  ) {
+    return {
+        total_sec : h * 60 * 60 + m * 60 + s,
+        timer:this.timer,
+        set: function(h,m,s) {
+                this.total_sec = parseInt(h) * 60 * 60 + parseInt(m) * 60 + parseInt(s);
+                this.time = {
+                    h : h,
+                    m : m,
+                    s : s
+                };
+            return this;
+        },
+        start: function() {
+            var self = this;
+            this.timer = setInterval( function() {
+                if (self.total_sec) {
+                    self.total_sec--;
+                        var hour = parseInt(self.total_sec / (60 * 60));
+                        var min = (self.total_sec - (parseInt(hour * (60 * 60))) - (self.total_sec % 60)) / 60;
+
+                        self.time = {
+                            h : parseInt(self.total_sec / (60 * 60)),
+                            m : parseInt(min),
+                            s : (self.total_sec % 60)
+                        };
+                        fn_tick(self.time.h + ":" + self.time.m + ":" + self.time.s, self.instance_index);
+                }
+                else {
+                    self.stop();
+                    fn_end();
+                }
+                }, 1000 );
+            return this;
+        },
+        stop: function() {
+            clearInterval(this.timer)
+                this.time = {
+                    h : 0,
+                    m : 0,
+                    s : 0
+                };
+            this.total_sec = 0;
+            return this;
+        }
+    }
+}
+	
 	var top_imageview = Titanium.UI.createImageView({
 		image : '/assets/overlayPlayerInfoCroped.png',
 		//height:'12.4%',
@@ -62,8 +121,15 @@ function FriendQuest(userinfo, friend_uid) {
 	});
 	view.add(return_imageview);
 	return_imageview.addEventListener('click', function(e) {
+	    if(!is_completed)
+	       my_timer.stop();
+	    //clearInterval(my_timer);
+	   // my_timer= null;
 		self.close();
 	});
+
+
+
 
 	var tabledata = [];
 	var ScreenHeight = Titanium.Platform.displayCaps.platformHeight;
@@ -118,11 +184,16 @@ function FriendQuest(userinfo, friend_uid) {
 								fontSize : '14dip'
 							},
 							quest_image : json.Record[i].QUEST_IMAGE,
-							assign_quest_id : json.Record[i].ASSIGN_QUEST_ID
+							assign_quest_id : json.Record[i].ASSIGN_QUEST_ID,
+							quest_id : json.Record[i].QUEST_ID
+							
+							
 						});
 						StartQuestButton.addEventListener('click', function(e) {
+//							alert( e.source.quest_id+":"+ userinfo.Record[0].UID +":"+friend_uid+":"+friend_quest_info.ASSIGN_QUEST_ID);
+
 							var PlayGame = require('/ui/common/MenuScreen/PlayGame');
-							var playgame = new PlayGame(e.source.quest_image, e.source.assign_quest_id);
+							var playgame = new PlayGame(e.source.quest_image,'INCOMLPETE',  e.source.quest_id,userinfo,friend_uid,friend_quest_info);
 							playgame.open();
 						});
 						rowView.add(StartQuestButton);
@@ -136,7 +207,7 @@ function FriendQuest(userinfo, friend_uid) {
 					width : '70%',
 					height : '40%',
 					left : '0',
-					top : '27.3%'
+					top : '33%'
 				});
 				view.add(tableview);
 			},
@@ -149,7 +220,7 @@ function FriendQuest(userinfo, friend_uid) {
 			},
 			method : 'GET',
 			contentType : 'text/xml',
-			url : "http://justechinfo.com/kap_server/get_all_assigned_quests.php?assign_by=" + friend_uid + "&assign_to=" + userinfo.Record[0].UID
+			url : "http://justechinfo.com/kap_server/knp_get_friend_quest_games.php?assign_quest_id=" + friend_quest_info.ASSIGN_QUEST_ID
 			//url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + 10000007 + "",
 
 		});
@@ -168,6 +239,7 @@ function FriendQuest(userinfo, friend_uid) {
 
 		success : function(e) {
 			var friend_json = JSON.parse(this.responseText);
+			friendsstatus_label = friend_json.Record[0].STATUS_MESSAGE+' \N LVL 1';
 			var friendsname_label = Titanium.UI.createLabel({
 				text : '' + friend_json.Record[0].NAME,
 				top : '5.5%',
@@ -179,6 +251,17 @@ function FriendQuest(userinfo, friend_uid) {
 				}
 			});
 			view.add(friendsname_label);
+			var character_imageview = Titanium.UI.createImageView({
+				top : '12%',
+				right : '0%',
+				image : (friend_json.Record[0].GENDER == 'm')?'/assets/K_fullbody_bad.png':'/assets/hdpi_female_character.png',
+				height : '75%',
+				zIndex : 500
+			});
+			view.add(character_imageview);
+			character_imageview.addEventListener('load', function(e) {
+				hideLoader();
+			});
 
 		},
 		onerror : function(e) {
@@ -196,7 +279,6 @@ function FriendQuest(userinfo, friend_uid) {
 	});
 
 	var friendsstatus_label = Titanium.UI.createLabel({
-		text : 'I M IN TO WIN \N LVL100',
 		top : '10.1%',
 		left : '4%',
 		textAlign : 'left',
@@ -208,6 +290,7 @@ function FriendQuest(userinfo, friend_uid) {
 	});
 	view.add(friendsstatus_label);
 
+/*
 	var viewFriends_button = Ti.UI.createButton({
 		backgroundImage : '/assets/button_small_UP.png',
 		top : '19.8%',
@@ -223,50 +306,101 @@ function FriendQuest(userinfo, friend_uid) {
 		self.close();
 	});
 	view.add(viewFriends_button);
+*/
 
-	var messages_button = Ti.UI.createButton({
-		backgroundImage : '/assets/button_small_UP.png',
-		top : '19.8%',
-		left : '51.7%',
-		width : '21.5%',
-		height : '5%',
-		title : 'Messages',
-		font : {
-			fontSize : '10dip'
-		}
+
+	var quests_status = Titanium.UI.createLabel({
+		color : '#5afd9b',
+		top : '25%',
+		left : '2%'
 	});
-	view.add(messages_button);
-	messages_button.addEventListener('click', function(e) {
-		var httpclientt = require('/ui/common/Functions/function');
-		httpclientt.requestServer({
+	view.add(quests_status);
 
-			success : function(e) {
-				var Messages_Thread = JSON.parse(this.responseText);
-				if (Messages_Thread.Record != undefined) {
-					//alert(Messages_Thread.Record[0].MESSAGE_TEXT);
-					var MessageScreen = require('/ui/common/MenuScreen/MessageScreen');
-					var messageScreen = new MessageScreen(Messages_Thread, userinfo, friend_uid);
-					messageScreen.open({
-						modal : true
-					});
+	var get_quest_url = "http://justechinfo.com/kap_server/knp_get_friend_quest_games.php?assign_quest_id=" + friend_quest_info.ASSIGN_QUEST_ID;
+	var httpclientt = require('/ui/common/Functions/function');
+	httpclientt.requestServer({
+		success : function(e) {
+			Ti.App.fireEvent('update_footer', {
+				clicked_item : 'FreindQuest'
+			});
+			Ti.App.fireEvent('update_inv_grid', {
+				clicked_item : 'FreindQuest'
+			});
+
+			items_json = JSON.parse(this.responseText);
+			if (items_json.Record != undefined) {
+				if (items_json.Record.length >0) {
+                    if(is_completed == 'COMPLETE'){
+                        quests_status.text = 'QUESTS COMPLETED!'
+                        
+                    }
+                    else{
+                        var n = items_json.Record[0].EXPIRED_TIME.split(":");
+                        my_timer = new countDown(parseInt(n[0]), parseInt(n[1]), parseInt(n[2]),
+                            function() {
+                                quests_status.text = 'TIME REMAINING: '+my_timer.time.h+":"+my_timer.time.m+":"+my_timer.time.s;
+                            },
+                            function() {
+                               // alert("The time is up!");
+                            }
+                        );
+                        my_timer.start();                  
+                    }
+
+					actInd.hide();
 				}
+			}
 
-			},
-			onerror : function(e) {
-				Ti.API.debug("STATUS: " + this.status);
-				Ti.API.debug("TEXT: " + this.responseText);
-				Ti.API.debug("ERROR: " + e.error);
-				Ti.API.debug("URL: " + "http://justechinfo.com/kap_server/get_thread_messages.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + friend_uid);
-				alert('There was an error retrieving the remote data. Try again.');
-			},
-			method : 'GET',
-			contentType : 'text/xml',
-			url : "http://justechinfo.com/kap_server/get_thread_messages.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + friend_uid,
-			//url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + 10000007 + "",
-
-		});
-
+		},
+		method : 'GET',
+		contentType : 'text/xml',
+		url : get_quest_url
 	});
+ 
+	var isFriends = function(callback){
+			var httpclientt = require('/ui/common/Functions/function');
+			_url = "http://justechinfo.com/kap_server/is_friend.php?uid1="+userinfo.Record[0].UID+"&uid2="+friend_uid; 
+			httpclientt.requestServer({
+				success : function(e) {
+					items_json = JSON.parse(this.responseText);
+					if (items_json.Record != undefined) {
+						callback(items_json.Record);
+					}
+					Ti.App.fireEvent('update_xp', {
+						clicked_item : 'StatusScreen'
+					});
+				},
+				method : 'GET',
+				contentType : 'text/xml',
+				url : _url,
+
+			});
+	}
+	isFriends(function(bool){
+		var messages_button = Ti.UI.createButton({
+			backgroundImage : '/assets/button_small_UP.png',
+			top : '19.8%',
+			left : '51.7%',
+			width : '21.5%',
+			height : '5%',
+			visible : bool,
+			title : 'Messages',
+			zIndex : 510,
+			font : {
+				fontSize : '10dip'
+			}
+		});
+		view.add(messages_button);
+		messages_button.addEventListener('click', function(e) {
+			var MessageScreen = require('/ui/common/MenuScreen/MessageScreen');
+			var messageScreen = new MessageScreen(userinfo, friend_uid);
+			messageScreen.open({
+				modal : true
+			});
+		});
+	});
+
+
 	var Message_imageview = Titanium.UI.createImageView({
 		url : '/assets/iconReturn.png',
 		height : '5.2%',
@@ -276,12 +410,6 @@ function FriendQuest(userinfo, friend_uid) {
 	//view.add(Message_imageview);
 
 	var images_counter = 0;
-	function hideLoader() {
-		images_counter++;
-		if (images_counter >= 3) {
-			actInd.hide();
-		}
-	}
 
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
@@ -296,34 +424,27 @@ function FriendQuest(userinfo, friend_uid) {
 
 			hideLoader();
 		},
-		method : 'GET',
+		method : 'GET', 
 		contentType : 'text/xml',
 		url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + userinfo.Record[0].UID + "",
 	});
 
-	var male_character_imageview = Titanium.UI.createImageView({
-		right : '0%',
-		top : '12%',
-		height : '79.5%',
-		image : '/assets/K_fullbody_bad.png'
-	});
-	view.add(male_character_imageview);
 
 	return_imageview.addEventListener('load', function(e) {
-		hideLoader();
-	});
-	male_character_imageview.addEventListener('load', function(e) {
 		hideLoader();
 	});
 	Message_imageview.addEventListener('load', function(e) {
 		hideLoader();
 	});
+    view.addEventListener('android:back', function(e) {
+        my_timer.stop();
+        //clearInterval(my_timer);
+          // my_timer= null;
+        
+        activity.finish();
+    });
 
 
-	var actInd = Titanium.UI.createActivityIndicator();
-	actInd.message = 'Loading...';
-	//message will only shows in android.
-	actInd.show();
 
 	return self;
 };

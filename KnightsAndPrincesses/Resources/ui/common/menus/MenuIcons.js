@@ -1,5 +1,12 @@
 function MenuIcons(active_screen) {
-
+    var quest_screen_active = false;
+    function clearQuestIntervals(){
+        if(quest_screen_active){
+            Ti.App.fireEvent('clear_quest_intervals', {
+            });
+            quest_screen_active = false;
+        }
+    }
 	var view = Titanium.UI.createView({
 		top : "12.5%",
 		height : "10%",
@@ -50,6 +57,7 @@ function MenuIcons(active_screen) {
 		Ti.App.fireEvent('menu_active', {
 			clicked_item : 'StatusScreen'
 		});
+		clearQuestIntervals();
 	});
 
 	view.add(iconstatus_imageview);
@@ -67,6 +75,7 @@ function MenuIcons(active_screen) {
 		Ti.App.fireEvent('menu_active', {
 			clicked_item : 'Inventoryscreen'
 		});
+		clearQuestIntervals();
 	});
 	var iconFriends_imageview = Titanium.UI.createImageView({
 		image : '/assets/iconFriends.png',
@@ -83,6 +92,7 @@ function MenuIcons(active_screen) {
 		Ti.App.fireEvent('menu_active', {
 			clicked_item : 'FreindsScreen'
 		});
+		clearQuestIntervals();
 	});
 	var iconQuests_imageview = Titanium.UI.createImageView({
 		image : '/assets/iconQuests.png',
@@ -99,7 +109,8 @@ function MenuIcons(active_screen) {
 		Ti.App.fireEvent('menu_active', {
 			clicked_item : 'QuestsHome'
 		});
-
+		clearQuestIntervals();
+        quest_screen_active = true;
 	});
 
 	var iconLeaderboards_imageview = Titanium.UI.createImageView({
@@ -116,7 +127,7 @@ function MenuIcons(active_screen) {
 		Ti.App.fireEvent('menu_active', {
 			clicked_item : 'Leaderboards'
 		});
-
+        clearQuestIntervals();
 	});
 
 	var iconCustomizeBackground_imageview = Titanium.UI.createImageView({
@@ -133,7 +144,7 @@ function MenuIcons(active_screen) {
 		Ti.App.fireEvent('menu_active', {
 			clicked_item : 'SceneryCustomization'
 		});
-
+        clearQuestIntervals();
 	});
 	var iconOptions_imageview = Titanium.UI.createImageView({
 		image : '/assets/iconOptions.png',
@@ -150,7 +161,7 @@ function MenuIcons(active_screen) {
 		Ti.App.fireEvent('menu_active', {
 			clicked_item : 'OptionsScreen'
 		});
-
+        clearQuestIntervals();
 	});
 	var new_request_beep = false, new_quest_beep = false;
 	Ti.App.addEventListener('NEW_REQUEST', function(data) {
@@ -192,14 +203,14 @@ function MenuIcons(active_screen) {
 			success : function(e) {
 				items_json = JSON.parse(this.responseText);
 				if (items_json.Record != undefined) {
-					// alert(items_json.Record[0].REQUEST);
+					 //alert(items_json.Record[0].REQUEST);
 					if (items_json.Record[0].REQUEST == 'NEW_REQUEST') {
-						// alert('TRUE');
+						 //alert('TRUE');
 						Ti.App.fireEvent('NEW_REQUEST', {
 							status : "NEW"
 						});
 					} else {
-						// alert('FALSE');
+						 //alert('FALSE');
 						Ti.App.fireEvent('NEW_REQUEST', {
 							status : ""
 						});
