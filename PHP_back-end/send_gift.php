@@ -2,8 +2,16 @@
 header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
+include "config.php";
 ini_set('memory_limit', '256M');
 $dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+$key = "tGKQ62mVRFS3AvCxelxnoHjJI8vIBtbW"; //APP KEY
+$cloud_password = "admin";
+$tmp_fname = 'cookie.txt';
+$channel    = "alert";
+$message    = "You have received Gift from '";
+$title      = "Knights And Princesses";
+
 if(isset($_GET))
 {
 	extract($_GET);
@@ -206,7 +214,7 @@ if(isset($_GET))
 							VALUES 
 								(:sender_id,
 								 :receiver_id,
-								 'YOUR FREIND HAS RECEIVED GIFT!',
+								 'I SENT YOU A GIFT!',
 								 'UNREAD') 
 						";
 						$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -215,6 +223,32 @@ if(isset($_GET))
 							':sender_id' => $sender_id,
 							':receiver_id' => $receiver_id
 							));
+						$query = "SELECT `USER_ID`,`NOTIFICATION`,`NAME` FROM KAP_USER_MAIN WHERE `UID` = :receiver_id";
+						$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+						$statement->execute(array(':receiver_id'=>$receiver_id));
+						$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+						if($res[0]['NOTIFICATION']=='ON' && $res[0]['USER_ID']!=''){
+							$message.= $res[0]['NAME']."'.";
+							$json       = '{"alert":"'. $message .'","title":"'. $title .'","vibrate":true,"sound":"default","icon":"appicon"}';
+								
+						list($status,$response) = CloudLogin(CLOUD_ADMIN,CLOUD_PASSWORD);
+							if($status){
+								$curlObj    = curl_init();
+								$c_opt      = array(CURLOPT_URL => 'https://api.cloud.appcelerator.com/v1/push_notification/notify.json?key='.$key."&to_ids=".$res[0]['USER_ID'],
+													CURLOPT_COOKIEJAR => $tmp_fname, 
+													CURLOPT_COOKIEFILE => $tmp_fname, 
+													CURLOPT_RETURNTRANSFER => true, 
+													CURLOPT_POST => 1,
+													CURLOPT_POSTFIELDS  => "channel=".$channel."&payload=".$json,
+													CURLOPT_FOLLOWLOCATION  =>  1,
+													CURLOPT_TIMEOUT => 60);
+								curl_setopt_array($curlObj, $c_opt); 
+								$session = curl_exec($curlObj);//print_r($session);
+								curl_close($curlObj);
+							}
+						}
+				
+							
 						$records = array("Message"=>"Gift successfully sent!");
 					}
 					else{
@@ -243,6 +277,32 @@ else
 }
 
 echo json_indent(json_encode($records));
+function CloudLogin($email,$password){
+	global $key;
+	global $cloud_password; 	
+	$curlObj = curl_init();
+
+	if($cloud_password != '')
+		$password = $cloud_password;
+	$c_opt = array( CURLOPT_URL => 'https://api.cloud.appcelerator.com/v1/users/login.json?key='.$key,
+					CURLOPT_COOKIEJAR => $tmp_fname, 
+					CURLOPT_COOKIEFILE => $tmp_fname, 
+					CURLOPT_RETURNTRANSFER => true, 
+					CURLOPT_POST => 1,
+					CURLOPT_POSTFIELDS  =>  "login=".$email."&password=".$password,
+					CURLOPT_FOLLOWLOCATION  =>  1,
+					CURLOPT_TIMEOUT => 60);
+	curl_setopt_array($curlObj, $c_opt);
+	$response = objectToArray(json_decode(curl_exec($curlObj)));//echo "CLOUD_LOGIN";print_r($response);//die();
+	if($response['meta']['status'] == 'ok'){
+		return array(true,$response['response']['users'][0]['id']);
+	} 
+	else if($response['meta']['status'] == 'fail'){
+		return array(false,$response['meta']['message']);
+	}
+	return array(false,'Unknown error');
+}
+
 function GiftCraft(){
 	
 }
