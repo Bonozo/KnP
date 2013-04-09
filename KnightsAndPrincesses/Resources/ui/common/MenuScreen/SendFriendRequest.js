@@ -58,7 +58,7 @@ function SendFriendRequest(userinfo, friendJson) {
 	});
 	Infoview.add(text_label);
 
-	var freind_info = "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + friendJson.UID;
+	var freind_info = "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + friendJson.UID;
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
 		success : function(e) {
@@ -223,7 +223,7 @@ function SendFriendRequest(userinfo, friendJson) {
 	    
 	    
 		actInd.show();
-		var _url = "http://justechinfo.com/kap_server/send_friend_request.php?uid=" + userinfo.Record[0].UID + "&friend_uid=" + friendJson.UID + "&user_id="+user_id+"";
+		var _url = "http://therealmattharmon.com/knp/send_friend_request.php?uid=" + userinfo.Record[0].UID + "&friend_uid=" + friendJson.UID + "&user_id="+user_id+"";
 		var items_json = "";
 		var items_length = 0;
 		var httpclientt = require('/ui/common/Functions/function');
@@ -299,7 +299,7 @@ function SendFriendRequest(userinfo, friendJson) {
 	 });
 	 add_friend_view.add(send_button);
 	 send_button.addEventListener('click', function(e) {
-	 var _url = "http://justechinfo.com/kap_server/send_friend_request.php?uid=" + userinfo.Record[0].UID + "&friend_uid=" + friendJson.UID + "";
+	 var _url = "http://therealmattharmon.com/knp/send_friend_request.php?uid=" + userinfo.Record[0].UID + "&friend_uid=" + friendJson.UID + "";
 	 var items_json = "";
 	 var items_length = 0;
 	 var httpclientt = require('/ui/common/Functions/function');

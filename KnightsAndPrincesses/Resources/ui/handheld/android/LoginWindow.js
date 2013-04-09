@@ -25,6 +25,8 @@ function LoginWindow() {
     }
 
     function CloudLogin(login_value, password_value, callback) {
+        // actInd.message = 'Login admin...';
+
         Cloud.Users.login({
             login : login_value,
             password : password_value
@@ -49,6 +51,7 @@ function LoginWindow() {
     }
 
     function CloudCreateUser(email_value, first_name_value, last_name_value, password_value, callback) {
+        //actInd.message = 'Creating user...';
         Cloud.Users.create({
             email : email_value,
             username : email_value,
@@ -65,7 +68,7 @@ function LoginWindow() {
     }
 
     function CloudSearchUser(email_value, callback) {
-        //actInd.message = 'Searching user...';
+        // actInd.message = 'Searching user...';
         Cloud.Users.query({
             page : 1,
             per_page : 10,
@@ -74,7 +77,7 @@ function LoginWindow() {
             }
         }, function(e) {
             if (e.success) {
-               // alert("'" + email_value + "' " + JSON.stringify(e));
+                // alert("'" + email_value + "' " + JSON.stringify(e));
 
                 if (e.users.length > 0)
                     callback(true, e.users[0].id);
@@ -97,7 +100,7 @@ function LoginWindow() {
     }
 
     function CloudSubscribeUser(email_value, channel_value, token_value, callback) {
-        //actInd.message = 'Subscribing...';
+         actInd.message = 'Configuring your device...';
         if (!admin_login) {
             CloudLogin('admin@bonozo.com', 'admin', function(success, admin_id) {
                 if (success) {
@@ -134,7 +137,7 @@ function LoginWindow() {
                                 type : 'android'
                             }, function(e) {
                                 if (e.success) {
-                                    debuggers.text += '\nsubscribe' + uid;
+                                    //debuggers.text += '\nsubscribe' + uid;
                                     callback(true, uid);
                                 } else {
                                     callback(false, e.message);
@@ -193,16 +196,18 @@ function LoginWindow() {
     function CloudUnsubscribeUser(user_id_value, channel_value, token_value, callback) {
         //actInd.message = 'Unsubscribing...';
         if (!admin_login) {
-           // alert(token_value+":"+user_id_value);
+            //alert(token_value+":"+user_id_value);
             CloudLogin('admin@bonozo.com', 'admin', function(success, admin_id) {
                 admin_login = true;
+                 //actInd.message = 'logged in admin...'+user_id_value+':'+token_value;
+
                 Cloud.PushNotifications.unsubscribe({
                     device_token : token_value,
                     channel : channel_value,
                     user_id : user_id_value
                 }, function(e) {
                     if (e.success) {
-                        //actInd.message = 'successful Unsss...';
+                         //actInd.message = 'successful Unsss...';
                         callback(true, 'Successfully unsubscribed');
                     } else {
                         actInd.message = e.message;
@@ -211,14 +216,17 @@ function LoginWindow() {
                 });
             });
         } else {
+           // actInd.message = 'Unsubscribingg Unsss...';
             Cloud.PushNotifications.unsubscribe({
                 channel : channel_value,
                 device_token : token_value,
                 user_id : user_id_value
             }, function(e) {
                 if (e.success) {
+                	// actInd.message = 'successful Unsss...';
                     callback(true, 'Successfully unsubscribed');
                 } else {
+                        actInd.message = e.message;
                     callback(false, e.message);
                 }
             });
@@ -230,7 +238,7 @@ function LoginWindow() {
         httpclientt.requestServer({
             success : function(e) {
                 var json = JSON.parse(this.responseText);
-                if (json.Record[0] != undefined) {
+                if (json.Record != undefined) {
                     if (remember) {
                         Ti.App.Properties.setString('knp_email', emailField.value);
                         Ti.App.Properties.setString('knp_password', passwordField.value);
@@ -239,21 +247,24 @@ function LoginWindow() {
                 } else if (json.Error != undefined) {
                     if (json.Error.AuthException != undefined) {
                         callback(false, json.Error.AuthException);
+                        actInd.hide();
                     } else if (json.Error.Request) {
                         callback(false, json.Error.Request);
+                        actInd.hide();
                     } else {
                         callback(false, "Unknown error occured!");
+                        actInd.hide();
                     }
                 }
             },
             method : 'GET',
             contentType : 'text/xml',
-            url : "http://justechinfo.com/kap_server/?email=" + email_value + "&password=" + password_value + "&version=" + app_version_value + "&device_token=" + device_token_value
+            url : "http://therealmattharmon.com/knp/?email=" + email_value + "&password=" + password_value + "&version=" + app_version_value + "&device_token=" + device_token_value
         });
     }
 
     function InsertUidAndToken(email_value, uid, token, callback) {
-       // actInd.message = 'inserting...';
+        // actInd.message = 'inserting...';
         var httpclientt = require('/ui/common/Functions/function');
         httpclientt.requestServer({
             success : function(e) {
@@ -277,7 +288,7 @@ function LoginWindow() {
             },
             method : 'GET',
             contentType : 'text/xml',
-            url : "http://justechinfo.com/kap_server/insert_uid_token.php?email=" + email_value + "&uid=" + uid + "&token=" + token
+            url : "http://therealmattharmon.com/knp/insert_uid_token.php?email=" + email_value + "&uid=" + uid + "&token=" + token
         });
     }
 
@@ -343,7 +354,9 @@ function LoginWindow() {
     });
     win.add(bgimageView);
     var top_header = Titanium.UI.createImageView({
-        top : '0%',
+         height : "8.5%",
+        width : "100%",
+        bottom : '92.5%',
         image : '/assets/overlayTitleStarCurtains.png'
     });
     win.add(top_header);
@@ -519,8 +532,8 @@ function LoginWindow() {
                                         if (success) {
                                             CloudSubscribeUser(emailField.value, 'alert', token, function(success, uid) {
                                                 /*
-                                                 //insert uid and device token in database
-                                                 *///alert(uid);
+                                                //insert uid and device token in database
+                                                *///alert(uid);
                                                 //actInd.message = "Inserting uid" + uid+"::"+token+":"+emailField.value;
                                                 InsertUidAndToken(emailField.value, uid, token, function(success, message) {
                                                     if (success) {

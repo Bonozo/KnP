@@ -84,7 +84,7 @@ function Footer(userinfojson) {
 			},
 			method : 'GET',
 			contentType : 'text/xml',
-			url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + userinfojson.Record[0].UID + "",
+			url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfojson.Record[0].UID + "",
 		});
 	});
 

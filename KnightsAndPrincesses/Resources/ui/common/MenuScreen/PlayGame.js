@@ -1,5 +1,10 @@
 function PlayGame(game, quest_status, quest_id, userinfo, friend_uid, friend_quest_info) {
-    //http://justechinfo.com/kap_server/knp_set_quest_status.php?game_status=COMPLETE&quest_status=INCOMPLETE_FRIEND&assign_quest_id=90000250&quest_id=80000004&uid=10000007&friend_uid=10000011
+    //http://therealmattharmon.com/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=INCOMPLETE_FRIEND&assign_quest_id=90000250&quest_id=80000004&uid=10000007&friend_uid=10000011
+	if (game == 'sonnet_game') {
+        var SonnetGamePlay = require('ui/common/MenuScreen/SonnetQuestPlay');
+        var sonnetgameplay = new SonnetGamePlay(quest_status, quest_id, userinfo, friend_uid, friend_quest_info);
+        return sonnetgameplay;
+    } else {
     var played = false;
     var images_counter = 0;
     function hideLoader() {
@@ -36,7 +41,7 @@ function PlayGame(game, quest_status, quest_id, userinfo, friend_uid, friend_que
         if (!played) {
 
             var httpclientt = require('/ui/common/Functions/function');
-            _url = "http://justechinfo.com/kap_server/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + friend_quest_info.ASSIGN_QUEST_ID + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + friend_uid;
+            _url = "http://therealmattharmon.com/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + friend_quest_info.ASSIGN_QUEST_ID + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + friend_uid;
             httpclientt.requestServer({
                 success : function(e) {
                     items_json = JSON.parse(this.responseText);
@@ -96,6 +101,7 @@ function PlayGame(game, quest_status, quest_id, userinfo, friend_uid, friend_que
     self.add(gameImage);
 
     return self;
+    }
 }
 
 module.exports = PlayGame;

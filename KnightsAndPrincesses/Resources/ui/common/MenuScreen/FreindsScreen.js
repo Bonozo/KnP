@@ -1,5 +1,5 @@
-//http://justechinfo.com/kap_server/friendship_notifications_action.php?uid=10000005&friend_uid=10000007&action=DENIED
-//http://justechinfo.com/kap_server/friendship_notifications_action.php?uid=10000005&friend_uid=10000007&action=FRIENDS
+//http://therealmattharmon.com/knp/friendship_notifications_action.php?uid=10000005&friend_uid=10000007&action=DENIED
+//http://therealmattharmon.com/knp/friendship_notifications_action.php?uid=10000005&friend_uid=10000007&action=FRIENDS
 function openNewTable(userinfojson, activeTable, callback) {
 	var TableView = require('ui/common/MenuScreen/' + activeTable);
 	TableView(userinfojson, function(Tableview) {
@@ -100,15 +100,36 @@ function FreindsScreen(userinfo) {
 		height : "8%"
 	});
 	view.add(NewMail);
+    var gift_notification = Titanium.UI.createButton({
+        title : "Gift Notifications",
+        backgroundImage : '/assets/button_smallLong_UP.png',
+        left : "2%",
+        top : "65%",
+        font : {
+            fontSize : '11dip'
+        },
+        //width : "20%",
+        height : "8%"
+    });
+    view.add(gift_notification);
+    gift_notification.addEventListener('click', function(e) {
+        var gift_notification = require('ui/common/MenuScreen/GiftNotifications');
+        var GiftNotiFromFreind = new gift_notification(userinfo);
+        GiftNotiFromFreind.open();
+    });
+
 	var req_notification = '';
 	var new_request_imageview;
-    var get_notification_url = "http://justechinfo.com/kap_server/get_notifications.php?uid=" + userinfo.Record[0].UID;
+	var gift_imageview;
+	var gift_icon = '';
+    var get_notification_url = "http://therealmattharmon.com/knp/get_notifications.php?uid=" + userinfo.Record[0].UID;
     var httpclientt = require('/ui/common/Functions/function');
     httpclientt.requestServer({
         success : function(e) {
             items_json = JSON.parse(this.responseText);
             if (items_json.Record != undefined) {
                 req_notification = items_json.Record[0].REQUEST;
+                gift_icon = items_json.Record[0].GIFT;
                 if (req_notification == 'NEW_REQUEST') {
                     new_request_imageview = Titanium.UI.createImageView({
                         image : '/assets/message_alert.png',
@@ -121,6 +142,18 @@ function FreindsScreen(userinfo) {
                     view.add(new_request_imageview);
                     
                 }
+                if (items_json.Record[0].GIFT == 'NEW_GIFT') {
+                    gift_imageview = Titanium.UI.createImageView({
+                        image : '/assets/message_alert.png',
+                        width : '4%',
+                        height : '4%',
+                        left : '2.7%',
+                        bottom : '27%',
+                        zIndex : 600
+                    });
+                    view.add(gift_imageview);
+                    
+                }
             }
 
         },
@@ -130,12 +163,19 @@ function FreindsScreen(userinfo) {
     });
     //if(req_notification == "NEW_REQUEST"){
         Ti.App.addEventListener("request_send",function(){
-            alert('hear');
+            //alert('hear');
             new_request_imageview.hide();
             //req_notification = "NO_REQUEST";
             
         }); 
     //}
+    
+
+	Ti.App.addEventListener("gift_Notification", function() {
+		if (gift_icon == 'NEW_GIFT') {
+			gift_imageview.hide();
+		}
+	});
     
 	
 	var request_button = Ti.UI.createButton({

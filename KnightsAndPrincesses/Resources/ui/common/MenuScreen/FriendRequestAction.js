@@ -110,7 +110,7 @@ function FriendRequestAction(userinfo, friendJson) {
     });
     Infoview.add(text_label);
 
-    var freind_info = "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + friendJson.UID;
+    var freind_info = "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + friendJson.UID;
     var httpclientt = require('/ui/common/Functions/function');
     httpclientt.requestServer({
         success : function(e) {
@@ -328,7 +328,7 @@ function FriendRequestAction(userinfo, friendJson) {
     var rowViewHeight = screenWidth * 0.175;
     var selected_item = [];
     var httpclientt = require('/ui/common/Functions/function');
-    var _url = "http://justechinfo.com/kap_server/get_all_quests.php";
+    var _url = "http://therealmattharmon.com/knp/get_all_quests.php";
     httpclientt.requestServer({
         success : function(e) {
             items_json = JSON.parse(this.responseText);
@@ -493,7 +493,7 @@ function FriendRequestAction(userinfo, friendJson) {
     view.add(accept_req);
     accept_req.addEventListener('click', function(e) {
         actInd.show();
-        var _url = "http://justechinfo.com/kap_server/friendship_notifications_action.php?uid=" + friendJson.UID + "&friend_uid=" + userinfo.Record[0].UID + "&action=FRIENDS";
+        var _url = "http://therealmattharmon.com/knp/friendship_notifications_action.php?uid=" + friendJson.UID + "&friend_uid=" + userinfo.Record[0].UID + "&action=FRIENDS";
         var items_json = "";
         var items_length = 0;
         var httpclientt = require('/ui/common/Functions/function');
@@ -583,8 +583,8 @@ function FriendRequestAction(userinfo, friendJson) {
                 switch (e.index) {
                     case 0:
                         actInd.show();
-                        //var assign_quest_url = "http://justechinfo.com/kap_server/assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "" + "&assign_to_uid=" + friendJson.UID + "" + "&quest_ids=" + e.source.quest_id + "&message=N/A";
-                        var assign_quest_url = "http://justechinfo.com/kap_server/knp_assign_quests.php?assign_by_uid=" + userinfo.Record[0].UID + "&assign_to_uid=" + friendJson.UID + "&quest_ids=" + quest_ids + "&message=" + Ti.Network.encodeURIComponent(name_text.value) + "&num_of_hours=" + num_of_hours + "&status=INCOMPLETE_FRIEND&user_id=" + user_id + "";
+                        //var assign_quest_url = "http://therealmattharmon.com/knp/assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "" + "&assign_to_uid=" + friendJson.UID + "" + "&quest_ids=" + e.source.quest_id + "&message=N/A";
+                        var assign_quest_url = "http://therealmattharmon.com/knp/knp_assign_quests.php?assign_by_uid=" + userinfo.Record[0].UID + "&assign_to_uid=" + friendJson.UID + "&quest_ids=" + quest_ids + "&message=" + Ti.Network.encodeURIComponent(name_text.value) + "&num_of_hours=" + num_of_hours + "&status=INCOMPLETE_FRIEND&user_id=" + user_id + "";
                         var httpclientt = require('/ui/common/Functions/function');
                         httpclientt.requestServer({
                             success : function(e) {
@@ -652,7 +652,7 @@ function FriendRequestAction(userinfo, friendJson) {
 
         //message will only shows in android.
         actInd.show();
-        var _url = "http://justechinfo.com/kap_server/friendship_notifications_action.php?uid=" + friendJson.UID + "&friend_uid=" + userinfo.Record[0].UID + "&action=DENIED";
+        var _url = "http://therealmattharmon.com/knp/friendship_notifications_action.php?uid=" + friendJson.UID + "&friend_uid=" + userinfo.Record[0].UID + "&action=DENIED";
         //&="+friendJson.UID+"";
         var items_json = "";
         var items_length = 0;
@@ -691,7 +691,7 @@ function FriendRequestAction(userinfo, friendJson) {
         clicked_item : 'FriendRequestAction'
     });
 
-    var avatar_info = "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + userinfo.Record[0].UID;
+    var avatar_info = "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID;
     var httpclientt = require('/ui/common/Functions/function');
     httpclientt.requestServer({
         success : function(e) {

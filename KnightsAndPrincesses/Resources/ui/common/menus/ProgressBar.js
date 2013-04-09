@@ -184,7 +184,7 @@ function ProgressBar(userinfo_json) {
 			},
 			method : 'GET',
 			contentType : 'text/xml',
-			url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + userinfo_json.Record[0].UID + "",
+			url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfo_json.Record[0].UID + "",
 		});
 	});
 	return view;

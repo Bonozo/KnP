@@ -250,7 +250,7 @@ function ChooseClass() {
             },
             method : 'GET',
             contentType : 'text/xml',
-            url : "http://justechinfo.com/kap_server/sign_up.php?email=" + email_value + "&password=" +password_value + "&name=" + name_value + "&gender=" + gender_value+"&device_token="+device_token_value
+            url : "http://therealmattharmon.com/knp/sign_up.php?email=" + email_value + "&password=" +password_value + "&name=" + name_value + "&gender=" + gender_value+"&device_token="+device_token_value
         });
     }
     function InsertUidAndToken(email_value,uid,token,callback){
@@ -273,7 +273,7 @@ function ChooseClass() {
             },
             method : 'GET',
             contentType : 'text/xml',
-            url : "http://justechinfo.com/kap_server/insert_uid_token.php?email=" + email_value + "&uid=" + uid + "&token=" + token
+            url : "http://therealmattharmon.com/knp/insert_uid_token.php?email=" + email_value + "&uid=" + uid + "&token=" + token
         });
     }
 

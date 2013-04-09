@@ -22,8 +22,8 @@ function InventoryGifting(userinfojson,selected_item) {
 	var view = Ti.UI.createView({
 		backgroundImage : '/assets/inventoryBackground.png',
 		width : '100%',
-		height : '80%',
-		top : '10%'
+		height : '100%',
+		//top : '10%'
 	});
 	window.add(view);
 	var headerView = Ti.UI.createView({
@@ -35,7 +35,7 @@ function InventoryGifting(userinfojson,selected_item) {
 	
 	var headerLabel = Ti.UI.createLabel({
 		color : '#000000',
-		text : "SELECT FREIND TO GIFT",
+		text : "SELECT FRIEND TO GIFT",
 		color : "#48d48d",
 		zIndex : 500
 	});

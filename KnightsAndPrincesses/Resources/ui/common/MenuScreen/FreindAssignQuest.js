@@ -48,7 +48,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	header_view.add(name_label);
 
 	var menu_label = Titanium.UI.createLabel({
-		text : 'INFO',
+		text : 'ASSIGN QUEST',
 		right : '15.6%',
 		textAlign : 'right',
 		color : '#5afd9b',
@@ -108,8 +108,8 @@ function FreindAssignQuest(userinfo, friend_uid) {
 
 	});
 	Infoview.add(text_label);
-
-	var freind_info = "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + friend_uid;
+	var bg_image;
+	var freind_info = "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + friend_uid;
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
 		success : function(e) {
@@ -122,7 +122,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 					freinds_label.text = items_json.Record[0].NUM_OF_FRIENDS;
 					gold_label.text = items_json.Record[0].NUM_OF_GOLDS;
 					user_id = items_json.Record[0].USER_ID;
-					actInd.hide();
+					//actInd.hide();
 				}
 			}
 		},
@@ -144,11 +144,9 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	Infoview.add(freinds_label);
 
 	if (gender == 'f') {
-		bg_image = '/assets/female_icon.png'
-		avatar_image = "female_icon";
+		bg_image = '/assets/female_icon.png';
 	} else {
-		bg_image = '/assets/male_icon.png'
-		avatar_image = "male_icon";
+		bg_image = '/assets/male_icon.png';
 	}
 
 	var freind_imageview = Titanium.UI.createImageView({
@@ -181,7 +179,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	});
 	var gold_imageview = Titanium.UI.createImageView({
 		image : '/assets/miGoldWide_up.png',
-		right : '25%',
+		right : '30%',
 		width : '12%',
 		height : '40%'
 	});
@@ -326,7 +324,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	var rowViewHeight = screenWidth * 0.150;
 	var selected_item = [];
 	var httpclientt = require('/ui/common/Functions/function');
-	var _url = "http://justechinfo.com/kap_server/get_all_quests.php";
+	var _url = "http://therealmattharmon.com/knp/get_all_quests.php";
 	httpclientt.requestServer({
 		success : function(e) {
 			items_json = JSON.parse(this.responseText);
@@ -521,8 +519,8 @@ function FreindAssignQuest(userinfo, friend_uid) {
 				switch (e.index) {
 					case 0:
 						actInd.show();
-						//var assign_quest_url = "http://justechinfo.com/kap_server/assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "" + "&assign_to_uid=" + friendJson.UID + "" + "&quest_ids=" + e.source.quest_id + "&message=N/A";
-						var assign_quest_url = "http://justechinfo.com/kap_server/knp_assign_quests.php?assign_by_uid=" + userinfo.Record[0].UID + 
+						//var assign_quest_url = "http://therealmattharmon.com/knp/assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "" + "&assign_to_uid=" + friendJson.UID + "" + "&quest_ids=" + e.source.quest_id + "&message=N/A";
+						var assign_quest_url = "http://therealmattharmon.com/knp/knp_assign_quests.php?assign_by_uid=" + userinfo.Record[0].UID + 
 						"&assign_to_uid=" + friend_uid + "&quest_ids=" + quest_ids + 
 						"&message="+ Ti.Network.encodeURIComponent(name_text.value)	+"&num_of_hours="+num_of_hours+"&status=INCOMPLETE&user_id="+user_id+"";
 						var httpclientt = require('/ui/common/Functions/function');
@@ -572,7 +570,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	});
 
 
-	var avatar_info = "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + userinfo.Record[0].UID;
+	var avatar_info = "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID;
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
 		success : function(e) {

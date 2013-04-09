@@ -109,8 +109,8 @@ function QuestsHome(userinfo) {
 		left : '52%'
 	});
 	sonnetIcon.addEventListener('click', function() {
-		var SinglePlayGame = require('/ui/common/MenuScreen/SinglePlayGame');
-		var singleplaygame = new SinglePlayGame('sonnet_game', 'INCOMPLETE', 80000002, userinfo);
+		var SinglePlayGame = require('/ui/common/MenuScreen/SonnetGamePlay');
+		var singleplaygame = new SinglePlayGame('INCOMPLETE', 80000002, userinfo);
 		singleplaygame.open();
 	});
 	view.add(sonnetIcon);
@@ -125,7 +125,6 @@ function QuestsHome(userinfo) {
 	});
 	archeryIcon.addEventListener('click', function() {
 		var SinglePlayGame = require('/ui/common/MenuScreen/SinglePlayGame');
-		//game,quest_status, quest_id, userinfo,friend_uid,friend_quest_info
 		var singleplaygame = new SinglePlayGame('archery_game', 'INCOMPLETE', 80000001, userinfo);
 		//actInd.show();
 		singleplaygame.open();

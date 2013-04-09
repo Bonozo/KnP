@@ -24,9 +24,9 @@ function FreindInfo(userinfo, friendinfo) {
 	
 	var top_imageview = Titanium.UI.createImageView({
 		image : '/assets/overlayPlayerInfoCroped.png',
-		//height:'12.4%',
+		height:'6.4%',
 		width : '100%',
-		top : '0%'
+		bottom : '94.6%'
 	});
 	view.add(top_imageview);
 
@@ -62,7 +62,7 @@ function FreindInfo(userinfo, friendinfo) {
 		image : '/assets/iconReturn.png',
 		//height:'12.4%',
 		width : '11.6%',
-		top : '1%',
+		bottom : '88%',
 		right : '3%'
 	});
 	view.add(return_imageview);
@@ -258,7 +258,7 @@ function FreindInfo(userinfo, friendinfo) {
 						right : '0%',
 						image : '/assets/hdpi_female_character.png',
 						height : '75%',
-						width : '51%',
+						width : '47%',
 						zIndex : 500
 					});
 					view.add(female_character_imageview);
@@ -317,13 +317,13 @@ function FreindInfo(userinfo, friendinfo) {
 			Ti.API.debug("STATUS: " + this.status);
 			Ti.API.debug("TEXT: " + this.responseText);
 			Ti.API.debug("ERROR: " + e.error);
-			Ti.API.debug("URL: " + "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + friendinfo.UID);
+			Ti.API.debug("URL: " + "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + friendinfo.UID);
 			alert('There was an error retrieving the remote data. Try again.');
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + friendinfo.UID
-		//url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + 10000007 + "",
+		url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + friendinfo.UID
+		//url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + 10000007 + "",
 
 	});
 
@@ -380,7 +380,7 @@ function FreindInfo(userinfo, friendinfo) {
 		left : '10%',
 		width : '21.5%',
 		height : '5%',
-		title : 'UnFreind',
+		title : 'Unfriend',
 		font : {
 			fontSize : '10dip'
 		}
@@ -404,7 +404,7 @@ function FreindInfo(userinfo, friendinfo) {
             switch (e.index) {
                 case 0:
                     actInd.show();
-                    var unfriend_url = "http://justechinfo.com/kap_server/unfriend_friend.php?uid=" + userinfo.Record[0].UID+'&friend_uid='+friendinfo.UID;
+                    var unfriend_url = "http://therealmattharmon.com/knp/unfriend_friend.php?uid=" + userinfo.Record[0].UID+'&friend_uid='+friendinfo.UID;
                     var httpclientt = require('/ui/common/Functions/function');
                     httpclientt.requestServer({
                         success : function(e) {
@@ -440,7 +440,7 @@ function FreindInfo(userinfo, friendinfo) {
 
 	var isFriends = function(callback){
 			var httpclientt = require('/ui/common/Functions/function');
-			_url = "http://justechinfo.com/kap_server/is_friend.php?uid1="+userinfo.Record[0].UID+"&uid2="+friend_uid; 
+			_url = "http://therealmattharmon.com/knp/is_friend.php?uid1="+userinfo.Record[0].UID+"&uid2="+friend_uid; 
 			httpclientt.requestServer({
 				success : function(e) {
 					items_json = JSON.parse(this.responseText);

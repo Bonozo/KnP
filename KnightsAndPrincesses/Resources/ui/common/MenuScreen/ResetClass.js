@@ -182,7 +182,7 @@ function ResetClass(userinfo) {
 				},
 				method : 'GET',
 				contentType : 'text/xml',
-				url : "http://justechinfo.com/kap_server/resetclass.php?uid=" + userinfo.Record[0].UID + "&name=" + Ti.Network.encodeURIComponent(name_text.value) + "&gender=" + gender
+				url : "http://therealmattharmon.com/knp/resetclass.php?uid=" + userinfo.Record[0].UID + "&name=" + Ti.Network.encodeURIComponent(name_text.value) + "&gender=" + gender
 				//param : '<Device xmlns="http://schemas.datacontract.org/2004/07/CalendarConnect.Model">' + '<culture>' + Titanium.Platform.locale + '</culture>' + '<deviceToken>Have to Do</deviceToken>' + '<deviceType>' + deviceType + '</deviceType>' + '<modelDescription>' + Titanium.Platform.model + '</modelDescription>' + '<osVersion>' + Titanium.Platform.version + '</osVersion></Device>'
 			});
 

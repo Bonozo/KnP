@@ -170,7 +170,7 @@ function FreindQuestTab(userinfo, callback) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://justechinfo.com/kap_server/knp_get_friend_quests.php?uid=" + userinfo.Record[0].UID,
+		url : "http://therealmattharmon.com/knp/knp_get_friend_quests.php?uid=" + userinfo.Record[0].UID,
 
 	});
 

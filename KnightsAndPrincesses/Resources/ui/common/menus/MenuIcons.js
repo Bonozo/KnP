@@ -31,6 +31,16 @@ function MenuIcons(active_screen) {
 		zIndex : 50
 	});
 	view.add(friend_alert_bg);
+	var friend_gift_alert_bg = Titanium.UI.createImageView({
+		left : '29.6%',
+		top : '0%',
+		image : '/assets/iconHighlightAlert.png',
+		height : '100%',
+		width : '13.8%',
+		visible : false,
+		zIndex : 50
+	});
+	view.add(friend_gift_alert_bg);
 
 	var quest_alert_bg = Titanium.UI.createImageView({
 		left : '43.4%',
@@ -163,7 +173,7 @@ function MenuIcons(active_screen) {
 		});
         clearQuestIntervals();
 	});
-	var new_request_beep = false, new_quest_beep = false;
+	var new_request_beep = false, new_quest_beep = false, new_gift_beep = false;
 	Ti.App.addEventListener('NEW_REQUEST', function(data) {
 		if (data.status == "NEW") {
 			friend_alert_bg.visible = true;
@@ -179,6 +189,21 @@ function MenuIcons(active_screen) {
 			friend_alert_bg.visible = false;
 		}
 	});
+    Ti.App.addEventListener('NEW_GIFT', function(data) {
+        if (data.status == "NEW") {
+            friend_gift_alert_bg.visible = true;
+            if (!new_gift_beep) {
+                var sound = Titanium.Media.createSound({
+                    url : '/sounds/message_bell.mp3'
+                });
+                sound.play();
+                new_gift_beep = !new_gift_beep;
+            }
+        } else {
+            new_gift_beep = !new_gift_beep;
+            friend_gift_alert_bg.visible = false;
+        }
+    });
 	Ti.App.addEventListener('NEW_QUEST', function(data) {
 		// alert(data.status);
 		if (data.status == "NEW") {
@@ -198,7 +223,7 @@ function MenuIcons(active_screen) {
 	Ti.App.addEventListener('service_notification', function(data) {
 
 		var httpclientt = require('/ui/common/Functions/function');
-		_url = "http://justechinfo.com/kap_server/get_notifications.php?uid=" + data.uid;
+		_url = "http://therealmattharmon.com/knp/get_notifications.php?uid=" + data.uid;
 		httpclientt.requestServer({
 			success : function(e) {
 				items_json = JSON.parse(this.responseText);
@@ -215,6 +240,17 @@ function MenuIcons(active_screen) {
 							status : ""
 						});
 					}
+                    if (items_json.Record[0].GIFT == 'NEW_GIFT') {
+                         //alert('TRUE');
+                        Ti.App.fireEvent('NEW_GIFT', {
+                            status : "NEW"
+                        });
+                    } else {
+                         //alert('FALSE');
+                        Ti.App.fireEvent('NEW_GIFT', {
+                            status : ""
+                        });
+                    }
 					if (items_json.Record[0].QUEST_ASSIGN == 'NEW_QUEST') {
 						Ti.App.fireEvent('NEW_QUEST', {
 							status : "NEW"

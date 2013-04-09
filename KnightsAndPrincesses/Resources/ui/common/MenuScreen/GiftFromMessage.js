@@ -80,7 +80,7 @@ function GiftFromMessage(userinfo,freind_uid) {
 				},
 				method : 'GET',
 				contentType : 'text/xml',
-				url : "http://justechinfo.com/kap_server/send_message.php?sender_id=" + Loggedin_id + "&receiver_id=" + friend_uid + "&message=" + text_feild + "",
+				url : "http://therealmattharmon.com/knp/send_message.php?sender_id=" + Loggedin_id + "&receiver_id=" + friend_uid + "&message=" + text_feild + "",
 	
 			});
 		}
@@ -96,7 +96,7 @@ function GiftFromMessage(userinfo,freind_uid) {
 	var selected_item = {};
 	function CreateInventoryGrid(TableviewCallback) {
 		var httpclientt = require('/ui/common/Functions/function');
-		_url = "http://justechinfo.com/kap_server/get_all_inventories.php?uid=" + userinfo.Record[0].UID + "", httpclientt.requestServer({
+		_url = "http://therealmattharmon.com/knp/get_all_inventories.php?uid=" + userinfo.Record[0].UID + "", httpclientt.requestServer({
 			success : function(e) {
 				items_json = JSON.parse(this.responseText);
 				if (items_json.Record != undefined) {
@@ -200,7 +200,7 @@ function GiftFromMessage(userinfo,freind_uid) {
 								//alert(userinfo.Record[0].UID+":::"+selected_item.id);
 
 									actInd.show();
-									var send_gift_url = "http://justechinfo.com/kap_server/send_gift.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + freind_uid + "&gift_id=" + selected_item.id + "&gift_type=" + selected_item.type;
+									var send_gift_url = "http://therealmattharmon.com/knp/send_gift.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + freind_uid + "&gift_id=" + selected_item.id + "&gift_type=" + selected_item.type;
 									var httpclientt = require('/ui/common/Functions/function');
 									
 									httpclientt.requestServer({

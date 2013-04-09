@@ -1,0 +1,3 @@
+dependencies: \
+  /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights\ And\ Princesses/build/iphone/Classes/ASI/Reachability.m \
+  /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights\ And\ Princesses/build/iphone/Classes/ASI/Reachability.h
