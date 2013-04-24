@@ -1,0 +1,288 @@
+[33mcommit b63219598b7aad6d2b4245c77cc33909977b4b8e[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Thu Apr 25 03:34:56 2013 +0500
+
+    Inventory Images
+
+[33mcommit 1c81a59c9f3e8699900e0871d1a7d104caba6ad6[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Fri Mar 15 10:22:36 2013 +0500
+
+    0.3
+
+[33mcommit 5160a4472bbb1f3d727d6af0a64d4a4e02b77ae4[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Fri Mar 15 10:19:52 2013 +0500
+
+    version 0.3
+
+[33mcommit 8ef2ab171c84e5a84b1518fcb2a46e8b09ab48b9[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Thu Jan 31 21:34:23 2013 +0500
+
+    game module
+
+[33mcommit 5aa0ec1c62ba2829f1b82db692be1dd24bd8ee77[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Thu Jan 31 21:33:20 2013 +0500
+
+    0.2
+
+[33mcommit 0f2bf417fa71db4b6f52fd6f5bf02e9d48f0be6d[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Thu Jan 31 21:31:47 2013 +0500
+
+    0.2
+
+[33mcommit f10d765bcfef81b6195f4592f3acb1cb4dc0c300[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Sun Jan 13 02:32:27 2013 +0500
+
+    Notifations
+
+[33mcommit 2f6a43aa85509719792da3ea19c531a54dfa93dd[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Mon Jan 7 01:25:48 2013 +0500
+
+    07-01-13 Update
+    
+    Sign in, Sign up, friending, messages
+
+[33mcommit 651dbadc007c0b1dbfeeb026f195776bd576532f[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Tue Jan 1 02:19:13 2013 +0500
+
+    New UI
+
+[33mcommit 666ec15f62cb8bb8f6bf56848864da7793afd963[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Tue Dec 18 01:38:17 2012 +0500
+
+    KnP
+    
+    CommonJS
+
+[33mcommit 430ffa87eac1956f3eb706ef6159d249ed41a339[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Tue Dec 18 01:37:35 2012 +0500
+
+    KnP
+    
+    CommonJS
+
+[33mcommit d92f2cd3d28fd9eac10dd07e2c96f1185c112c5c[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Tue Dec 11 20:04:17 2012 +0500
+
+    New UI
+
+[33mcommit 349273f2243c181998fb06e17c4a809db02c15b3[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Sun Dec 9 18:26:15 2012 +0500
+
+    Get Avatar Info
+
+[33mcommit 77a3fed1886ff9829408963c3cda523902f0e1a2[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Sun Dec 9 18:25:20 2012 +0500
+
+    New UI of Status Main screen
+
+[33mcommit b5eabbac99efdb4598194dff80352f172a6dae92[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Mon Dec 3 18:19:17 2012 +0500
+
+    XP, Energy and Levels added
+
+[33mcommit b72c5a2334ab6461a7f9338129fb2fdf8d2956d2[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Sun Dec 2 02:15:17 2012 +0500
+
+    Inventoy/purchasing/gifting
+
+[33mcommit 566c97b119f3c5e6660ac542d3e753019f4e530d[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Tue Nov 20 20:42:17 2012 +0500
+
+    Crafting, transactions, inventories web-services
+
+[33mcommit ea7eed3e9feb689f810663fd71d8aa1754f2870b[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Sat Nov 17 02:40:58 2012 +0500
+
+    Ti Sample MVC APP
+
+[33mcommit 98611a2d1401cf6f5f8f43dca1c8edd9935f6f6e[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Sat Nov 17 02:22:50 2012 +0500
+
+    Ti Sample MVC APP
+
+[33mcommit d924c477ea86f664a40feda13563308d252cf24e[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Thu Nov 15 20:45:30 2012 +0500
+
+    Quest Screen feature added!
+
+[33mcommit 7b36557baac4a3cd6113b246d52ff3a39a2c0445[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Thu Nov 15 02:17:18 2012 +0500
+
+    Quests Module web-services added
+
+[33mcommit 927220896c36c0eeebe5434c7f09b9aeb5f76987[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Tue Nov 13 05:11:30 2012 +0500
+
+    Notification Feature Added
+
+[33mcommit 80e57e5a1ca3aa9b88415dca67aa5f4f77dee1bd[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Sun Nov 11 07:24:39 2012 +0500
+
+    Remove Bug from Inbox screen
+
+[33mcommit 217d1f787b9403233d1c6c6919d77b8a74a2a599[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Sun Nov 11 07:03:54 2012 +0500
+
+    Inbox Screen Added
+
+[33mcommit 0ca34ffa935045d514cb25d968e91fdfe68a21dd[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Sun Nov 11 04:26:21 2012 +0500
+
+    Show All Inbox Messages
+
+[33mcommit e337f01001cc321c70f2570d63e8bd8b07b47ea2[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Sat Nov 10 08:31:56 2012 +0500
+
+    Bug removed
+    
+    - Restrict sign up to entering email address and password
+    - Enhance chat efficiency from 5 second to 1 second
+    - After sign up for an account, user can now send friend's request
+
+[33mcommit 03dced6c0ce813dd43f66a68d973722ac71d9cc6[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Sat Nov 10 03:24:59 2012 +0500
+
+    Real-time chatting feature
+
+[33mcommit 8788d0cc5147e95d267b720edb4ddbd4d47be034[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Fri Nov 9 04:15:05 2012 +0500
+
+    Message sending /screen position
+    
+    1. Upgrade player screen from where we can click on message button to
+    message specific person
+    2. Place message screen to it's correct position
+
+[33mcommit b62305ebed9078598fb07b2b4563d3fa476fb8ee[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Thu Nov 8 18:58:17 2012 +0500
+
+    Sending messages through APP using web-services
+
+[33mcommit 84ba5540672a874605404032a2bcbcf00fd793f5[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Thu Nov 8 18:57:52 2012 +0500
+
+    fastdev.lock
+
+[33mcommit 5862f32bffdd1db7b5dc4956aa936d7d807bb7e4[m
+Author: Mohsin <mohsin.mr@gmail.com>
+Date:   Thu Nov 8 18:56:09 2012 +0500
+
+    Sending messages through web service
+
+[33mcommit 9315c7bf246a72ba7030823377b287a111ac9ba1[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Wed Nov 7 06:19:08 2012 +0500
+
+    Get Thread Messages
+
+[33mcommit 8efe71a6f5606fd563ce28e06fa02de73fd05b29[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Tue Nov 6 20:43:31 2012 +0500
+
+    Messages Mock-up
+    
+    some formatting issues, but main feature have added.
+
+[33mcommit 72db6ff34b8836f47f31ce0ab3dd50334b0e831d[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Mon Nov 5 19:23:07 2012 +0500
+
+    Save messages into database also.
+
+[33mcommit 57504dcd1aabb5254243c212f4690e51d54a51dd[m
+Merge: e46e408 da62b11
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Sun Nov 4 13:33:53 2012 +0500
+
+    Merge branch 'test-branch'
+
+[33mcommit da62b11563fd57517d5664476cb4aebb3a76a25c[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Sun Nov 4 13:32:40 2012 +0500
+
+    Test Update
+
+[33mcommit e46e408f723acb0f630fbc24c7d34d7fc25eee71[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Sun Nov 4 13:29:07 2012 +0500
+
+    Update Index File
+
+[33mcommit aef460d81f06dd6ec28d5f643fbf612766208b2c[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Sun Nov 4 05:43:30 2012 +0500
+
+    Change index file name
+
+[33mcommit e28393da417a365ccbf43b276cf7aba875726de3[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Sun Nov 4 03:16:58 2012 +0500
+
+    Titanium Mobile APP
+    
+    Version 0.0.22
+
+[33mcommit c39bd84f3014b3ccce0a310ecaad498c3e09052d[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Sun Nov 4 02:23:22 2012 +0500
+
+    update
+
+[33mcommit ca39a1fd624fc232fd5024efd83d0b12addacfb9[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Sun Nov 4 02:06:02 2012 +0500
+
+    Socket Server App
+
+[33mcommit 051c5d254c30a411657c5109e07101673c25054e[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Sun Nov 4 00:25:58 2012 +0500
+
+    Deleting testing files
+
+[33mcommit 705b8d172b8bc6b9b1b0add936c9b25a32f5b6cf[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Sun Nov 4 00:05:18 2012 +0500
+
+    Commit Checking
+
+[33mcommit 3905d691a96ecb2fda0d16456bb37fb0e8a6fd3d[m
+Author: Mohsin Rasheed <mohsin.mr@gmail.com>
+Date:   Sun Nov 4 00:02:15 2012 +0500
+
+    Checking uploading repostory
+
+[33mcommit f43c2ece5708c497e27d549dadd7e2cc28e16c16[m
+Author: Bonozo <bonozogames@gmail.com>
+Date:   Sat Nov 3 10:46:02 2012 -0700
+
+    Initial commit
