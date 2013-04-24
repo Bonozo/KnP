@@ -297,7 +297,7 @@ function OptionsScreen(userinfo) {
     });
     view.add(selected_menu_label);
     var version_label = Titanium.UI.createLabel({
-        text : 'v0.3.39',
+        text : 'v0.3.44',
         bottom : '16%',
         left : '84.8%',
         textAlign : 'center',
@@ -309,128 +309,203 @@ function OptionsScreen(userinfo) {
     });
     view.add(version_label);
     var gender = userinfo.Record[0].GENDER;
+	        var dress_imageview1 = Ti.UI.createImageView({
+	            height : '0.1%',
+	            width : '0.%',
+	            bottom : '0%',
+	            left : '0%',
+	            image : '/assets/1.png',
+	            //bottom : '0%'
+	            //zIndex : 500
+	        });
+	        view.add(dress_imageview1);
     var user_appearence_view = Ti.UI.createView({
-        width : '35%',
-        height : '76%',
+        width : '50%',
+        height : '85%',
         right : '60%',
-        left : '0',
+        //left : '0',
         top : '5%',
         zIndex : 500
 
     });
-    if (userinfo.Record[0].USER_APPEARANCE != undefined && userinfo.Record[0].USER_APPEARANCE != '' && userinfo.Record[0].GENDER == 'f') {
-        var dress_imageview = Titanium.UI.createImageView({
-            height : '100%',
-            width : '100%',
-            top : '0%',
-            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[3].IMAGE + '.png',
-            //bottom : '0%'
-            //zIndex : 500
-        });
-        user_appearence_view.add(dress_imageview);
-        var face_imageview = Titanium.UI.createImageView({
-            height : '25%',
-            width : '100%',
-            top : '0%',
-            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[1].IMAGE + '.png',
-            //bottom : '0%'
-            //zIndex : 600
-        });
-        user_appearence_view.add(face_imageview);
-        var hair_imageview = Titanium.UI.createImageView({
-            height : '25%',
-            width : '100%',
-            top : '0%',
-            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '.png',
-            //bottom : '0%'
-            //zIndex : 700
-        });
-        user_appearence_view.add(hair_imageview);
-        var jwel_imageview = Titanium.UI.createImageView({
-            height : '25%',
-            width : '100%',
-            top : '0%',
-            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[2].IMAGE + '.png',
-            //bottom : '0%'
-            //zIndex : 500
-        });
-        user_appearence_view.add(jwel_imageview);
-    } else     if (userinfo.Record[0].USER_APPEARANCE != undefined && userinfo.Record[0].USER_APPEARANCE != '' && userinfo.Record[0].GENDER == 'm') {
-        var dress_imageview = Titanium.UI.createImageView({
-            height : '100%',
-            width : '100%',
-            left : '0%',
-            top : '0%',
-            image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[2].IMAGE + '.png',
-            //bottom : '0%'
-            zIndex : 100
-        });
-        user_appearence_view.add(dress_imageview);
-        var helmet_imageview = Titanium.UI.createImageView({
-            height : '100%',
-            width : '100%',
-            left : '0%',
-            top : '0%',
-            
-            image : '/assets/knight/helmet1.png',
-            //bottom : '0%'
-            zIndex : 100
-        });
-        user_appearence_view.add(helmet_imageview);
-        var shield_imageview = Titanium.UI.createImageView({
-            height : '100%',
-            width : '100%',
-            left : '0%',
-            top : '0%',
-            
-            image : '/assets/knight/shield.png',
-            //bottom : '0%'
-        });
-        user_appearence_view.add(shield_imageview);
-        var face_imageview = Titanium.UI.createImageView({
-            height : '18%',
-            width : '100%',
-            left : '0%',
-            top : '7.5%',
-            image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[1].IMAGE + '.png',
-            //bottom : '0%'
-            //zIndex : 600
-        });
-        user_appearence_view.add(face_imageview);
-        var hair_imageview = Titanium.UI.createImageView({
-            height : '17.8',
-            width : '100%',
-            left : '0%',
-            top : '6.5%',
-            image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '.png',
-            //bottom : '0%'
-            //zIndex : 700
-        });
-        user_appearence_view.add(hair_imageview);
-        var weapon_imageview = Titanium.UI.createImageView({
-            height : '100%',
-            width : '100%',
-            top : '0%',
-            image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[3].IMAGE + '.png',
-            //bottom : '0%'
-            //zIndex : 700
-        });
-        user_appearence_view.add(weapon_imageview);
-    } else {
-
-        var character_imageview = Titanium.UI.createImageView({
-            height : '100%',
-            width : '100%',
-            top : "5%",
-            left : '0%',
-            image : (gender == 'm') ? '/assets/K_fullbody_bad.png' : '/assets/hdpi_female_character_Image2.png',
-            //zIndex : 500
-        });
-        user_appearence_view.add(character_imageview);
-    }
     view.add(user_appearence_view);
-    var actInd = Titanium.UI.createActivityIndicator();
+    var counter = 1;
+	view.addEventListener('load', function(e) {
+		//alert('1');
+		if(counter ==1)
+			appearanceView();
+		counter++;	
+	});
+	//appearanceView();
+	function appearanceView() {
+	    if (userinfo.Record[0].USER_APPEARANCE != undefined && userinfo.Record[0].USER_APPEARANCE != '' && userinfo.Record[0].GENDER == 'f') {
+	        var back_hair_imageview = Ti.UI.createImageView({
+	            height : '100%',
+	            width : '100%',
+	            top : '0%',
+	            image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '_back.png',
+				visible : false, 
+	            //bottom : '0%'
+	            //zIndex : 700
+	        });
+	        user_appearence_view.add(back_hair_imageview);
+	        var dress_imageview = Ti.UI.createImageView({
+	            height : '100%',
+	            width : '100%',
+	            top : '0%',
+	            image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[3].IMAGE + '.png',
+				visible : false, 
+	            //bottom : '0%'
+	            zIndex : 500
+	        });
+	        user_appearence_view.add(dress_imageview);
+	        var face_imageview = Ti.UI.createImageView({
+	            height : '100%',
+	            width : '100%',
+	            top : '0%',
+	            image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[1].IMAGE + '.png',
+				visible : false, 
+	            //bottom : '0%'
+	            //zIndex : 600
+	        });
+	        user_appearence_view.add(face_imageview);
+	        var hair_imageview = Ti.UI.createImageView({
+	            height : '100%',
+	            width : '100%',
+	            top : '0%',
+	            image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '_front.png',
+				visible : false, 
+	            //bottom : '0%'
+	            //zIndex : 700
+	        });
+	        user_appearence_view.add(hair_imageview);
+	        var jwel_imageview = Ti.UI.createImageView({
+	            height : '100%',
+	            width : '100%',
+	            top : '0%',
+				visible : false, 
+	            image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[2].IMAGE + '.png',
+	            //bottom : '0%'
+	            //zIndex : 500
+	        });
+	        user_appearence_view.add(jwel_imageview);
+			var label  = Titanium.UI.createLabel({
+				text : 'loading...'
+			});
+			user_appearence_view.add(label);
+			if(counter >= 1){
+				back_hair_imageview.visible = true;
+				dress_imageview.visible = true;
+				face_imageview.visible = true;
+				hair_imageview.visible = true;
+				jwel_imageview.visible = true;
+				label.hide();
+			}
+	    } else     if (userinfo.Record[0].USER_APPEARANCE != undefined && userinfo.Record[0].USER_APPEARANCE != '' && userinfo.Record[0].GENDER == 'm') {
+	        var dress_imageview = Ti.UI.createImageView({
+	            height : '99%',
+	            width : '100%',
+	            left : '0%',
+	            top : '1%',
+	            image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[2].IMAGE + '.png',
+				visible : false, 
+	            zIndex : 100
+	        });
+	        user_appearence_view.add(dress_imageview);
+	        var helmet_imageview = Ti.UI.createImageView({
+	            height : '99%',
+	            width : '100%',
+	            left : '0%',
+	            top : '1%',
+	            
+	            image : '/assets/knight/helmet1.png',
+				visible : false, 
+	            zIndex : 100
+	        });
+	        user_appearence_view.add(helmet_imageview);
+	        var shield_imageview = Ti.UI.createImageView({
+	            height : '100%',
+	            width : '100%',
+	            left : '0%',
+	            top : '0%',
+				visible : false, 
+	            image : '/assets/knight/shield.png',
+	            //bottom : '0%'
+	        });
+	        user_appearence_view.add(shield_imageview);
+	        var back_hair_imageview = Ti.UI.createImageView({
+	            height : '99%',
+	            width : '100%',
+	            left : '0%',
+	            top : '1%',
+	            image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '_back.png',
+				visible : false, 
+	            //zIndex : 700
+	        });
+	        user_appearence_view.add(back_hair_imageview);
+	        var face_imageview = Ti.UI.createImageView({
+	            height : '99%',
+	            width : '100%',
+	            left : '0%',
+	            top : '1%',
+				visible : false, 
+	            image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[1].IMAGE + '.png',
+	            //bottom : '0%'
+	            //zIndex : 600
+	        });
+	        user_appearence_view.add(face_imageview);
+	        var hair_imageview = Ti.UI.createImageView({
+	            height : '99%',
+	            width : '100%',
+	            left : '0%',
+	            top : '1%',
+	            image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '_front.png',
+				visible : false, 
+	            //zIndex : 700
+	        });
+	        user_appearence_view.add(hair_imageview);
+	        var weapon_imageview = Ti.UI.createImageView({
+	            height : '100%',
+	            width : '100%',
+	            top : '0%',
+	            left : '0%',
+	            image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[3].IMAGE + '.png',
+				visible : false, 
+	            //zIndex : 700
+	        });
+	        user_appearence_view.add(weapon_imageview);
+			var label  = Titanium.UI.createLabel({
+				text : 'loading...'
+			});
+			user_appearence_view.add(label);
+			if(counter >= 1){
+				dress_imageview.visible = true;
+				helmet_imageview.visible = true;
+				shield_imageview.visible = true;
+				face_imageview.visible = true;
+				hair_imageview.visible = true;
+				weapon_imageview.visible = true;
+				back_hair_imageview.visible = true;
+				label.hide();
+			}
+	    } else {
+	
+	        var character_imageview = Ti.UI.createImageView({
+	            height : '100%',
+	            width : '100%',
+	            top : "5%",
+	            left : '0%',
+	            image : (gender == 'm') ? '/assets/knight/knight_default.png' : '/assets/hdpi_female_character_Image2.png',
+	            //zIndex : 500
+	        });
+	        user_appearence_view.add(character_imageview);
+	    }
+	
+	}    
+
+    var actInd = Ti.UI.createActivityIndicator();
     actInd.message = 'Loading...';
+  //  view.add(actInd);
     //message will only shows in android.
 
     /*var topbar=require('ui/common/TopBar/ProgressBar');
@@ -446,10 +521,10 @@ function OptionsScreen(userinfo) {
     var sound_button = Titanium.UI.createButton({
         top : "7%",
         right : "5%",
-        height : "9%",
+        height : "10%",
         title : "SOUND ON",
         width : "60%",
-        borderColor : "#a42b76",
+/*        borderColor : "#a42b76",
         borderRadius : 6,
         borderWidth : 3,
         backgroundGradient : {
@@ -465,6 +540,8 @@ function OptionsScreen(userinfo) {
             },
             backFillStart : false
         }
+*/
+		backgroundImage : '/assets/button_smallLong_UP.png',
     });
     view.add(sound_button);
     var Music_button = Titanium.UI.createButton({
@@ -473,7 +550,7 @@ function OptionsScreen(userinfo) {
         height : "9%",
         title : "MUSIC ON",
         width : "60%",
-        borderColor : "#a42b76",
+/*        borderColor : "#a42b76",
         borderRadius : 6,
         borderWidth : 3,
         backgroundGradient : {
@@ -489,6 +566,8 @@ function OptionsScreen(userinfo) {
             },
             backFillStart : false
         }
+*/
+		backgroundImage : '/assets/button_smallLong_UP.png',
     });
     view.add(Music_button);
     Notification_button = Titanium.UI.createButton({
@@ -497,7 +576,7 @@ function OptionsScreen(userinfo) {
         height : "9%",
         title : "NOTIFICATION ",
         width : "60%",
-        borderColor : "#a42b76",
+ /*        borderColor : "#a42b76",
         borderRadius : 6,
         borderWidth : 3,
         backgroundGradient : {
@@ -513,6 +592,8 @@ function OptionsScreen(userinfo) {
             },
             backFillStart : false
         }
+*/
+		backgroundImage : '/assets/button_smallLong_UP.png',
     });
     view.add(Notification_button);
     Notification_button.addEventListener('click', function(e) {
@@ -581,31 +662,7 @@ function OptionsScreen(userinfo) {
         height : "9%",
         title : "REPORT ABUSE",
         width : "60%",
-        borderColor : "#a42b76",
-        borderRadius : 6,
-        borderWidth : 3,
-        backgroundGradient : {
-            type : 'linear',
-            colors : [' #e49cc9', '#a52b76'],
-            startPoint : {
-                x : '50%',
-                y : '100%'
-            },
-            endPoint : {
-                x : '50%',
-                y : '0%'
-            },
-            backFillStart : false
-        }//backgroundImage:"/assets/button_large_UP.png"
-    });
-    view.add(Report_button);
-    var Reset_button = Titanium.UI.createButton({
-        top : "55%",
-        right : "5%",
-        height : "9%",
-        title : "RESET GAME",
-        width : "60%",
-        borderColor : "#a42b76",
+/*        borderColor : "#a42b76",
         borderRadius : 6,
         borderWidth : 3,
         backgroundGradient : {
@@ -621,6 +678,34 @@ function OptionsScreen(userinfo) {
             },
             backFillStart : false
         }
+*/
+		backgroundImage : '/assets/button_smallLong_UP.png',
+    });
+    view.add(Report_button);
+    var Reset_button = Titanium.UI.createButton({
+        top : "55%",
+        right : "5%",
+        height : "9%",
+        title : "RESET GAME",
+        width : "60%",
+/*        borderColor : "#a42b76",
+        borderRadius : 6,
+        borderWidth : 3,
+        backgroundGradient : {
+            type : 'linear',
+            colors : [' #e49cc9', '#a52b76'],
+            startPoint : {
+                x : '50%',
+                y : '100%'
+            },
+            endPoint : {
+                x : '50%',
+                y : '0%'
+            },
+            backFillStart : false
+        }
+*/
+		backgroundImage : '/assets/button_smallLong_UP.png',
     });
     view.add(Reset_button);
     Reset_button.addEventListener('click', function(e) {

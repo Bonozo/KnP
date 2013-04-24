@@ -248,6 +248,7 @@ function FreindInfo(userinfo, friendinfo) {
 						right : '0%',
 						image : '/assets/K_fullbody_bad.png',
 						height : '79.5%',
+						width : '45%',
 						zIndex : 500
 					});
 					view.add(male_character_imageview);

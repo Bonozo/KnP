@@ -144,7 +144,8 @@ function kandp(userinfo) {
                             //height:'40%',
                             bottom : '10%',
                             left : '80%',
-                            borderColor : "#a42b76",
+                            backgroundImage : '/assets/button_small_UP.png',
+                            /*borderColor : "#a42b76",
                             borderRadius : 4,
                             borderWidth : 1,
                             backgroundGradient : {
@@ -159,7 +160,7 @@ function kandp(userinfo) {
                                     y : '0%'
                                 },
                                 backFillStart : false
-                            }
+                            }*/
                         });
                         rowView.add(buy_button);
                         //alert(items_json.Record[i].INVENTORY_ID);
@@ -299,7 +300,7 @@ function kandp(userinfo) {
         right : '2.7%',
         bottom : '10.3%'
     });
-    view.add(spell_button);
+  //  view.add(spell_button);
 
     var armor_button = Ti.UI.createButton({
         backgroundImage : '/assets/button_smallLong_UP.png',
@@ -312,7 +313,7 @@ function kandp(userinfo) {
         right : '20.8%',
         bottom : '10.3%'
     });
-    view.add(armor_button);
+//    view.add(armor_button);
 
     var supplies_button = Ti.UI.createButton({
         backgroundImage : '/assets/button_smallLong_UP.png',
@@ -325,7 +326,7 @@ function kandp(userinfo) {
         right : '37.9%',
         bottom : '10.3%'
     });
-    view.add(supplies_button);
+//    view.add(supplies_button);
 
     var gifts_button = Ti.UI.createButton({
         backgroundImage : '/assets/button_smallLong_UP.png',
@@ -338,7 +339,7 @@ function kandp(userinfo) {
         right : '55%',
         bottom : '10.3%'
     });
-    view.add(gifts_button);
+//    view.add(gifts_button);
 
     var sort_label = Ti.UI.createLabel({
         text : 'SORT',
@@ -350,7 +351,7 @@ function kandp(userinfo) {
             fontSize : '14dip'
         }
     });
-    view.add(sort_label);
+ //   view.add(sort_label);
 
     var getmore_button = Ti.UI.createButton({
         backgroundColor : '#9c5b00',

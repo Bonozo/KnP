@@ -163,24 +163,29 @@ function QuestsHome(userinfo) {
 
 	view.add(sortby_lbl);
 	var my_quest = Ti.UI.createButton({
-		backgroundGradient : {
-			type : 'linear',
-			colors : [' #A42B76', '#E39bc8'],
-			startPoint : {
-				x : '50%',
-				y : '100%'
-			},
-			endPoint : {
-				x : '50%',
-				y : '0%'
-			},
-			backFillStart : false
-		},
+			/*	backgroundGradient : {
+					type : 'linear',
+					colors : [' #A42B76', '#E39bc8'],
+					startPoint : {
+						x : '50%',
+						y : '100%'
+					},
+					endPoint : {
+						x : '50%',
+						y : '0%'
+					},
+					backFillStart : false
+				},
+				font : {
+					fontSize : '13dip'
+				},
+				borderColor : '#A42B76',
+				borderRadius : '2',
+				color : '#0000',*/
 		font : {
 			fontSize : '9dip'
 		},
-		borderColor : '#A42B76',
-		borderRadius : '2',
+				backgroundImage : '/assets/button_small_UP.png',
 		title : 'MY QUEST',
 		height : '6.5%',
 		right : '55%',
@@ -199,27 +204,29 @@ function QuestsHome(userinfo) {
 	});
 
 	var freind_quest = Ti.UI.createButton({
-		backgroundGradient : {
-			type : 'linear',
-			colors : [' #A42B76', '#E39bc8'],
-			startPoint : {
-				x : '50%',
-				y : '100%'
-			},
-			endPoint : {
-				x : '50%',
-				y : '0%'
-			},
-			backFillStart : false
-		},
+			/*	backgroundGradient : {
+					type : 'linear',
+					colors : [' #A42B76', '#E39bc8'],
+					startPoint : {
+						x : '50%',
+						y : '100%'
+					},
+					endPoint : {
+						x : '50%',
+						y : '0%'
+					},
+					backFillStart : false
+				},
+				font : {
+					fontSize : '13dip'
+				},
+				borderColor : '#A42B76',
+				borderRadius : '2',
+				color : '#0000',*/
 		font : {
 			fontSize : '9dip'
 		},
-		borderColor : '#A42B76',
-		borderRadius : '2',
-		font : {
-			fontSize : '9dip'
-		},
+				backgroundImage : '/assets/button_small_UP.png',
 		title : 'FRIEND QUEST',
 		height : '6.5%',
 		right : '26.5%',
@@ -237,24 +244,26 @@ function QuestsHome(userinfo) {
 	});
 
 	var quest_log = Ti.UI.createButton({
-		backgroundGradient : {
-			type : 'linear',
-			colors : [' #A42B76', '#E39bc8'],
-			startPoint : {
-				x : '50%',
-				y : '100%'
-			},
-			endPoint : {
-				x : '50%',
-				y : '0%'
-			},
-			backFillStart : false
-		},
-		font : {
-			fontSize : '9dip'
-		},
-		borderColor : '#A42B76',
-		borderRadius : '2',
+			/*	backgroundGradient : {
+					type : 'linear',
+					colors : [' #A42B76', '#E39bc8'],
+					startPoint : {
+						x : '50%',
+						y : '100%'
+					},
+					endPoint : {
+						x : '50%',
+						y : '0%'
+					},
+					backFillStart : false
+				},
+				font : {
+					fontSize : '13dip'
+				},
+				borderColor : '#A42B76',
+				borderRadius : '2',
+				color : '#0000',*/
+				backgroundImage : '/assets/button_small_UP.png',
 		font : {
 			fontSize : '9dip'
 		},

@@ -32,6 +32,18 @@ function InventoryGifting(userinfojson,selected_item) {
 		top : 0,
 		backgroundImage : "/assets/overlayTitleStarCurtains.png"
 	});
+    var return_imageview = Ti.UI.createImageView({
+        image : '/assets/iconReturn.png',
+        height : '8%',
+        width : '11.6%',
+        top : '1%',
+        right : '3%',
+        zIndex : 600,
+    });
+    view.add(return_imageview);
+    return_imageview.addEventListener('click', function(e) {
+        window.close();
+    });
 	
 	var headerLabel = Ti.UI.createLabel({
 		color : '#000000',

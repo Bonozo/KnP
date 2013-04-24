@@ -72,7 +72,7 @@ function SceneryCustomization(userinfo) {
         weapon_images = 5;
 
     } else {
-        head_images = 2;
+        head_images = 7;
         dress_images = 5;
         hair_images = 2;
         jwel_images = 4;
@@ -81,9 +81,9 @@ function SceneryCustomization(userinfo) {
     if (gender == 'm') {
         var character_imageview1 = Titanium.UI.createImageView({
             height : '85.5%',
-            width : '45%',
+            width : '55%',
             top : '5%',
-            left : '50%',
+            left : '45%',
             image : '/assets/knight/male_dress'+dress_counter+'.png',
             //bottom : '0%'
             zIndex : 100
@@ -94,9 +94,9 @@ function SceneryCustomization(userinfo) {
         });
         var helmet_imageview = Titanium.UI.createImageView({
             height : '85.5%',
-            width : '45%',
+            width : '55%',
             top : '5%',
-            left : '50%',
+            left : '45%',
             
             image : '/assets/knight/helmet1.png',
             //bottom : '0%'
@@ -105,49 +105,49 @@ function SceneryCustomization(userinfo) {
         view.add(helmet_imageview);
         var shield_imageview = Titanium.UI.createImageView({
             height : '85.5%',
-            width : '45%',
+            width : '55%',
             top : '5%',
-            left : '50%',
+            left : '45%',
             
             image : '/assets/knight/shield.png',
             //bottom : '0%'
         });
         view.add(shield_imageview);
+        var back_hair_imageview = Titanium.UI.createImageView({
+            height : '85.5%',
+            width : '55%',
+            top : '5%',
+            left : '45%',
+            image : '/assets/knight/male_hair' + hair_counter + '_back.png',
+            //bottom : '0%'
+            //zIndex : 700
+        });
+        view.add(back_hair_imageview);
         var face_imageview = Titanium.UI.createImageView({
-            height : '15%',
-            width : '45%',
-            top : '20%',
-            left : '50%',
+            height : '85.5%',
+            width : '55%',
+            top : '5%',
+            left : '45%',
             image : '/assets/knight/male_face' + head_counter + '.png',
             //bottom : '0%'
             //zIndex : 600
         });
         view.add(face_imageview);
-        var hair_front_imageview = Titanium.UI.createImageView({
-            height : '20%',
-            width : '52%',
-            top : '16%',
-            left : '47.2%',
-            image : '/assets/knight/male_hair' + hair_counter + '.png',
+        var hair_imageview = Titanium.UI.createImageView({
+            height : '85.5%',
+            width : '55%',
+            top : '5%',
+            left : '45%',
+            image : '/assets/knight/male_hair' + hair_counter + '_front.png',
             //bottom : '0%'
             //zIndex : 700
         });
-        view.add(hair_front_imageview);
-        var hair_back_imageview = Titanium.UI.createImageView({
-            height : '8.9%',
-            width : '10.5%',
-            top : '19%',
-            left : '65%',
-            image : '/assets/knight/male_hair' + hair_counter + '_back.png',
-            //bottom : '0%'
-            //zIndex : 700
-        });
-       // view.add(hair_back_imageview);
+        view.add(hair_imageview);
         var weapon_imageview = Titanium.UI.createImageView({
             height : '85%',
-            width : '45%',
+            width : '55%',
             top : '5%',
-            left : '50%',
+            left : '45%',
             image : '/assets/knight/left_hand' + weapon_counter+ '.png',
             //bottom : '0%'
             //zIndex : 700
@@ -168,8 +168,8 @@ function SceneryCustomization(userinfo) {
             hair_counter++;
             hair_button.title = 'Hair ' + hair_counter;
             //alert(hair_counter);
-            hair_front_imageview.image = '/assets/knight/male_hair' + hair_counter + '.png';
-          //  hair_back_imageview.image = '/assets/knight/hair' + hair_counter + '_back.png';
+            hair_imageview.image = '/assets/knight/male_hair' + hair_counter + '_front.png';
+            back_hair_imageview.image = '/assets/knight/male_hair' + hair_counter + '_back.png';
         });
         
         head_button = Titanium.UI.createButton({
@@ -266,43 +266,53 @@ function SceneryCustomization(userinfo) {
     } else {
         var character_imageview = Titanium.UI.createImageView({
             height : '75.5%',
-            width : '38%',
+            width : '55%',
             top : '10%',
-            left : '65%',
-            image : '/assets/dress' + dress_counter + '.png',
+            left : '55%',
+            image : '/assets/princess/dress' + dress_counter + '.png',
             //bottom : '0%'
-            //zIndex : 500
+            zIndex : 500
         });
         view.add(character_imageview);
         character_imageview.addEventListener('load', function(e) {
             //hideLoader();
         });
+        var back_hair_imageview = Titanium.UI.createImageView({
+            height : '75.5%',
+            width : '55%',
+            top : '10%',
+            left : '55%',
+            image : '/assets/princess/hair' + hair_counter + '_back.png',
+            //bottom : '0%'
+            //zIndex : 700
+        });
+        view.add(back_hair_imageview);
         var face_imageview = Titanium.UI.createImageView({
-            height : '18.8%',
-            width : '38%',
-            top : '16%',
-            left : '65%',
-            image : '/assets/face' + head_counter + '.png',
+            height : '75.5%',
+            width : '55%',
+            top : '10%',
+            left : '55%',
+	        image : '/assets/princess/face' + head_counter + '.png',
             //bottom : '0%'
             //zIndex : 600
         });
         view.add(face_imageview);
         var hair_imageview = Titanium.UI.createImageView({
-            height : '18.8%',
-            width : '38%',
-            top : '16%',
-            left : '65%',
-            image : '/assets/hair' + hair_counter + '.png',
+            height : '75.5%',
+            width : '55%',
+            top : '10%',
+            left : '55%',
+            image : '/assets/princess/hair' + hair_counter + '_front.png',
             //bottom : '0%'
             //zIndex : 700
         });
         view.add(hair_imageview);
         var jwel_imageview = Titanium.UI.createImageView({
-            height : '18.8%',
-            width : '38%',
-            top : '16%',
-            left : '65%',
-            image : '/assets/necklace' + jwel_counter + '.png',
+            height : '75.5%',
+            width : '55%',
+            top : '10%',
+            left : '55%',
+            image : '/assets/princess/necklace' + jwel_counter + '.png',
             //bottom : '0%'
             //zIndex : 500
         });
@@ -322,7 +332,7 @@ function SceneryCustomization(userinfo) {
             dress_counter++;
             dress_button.title = 'Dress ' + dress_counter;
             //alert(dress_counter);
-            character_imageview.image = '/assets/dress' + dress_counter + '.png';
+            character_imageview.image = '/assets/princess/dress' + dress_counter + '.png';
 
             // alert('/assets/dress'+dress_counter+'.png');
 
@@ -343,7 +353,7 @@ function SceneryCustomization(userinfo) {
             //face_imageview.hide();
             head_counter++;
             head_button.title = 'Head ' + head_counter;
-            face_imageview.image = '/assets/face' + head_counter + '.png';
+            face_imageview.image = '/assets/princess/face' + head_counter + '.png';
             //face_imageview.show();
             //face_imageview.zIndex += head_counter;
             //       face_imageview.zIndex = 600;
@@ -364,7 +374,8 @@ function SceneryCustomization(userinfo) {
             hair_counter++;
             hair_button.title = 'Hair ' + hair_counter;
             //alert(hair_counter);
-            hair_imageview.image = '/assets/hair' + hair_counter + '.png';
+            hair_imageview.image = '/assets/princess/hair' + hair_counter + '_front.png';
+            back_hair_imageview.image = '/assets/princess/hair' + hair_counter + '_back.png';
         });
 
         jwel_button = Titanium.UI.createButton({
@@ -381,7 +392,7 @@ function SceneryCustomization(userinfo) {
                 jwel_counter = 0;
             jwel_counter++;
             jwel_button.title = 'Jwelery ' + jwel_counter;
-            jwel_imageview.image = '/assets/necklace' + jwel_counter + '.png';
+            jwel_imageview.image = '/assets/princess/necklace' + jwel_counter + '.png';
         });
 
         set_dressing = Titanium.UI.createButton({

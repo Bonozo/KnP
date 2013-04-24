@@ -100,6 +100,14 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
     });
     scene.add(energy_bar_right);
 
+	var textsprite = quicktigame2d.createTextSprite({
+		text : 'Lorem ipsum',
+        x : getPixelFromPercent('x',85),
+        y : getPixelFromPercent('x',85),
+        z : 5
+		
+	}); 
+    scene.add(textsprite);
     var bg_image = quicktigame2d.createSpriteSheet({
         image : 'assets/games/jousting/spritesheet_grass.png',
         width : 400,
@@ -232,6 +240,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
         
 
         timer = setInterval(function(){
+        	
             initknightSprite();
             
             knight_image.show();
@@ -241,7 +250,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
             //if(sprite_count>=6){
                 sound.play();
             //}
-
+		textsprite.text =  Titanium.Platform.availableMemory;
             
         },3000);
 

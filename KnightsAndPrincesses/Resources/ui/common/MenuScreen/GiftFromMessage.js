@@ -31,6 +31,17 @@ function GiftFromMessage(userinfo,freind_uid) {
 
 	});
 	view.add(textat_label);
+    var return_imageview = Titanium.UI.createImageView({
+        image : '/assets/iconReturn.png',
+        height : '8%',
+        width : '11.6%',
+        top : '1%',
+        right : '3%'
+    });
+    //view.add(return_imageview);
+    return_imageview.addEventListener('click', function(e) {
+        view.close();
+    });
 
 	var value_label = Titanium.UI.createLabel({
 		top : '23.3%',
@@ -177,7 +188,19 @@ function GiftFromMessage(userinfo,freind_uid) {
 					});
 					view.add(gift_button);
 					actInd.hide();
-					
+					var cancel_button = Titanium.UI.createButton({
+						backgroundImage : '/assets/button_small_UP.png',
+						title : 'Cancel',
+						height : '6%',
+						width : '22%',
+						top : '26.2%',
+						right : '24.7%'
+					});
+					view.add(cancel_button);
+					cancel_button.addEventListener('click', function(e) {
+						view.close();
+					});
+
 					gift_button.addEventListener('click', function(e) {
 						var ConfirmationAlert = Titanium.UI.createAlertDialog({
 							title : 'Click \'Yes\' to Send Gift.',

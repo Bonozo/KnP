@@ -32,6 +32,17 @@ function MessageScreen(userinfo, friend_uid, friend_gender,friend_name) {
 		top : '0%'
 	});
 	view.add(top_imageview);
+    var return_imageview = Titanium.UI.createImageView({
+        image : '/assets/iconReturn.png',
+        height : '8%',
+        width : '11.6%',
+        top : '1%',
+        right : '3%'
+    });
+    view.add(return_imageview);
+    return_imageview.addEventListener('click', function(e) {
+        self.close();
+    });
 
 	var name_label = Titanium.UI.createLabel({
 		text : userinfo.Record[0].NAME,

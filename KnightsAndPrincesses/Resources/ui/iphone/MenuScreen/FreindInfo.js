@@ -247,6 +247,7 @@ function FreindInfo(userinfo, friendinfo) {
 						top : '12%',
 						right : '0%',
 						image : '/assets/K_fullbody_bad.png',
+						width : '48%',
 						height : '79.5%',
 						zIndex : 500
 					});
@@ -257,7 +258,7 @@ function FreindInfo(userinfo, friendinfo) {
 						top : '12%',
 						right : '0%',
 						image : '/assets/hdpi_female_character.png',
-						height : '75%',
+						height : '79.5%',
 						width : '51%',
 						zIndex : 500
 					});

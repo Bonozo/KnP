@@ -121,7 +121,7 @@ function FreindsScreen(userinfo) {
 
 	var req_notification = '';
 	var new_request_imageview;
-	var gift_imageview;
+	var gift_imageview = null;
 	var gift_icon = '';
     var get_notification_url = "http://therealmattharmon.com/knp/get_notifications.php?uid=" + userinfo.Record[0].UID;
     var httpclientt = require('ui/iphone/Functions/function');
@@ -172,7 +172,7 @@ function FreindsScreen(userinfo) {
     //}
     
     Ti.App.addEventListener("gift_Notification",function(){
-		if (gift_icon) {
+		if (gift_icon && gift_imageview != null) {
 			gift_imageview.hide();
 		}
     }); 

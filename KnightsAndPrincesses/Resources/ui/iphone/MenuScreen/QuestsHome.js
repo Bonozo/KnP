@@ -270,7 +270,13 @@ function QuestsHome(userinfo) {
 			view.add(main_table_view);
 		});
 	});
-
+var label = Titanium.UI.createLabel({
+  text:'Available Memory: ' + Titanium.Platform.availableMemory,
+  bottom:'15.1%',
+  left : '0%',
+  height:40,
+  width:'auto'
+});//view.add(label);
 	///////////////////////////////////////////////////////////////////////////////////
 
 	return view;

@@ -293,7 +293,7 @@ function kandp(userinfo) {
         right : '2.7%',
         bottom : '10.3%'
     });
-    view.add(spell_button);
+    //view.add(spell_button);
 
     var armor_button = Ti.UI.createButton({
         backgroundImage : '/assets/button_smallLong_UP.png',
@@ -306,7 +306,7 @@ function kandp(userinfo) {
         right : '20.8%',
         bottom : '10.3%'
     });
-    view.add(armor_button);
+   // view.add(armor_button);
 
     var supplies_button = Ti.UI.createButton({
         backgroundImage : '/assets/button_smallLong_UP.png',
@@ -319,7 +319,7 @@ function kandp(userinfo) {
         right : '37.9%',
         bottom : '10.3%'
     });
-    view.add(supplies_button);
+   // view.add(supplies_button);
 
     var gifts_button = Ti.UI.createButton({
         backgroundImage : '/assets/button_smallLong_UP.png',
@@ -332,7 +332,7 @@ function kandp(userinfo) {
         right : '55%',
         bottom : '10.3%'
     });
-    view.add(gifts_button);
+   // view.add(gifts_button);
 
     var sort_label = Ti.UI.createLabel({
         text : 'SORT',
@@ -344,7 +344,7 @@ function kandp(userinfo) {
             fontSize : '12'
         }
     });
-    view.add(sort_label);
+  //  view.add(sort_label);
 
     var getmore_button = Ti.UI.createButton({
         backgroundImage : '/assets/button_smallLong_UP.png',

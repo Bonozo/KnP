@@ -14,7 +14,7 @@
         <target device="android">true</target>
         <target device="blackberry">false</target>
     </deployment-targets>
-    <sdk-version>2.1.3.v20121002161610</sdk-version>
+    <sdk-version>3.1.0.GA</sdk-version>
     <id>com.bonozo.knp</id>
     <name>KnightsAndPrincesses</name>
     <version>1.0</version>
@@ -85,7 +85,7 @@
         </splash>
         <theme>default</theme>
     </mobileweb>
-<modules>
+    <modules>
         <module platform="iphone" version="1.2">com.googlecode.quicktigame2d</module>
         <module platform="android" version="1.3">com.googlecode.quicktigame2d</module>
     </modules>
