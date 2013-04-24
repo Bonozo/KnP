@@ -63,7 +63,7 @@ function FreindListForGift(userinfo, selected_item, callback) {
 							switch (e.index) {
 								case 0:
 									actInd.show();
-									var reset_option_url = "http://justechinfo.com/kap_server/send_gift.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + e.source.uid + "&gift_id=" + selected_item.id + "&gift_type=" + selected_item.type;
+									var reset_option_url = "http://therealmattharmon.com/knp/send_gift.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + e.source.uid + "&gift_id=" + selected_item.id + "&gift_type=" + selected_item.type;
 									var httpclientt = require('/ui/common/Functions/function');
 									httpclientt.requestServer({
 										success : function(e) {
@@ -130,7 +130,7 @@ function FreindListForGift(userinfo, selected_item, callback) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://justechinfo.com/kap_server/friends_list.php?uid=" + userinfo.Record[0].UID,
+		url : "http://therealmattharmon.com/knp/friends_list.php?uid=" + userinfo.Record[0].UID,
 
 	});
 };

@@ -16,9 +16,9 @@ function crafting(userinfojson) {
 	view.add(bottom);
 	var top_imageview = Titanium.UI.createImageView({
 		image : '/assets/overlayPlayerInfoCroped.png',
-		//height:'12.4%',
+		height:'6.4%',
 		width : '100%',
-		top : '0%'
+		bottom : '94.6%'
 	});
 	view.add(top_imageview);
 	var name_label = Titanium.UI.createLabel({
@@ -157,7 +157,7 @@ function crafting(userinfojson) {
 							switch (e.index) {
 								case 0:
 									actInd.show();
-									var create_craft_url = "justechinfo.com/kap_server/create_craft.php?uid=" + userinfojson.Record[0].UID + "&craft_id=" + e.source.craft_id + "";
+									var create_craft_url = "http://therealmattharmon.com/knp/create_craft.php?uid=" + userinfojson.Record[0].UID + "&craft_id=" + e.source.craft_id + "";
 
 									var httpclientt = require('/ui/common/Functions/function');
 									httpclientt.requestServer({
@@ -220,9 +220,24 @@ function crafting(userinfojson) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://justechinfo.com/kap_server/get_craft_ingredients.php",
+		url : "http://therealmattharmon.com/knp/get_craft_ingredients.php",
 
 	});
+    var httpclientt = require('/ui/common/Functions/function');
+    httpclientt.requestServer({
+        success : function(e) {
+            var userinfo = JSON.parse(this.responseText);
+            if (userinfo.Record != undefined) {
+                var Footer = require('ui/common/menus/Footer');
+                var footer = new Footer(userinfo);
+                view.add(footer);
+            }
+        },
+        method : 'GET',
+        contentType : 'text/xml',
+        url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfojson.Record[0].UID + "",
+    });
+	
 
 /*
 	var UP_imageview = Titanium.UI.createImageView({
@@ -244,7 +259,7 @@ function crafting(userinfojson) {
 	view.add(down_imageview);
 */
 	view.addEventListener('android:back', function(e) {
-		alert("asd")
+		//alert("asd")
 		view.close();
 		view = null;
 	});

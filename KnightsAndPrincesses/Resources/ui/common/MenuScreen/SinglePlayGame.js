@@ -7,6 +7,14 @@ function JoustGame(game, quest_status, quest_id, userinfo) {
         var ArcheryGamePlay = require('/ui/common/MenuScreen/ArcheryGamePlay');
         var archerygameplay = new ArcheryGamePlay('INCOMPLETE', 80000001, userinfo);
         return archerygameplay;
+    } else if (game == 'cooking_game') {
+        var CookingGamePlay = require('/ui/common/MenuScreen/CookingGame');
+        var cookinggameplay = new CookingGamePlay('INCOMPLETE', 80000004, userinfo);
+        return cookinggameplay;
+    } else if (game == 'sonnet_game') {
+        var SonnetGamePlay = require('/ui/common/MenuScreen/SonnetGamePlay');
+        var sonnetgameplay = new SonnetGamePlay('INCOMPLETE', 80000002, userinfo);
+        return sonnetgameplay;
     } else {
         var played = false;
         var _assign_quest_id = "";
@@ -25,10 +33,12 @@ function JoustGame(game, quest_status, quest_id, userinfo) {
 
         var self = Ti.UI.createWindow({
             orientation : Ti.UI.PORTRAIT,
-            navBarHidden : true
+            navBarHidden : true,
+            fullscreen : true
         });
+    self.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 
-        var _url = "http://justechinfo.com/kap_server/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
+        var _url = "http://therealmattharmon.com/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
 
         var items_json = "";
         var items_length = 0;
@@ -77,7 +87,7 @@ function JoustGame(game, quest_status, quest_id, userinfo) {
                 actInd.show();
                 //alert(_assign_quest_id);
 
-                _url = "http://justechinfo.com/kap_server/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
+                _url = "http://therealmattharmon.com/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
                 httpclientt.requestServer({
                     success : function(e) {
                         items_json = JSON.parse(this.responseText);

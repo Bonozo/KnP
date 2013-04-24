@@ -117,8 +117,8 @@ function QuestLog(userinfo, callback) {
 	//actInd.hide();
 	callback(view);
 	//actInd.show();
-	//http://justechinfo.com/kap_server/knp_quest_log.php?uid=10000007
-	var reset_option_url = "http://justechinfo.com/kap_server/knp_quest_log.php?uid=" + userinfo.Record[0].UID;
+	//http://therealmattharmon.com/knp/knp_quest_log.php?uid=10000007
+	var reset_option_url = "http://therealmattharmon.com/knp/knp_quest_log.php?uid=" + userinfo.Record[0].UID;
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
 		success : function(e) {
@@ -154,7 +154,7 @@ function QuestLog(userinfo, callback) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + userinfo.Record[0].UID + "",
+		url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID + "",
 	});
 
 

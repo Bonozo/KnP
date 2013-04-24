@@ -149,7 +149,7 @@ function MessageScreen(userinfo, friend_uid, friend_gender,friend_name) {
                         image : dp,
                         width : '20%',
                         left : dp_left,
-                        height : rowViewHeight*3,
+                        height : 'auto',
                         top : '10%',
                         bottom : '10%'
                     });
@@ -222,13 +222,13 @@ function MessageScreen(userinfo, friend_uid, friend_gender,friend_name) {
 			Ti.API.debug("STATUS: " + this.status);
 			Ti.API.debug("TEXT: " + this.responseText);
 			Ti.API.debug("ERROR: " + e.error);
-			Ti.API.debug("URL: " + "http://justechinfo.com/kap_server/get_thread_messages.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + friend_uid);
+			Ti.API.debug("URL: " + "http://therealmattharmon.com/knp/get_thread_messages.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + friend_uid);
 			alert('There was an error retrieving the remote data. Try again.');
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://justechinfo.com/kap_server/get_thread_messages.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + friend_uid,
-		//url : "http://justechinfo.com/kap_server/get_avatar_info.php?uid=" + 10000007 + "",
+		url : "http://therealmattharmon.com/knp/get_thread_messages.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + friend_uid,
+		//url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + 10000007 + "",
 
 	});
 	/*
@@ -274,7 +274,7 @@ function MessageScreen(userinfo, friend_uid, friend_gender,friend_name) {
 				},
 				method : 'GET',
 				contentType : 'text/xml',
-				url : "http://justechinfo.com/kap_server/send_message.php?sender_id=" + Loggedin_id + "&receiver_id=" + friend_uid + "&message=" + Ti.Network.encodeURIComponent(text_feild)+ "",
+				url : "http://therealmattharmon.com/knp/send_message.php?sender_id=" + Loggedin_id + "&receiver_id=" + friend_uid + "&message=" + Ti.Network.encodeURIComponent(text_feild)+ "",
 	
 			});
 		}
@@ -417,7 +417,7 @@ function MessageScreen(userinfo, friend_uid, friend_gender,friend_name) {
 			},
 			method : 'GET',
 			contentType : 'text/xml',
-			url : "http://www.justechinfo.com/kap_server/get_unread_messages.php?sender_id=" + friend_uid + "&receiver_id=" + Loggedin_id + "",
+			url : "http://therealmattharmon.com/knp/get_unread_messages.php?sender_id=" + friend_uid + "&receiver_id=" + Loggedin_id + "",
 
 		});
 		

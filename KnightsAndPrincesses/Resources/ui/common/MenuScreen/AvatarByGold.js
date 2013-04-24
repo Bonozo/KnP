@@ -135,7 +135,7 @@ function AvatarByLevel(userinfo, callback) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://justechinfo.com/kap_server/get_avatar_list.php?uid=" + userinfo.Record[0].UID +"&gold=1",
+		url : "http://therealmattharmon.com/knp/get_avatar_list.php?uid=" + userinfo.Record[0].UID +"&gold=1",
 
 	});
 

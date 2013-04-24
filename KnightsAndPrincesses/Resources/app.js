@@ -27,22 +27,26 @@ if (Ti.version < 1.8 ) {
 	var isTablet = osname === 'ipad' || (osname === 'android' && (width > 899 || height > 899));
 	
 	var Window;
-	if (isTablet) {
-		Window = require('ui/handheld/android/LoginWindow');
+/*	if (isTablet) {
+			Window = require('ui/iphone/LoginWindow');
 	}
 	else {
-		// Android uses platform-specific properties to create windows.
+*/		// Android uses platform-specific properties to create windows.
 		// All other platforms follow a similar UI pattern.
-		if (osname === 'android') {
+		if (osname === 'iphone' || osname === 'ipad') {
+			//Window = require('ui/handheld/LoginWindow');
+			Window = require('ui/iphone/LoginWindow');
+		}
+		else {
 			Window = require('ui/handheld/android/LoginWindow');
 			//Window=require('ui/common/MenuScreen/inventorycrafting');
 			//Window=require('ui/common/MenuScreen/FreindInfo');
 		}
-		else {
+/*		else if (osname === 'iphone' || osname === 'ipad') {
 			//Window = require('ui/handheld/LoginWindow');
-			Window = require('ui/handheld/android/LoginWindow');
+			Window = require('ui/iphone/LoginWindow');
 		}
-	}
+*///	}
 	var win1 = new Window();
 	win1.open();
 })();
