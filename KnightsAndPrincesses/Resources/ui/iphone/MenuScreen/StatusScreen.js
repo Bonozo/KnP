@@ -56,15 +56,24 @@ function StatusScreen(userinfo) {
     var gender = userinfo.Record[0].GENDER;
 
     var user_appearence_view = Ti.UI.createView({
+<<<<<<< HEAD
         width : '74%',
         height : '80%',
         right : '40%',
         bottom : '0%',
         //zIndex : 500
+=======
+        width : '55%',
+        height : '76%',
+        right : '50%',
+        bottom : '0%',
+        zIndex : 500
+>>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 
     });
     ////////////////////////////////////////////////
     if (userinfo.Record[0].USER_APPEARANCE != undefined && userinfo.Record[0].USER_APPEARANCE != '' && userinfo.Record[0].GENDER == 'f') {
+<<<<<<< HEAD
         var back_hair_imageview = Titanium.UI.createImageView({
             height : '95%',
             width : '80%',
@@ -79,10 +88,28 @@ function StatusScreen(userinfo) {
             width : '80%',
             top : '0%',
             image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[1].IMAGE + '.png',
+=======
+        var dress_imageview = Titanium.UI.createImageView({
+            height : '95%',
+            width : '80%',
+            top : '0%',
+            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[3].IMAGE + '.png',
+            //bottom : '0%'
+            //zIndex : 500
+        });
+        user_appearence_view.add(dress_imageview);
+        var face_imageview = Titanium.UI.createImageView({
+            height : '24%',
+            width : '80%',
+            //top : '0%',
+            bottom : '67%',
+            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[1].IMAGE + '.png',
+>>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //bottom : '0%'
             //zIndex : 600
         });
         user_appearence_view.add(face_imageview);
+<<<<<<< HEAD
         var dress_imageview = Titanium.UI.createImageView({
             height : '95%',
             width : '80%',
@@ -97,15 +124,31 @@ function StatusScreen(userinfo) {
             width : '80%',
             top : '0%',
             image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '_front.png',
+=======
+        var hair_imageview = Titanium.UI.createImageView({
+            height : '24%',
+            width : '80%',
+            //top : '0%',
+            bottom : '67%',
+            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '.png',
+>>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //bottom : '0%'
             //zIndex : 700
         });
         user_appearence_view.add(hair_imageview);
         var jwel_imageview = Titanium.UI.createImageView({
+<<<<<<< HEAD
             height : '95%',
             width : '80%',
             top : '0%',
             image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[2].IMAGE + '.png',
+=======
+            height : '24%',
+            width : '80%',
+            //top : '0%',
+            bottom : '67%',
+            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[2].IMAGE + '.png',
+>>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //bottom : '0%'
             //zIndex : 500
         });
@@ -135,15 +178,23 @@ function StatusScreen(userinfo) {
         });
         user_appearence_view.add(helmet_imageview);
         var shield_imageview = Titanium.UI.createImageView({
+<<<<<<< HEAD
             height : '95%',
             width : '95%',
             left : '0',
             bottom : '7%',
+=======
+            height : '55%',
+            width : '95%',
+            left : '0',
+            bottom : '18%',
+>>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             
             image : '/assets/knight/shield.png',
             //bottom : '0%'
         });
         user_appearence_view.add(shield_imageview);
+<<<<<<< HEAD
         var back_hair_imageview = Titanium.UI.createImageView({
             height : '95%',
             width : '95%',
@@ -159,25 +210,44 @@ function StatusScreen(userinfo) {
             width : '95%',
             left : '0',
             bottom : '7%',
+=======
+        var face_imageview = Titanium.UI.createImageView({
+            height : '20%',
+            width : '95%',
+            left : '0',
+            bottom : '68.5%',
+>>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[1].IMAGE + '.png',
             //bottom : '0%'
             //zIndex : 600
         });
         user_appearence_view.add(face_imageview);
         var hair_imageview = Titanium.UI.createImageView({
+<<<<<<< HEAD
             height : '95%',
             width : '95%',
             left : '0',
             bottom : '7%',
             image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '_front.png',
+=======
+            height : '11.9%',
+            width : '95%',
+            left : '0%',
+            top : '13%',
+            image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '.png',
+>>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //bottom : '0%'
             //zIndex : 700
         });
         user_appearence_view.add(hair_imageview);
         var weapon_imageview = Titanium.UI.createImageView({
             height : '95%',
+<<<<<<< HEAD
             width : '95%',
             left : '0',
+=======
+            width : '90%',
+>>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             bottom : '7%',
             image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[3].IMAGE + '.png',
             //bottom : '0%'
@@ -190,7 +260,11 @@ function StatusScreen(userinfo) {
         ///////////////////////////////////////////////
         var character_imageview = Titanium.UI.createImageView({
             bottom : '0%',
+<<<<<<< HEAD
             image : (gender == 'm') ? '/assets/knight/knight_default.png' : '/assets/hdpi_female_character_Image2.png',
+=======
+            image : (gender == 'm') ? '/assets/K_fullbody_bad.png' : '/assets/hdpi_female_character_Image2.png',
+>>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             height : '100%',
             width : '100%',
             zIndex : 500

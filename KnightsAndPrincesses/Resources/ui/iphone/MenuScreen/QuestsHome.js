@@ -270,6 +270,7 @@ function QuestsHome(userinfo) {
 			view.add(main_table_view);
 		});
 	});
+<<<<<<< HEAD
 var label = Titanium.UI.createLabel({
   text:'Available Memory: ' + Titanium.Platform.availableMemory,
   bottom:'15.1%',
@@ -277,6 +278,9 @@ var label = Titanium.UI.createLabel({
   height:40,
   width:'auto'
 });//view.add(label);
+=======
+
+>>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 	///////////////////////////////////////////////////////////////////////////////////
 
 	return view;
