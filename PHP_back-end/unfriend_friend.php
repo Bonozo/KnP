@@ -3,14 +3,14 @@ header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
-$dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+include "config.php";
+$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 //$union = array_unique(array_merge($a, $b));
 if(isset($_GET))
 {
 	extract($_GET);
 	if(isset($uid, $friend_uid))
 	{
-		$name = urldecode($name);
 		$query = "
 			DELETE FROM `FRIENDSHIP_MAIN`
 			WHERE
@@ -32,6 +32,9 @@ else
 	$records = array('Error'=>"Bad Request!");
 }
 $records = array('Record'=>$records);
+
+echo json_indent(json_encode($records));
+?>ds);
 
 echo json_indent(json_encode($records));
 ?>

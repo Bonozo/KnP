@@ -147,4 +147,14 @@ function getAvatarInfo($uid){
 	return $res[0];
 }
 
+?>RSOR_FWDONLY));
+	$statement->execute(
+	array(
+		':uid'=>$uid
+		));
+	$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+	
+	return $res[0];
+}
+
 ?>

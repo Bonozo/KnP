@@ -3,7 +3,8 @@ header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
-		$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+include "config.php";
+$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 
 if(isset($_GET))
 {
@@ -51,4 +52,5 @@ else
 }
 
 echo json_indent(json_encode($records));
+?>on_indent(json_encode($records));
 ?>

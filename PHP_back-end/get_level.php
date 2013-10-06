@@ -38,4 +38,9 @@ if(isset($_GET))
 }
 
 
+?>ent(json_encode($records));
+
+}
+
+
 ?>

@@ -52,25 +52,48 @@ if(isset($_GET))
 
 		////////////////////////////////////////////////////////////
 		$query1 = "
-			SELECT `UID`, `NAME`, `GENDER`, `MARITIAL_STATUS`,  `LAST_LOGIN`, `LEVEL`, `XP`,`ENERGY` FROM `KAP_USER_MAIN` WHERE UID = :uid
+			SELECT `UID`, `NAME`, `GENDER`, `MARITIAL_STATUS`,`STATUS_MESSAGE`,  `LAST_LOGIN`, `LEVEL`, `XP`,`ENERGY`,`USER_ID`,DATEDIFF(NOW(),`TIMESTAMP`) AS 'ACCOUNT_AGE' FROM `KAP_USER_MAIN` WHERE UID = :uid
 				";
 		$statement1 = $dbObj->prepare($query1, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement1->execute(array(':uid'=>$uid));
 		$res1 = $statement1->fetchAll(PDO::FETCH_ASSOC);
+		$query =   
+			   "SELECT uwi.`UID`,uwt.`WEAR_TYPE_ID`,uw.`WEAR_ID`,uw.`IMAGE`,uw.`NAME`
+				FROM 
+					`USER_WEAR_TYPE` uwt
+				LEFT JOIN 
+					`USER_WEAR` uw 
+				ON 
+					uwt.`WEAR_TYPE_ID`= uw.`WEAR_TYPE_ID`
+				LEFT JOIN 
+					`USER_WEAR_INFO` uwi
+				ON 
+					uwt.`WEAR_TYPE_ID` = uwi.`WEAR_TYPE_ID`
+				AND 
+					uw.`WEAR_ID` = uwi.`WEAR_ID`
+				WHERE 
+					uwi.UID = :uid";
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(array(':uid'=>$uid));
+		$result = $statement->fetchAll(PDO::FETCH_ASSOC);//print_r($result);
 		
 		$posts[0]['UID'] = $res1[0]['UID'];
 		$posts[0]['NAME'] = $res1[0]['NAME'];
-		$posts[0]['GENDER'] = (strcmp($res1[0]['GENDER'],'m') == 0)?'KNIGHT':'PRINCESS';
+		$posts[0]['ACCOUNT_AGE'] = $res1[0]['ACCOUNT_AGE'];
+		$posts[0]['GENDER'] = $res1[0]['GENDER'];//(strcmp($res1[0]['GENDER'],'m') == 0)?'m':'f';
 		$posts[0]['MARITIAL_STATUS'] = $res1[0]['MARITIAL_STATUS'];
+		$posts[0]['STATUS_MESSAGE'] = $res1[0]['STATUS_MESSAGE'];
 		$posts[0]['LAST_LOGIN'] = $res1[0]['LAST_LOGIN'];
 		$posts[0]['LEVEL'] = $res1[0]['LEVEL'];
 		$posts[0]['XP'] = $res1[0]['XP'];
+		$posts[0]['XP'] = $res1[0]['XP'];
+		$posts[0]['USER_ID'] = $res1[0]['USER_ID'];
 		$posts[0]['ENERGY'] = $res1[0]['ENERGY'];
 		$posts[0]['NUM_OF_QUESTS'] = $num_of_quests[0]['NUM_OF_QUESTS'];
 		$posts[0]['NUM_OF_FRIENDS'] = $num_of_friends[0]['NUM_OF_FRIENDS'];
 		$posts[0]['NUM_OF_INV'] = $num_of_inv[0]['NUM_OF_INV'];
 		$posts[0]['NUM_OF_GOLDS'] = $res5[0]['TOTAL_UNIT'];
-		
+		$posts[0]['USER_APPEARANCE'] = $result;
 		
 		$records = array('Record'=>$posts);//$records = array('Error'=>$posts[0]);
 

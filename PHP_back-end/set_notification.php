@@ -4,36 +4,30 @@ header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
-$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+include "config.php";
+$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 $key = "tGKQ62mVRFS3AvCxelxnoHjJI8vIBtbW"; //APP KEY
-$cloud_password = "test";
+$cloud_password = "admin";
 $tmp_fname = 'cookie.txt';
+error_reporting(E_ALL);
 if (isset($_GET)) {
     extract($_GET);
-    if (isset($uid,$device_token)) {
+    if (isset($uid,$device_token,$user_id)) {
 		$query = "SELECT `EMAIL`,`NOTIFICATION` FROM KAP_USER_MAIN WHERE `UID` = :uid";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(array(':uid'=>$uid));
 		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
 		if($res[0]['NOTIFICATION']=='ON'){
-			list($status,$error) = RemoveUserTraces($res[0]['EMAIL'], $password);
-			$records = array("Message"=>array("Your Notification settings turned off."));
+			$query = "UPDATE `KAP_USER_MAIN` SET `USER_ID` = '',`DEVICE_TOKEN` = '', `NOTIFICATION` = 'OFF' WHERE `UID` = '".$uid."'";
+			$statement = $dbObj -> prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement -> execute();
+			$records = array("Message"=>array("NOTIFICATION"=>"OFF"));
 		}
 		else if($res[0]['NOTIFICATION']=='OFF'){
-			list($status,$response) = CreateCloudUser($res[0]['EMAIL'],'test'); // response contain new cloud user id
-			if($status){
-				$user_id = $response; 
-				list($status,$error) = SubscribeCloudUser($device_token);
-				$query1 = "UPDATE `KAP_USER_MAIN` SET `DEVICE_TOKEN`= '".$device_token."',`USER_ID` = '".$user_id."',`NOTIFICATION` = 'ON' WHERE `UID`= :uid";
-				$statement1 = $dbObj->prepare($query1, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-				$statement1->execute(array(
-					':uid'=>$uid
-				));
-				$records = array("Message"=>array("Your Notification settings turned On."));
-
-			}
-	
-			
+				$query = "UPDATE `KAP_USER_MAIN` SET `DEVICE_TOKEN`= '".$device_token."',`USER_ID` = '".$user_id."',`NOTIFICATION` = 'ON' WHERE `UID`= '".$uid."'";//die($query);
+			$statement = $dbObj -> prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement -> execute();
+				$records = array("Message"=>array("NOTIFICATION"=>"ON"));
 		}
 
 
@@ -162,6 +156,14 @@ function CreateCloudUser($email,$password){
 	curl_setopt_array($curlObj,$c_opt);
 	$response = objectToArray(json_decode(curl_exec($curlObj)));//echo "CREATE_CLOUD_USER";print_r($response);
 	if($response['meta']['status'] == 'ok'){
+		return array(true,$response['response']['users'][0]['id']);
+	} 
+	else if($response['meta']['status'] == 'fail'){
+		return array(false,$response['meta']['message']);
+	}
+	return array(false,'Unknown error');
+}
+k'){
 		return array(true,$response['response']['users'][0]['id']);
 	} 
 	else if($response['meta']['status'] == 'fail'){

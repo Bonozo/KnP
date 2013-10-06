@@ -25,7 +25,8 @@ if(isset($_GET))
 			ON
 			KAQ.ASSIGN_QUEST_ID = KAQG.ASSIGN_QUEST_ID
 			WHERE KAQ.ASSIGN_TO_UID = :uid AND 
-			NOT KAQ.ASSIGN_BY_UID = :uid 
+			NOT KAQ.ASSIGN_BY_UID = :uid AND
+			KAQ.ASSIGNEE_STATUS = 'ACTIVE'
 			GROUP BY
 			KAQG.ASSIGN_QUEST_ID
 					";
@@ -39,44 +40,50 @@ if(isset($_GET))
 		$counter = 0;
 		$posts = array();
 		foreach($res as $key => $post){
-
-/*			$days = floor($post["REMAINING_TIME"] / (60 * 60 * 24));
+			
+			/*			$days = floor($post["REMAINING_TIME"] / (60 * 60 * 24));
 			$remainder = $post["REMAINING_TIME"] % (60 * 60 * 24);
 			$hours = floor($remainder / (60 * 60));
 			$remainder = $remainder % (60 * 60);
 			$minutes = floor($remainder / 60);
 			$seconds = $remainder % 60;  
- 
+			
 			if($post["STATUS"] == 'EXPIRED'){
-			  $posts[$counter]["REMAINING_TIME"] = "00:00:00";
-			  $posts[$counter]["STATUS"] = 'EXPIRE';//:"3",
+			$posts[$counter]["REMAINING_TIME"] = "00:00:00";
+			$posts[$counter]["STATUS"] = 'EXPIRE';//:"3",
 			}
-			 else */
-			 if( strtotime($post["EXPIRED_TIME"]) < strtotime(date("Y:m:d h:i:s", time()))){
-				  if($post["STATUS"] != "COMPLETE"){
-					  ExpireQuest($post["ASSIGN_QUEST_ID"]);
-					  $posts[$counter]["EXPIRED_TIME"] = "00:00:00";
-					  $posts[$counter]["STATUS"] = 'EXPIRE';//:"3",
-				  }
-				  else{
-					  $posts[$counter]["EXPIRED_TIME"] = "00:00:00";
-					  $posts[$counter]["STATUS"] = $post["STATUS"];//:"3",
-				  }
+			else */
+			//			 echo $post["ASSIGN_QUEST_ID"].">>>>";
+			//			 echo "Expired time : " . $post["EXPIRED_TIME"]."\nNow : " . date('Y-m-d H:i:s') . "\n";
+			if( strtotime($post["EXPIRED_TIME"]) < strtotime(date('Y-m-d H:i:s') )){
+			// echo $post["ASSIGN_QUEST_ID"]."\n";
+			  if($post["STATUS"] != "COMPLETE"){
+				  ExpireQuest($post["ASSIGN_QUEST_ID"]);
+				  $posts[$counter]["EXPIRED_TIME"] = "00:00:00";
+				  $posts[$counter]["STATUS"] = 'EXPIRE';//:"3",
 			  }
 			  else{
-				  $posts[$counter]["EXPIRED_TIME"] = $post["REMAINING_TIME"];
+				  $posts[$counter]["EXPIRED_TIME"] = "00:00:00";
 				  $posts[$counter]["STATUS"] = $post["STATUS"];//:"3",
 			  }
- 				
-//			  $posts[$counter]["REMAINING_TIME"] = $TimeRemaining;
-			  $posts[$counter]["ASSIGN_QUEST_ID"] = $post["ASSIGN_QUEST_ID"];//:"3",
-			  $posts[$counter]["NUM_OF_QUESTS"] = $post["NUM_OF_QUESTS"];//:"3",
-			  $posts[$counter]["ASSIGN_BY_UID"] = $post["ASSIGN_BY_UID"];//:"3",
-			  $posts[$counter]["NAME"] = $post["NAME"];//:"3",
-			  $posts[$counter]["GENDER"] = $post["GENDER"];//:"3",
-			  $posts[$counter]["LEVEL"] = $post["LEVEL"];//:"3",
-			  $posts[$counter]["MESSAGE"] = $post["MESSAGE"];//:"3",
-			  $posts[$counter++]["STARTED_TIME"] = $post["STARTED_TIME"];//:"3",
+			}
+			else{
+			  $posts[$counter]["EXPIRED_TIME"] = $post["REMAINING_TIME"];
+			  $posts[$counter]["STATUS"] = $post["STATUS"];//:"3",
+			}
+			
+			//			  $posts[$counter]["REMAINING_TIME"] = $TimeRemaining;
+			$posts[$counter]["ASSIGN_QUEST_ID"] = $post["ASSIGN_QUEST_ID"];//:"3",
+			$posts[$counter]["NUM_OF_QUESTS"] = $post["NUM_OF_QUESTS"];//:"3",
+			$posts[$counter]["ASSIGN_BY_UID"] = $post["ASSIGN_BY_UID"];//:"3",
+			$posts[$counter]["NAME"] = $post["NAME"];//:"3",
+			$posts[$counter]["GENDER"] = $post["GENDER"];//:"3",
+			$posts[$counter]["LEVEL"] = $post["LEVEL"];//:"3",
+			$posts[$counter]["MESSAGE"] = $post["MESSAGE"];//:"3",
+			$posts[$counter]['USER_APPEARANCE'] = getAvatarAppearance($post['ASSIGN_BY_UID']);
+			$posts[$counter]['NUM_OF_FRIENDS'] = getFriendsCount($post['ASSIGN_BY_UID']);
+			$posts[$counter++]["STARTED_TIME"] = $post["STARTED_TIME"];//:"3",
+			
 		}
 		$records = $posts;
 	}
@@ -92,6 +99,46 @@ else
 $records = array('Record'=>$records);
 
 echo json_indent(json_encode($records));
+function getAvatarAppearance($_uid){
+	global $dbObj;
+	$query =   
+		"SELECT uwi.`UID`,uwt.`WEAR_TYPE_ID`,uw.`WEAR_ID`,uw.`IMAGE`,uw.`NAME`
+		FROM 
+			`USER_WEAR_TYPE` uwt
+		LEFT JOIN 
+			`USER_WEAR` uw 
+		ON 
+			uwt.`WEAR_TYPE_ID`= uw.`WEAR_TYPE_ID`
+		LEFT JOIN 
+			`USER_WEAR_INFO` uwi
+		ON 
+			uwt.`WEAR_TYPE_ID` = uwi.`WEAR_TYPE_ID`
+		AND 
+			uw.`WEAR_ID` = uwi.`WEAR_ID`
+		WHERE 
+			uwi.UID = :uid";
+	$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+	$statement->execute(array(':uid'=>$_uid));
+	$result = $statement->fetchAll(PDO::FETCH_ASSOC);//print_r($result);
+	return $result;
+}
+function getFriendsCount($_uid){
+	global $dbObj;
+	$query = "
+			SELECT 
+				COUNT(M.UID) AS `NUM_OF_FRIENDS` 
+			FROM 
+				`FRIENDSHIP_MAIN` M 
+			WHERE 
+				(M.UID = '".$_uid."' OR M.FRIEND_UID = '".$_uid."') AND 
+				M.STATUS = 'FRIENDS' 
+			";
+			//echo $query;die();
+	$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+	$statement->execute();
+	$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+	return $res[0]['NUM_OF_FRIENDS'];
+}
 function ExpireQuest($assign_quest_id){
 	global $dbObj;
 	$query = "

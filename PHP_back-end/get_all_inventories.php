@@ -4,13 +4,77 @@ header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
+include "config.php";
+
 
 if(isset($_GET))
 {
 	extract($_GET);
 	if(isset($uid))
 	{
-		$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+		$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
+
+		$query = "
+				SELECT ID, UID, RECIPE_ID
+				FROM USER_COOKING
+				WHERE `END_TIME` < NOW( )
+				AND `STATUS` = 'ACTIVE'
+				AND UID = :uid
+				";
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(array(
+				':uid' => $uid
+				));
+		$records = $statement->fetchAll(PDO::FETCH_ASSOC);
+		foreach($records as $record){
+			$query = "SELECT RECIPE_ID FROM USER_COOKING_SUMMARY WHERE RECIPE_ID = :recipe_id AND UID = :uid";
+			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement->execute(array(
+					':recipe_id' => $record['RECIPE_ID'],
+					':uid' => $uid
+					));
+			$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+			if(sizeof($res) == 1){
+				$query = "
+					UPDATE 
+						USER_COOKING_SUMMARY
+					SET
+						UNIT = UNIT + 1
+					WHERE
+						RECIPE_ID = :recipe_id AND
+						UID = :uid
+				";
+				$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+				$statement->execute(array(
+						':recipe_id' => $record['RECIPE_ID'],
+						':uid' => $uid
+						));
+			}
+			else{
+				$query = "INSERT INTO USER_COOKING_SUMMARY (`RECIPE_ID`,`UID`,`UNIT`) VALUES ('".$record['RECIPE_ID']."','".$uid."','1')";
+				$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+				$statement->execute(array(
+						':uid' => $uid
+						));
+			}
+		}
+		$query = "
+				UPDATE 
+					`USER_COOKING`
+				SET 
+					`STATUS` = 'COMPLETED', `END_TIME` = ''
+				WHERE 
+					`END_TIME` < NOW()
+					AND `STATUS` = 'ACTIVE'
+					AND UID = :uid 
+				";
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(array(
+				':uid' => $uid
+				));
+		////////////////
+		////////////////
+
 		$query =   
 		   "SELECT 
 				'INVENTORY' AS 'CATEGORY', kits.INV_ID AS 'ID', kii.NAME,kii.DESCRIPTION, kii.REQ_GOLD,kii.IMAGE,kii.TYPE,kii.STATUS,kits.TOTAL_UNIT
@@ -32,7 +96,19 @@ if(isset($_GET))
 			WHERE
 				kcts.CRAFT_ID = kcm.CRAFT_ID AND
 				NOT kcts.TOTAL_UNIT = '0' AND
-				kcts.UID = :uid";
+				kcts.UID = :uid
+			UNION
+			SELECT 
+				'COOKING' AS 'CATEGORY', RM.RECIPE_ID AS 'ID',
+				RM.NAME, RM.DESCRIPTION, 'N/A' AS 'REQ_GOLD',RM.IMAGE, 
+				RM.TYPE, RM.STATUS, UCS.UNIT AS 'TOTAL_UNIT' 
+			FROM 
+				USER_COOKING_SUMMARY UCS, RECIPE_MAIN RM
+			WHERE
+				UCS.RECIPE_ID = RM.RECIPE_ID AND
+				UCS.UNIT <> '0' AND
+				UCS.UID = :uid
+				";
 		
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(array(':uid'=>$uid));

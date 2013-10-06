@@ -89,4 +89,12 @@ echo json_indent(json_encode($records));
 
 
 
+?> array('Error'=>$posts);
+}
+echo json_indent(json_encode($records));
+?>
+<?php 
+
+
+
 ?>

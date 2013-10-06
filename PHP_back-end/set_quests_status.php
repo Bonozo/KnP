@@ -230,4 +230,14 @@ function updateInventorySummary($uid,$inv_id,$operation,$unit){
 			));
 	}
 }
+?>id,:inv_id,:unit,'0')";
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(
+		array(
+			':uid' => $uid,
+			':inv_id' => $inv_id,
+			':unit' => $unit
+			));
+	}
+}
 ?>

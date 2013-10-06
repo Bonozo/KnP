@@ -30,4 +30,7 @@ $query =
 $statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 $statement->execute();
 
+?>);
+$statement->execute();
+
 ?>

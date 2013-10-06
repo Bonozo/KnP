@@ -3,13 +3,19 @@ header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
-$dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+include "config.php";
+$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 //$union = array_unique(array_merge($a, $b));
 if(isset($_GET))
 {
-	extract($_GET);
+	extract($_GET); 
 	if(isset($uid,$inv_id,$req_golds))
 	{
+		$apple_inventory_id = 10060;
+		$num_of_required_apple = 4;
+		$task_detail_id = 3003;
+		$task_1 = 1001;
+		
 		$name = "";
 		$num_of_friends = "";
 		$quest_id = "";
@@ -126,7 +132,57 @@ if(isset($_GET))
 					':inv_id' => $inv_id,
 					':uid' => $uid
 					));
-				
+			}
+			/*Checking for task 1*/
+			$sql = "SELECT ACTIVE_TASK FROM KAP_USER_MAIN WHERE UID = :uid";
+			$statement = $dbObj->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement->execute(
+			array(
+				':uid' => $uid
+				));
+			$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+			if(doubleval($res[0]['ACTIVE_TASK']) == $task_1){
+				$sql = 	"
+						SELECT COUNT( UID ) AS 'TASK_COMPLETED'
+						FROM `KNP_INVENTORY_TRANSACTION_SUMMARY`
+						WHERE `INV_ID` = :apple_inventory_id
+						AND `UID` = :uid
+						AND TOTAL_UNIT >= :num_of_required_apple
+						";
+				$statement = $dbObj->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+				$statement->execute(
+				array(
+					':apple_inventory_id' => $apple_inventory_id,
+					':uid' => $uid,
+					':num_of_required_apple' => $num_of_required_apple
+					));
+				$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+				if(intval($res[0]['TASK_COMPLETED']) == 1){ // apple purchased or already have it
+					$sql = "
+							SELECT COUNT(UID) AS 'EXISTS' FROM USER_TASK_DETAILS WHERE UID = :uid AND TASK_DETAIL_ID = :task_detail_id 
+							";
+					$params = array(
+						':uid '=>$uid,
+						':task_detail_id'=>$task_detail_id
+						);
+					$statement = $dbObj->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+					$statement->execute($params);
+					$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+					if(intval($res[0]['EXISTS']) == 0){
+						$sql = "
+								INSERT INTO `USER_TASK_DETAILS` (`UID`,`TASK_DETAIL_ID`,`STATUS`)
+								VALUES
+								( :uid, :task_detail_id, :status )
+								";
+						$params = array(
+							':uid' => $uid,
+							':task_detail_id' => $task_detail_id,
+							':status' => 'COMPLETED'
+							);
+						$statement = $dbObj->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+						$statement->execute($params);
+					}
+				}
 			}
 			$posts = array('Message'=> "Successfully purchased!");
 

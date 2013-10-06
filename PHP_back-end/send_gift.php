@@ -4,7 +4,7 @@ include "db/db.php";
 include "functions/misc.php";
 include "config.php";
 ini_set('memory_limit', '256M');
-$dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 $key = "tGKQ62mVRFS3AvCxelxnoHjJI8vIBtbW"; //APP KEY
 $cloud_password = "admin";
 $tmp_fname = 'cookie.txt';
@@ -26,10 +26,20 @@ if(isset($_GET))
 			$query = "SELECT IF((SELECT TOTAL_UNIT FROM KNP_INVENTORY_TRANSACTION_SUMMARY WHERE UID = :sender_id AND INV_ID = :gift_id) > 0,
 			'AVAILABLE','NOT_AVAILABLE') AS 'INVENTORY'";
 		}
+		else if(strcmp($gift_type,'COOKING') == 0){
+			$query = " SELECT IF( (
+						SELECT UNIT
+						FROM USER_COOKING_SUMMARY
+						WHERE UID = :sender_id
+						AND RECIPE_ID = :gift_id
+						) >0, 'AVAILABLE', 'NOT_AVAILABLE' ) AS 'COOKING'";
+		}
+		
 		if($query <> ""){
 			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$statement->execute(array(':sender_id'=>$sender_id,':gift_id'=>$gift_id));
 			$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+
 			if(strcmp($res[0][$gift_type],'AVAILABLE') == 0){
 				if(strcmp($gift_type,'CRAFT') == 0){
 					/*
@@ -115,7 +125,7 @@ if(isset($_GET))
 							VALUES 
 								(:sender_id,
 								 :receiver_id,
-								 'YOUR FREIND HAS RECEIVED GIFT!',
+								 'I SENT YOU A GIFT!',
 								 'UNREAD') 
 						";
 						$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -128,12 +138,15 @@ if(isset($_GET))
 					}
 					else{
 						$records = array("Message"=>"Transaction NOT committed!");
-					}
+					}  
 				}
 				else if(strcmp($gift_type,'INVENTORY') == 0){
 					/*
 					 * INVENTORY
 					 */
+					$task_detail_id = 3006;
+					$apple_inv_id = 10060;
+
 					$query = "INSERT INTO
 					 `KNP_INVENTORY_TRANSACTION`
 					 (`DONAR_UID`,
@@ -223,13 +236,20 @@ if(isset($_GET))
 							':sender_id' => $sender_id,
 							':receiver_id' => $receiver_id
 							));
+						$query = "SELECT `NAME`,`GENDER` FROM KAP_USER_MAIN WHERE `UID` = :sender_id";
+						$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+						$statement->execute(array(':sender_id'=>$sender_id));
+						$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+						$sender_name = $res[0]['NAME'];
+						$static_message = ($res[0]['NAME'] == 'm')?"your knight has sent you a gift":"your prince has sent you a gift";
+							
 						$query = "SELECT `USER_ID`,`NOTIFICATION`,`NAME` FROM KAP_USER_MAIN WHERE `UID` = :receiver_id";
 						$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 						$statement->execute(array(':receiver_id'=>$receiver_id));
 						$res = $statement->fetchAll(PDO::FETCH_ASSOC);
 						if($res[0]['NOTIFICATION']=='ON' && $res[0]['USER_ID']!=''){
-							$message.= $res[0]['NAME']."'.";
-							$json       = '{"alert":"'. $message .'","title":"'. $title .'","vibrate":true,"sound":"default","icon":"appicon"}';
+							//$message.= $sender_name."'.";
+							$json       = '{"alert":"'. $static_message .'","title":"'. $title .'","vibrate":true,"sound":"default","icon":"appicon"}';
 								
 						list($status,$response) = CloudLogin(CLOUD_ADMIN,CLOUD_PASSWORD);
 							if($status){
@@ -247,13 +267,162 @@ if(isset($_GET))
 								curl_close($curlObj);
 							}
 						}
-				
+						if(strcmp($gift_id."",$apple_inv_id."") == 0){
+							$sql = "
+									SELECT COUNT(UID) AS 'EXISTS' FROM USER_TASK_DETAILS WHERE UID = '".$sender_id."' AND TASK_DETAIL_ID = '".$task_detail_id."' 
+									";
+
+							$statement = $dbObj->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+							$statement->execute();
+							$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+							if(strcmp($res[0]['EXISTS']."","0") == 0){
+
+								$sql = "
+										INSERT INTO `USER_TASK_DETAILS` (`UID`,`TASK_DETAIL_ID`,`STATUS`)
+										VALUES
+										( '".$sender_id."', '".$task_detail_id."', 'COMPLETED' )
+										";
+								$params = array(
+									':uid' => $sender_id,
+									':task_detail_id' => $task_detail_id,
+									':status' => 'COMPLETED'
+									);
+								$statement = $dbObj->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+								$statement->execute();
+							}
+						}
+
 							
 						$records = array("Message"=>"Gift successfully sent!");
 					}
 					else{
 						$records = array("Message"=>"Transaction NOT committed!");
 					}
+				}
+				else if(strcmp($gift_type,'COOKING') == 0){
+
+					$task_detail_id = 3008;
+					$apple_pie_cooking_id = 1001;
+					/*
+					 * COOKING
+					 */
+					$query = "INSERT INTO
+					 `KNP_INVENTORY_TRANSACTION`
+					 (`DONAR_UID`,
+					 `BENEFICIARY_UID`,
+					 `CRAFT_ID`,
+					 `UNIT_TRANSFER`,
+					 `TRANS_TYPE`,
+					 `COMMENTS`) 
+					VALUES 
+					 (:sender_id,
+ 					  :receiver_id,
+					  :gift_id,
+					 '1',
+					 'GIFT_COOKING',
+					 'Cooking send as gift')";
+					$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+					$statement->execute(array(
+					':sender_id'=>$sender_id,
+					':receiver_id'=>$receiver_id,
+					':gift_id'=>$gift_id
+					));
+					$query = "
+					UPDATE 
+						`USER_COOKING_SUMMARY` 
+					SET 
+						UNIT = UNIT - 1
+					WHERE
+						UID = :sender_id AND
+						RECIPE_ID = :gift_id
+					";
+					
+					$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+					$statement->execute(
+					array(
+						':sender_id' => $sender_id,
+						':gift_id' => $gift_id
+						));
+					
+					$query = "
+					UPDATE 
+						`USER_COOKING_SUMMARY` 
+					SET 
+						UNIT = UNIT + 1
+					WHERE
+						UID = :receiver_id AND
+						RECIPE_ID = :gift_id;
+					";
+					$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+					$statement->execute(
+					array(
+						':receiver_id' => $receiver_id,
+						':gift_id' => $gift_id
+						));
+
+					if($statement->rowCount() == 0){
+						$query = 
+						"INSERT INTO USER_COOKING_SUMMARY 
+						(`UID`,`RECIPE_ID`,`UNIT`,`CONSUMED_UNIT`) 
+						VALUES 
+						( :receiver_id, :gift_id, '1', '0');
+						";
+						$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+						$statement->execute(
+						array(
+							':receiver_id' => $receiver_id,
+							':gift_id' => $gift_id
+							));
+						
+					}
+					$query = "
+					INSERT INTO 
+						`KNP_MESSAGE_MAIN`
+							(`SENDER_UID`,
+							`RECEIVER_UID`,
+							`MESSAGE_TEXT`,
+							`STATUS`) 
+						VALUES 
+							(:sender_id,
+							 :receiver_id,
+							 'I SENT YOU A GIFT!',
+							 'UNREAD') 
+					"; 
+					$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+					$statement->execute(
+					array(
+						':sender_id' => $sender_id,
+						':receiver_id' => $receiver_id
+						));
+					//TASK #3 
+					if($gift_id == $apple_pie_cooking_id){
+						$sql = "
+								SELECT COUNT(UID) AS 'EXISTS' FROM USER_TASK_DETAILS WHERE UID = :uid AND TASK_DETAIL_ID = :task_detail_id 
+								";
+						$params = array(
+							':uid '=>$sender_id,
+							':task_detail_id'=>$task_detail_id
+							);
+						$statement = $dbObj->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+						$statement->execute($params);
+						$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+						if(intval($res[0]['EXISTS']) == 0){
+							$sql = "
+									INSERT INTO `USER_TASK_DETAILS` (`UID`,`TASK_DETAIL_ID`,`STATUS`)
+									VALUES
+									( :uid, :task_detail_id, :status )
+									";
+							$params = array(
+								':uid' => $sender_id,
+								':task_detail_id' => $task_detail_id,
+								':status' => 'COMPLETED'
+								);
+							$statement = $dbObj->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+							$statement->execute($params);
+						}
+					}
+						
+					$records = array("Message"=>"Gift successfully sent!");
 				}
 			}
 			else{
@@ -262,7 +431,7 @@ if(isset($_GET))
 		}
 		else
 		{
-			$records = array("Message"=>"Operation failed. Unknown gift type");
+			$records = array("Message"=>"Operation failed. Unknown gift type" . $query);
 		}
 	}
 	else
@@ -275,11 +444,12 @@ else
 {
 	$records = array("Request"=>"Bad Request!");
 }
-
 echo json_indent(json_encode($records));
 function CloudLogin($email,$password){
+
 	global $key;
-	global $cloud_password; 	
+	global $cloud_password;
+	global $tmp_fname; 	
 	$curlObj = curl_init();
 
 	if($cloud_password != '')

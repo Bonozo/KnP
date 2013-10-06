@@ -5,7 +5,7 @@ include "db/db.php";
 include "functions/misc.php";
 include "config.php";
 ini_set('memory_limit', '256M');
-$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 $key = "tGKQ62mVRFS3AvCxelxnoHjJI8vIBtbW"; //APP KEY
 $cloud_password = "admin";
 $tmp_fname = 'cookie.txt';
@@ -21,10 +21,11 @@ if(isset($_GET))
 
 
 		$dbObj->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$query = "SELECT kits.TOTAL_UNIT,kum.ENERGY FROM KAP_USER_MAIN kum,KNP_INVENTORY_TRANSACTION_SUMMARY kits WHERE kits.UID = :uid AND kits.INV_ID = '10004' and kum.UID = :uid";
+		$query = "SELECT kits.TOTAL_UNIT,kum.ENERGY,kum.NAME FROM KAP_USER_MAIN kum,KNP_INVENTORY_TRANSACTION_SUMMARY kits WHERE kits.UID = :uid AND kits.INV_ID = '10004' and kum.UID = :uid";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(array(':uid'=>$uid));
 		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+		$sender_name = $res[0]['NAME'];
 
 		if($res[0]['TOTAL_UNIT']>=MIN_GOLD){
 			if($res[0]['ENERGY']>=MIN_ENERGY){
@@ -92,7 +93,7 @@ if(isset($_GET))
 							$res = $statement->fetchAll(PDO::FETCH_ASSOC);
 			
 							if($res[0]['NOTIFICATION']=='ON' && $res[0]['USER_ID']!=''){
-								$message.= $res[0]['NAME']."'.";
+								$message.= $sender_name.".";
 $json       = '{"alert":"'. $message .'","title":"'. $title .'","vibrate":true,"sound":"default","icon":"appicon"}';
 								
 								list($status,$response) = CloudLogin(CLOUD_ADMIN,CLOUD_PASSWORD);
@@ -203,6 +204,7 @@ $json       = '{"alert":"'. $message .'","title":"'. $title .'","vibrate":true,"
 function CloudLogin($email,$password){
 	global $key;
 	global $cloud_password; 	
+	global $tmp_fname; 	
 	$curlObj = curl_init();
 
 	if($cloud_password != '')
@@ -219,6 +221,15 @@ function CloudLogin($email,$password){
 	$response = objectToArray(json_decode(curl_exec($curlObj)));//echo "CLOUD_LOGIN";print_r($response);///die();
 	if($response['meta']['status'] == 'ok'){
 		return array(true,$response['response']['users'][0]['id']);
+	} 
+	else if($response['meta']['status'] == 'fail'){
+		return array(false,$response['meta']['message']);
+	}
+	return array(false,'Unknown error');
+}
+
+
+?>0]['id']);
 	} 
 	else if($response['meta']['status'] == 'fail'){
 		return array(false,$response['meta']['message']);

@@ -4,7 +4,8 @@ include "db/db.php";
 include "functions/misc.php";
 include "config.php";
 ini_set('memory_limit', '256M');
-$dbObj = new sdb("mysql:host=174.132.165.194;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+include "config.php";
+$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 //$union = array_unique(array_merge($a, $b));
 $key = "tGKQ62mVRFS3AvCxelxnoHjJI8vIBtbW"; //APP KEY
 $cloud_password = "admin";
@@ -181,6 +182,40 @@ if(isset($_GET))
 
 		}
 		else{
+		$task_detail_id = 3007;
+		$sql = "
+				SELECT COUNT(UID) AS 'EXISTS' FROM USER_TASK_DETAILS WHERE UID = :uid AND TASK_DETAIL_ID = :task_detail_id 
+				";
+		$params = array(
+			':uid '=>$assign_by_uid,
+			':task_detail_id'=>$task_detail_id
+			);
+		$statement = $dbObj->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute($params);
+		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+		if(intval($res[0]['EXISTS']) == 0){
+			$sql = "
+					INSERT INTO `USER_TASK_DETAILS` (`UID`,`TASK_DETAIL_ID`,`STATUS`)
+					VALUES
+					( :uid, :task_detail_id, :status )
+					";
+			$params = array(
+				':uid' => $assign_by_uid,
+				':task_detail_id' => $task_detail_id,
+				':status' => 'COMPLETED'
+				);
+			$statement = $dbObj->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement->execute($params);
+		}
+		
+
+
+		$query = "SELECT `NAME` FROM KAP_USER_MAIN WHERE `UID` = :$assign_by_uid";
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(array(':$assign_by_uid'=>$assign_by_uid));
+		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+		$sender_name = $res[0]['NAME'];
+			
 			$query = "
 		SELECT 
 			COUNT(`STATUS`) AS 'REQUESTS' 
@@ -260,7 +295,7 @@ if(isset($_GET))
 					$statement->execute(array(':assign_to_uid'=>$assign_to_uid));
 					$res = $statement->fetchAll(PDO::FETCH_ASSOC);
 					if($res[0]['NOTIFICATION']=='ON' && $res[0]['USER_ID']!=''){
-						$message.= $res[0]['NAME']."'.";
+						$message.= $sender_name."'.";
 $json       = '{"alert":"'. $message .'","title":"'. $title .'","vibrate":true,"sound":"default","icon":"appicon"}';
 						
 						//die('YES');
@@ -295,8 +330,6 @@ $json       = '{"alert":"'. $message .'","title":"'. $title .'","vibrate":true,"
 		}
 			
 		}
-		
-		
 	}
 	else
 	{
@@ -312,7 +345,8 @@ $records = array('Record'=>$records);
 echo json_indent(json_encode($records));
 function CloudLogin($email,$password){
 	global $key;
-	global $cloud_password; 	
+	global $cloud_password;
+	global $tmp_fname; 	
 	$curlObj = curl_init();
 
 	if($cloud_password != '')

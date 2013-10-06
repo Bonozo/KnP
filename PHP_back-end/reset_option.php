@@ -49,6 +49,14 @@ if(isset($_GET))
 		$statement->execute(array(':uid'=>$uid));
 		$query =   
 		   "DELETE FROM 
+		   `USER_WEAR_INFO`
+		   WHERE 
+		   `UID` = :uid";
+		   
+			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(array(':uid'=>$uid));
+		$query =   
+		   "DELETE FROM 
 		   `KNP_ASSIGN_QUESTS`
 		   WHERE 
 		   `ASSIGN_BY_UID` = :uid 
@@ -60,20 +68,39 @@ if(isset($_GET))
 		$query =   
 		   "UPDATE `KAP_USER_MAIN` 
 		   SET
+		   `GENDER`='r',
 		   `LEVEL`='1',
 		   `XP` = '1000',
-		   `ENERGY` = '1000'
+		   `ENERGY` = '1000',
+		   `ACTIVE_TASK` = '1001'
 		   WHERE `UID` = :uid";
 		   
-			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(array(':uid'=>$uid));
 
-		$posts = array('Message'=>"You are successfully reset your account!");
+		$query =   
+		   "DELETE FROM 
+		   `USER_COOKING_SUMMARY`
+		   WHERE 
+		   `UID` = :uid
+			";
+		   
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(array(':uid'=>$uid));
+
+		$query =   
+		   "
+		   DELETE FROM 
+		   `USER_TASK_DETAILS`
+		   WHERE 
+		   `UID` = :uid;
+		   ";
+		   
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(array(':uid'=>$uid));
 
 
-		
-		
-		
+		$posts = array('Message'=>"You have successfully reset your account!");
 		$records = array('Record'=>$posts);//$records = array('Error'=>$posts[0]);
 
 	}

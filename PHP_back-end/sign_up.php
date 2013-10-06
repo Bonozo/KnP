@@ -4,7 +4,8 @@ header('Content-type: application/json');
 include "db/db.php";
 include "functions/misc.php";
 ini_set('memory_limit', '256M');
-$dbObj = new sdb("mysql:host=localhost;dbname=mohsin13_dev", 'mohsin13_dev', 'reaction');
+include "config.php";
+$dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSWORD);
 $key = "tGKQ62mVRFS3AvCxelxnoHjJI8vIBtbW"; //APP KEY
 $cloud_password = "test";
 $tmp_fname = 'cookie.txt';
@@ -311,6 +312,15 @@ function emailValidation($email){
 		 * Check for Email already exist
 		 */
 		$query = "SELECT `EMAIL` FROM `KAP_USER_MAIN` WHERE `EMAIL` = :email";
+		$statement = $dbObj -> prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement -> execute(array(':email' => $email));
+		$res = $statement -> fetchAll(PDO::FETCH_ASSOC);
+	
+		return is_value_exists($res, "EMAIL", $email);
+	}
+	return '-2';
+}
+?>IN` WHERE `EMAIL` = :email";
 		$statement = $dbObj -> prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement -> execute(array(':email' => $email));
 		$res = $statement -> fetchAll(PDO::FETCH_ASSOC);
