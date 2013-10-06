@@ -138,7 +138,7 @@ function AvatarByLevel(userinfo, callback) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/get_avatar_list.php?uid=" + userinfo.Record[0].UID +"&gender=f&gold=0",
+		url : "http://bonozo.com:8080/knp/get_avatar_list.php?uid=" + userinfo.Record[0].UID +"&gender=f&gold=0",
 
 	});
 

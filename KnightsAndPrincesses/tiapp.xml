@@ -8,13 +8,14 @@
     <property name="acs-api-key-development" type="string">tGKQ62mVRFS3AvCxelxnoHjJI8vIBtbW</property>
     <property name="ti.android.threadstacksize" type="int">32768</property>
     <deployment-targets>
+        <target device="tizen">false</target>
         <target device="mobileweb">true</target>
         <target device="iphone">true</target>
         <target device="ipad">true</target>
         <target device="android">true</target>
         <target device="blackberry">false</target>
     </deployment-targets>
-    <sdk-version>3.1.0.GA</sdk-version>
+    <sdk-version>3.1.1.GA</sdk-version>
     <id>com.bonozo.knp</id>
     <name>KnightsAndPrincesses</name>
     <version>1.0</version>
@@ -51,14 +52,13 @@
         </services>
         <!-- TI_MANIFEST -->
         <!--<manifest android:installLocation="preferExternal">
-			
 		</manifest>-->
-        <application android:debuggable="false"
+        <application android:debuggable="false" android:theme="@style/Theme.KNP"
             android:icon="@drawable/appicon" android:label="Hello" android:name="KnightsAndPrincessesApplication">
             <!-- TI_APPLICATION -->
             <activity android:configChanges="keyboardHidden|orientation"
                 android:label="Hello"
-                android:name=".KnightsAndPrincessesActivity" android:theme="@style/Theme.Titanium">
+                android:name=".KnightsAndPrincessesActivity"> <!--android:theme="@style/Theme.Titanium" --><!--@style/Theme.Titanium -->
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN"/>
                     <category android:name="android.intent.category.LAUNCHER"/>

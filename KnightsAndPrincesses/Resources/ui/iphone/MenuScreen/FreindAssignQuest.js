@@ -109,7 +109,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	});
 	Infoview.add(text_label);
 
-	var freind_info = "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + friend_uid;
+	var freind_info = "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + friend_uid;
 	var httpclientt = require('ui/iphone/Functions/function');
 	httpclientt.requestServer({
 		success : function(e) {
@@ -328,7 +328,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	var rowViewHeight = screenWidth * 0.150;
 	var selected_item = [];
 	var httpclientt = require('ui/iphone/Functions/function');
-	var _url = "http://therealmattharmon.com/knp/get_all_quests.php";
+	var _url = "http://bonozo.com:8080/knp/get_all_quests.php";
 	httpclientt.requestServer({
 		success : function(e) {
 			items_json = JSON.parse(this.responseText);
@@ -526,8 +526,8 @@ function FreindAssignQuest(userinfo, friend_uid) {
 				switch (e.index) {
 					case 0:
 						actInd.show();
-						//var assign_quest_url = "http://therealmattharmon.com/knp/assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "" + "&assign_to_uid=" + friendJson.UID + "" + "&quest_ids=" + e.source.quest_id + "&message=N/A";
-						var assign_quest_url = "http://therealmattharmon.com/knp/knp_assign_quests.php?assign_by_uid=" + userinfo.Record[0].UID + 
+						//var assign_quest_url = "http://bonozo.com:8080/knp/assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "" + "&assign_to_uid=" + friendJson.UID + "" + "&quest_ids=" + e.source.quest_id + "&message=N/A";
+						var assign_quest_url = "http://bonozo.com:8080/knp/knp_assign_quests.php?assign_by_uid=" + userinfo.Record[0].UID + 
 						"&assign_to_uid=" + friend_uid + "&quest_ids=" + quest_ids + 
 						"&message="+ Ti.Network.encodeURIComponent(name_text.value)	+"&num_of_hours="+num_of_hours+"&status=INCOMPLETE&user_id="+user_id+"";
 						var httpclientt = require('ui/iphone/Functions/function');
@@ -577,7 +577,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	});
 
 
-	var avatar_info = "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID;
+	var avatar_info = "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID;
 	var httpclientt = require('ui/iphone/Functions/function');
 	httpclientt.requestServer({
 		success : function(e) {

@@ -5,31 +5,29 @@ function SonnetGame(quest_status, quest_id, userinfo) {
 	function hideLoader() {
 		images_counter++;
 		if (images_counter >= 2) {
-			actInd.hide();
+			//actInd.hide();
 		}
 	}
 
-	var actInd = Titanium.UI.createActivityIndicator();
-	actInd.message = 'Loading...';
-	//message will only shows in android.
-	actInd.show();
+   //actInd.message = 'Signing In...';
+    //window.add(//actInd);
+	////actInd.show();
     var screenWidth = Titanium.Platform.displayCaps.platformWidth;
-	var self = Ti.UI.createWindow({
+	var window = Ti.UI.createWindow({
 		orientation : Ti.UI.PORTRAIT,
 		navBarHidden : true,
 		fullscreen : true
 	});
-    self.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
+    window.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 
     var view = Titanium.UI.createView({
         width : '100%',
-        height : '100%',
-        backgroundImage : '/assets/inventoryBackground.png'
+        height : '100%'
 
     });
-    self.add(view);
+    window.add(view);
 
-	var _url = "http://therealmattharmon.com/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
+	var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
 
 	var items_json = "";
 	var items_length = 0;
@@ -47,7 +45,7 @@ function SonnetGame(quest_status, quest_id, userinfo) {
 					});
 					alertDialog.show();
 					alertDialog.addEventListener('click', function(e) {
-						self.close();
+						window.close();
 					});
 				} else {
 					_assign_quest_id = items_json.Record[0].ASSIGN_QUEST_ID;
@@ -57,7 +55,7 @@ function SonnetGame(quest_status, quest_id, userinfo) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : _url,
+		url : _url
 
 	});
 
@@ -117,7 +115,7 @@ function SonnetGame(quest_status, quest_id, userinfo) {
     });
     view.add(return_imageview);
     return_imageview.addEventListener('click', function(e) {
-        self.close();
+        window.close();
     });
     var challenger_label = Titanium.UI.createLabel({
         text : 'CHALLENGER: '+userinfo.Record[0].NAME,
@@ -186,7 +184,7 @@ function SonnetGame(quest_status, quest_id, userinfo) {
 	
     view.add(commentBg);
     var dp_imageview = Ti.UI.createImageView({
-        image : '/assets/female_icon.png',
+        image : (userinfo.Record[0].GENDER == 'm')?'/assets/male_icon.png':'/assets/female_icon.png',
         width : '28%',
         right : '1%',
         height : '15%',
@@ -232,8 +230,8 @@ function SonnetGame(quest_status, quest_id, userinfo) {
     });
     view.add(writing_imageview);
     var undo_word = Titanium.UI.createButton({
-        title : "UNDO WORD",
         backgroundImage : '/assets/button_smallLong_UP.png',
+        title : "UNDO WORD",
         left : "5%",
         top : "60%",
         font : {
@@ -380,13 +378,18 @@ function SonnetGame(quest_status, quest_id, userinfo) {
 					if(counter == '3'){
 						//alert('you lost the game');
 						if (!played) {
-							actInd.show();
+							////actInd.show();
 							//alert(_assign_quest_id);
-				
-							_url = "http://therealmattharmon.com/knp/knp_set_quest_status.php?game_status=LOSS&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
-							httpclientt.requestServer({
+							//alert('You loose the game');
+							
+							
+							_url = "http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=LOSS&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid="  +  userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
+					        var httpclientt2 = require('/ui/common/Functions/function');
+					        var items_json = "";
+							httpclientt2.requestServer({
 								success : function(e) {
 									items_json = JSON.parse(this.responseText);
+									//alert(JSON.stringify(items_json));
 									if (items_json.Record != undefined) {
 										if (items_json.Record[0].Message == 'Updated!') {
 				
@@ -397,12 +400,18 @@ function SonnetGame(quest_status, quest_id, userinfo) {
 											});
 											alertDialog.show();
 											alertDialog.addEventListener('click', function(e) {
-												self.close();
+												window.close();
 											});
 				
-											//self.close();
+											//window.close();
 				
 										}
+										else{
+											alert('message undefined');
+										}
+									}
+									else{
+										alert('record undefined');
 									}
 									Ti.App.fireEvent('update_xp', {
 										clicked_item : 'StatusScreen'
@@ -410,9 +419,11 @@ function SonnetGame(quest_status, quest_id, userinfo) {
 								},
 								method : 'GET',
 								contentType : 'text/xml',
-								url : _url,
+								url : _url// "http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=INCOMPLETE&assign_quest_id=90000511&quest_id=80000002&uid=10000134&friend_uid=10000134"
 				
 							});
+							
+							
 							played = true;
 						} else {
 							alert('You have already played this quest!\nPress back button');
@@ -431,16 +442,20 @@ function SonnetGame(quest_status, quest_id, userinfo) {
 						sonnet_desc_label.text += " "+txt;
 						if(words.length >='3' ){
 							if (!played) {
-								actInd.show();
+								////actInd.show();
 								//alert(_assign_quest_id);
-					
-								_url = "http://therealmattharmon.com/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
-								httpclientt.requestServer({
-									success : function(e) {
+								
+								//alert('You have win the game');
+								
+						        var httpclientt1 = require('/ui/common/Functions/function');
+						        var items_json = "";
+						        httpclientt1.requestServer({
+						            success : function(e) {
 										items_json = JSON.parse(this.responseText);
+										//alert(JSON.stringify(items_json));
 										if (items_json.Record != undefined) {
 											if (items_json.Record[0].Message == 'Updated!') {
-												actInd.hide();
+												////actInd.hide();
 												Ti.App.fireEvent('game_played', {
 													status : 'complete'
 												});
@@ -463,27 +478,49 @@ function SonnetGame(quest_status, quest_id, userinfo) {
 												var alertDialog = Titanium.UI.createAlertDialog({
 													title : 'You have completed ' + quest_name + '.',
 													message : 'Rewards earned:' + rewards,
-													buttonNames : ['OK']
+													buttonNames : ['OK'],
+													zIndex : 500
 												});
 												alertDialog.show();
 												alertDialog.addEventListener('click', function(e) {
-													self.close();
+													window.close();
 												});
 					
-												//self.close();
+												//window.close();
 					
 											}
+											else{
+												alert('message undefined');
+											}
+										}
+										else{
+											alert('record undefined');
 										}
 										Ti.App.fireEvent('update_xp', {
 											clicked_item : 'StatusScreen'
 										});
-									},
-									method : 'GET',
-									contentType : 'text/xml',
-									url : _url,
-					
-								});
-								played = true;
+						            },
+						            method : 'GET',
+						            contentType : 'text/xml',
+						            url : "http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + 
+											quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id +
+											"&uid=" + 
+											"" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + ""
+ 
+						            //"http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=INCOMPLETE&assign_quest_id=90000511&quest_id=80000002&uid=10000134&friend_uid=10000134"
+						            
+						            //"http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + 
+									//		quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id +
+									//		"&uid=" + 
+									//		"" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + ""
+						        });
+
+								
+/*								var _url = "http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + 
+								quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id +
+								"&uid=" + 
+								 "" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
+*/								played = true;
 							} else {
 								alert('You have already played this quest!\nPress back button');
 							}
@@ -534,90 +571,14 @@ function SonnetGame(quest_status, quest_id, userinfo) {
 			sonnet_text.value += e.source.value;//letters[i];
 		});
 		lleft+=11;
-/*	    var characterss = Titanium.UI.createButton({
-	        title : 'B',
-	        backgroundImage : '/assets/button_smallLong_UP.png',
-	        //color : '#A42B76',
-	        left : lleft+'%',
-	        top : "0%",
-	        
-	        font : {
-	            fontSize : '16'
-	        },
-	        width : "10%",
-	        height : "25%",
-	    });
-		lettersView.add(characterss);
-		lleft+=10;
-*/	}
-	//view.add(lettersView);
-
-/*	
-
-	gameImage.addEventListener('click', function() {
-		if (!played) {
-			actInd.show();
-			//alert(_assign_quest_id);
-
-			_url = "http://therealmattharmon.com/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
-			httpclientt.requestServer({
-				success : function(e) {
-					items_json = JSON.parse(this.responseText);
-					if (items_json.Record != undefined) {
-						if (items_json.Record[0].Message == 'Updated!') {
-							actInd.hide();
-							Ti.App.fireEvent('game_played', {
-								status : 'complete'
-							});
-							var index = 0;
-							var quest_name = '';
-							var rewards = '';
-							for (var key in items_json.Record[0]) {
-								if (items_json.Record[0].hasOwnProperty(key)) {
-									var rewards_earned = key + " -> " + items_json.Record[0][key];
-									if (index == 1) {
-										quest_name = items_json.Record[0][key];
-									} else if (index > 1) {
-										rewards += '\n' + key + '(' + items_json.Record[0][key] + ')';
-									}
-
-								}
-								index++;
-							}
-
-							var alertDialog = Titanium.UI.createAlertDialog({
-								title : 'You have completed ' + quest_name + '.',
-								message : 'Rewards earned:' + rewards,
-								buttonNames : ['OK']
-							});
-							alertDialog.show();
-							alertDialog.addEventListener('click', function(e) {
-								self.close();
-							});
-
-							//self.close();
-
-						}
-					}
-					Ti.App.fireEvent('update_xp', {
-						clicked_item : 'StatusScreen'
-					});
-				},
-				method : 'GET',
-				contentType : 'text/xml',
-				url : _url,
-
-			});
-			played = true;
-		} else {
-			alert('You have already played this quest!\nPress back button');
-		}
-	});
-*/
-	// Add to the parent view.
+  	}
 
 
-	return self;
+    window.open({
+        fullscreen : true,
+        navBarHidden : true
+    });
+	return window;
 
 }
 

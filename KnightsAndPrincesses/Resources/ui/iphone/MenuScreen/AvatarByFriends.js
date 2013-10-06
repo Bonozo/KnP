@@ -164,7 +164,7 @@ function AvatarByFriends(userinfo, callback) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/friends_list.php?uid=" + userinfo.Record[0].UID,
+		url : "http://bonozo.com:8080/knp/friends_list.php?uid=" + userinfo.Record[0].UID,
 
 	});
 };

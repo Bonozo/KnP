@@ -21,6 +21,18 @@ function MenuIcons(active_screen) {
 		width : '13.8%',
 		zIndex : 100
 	});
+	var selected_menu_label = Titanium.UI.createLabel({
+		text : 'Status',
+		top : '23%',
+		left : '0%',
+		textAlign : 'center',
+		color : 'rgb(255,0,255)',
+		font : {
+			fontSize : '12dip'
+		}
+	});
+	view.add(selected_menu_label);
+
 	var friend_alert_bg = Titanium.UI.createImageView({
 		left : '29.6%',
 		top : '0%',
@@ -112,7 +124,6 @@ function MenuIcons(active_screen) {
 		clearQuestIntervals();
         quest_screen_active = true;
 	});
-
 	var iconLeaderboards_imageview = Titanium.UI.createImageView({
 		image : '/assets/iconLeaderboards.png',
 		height : '100%',
@@ -213,7 +224,7 @@ function MenuIcons(active_screen) {
 	Ti.App.addEventListener('service_notification', function(data) {
 
 		var httpclientt = require('ui/iphone/Functions/function');
-		_url = "http://therealmattharmon.com/knp/get_notifications.php?uid=" + data.uid;
+		_url = "http://bonozo.com:8080/knp/get_notifications.php?uid=" + data.uid;
 		httpclientt.requestServer({
 			success : function(e) {
 				items_json = JSON.parse(this.responseText);

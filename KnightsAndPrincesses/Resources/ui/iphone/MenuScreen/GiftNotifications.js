@@ -165,7 +165,7 @@ function GiftNotifications(userinfo) {
         },
         method : 'GET',
         contentType : 'text/xml',
-        url : "http://therealmattharmon.com/knp/get_gift_notification.php?uid=" + userinfo.Record[0].UID,
+        url : "http://bonozo.com:8080/knp/get_gift_notification.php?uid=" + userinfo.Record[0].UID,
 
     });
 

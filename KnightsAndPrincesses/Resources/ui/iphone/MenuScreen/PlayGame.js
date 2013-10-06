@@ -1,5 +1,5 @@
 function PlayGame(game, quest_status, quest_id, userinfo, friend_uid, friend_quest_info) {
-    //http://therealmattharmon.com/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=INCOMPLETE_FRIEND&assign_quest_id=90000250&quest_id=80000004&uid=10000007&friend_uid=10000011
+    //http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=INCOMPLETE_FRIEND&assign_quest_id=90000250&quest_id=80000004&uid=10000007&friend_uid=10000011
 	if (game == 'sonnet_game') {
         var SonnetGamePlay = require('ui/iphone/MenuScreen/SonnetQuestPlay');
         var sonnetgameplay = new SonnetGamePlay(quest_status, quest_id, userinfo, friend_uid, friend_quest_info);
@@ -48,7 +48,7 @@ function PlayGame(game, quest_status, quest_id, userinfo, friend_uid, friend_que
         if (!played) {
 
             var httpclientt = require('ui/iphone/Functions/function');
-            _url = "http://therealmattharmon.com/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + friend_quest_info.ASSIGN_QUEST_ID + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + friend_uid;
+            _url = "http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + friend_quest_info.ASSIGN_QUEST_ID + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + friend_uid;
             httpclientt.requestServer({
                 success : function(e) {
                     items_json = JSON.parse(this.responseText);

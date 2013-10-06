@@ -72,11 +72,7 @@ function SceneryCustomization(userinfo) {
         weapon_images = 5;
 
     } else {
-<<<<<<< HEAD
         head_images = 7;
-=======
-        head_images = 2;
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
         dress_images = 5;
         hair_images = 2;
         jwel_images = 4;
@@ -85,15 +81,9 @@ function SceneryCustomization(userinfo) {
     if (gender == 'm') {
         var character_imageview1 = Titanium.UI.createImageView({
             height : '85.5%',
-<<<<<<< HEAD
             width : '55%',
             top : '5%',
             left : '45%',
-=======
-            width : '45%',
-            top : '5%',
-            left : '50%',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             image : '/assets/knight/male_dress'+dress_counter+'.png',
             //bottom : '0%'
             zIndex : 100
@@ -104,15 +94,9 @@ function SceneryCustomization(userinfo) {
         });
         var helmet_imageview = Titanium.UI.createImageView({
             height : '85.5%',
-<<<<<<< HEAD
             width : '55%',
             top : '5%',
             left : '45%',
-=======
-            width : '45%',
-            top : '5%',
-            left : '50%',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             
             image : '/assets/knight/helmet1.png',
             //bottom : '0%'
@@ -121,21 +105,14 @@ function SceneryCustomization(userinfo) {
         view.add(helmet_imageview);
         var shield_imageview = Titanium.UI.createImageView({
             height : '85.5%',
-<<<<<<< HEAD
             width : '55%',
             top : '5%',
             left : '45%',
-=======
-            width : '45%',
-            top : '5%',
-            left : '50%',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             
             image : '/assets/knight/shield.png',
             //bottom : '0%'
         });
         view.add(shield_imageview);
-<<<<<<< HEAD
         var back_hair_imageview = Titanium.UI.createImageView({
             height : '85.5%',
             width : '55%',
@@ -151,19 +128,11 @@ function SceneryCustomization(userinfo) {
             width : '55%',
             top : '5%',
             left : '45%',
-=======
-        var face_imageview = Titanium.UI.createImageView({
-            height : '15%',
-            width : '45%',
-            top : '20%',
-            left : '50%',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             image : '/assets/knight/male_face' + head_counter + '.png',
             //bottom : '0%'
             //zIndex : 600
         });
         view.add(face_imageview);
-<<<<<<< HEAD
         var hair_imageview = Titanium.UI.createImageView({
             height : '85.5%',
             width : '55%',
@@ -179,33 +148,6 @@ function SceneryCustomization(userinfo) {
             width : '55%',
             top : '5%',
             left : '45%',
-=======
-        var hair_front_imageview = Titanium.UI.createImageView({
-            height : '20%',
-            width : '52%',
-            top : '16%',
-            left : '47.2%',
-            image : '/assets/knight/male_hair' + hair_counter + '.png',
-            //bottom : '0%'
-            //zIndex : 700
-        });
-        view.add(hair_front_imageview);
-        var hair_back_imageview = Titanium.UI.createImageView({
-            height : '8.9%',
-            width : '10.5%',
-            top : '19%',
-            left : '65%',
-            image : '/assets/knight/male_hair' + hair_counter + '_back.png',
-            //bottom : '0%'
-            //zIndex : 700
-        });
-       // view.add(hair_back_imageview);
-        var weapon_imageview = Titanium.UI.createImageView({
-            height : '85%',
-            width : '45%',
-            top : '5%',
-            left : '50%',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             image : '/assets/knight/left_hand' + weapon_counter+ '.png',
             //bottom : '0%'
             //zIndex : 700
@@ -226,13 +168,8 @@ function SceneryCustomization(userinfo) {
             hair_counter++;
             hair_button.title = 'Hair ' + hair_counter;
             //alert(hair_counter);
-<<<<<<< HEAD
             hair_imageview.image = '/assets/knight/male_hair' + hair_counter + '_front.png';
             back_hair_imageview.image = '/assets/knight/male_hair' + hair_counter + '_back.png';
-=======
-            hair_front_imageview.image = '/assets/knight/male_hair' + hair_counter + '.png';
-          //  hair_back_imageview.image = '/assets/knight/hair' + hair_counter + '_back.png';
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
         });
         
         head_button = Titanium.UI.createButton({
@@ -305,7 +242,7 @@ function SceneryCustomization(userinfo) {
         view.add(set_dressing);
         set_dressing.addEventListener('click', function(e) {
             //alert(dress_counter+":"+hair_counter+":"+jwel_counter+":"+head_counter);
-            var set_avatar_appearance_url = "http://therealmattharmon.com/knp/set_avatar_appearance.php?uid=" + userinfo.Record[0].UID + 
+            var set_avatar_appearance_url = "http://bonozo.com:8080/knp/set_avatar_appearance.php?uid=" + userinfo.Record[0].UID + 
             "&gender="+userinfo.Record[0].GENDER+"&hair=male_hair" + hair_counter + "&face=male_face" + head_counter + "&jwel=&dress=male_dress1&weapon=left_hand"+weapon_counter;
             //alert(set_avatar_appearance_url);
             var httpclientt = require('ui/iphone/Functions/function');
@@ -329,27 +266,17 @@ function SceneryCustomization(userinfo) {
     } else {
         var character_imageview = Titanium.UI.createImageView({
             height : '75.5%',
-<<<<<<< HEAD
             width : '55%',
             top : '10%',
             left : '55%',
             image : '/assets/princess/dress' + dress_counter + '.png',
             //bottom : '0%'
             zIndex : 500
-=======
-            width : '38%',
-            top : '10%',
-            left : '65%',
-            image : '/assets/dress' + dress_counter + '.png',
-            //bottom : '0%'
-            //zIndex : 500
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
         });
         view.add(character_imageview);
         character_imageview.addEventListener('load', function(e) {
             //hideLoader();
         });
-<<<<<<< HEAD
         var back_hair_imageview = Titanium.UI.createImageView({
             height : '75.5%',
             width : '55%',
@@ -366,50 +293,26 @@ function SceneryCustomization(userinfo) {
             top : '10%',
             left : '55%',
 	        image : '/assets/princess/face' + head_counter + '.png',
-=======
-        var face_imageview = Titanium.UI.createImageView({
-            height : '18.8%',
-            width : '38%',
-            top : '16%',
-            left : '65%',
-            image : '/assets/face' + head_counter + '.png',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //bottom : '0%'
             //zIndex : 600
         });
         view.add(face_imageview);
         var hair_imageview = Titanium.UI.createImageView({
-<<<<<<< HEAD
             height : '75.5%',
             width : '55%',
             top : '10%',
             left : '55%',
             image : '/assets/princess/hair' + hair_counter + '_front.png',
-=======
-            height : '18.8%',
-            width : '38%',
-            top : '16%',
-            left : '65%',
-            image : '/assets/hair' + hair_counter + '.png',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //bottom : '0%'
             //zIndex : 700
         });
         view.add(hair_imageview);
         var jwel_imageview = Titanium.UI.createImageView({
-<<<<<<< HEAD
             height : '75.5%',
             width : '55%',
             top : '10%',
             left : '55%',
             image : '/assets/princess/necklace' + jwel_counter + '.png',
-=======
-            height : '18.8%',
-            width : '38%',
-            top : '16%',
-            left : '65%',
-            image : '/assets/necklace' + jwel_counter + '.png',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //bottom : '0%'
             //zIndex : 500
         });
@@ -429,11 +332,7 @@ function SceneryCustomization(userinfo) {
             dress_counter++;
             dress_button.title = 'Dress ' + dress_counter;
             //alert(dress_counter);
-<<<<<<< HEAD
             character_imageview.image = '/assets/princess/dress' + dress_counter + '.png';
-=======
-            character_imageview.image = '/assets/dress' + dress_counter + '.png';
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 
             // alert('/assets/dress'+dress_counter+'.png');
 
@@ -454,11 +353,7 @@ function SceneryCustomization(userinfo) {
             //face_imageview.hide();
             head_counter++;
             head_button.title = 'Head ' + head_counter;
-<<<<<<< HEAD
             face_imageview.image = '/assets/princess/face' + head_counter + '.png';
-=======
-            face_imageview.image = '/assets/face' + head_counter + '.png';
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //face_imageview.show();
             //face_imageview.zIndex += head_counter;
             //       face_imageview.zIndex = 600;
@@ -479,12 +374,8 @@ function SceneryCustomization(userinfo) {
             hair_counter++;
             hair_button.title = 'Hair ' + hair_counter;
             //alert(hair_counter);
-<<<<<<< HEAD
             hair_imageview.image = '/assets/princess/hair' + hair_counter + '_front.png';
             back_hair_imageview.image = '/assets/princess/hair' + hair_counter + '_back.png';
-=======
-            hair_imageview.image = '/assets/hair' + hair_counter + '.png';
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
         });
 
         jwel_button = Titanium.UI.createButton({
@@ -501,11 +392,7 @@ function SceneryCustomization(userinfo) {
                 jwel_counter = 0;
             jwel_counter++;
             jwel_button.title = 'Jwelery ' + jwel_counter;
-<<<<<<< HEAD
             jwel_imageview.image = '/assets/princess/necklace' + jwel_counter + '.png';
-=======
-            jwel_imageview.image = '/assets/necklace' + jwel_counter + '.png';
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
         });
 
         set_dressing = Titanium.UI.createButton({
@@ -537,7 +424,7 @@ function SceneryCustomization(userinfo) {
         view.add(set_dressing);
         set_dressing.addEventListener('click', function(e) {
             //alert(dress_counter+":"+hair_counter+":"+jwel_counter+":"+head_counter);
-            var set_avatar_appearance_url = "http://therealmattharmon.com/knp/set_avatar_appearance.php?uid=" + userinfo.Record[0].UID + "&gender="+userinfo.Record[0].GENDER+
+            var set_avatar_appearance_url = "http://bonozo.com:8080/knp/set_avatar_appearance.php?uid=" + userinfo.Record[0].UID + "&gender="+userinfo.Record[0].GENDER+
             "&hair=" + hair_counter + "&face="+head_counter+"&jwel="+jwel_counter+"&dress="+dress_counter+"&weapon=";
             //alert(set_avatar_appearance_url);
             var httpclientt = require('ui/iphone/Functions/function');

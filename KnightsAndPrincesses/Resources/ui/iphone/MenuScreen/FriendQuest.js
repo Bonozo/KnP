@@ -135,7 +135,7 @@ var countDown =  function(h, m , s, fn_tick, fn_end  ) {
 	var ScreenHeight = Titanium.Platform.displayCaps.platformHeight;
 	var rowview_height = ScreenHeight * (12 / 100);
 
-	//http://therealmattharmon.com/knp/get_all_assigned_quests.php?assign_by=10000002&assign_to=10000001
+	//http://bonozo.com:8080/knp/get_all_assigned_quests.php?assign_by=10000002&assign_to=10000001
 
 	function updateQuestsList() {
 		httpclientt.requestServer({
@@ -217,13 +217,13 @@ var countDown =  function(h, m , s, fn_tick, fn_end  ) {
 				Ti.API.debug("STATUS: " + this.status);
 				Ti.API.debug("TEXT: " + this.responseText);
 				Ti.API.debug("ERROR: " + e.error);
-				Ti.API.debug("URL: " + "http://therealmattharmon.com/knp/get_all_assigned_quests.php?assign_by=10000002&assign_to=10000001");
+				Ti.API.debug("URL: " + "http://bonozo.com:8080/knp/get_all_assigned_quests.php?assign_by=10000002&assign_to=10000001");
 				alert('There was an error retrieving the remote data. Try again.');
 			},
 			method : 'GET',
 			contentType : 'text/xml',
-			url : "http://therealmattharmon.com/knp/knp_get_friend_quest_games.php?assign_quest_id=" + friend_quest_info.ASSIGN_QUEST_ID
-			//url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + 10000007 + "",
+			url : "http://bonozo.com:8080/knp/knp_get_friend_quest_games.php?assign_quest_id=" + friend_quest_info.ASSIGN_QUEST_ID
+			//url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + 10000007 + "",
 
 		});
 	}
@@ -271,13 +271,13 @@ var countDown =  function(h, m , s, fn_tick, fn_end  ) {
 			Ti.API.debug("STATUS: " + this.status);
 			Ti.API.debug("TEXT: " + this.responseText);
 			Ti.API.debug("ERROR: " + e.error);
-			Ti.API.debug("URL: " + "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + friend_uid);
+			Ti.API.debug("URL: " + "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + friend_uid);
 			alert('There was an error retrieving the remote data. Try again.');
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + friend_uid
-		//url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + 10000007 + "",
+		url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + friend_uid
+		//url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + 10000007 + "",
 
 	});
 
@@ -319,7 +319,7 @@ var countDown =  function(h, m , s, fn_tick, fn_end  ) {
 	});
 	view.add(quests_status);
 
-	var get_quest_url = "http://therealmattharmon.com/knp/knp_get_friend_quest_games.php?assign_quest_id=" + friend_quest_info.ASSIGN_QUEST_ID;
+	var get_quest_url = "http://bonozo.com:8080/knp/knp_get_friend_quest_games.php?assign_quest_id=" + friend_quest_info.ASSIGN_QUEST_ID;
 	var httpclientt = require('ui/iphone/Functions/function');
 	httpclientt.requestServer({
 		success : function(e) {
@@ -362,7 +362,7 @@ var countDown =  function(h, m , s, fn_tick, fn_end  ) {
  
 	var isFriends = function(callback){
 			var httpclientt = require('ui/iphone/Functions/function');
-			_url = "http://therealmattharmon.com/knp/is_friend.php?uid1="+userinfo.Record[0].UID+"&uid2="+friend_uid; 
+			_url = "http://bonozo.com:8080/knp/is_friend.php?uid1="+userinfo.Record[0].UID+"&uid2="+friend_uid; 
 			httpclientt.requestServer({
 				success : function(e) {
 					items_json = JSON.parse(this.responseText);
@@ -429,7 +429,7 @@ var countDown =  function(h, m , s, fn_tick, fn_end  ) {
 		},
 		method : 'GET', 
 		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID + "",
+		url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID + "",
 	});
 
 

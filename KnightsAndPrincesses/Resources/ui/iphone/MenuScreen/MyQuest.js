@@ -143,7 +143,7 @@ function MyQuest(userinfo, callback) {
 
                     rowView.add(rowview_friends_icon);
 
-                    var freind_count_url = "http://therealmattharmon.com/knp/get_avatar_friend_count.php?uid=" + items_json.Record[i].ASSIGN_BY_UID;
+                    var freind_count_url = "http://bonozo.com:8080/knp/get_avatar_friend_count.php?uid=" + items_json.Record[i].ASSIGN_BY_UID;
                     var httpclientt = require('ui/iphone/Functions/function');
                     httpclientt.requestServer({
                         success : function(e) {
@@ -284,7 +284,7 @@ function MyQuest(userinfo, callback) {
         },
         method : 'GET',
         contentType : 'text/xml',
-        url : "http://therealmattharmon.com/knp/knp_get_my_quests.php?uid=" + userinfo.Record[0].UID,
+        url : "http://bonozo.com:8080/knp/knp_get_my_quests.php?uid=" + userinfo.Record[0].UID,
 
     });
     var index = 0;
@@ -326,7 +326,7 @@ function MyQuest(userinfo, callback) {
             }
         }
         //alert(status_counter);
-        var check_status_url = "http://therealmattharmon.com/knp/check_quest_status.php?uid=" + userinfo.Record[0].UID + "&assign_quest_id=" + status_counter;
+        var check_status_url = "http://bonozo.com:8080/knp/check_quest_status.php?uid=" + userinfo.Record[0].UID + "&assign_quest_id=" + status_counter;
         var httpclientt = require('ui/iphone/Functions/function');
         httpclientt.requestServer({
             success : function(e) {
@@ -389,7 +389,7 @@ function MyQuest(userinfo, callback) {
 
                             rowView.add(rowview_friends_icon);
 
-                            var freind_count_url = "http://therealmattharmon.com/knp/get_avatar_friend_count.php?uid=" + items_json.Record.NEW[i].ASSIGN_BY_UID;
+                            var freind_count_url = "http://bonozo.com:8080/knp/get_avatar_friend_count.php?uid=" + items_json.Record.NEW[i].ASSIGN_BY_UID;
                             var httpclientt = require('ui/iphone/Functions/function');
                             httpclientt.requestServer({
                                 success : function(e) {

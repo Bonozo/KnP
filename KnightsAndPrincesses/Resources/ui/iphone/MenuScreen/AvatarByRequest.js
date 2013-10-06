@@ -166,7 +166,7 @@ function AvatarByRequest(userinfo, callback) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/friendship_notifications.php?uid=" + userinfo.Record[0].UID,
+		url : "http://bonozo.com:8080/knp/friendship_notifications.php?uid=" + userinfo.Record[0].UID,
 
 	});
     //if(request_counter >0){

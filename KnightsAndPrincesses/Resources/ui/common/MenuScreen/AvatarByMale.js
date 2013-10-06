@@ -1,12 +1,13 @@
-<<<<<<< HEAD
-function AvatarByLevel(userinfo, callback) {
-	var actInd = Titanium.UI.createActivityIndicator();
-	actInd.message = 'Loading...';
-	//message will only shows in android.
-	actInd.show();
+function AvatarByMale(userinfo, callback) {
+	var gender = '';
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var items_json = "";
 	var items_length = 0;
+	var tableview = "";
+	var rowView = [];
+	var tabledata = [];
+	var avatar_images = [];
+	var AvatarThumbnail = require('/ui/common/drawings/AvatarThumbnail');
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
 		success : function(e) {
@@ -14,26 +15,25 @@ function AvatarByLevel(userinfo, callback) {
 			items_length = items_json.Record.length;
 			if (items_json.Record != undefined) {
 				var rowViewHeight = screenWidth * 0.189;
-				var tabledata = [];
 				var bg_image = '';
 				var avatar_image = "";
 
 				for (var i = 0; i < items_json.Record.length; i++) {
-					if (items_json.Record[i].GENDER == 'f') {
-						bg_image = '/assets/freind_list_female.png'
-						avatar_image = "female_icon";
-					} else {
-						bg_image = '/assets/freind_list_male.png'
-						avatar_image = "male_icon";
-					}
-					var rowView = Ti.UI.createTableViewRow({
+					gender = items_json.Record[i].GENDER;
+					bg_image = '/assets/freind_list' + ((gender == 'f') ? '_female' : '_male') + '.png';
+					//((items_json.Record[i].MESSAGE =='NEW_MESSAGE')?'_message':'') + '.png';
+					avatar_image = ((gender == 'f') ? 'female_icon' : 'male_icon');
+
+					rowView[i] = Ti.UI.createTableViewRow({
 						height : rowViewHeight,
 						uid : items_json.Record[i].UID,
+						className : 'Friendlist',
+						genes : items_json.Record[i].GENDER,
 						index : i,
 						backgroundImage : bg_image,
-						zIndex : 10
+						//zIndex : 10
 					});
-					rowView.addEventListener('longclick', function(e) {
+					rowView[i].addEventListener('longclick', function(e) {
 						Titanium.Media.vibrate();
 						var SendFriendRequest = require('/ui/common/MenuScreen/SendFriendRequest');
 						var sendfriendrequest = new SendFriendRequest(userinfo, items_json.Record[e.row.index]);
@@ -41,53 +41,64 @@ function AvatarByLevel(userinfo, callback) {
 							modal : true
 						});
 					});
-                    rowView.addEventListener('click', function(e) {
-                        Titanium.Media.vibrate();
-                        var SendFriendRequest = require('/ui/common/MenuScreen/SendFriendRequest');
-                        var sendfriendrequest = new SendFriendRequest(userinfo, items_json.Record[e.row.index]);
-                        sendfriendrequest.open({
-                            modal : true
-                        });
-                    });
+					rowView[i].addEventListener('click', function(e) {
+						// alert(items_json.Record[e.row.index]);
 
-					var return_imageview = Titanium.UI.createImageView({
+						Ti.App.addEventListener("message_read", function(data) {
+							backgroundImage = '/assets/freind_list' + ((e.row.genes == 'f') ? '_female' : '_male') + '.png';
+
+						});
+						var FreindInfo = require('/ui/common/MenuScreen/FreindInfo');
+						var freindinfo = new FreindInfo(userinfo, items_json.Record[e.row.index]);
+						freindinfo.open();
+					});
+					AvatarThumbnail({
+						width : '12%',
+						height : '85.5%',
+						top : '4.8px',
+						right : '3%'
+					}, items_json.Record[i].USER_APPEARANCE, items_json.Record[i].GENDER, i, function(avatar_imageview,index) {
+						avatar_images[index] = avatar_imageview;
+						rowView[index].add(avatar_images[index]);
+					});
+
+					var row_imageview = Titanium.UI.createImageView({
 						image : '/assets/' + avatar_image + '.png',
 						width : '15%',
 						top : '2px',
 						right : '2%'
 					});
-					rowView.add(return_imageview);
+					//rowView[i].add(row_imageview);
 
 					var level_label = Ti.UI.createLabel({
-						text : 'LVL '+items_json.Record[i].LEVEL,
+						text : 'LVL ' + items_json.Record[i].LEVEL,
 						font : {
 							fontSize : '12dip'
 						},
 						color : '#b3fad0',
-						right : '20%',
+						right : '17%',
 						top : '5%'
 					});
-					rowView.add(level_label);
+					rowView[i].add(level_label);
 
 					var gold_imageview = Titanium.UI.createImageView({
 						image : '/assets/miGoldWide_up.png',
-						right : '35%',
-						width : '12%',
-						height : '40%',
-						zIndex : 100
+						visible : true,
+						right : '30%',
+						width : '11%',
+						height : '32%'
 					});
-					rowView.add(gold_imageview);
-					
-					var gold_label = Ti.UI.createLabel({
-						text :items_json.Record[i].NUM_OF_GOLDS,
-						font : {
-							fontSize : '12dip'
-						},
-						color : '#b3fad0',
-						right : '20%',
-					});
-					rowView.add(gold_label);
+					rowView[i].add(gold_imageview);
 
+					var gold_label = Ti.UI.createLabel({
+						text : items_json.Record[i].NUM_OF_GOLDS,
+						font : {
+							fontSize : '14dip'
+						},
+						color : '#FFCC00',
+						right : '17%',
+					});
+					rowView[i].add(gold_label);
 
 					var online_label = Ti.UI.createLabel({
 						text : 'ONLINE',
@@ -96,9 +107,9 @@ function AvatarByLevel(userinfo, callback) {
 						},
 						color : '#b3fad0',
 						bottom : '5%',
-						right : '20%',
+						right : '17%',
 					});
-					rowView.add(online_label);
+					rowView[i].add(online_label);
 					var name_label = Ti.UI.createLabel({
 						text : items_json.Record[i].NAME,
 						font : {
@@ -109,328 +120,42 @@ function AvatarByLevel(userinfo, callback) {
 						top : '5%',
 						width : '45%'
 					});
-					rowView.add(name_label);
-                    var status_message_label = Ti.UI.createLabel({
-                        text : items_json.Record[i].STATUS_MESSAGE,
-                        font : {
-                            fontSize : '11dip'
-                        },
-                        color : '#b3fad0',
-                        left : '8px',
-                        width : '45%'
-                    });
-                    rowView.add(status_message_label);
-
-					tabledata.push(rowView);
-				}//end of for loop
-
-				tableview = Ti.UI.createTableView({
-					data : tabledata,
-					width : '100%',
-					height : '56%',
-					top : '13%'
-				});
-				actInd.hide();
-				callback(tableview);
-			}
-		},
-		method : 'GET',
-		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/get_avatar_list.php?uid=" + userinfo.Record[0].UID +"&gender=m&gold=0",
-
-	});
-
-}
-
-=======
-<<<<<<< HEAD
-function AvatarByLevel(userinfo, callback) {
-	var actInd = Titanium.UI.createActivityIndicator();
-	actInd.message = 'Loading...';
-	//message will only shows in android.
-	actInd.show();
-	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
-	var items_json = "";
-	var items_length = 0;
-	var httpclientt = require('/ui/common/Functions/function');
-	httpclientt.requestServer({
-		success : function(e) {
-			items_json = JSON.parse(this.responseText);
-			items_length = items_json.Record.length;
-			if (items_json.Record != undefined) {
-				var rowViewHeight = screenWidth * 0.189;
-				var tabledata = [];
-				var bg_image = '';
-				var avatar_image = "";
-
-				for (var i = 0; i < items_json.Record.length; i++) {
-					if (items_json.Record[i].GENDER == 'f') {
-						bg_image = '/assets/freind_list_female.png'
-						avatar_image = "female_icon";
-					} else {
-						bg_image = '/assets/freind_list_male.png'
-						avatar_image = "male_icon";
-					}
-					var rowView = Ti.UI.createTableViewRow({
-						height : rowViewHeight,
-						uid : items_json.Record[i].UID,
-						index : i,
-						backgroundImage : bg_image,
-						zIndex : 10
-					});
-					rowView.addEventListener('longclick', function(e) {
-						Titanium.Media.vibrate();
-						var SendFriendRequest = require('/ui/common/MenuScreen/SendFriendRequest');
-						var sendfriendrequest = new SendFriendRequest(userinfo, items_json.Record[e.row.index]);
-						sendfriendrequest.open({
-							modal : true
-						});
-					});
-                    rowView.addEventListener('click', function(e) {
-                        Titanium.Media.vibrate();
-                        var SendFriendRequest = require('/ui/common/MenuScreen/SendFriendRequest');
-                        var sendfriendrequest = new SendFriendRequest(userinfo, items_json.Record[e.row.index]);
-                        sendfriendrequest.open({
-                            modal : true
-                        });
-                    });
-
-					var return_imageview = Titanium.UI.createImageView({
-						image : '/assets/' + avatar_image + '.png',
-						width : '15%',
-						top : '2px',
-						right : '2%'
-					});
-					rowView.add(return_imageview);
-
-					var level_label = Ti.UI.createLabel({
-						text : 'LVL '+items_json.Record[i].LEVEL,
+					rowView[i].add(name_label);
+					var status_message_label = Ti.UI.createLabel({
+						text : items_json.Record[i].STATUS_MESSAGE,
 						font : {
-							fontSize : '12dip'
-						},
-						color : '#b3fad0',
-						right : '20%',
-						top : '5%'
-					});
-					rowView.add(level_label);
-
-					var gold_imageview = Titanium.UI.createImageView({
-						image : '/assets/miGoldWide_up.png',
-						right : '35%',
-						width : '12%',
-						height : '40%',
-						zIndex : 100
-					});
-					rowView.add(gold_imageview);
-					
-					var gold_label = Ti.UI.createLabel({
-						text :items_json.Record[i].NUM_OF_GOLDS,
-						font : {
-							fontSize : '12dip'
-						},
-						color : '#b3fad0',
-						right : '20%',
-					});
-					rowView.add(gold_label);
-
-
-					var online_label = Ti.UI.createLabel({
-						text : 'ONLINE',
-						font : {
-							fontSize : '12dip'
-						},
-						color : '#b3fad0',
-						bottom : '5%',
-						right : '20%',
-					});
-					rowView.add(online_label);
-					var name_label = Ti.UI.createLabel({
-						text : items_json.Record[i].NAME,
-						font : {
-							fontSize : '16dip'
+							fontSize : '11dip'
 						},
 						color : '#b3fad0',
 						left : '8px',
-						top : '5%',
 						width : '45%'
 					});
-					rowView.add(name_label);
-                    var status_message_label = Ti.UI.createLabel({
-                        text : items_json.Record[i].STATUS_MESSAGE,
-                        font : {
-                            fontSize : '11dip'
-                        },
-                        color : '#b3fad0',
-                        left : '8px',
-                        width : '45%'
-                    });
-                    rowView.add(status_message_label);
+					rowView[i].add(status_message_label);
 
-					tabledata.push(rowView);
+					tabledata.push(rowView[i]);
 				}//end of for loop
 
 				tableview = Ti.UI.createTableView({
 					data : tabledata,
 					width : '100%',
-					height : '56%',
-					top : '13%'
+					height : '66%',
+					top : '2%'
 				});
-				actInd.hide();
+				//actInd.hide();
 				callback(tableview);
+				AvatarThumbnail = null;
 			}
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/get_avatar_list.php?uid=" + userinfo.Record[0].UID +"&gender=m&gold=0",
-
+		url : "http://bonozo.com:8080/knp/get_avatar_list.php?uid=" + userinfo.Record[0].UID +"&gender=m&gold=0"
 	});
+	// Ti.App.addEventListener('avatar_table_changed',function(data){
+		// if(data.release_table != 'AvatarByMale')return;
+		// Ti.App.fireEvent('render_table',{});
+	// });
+	return;
 
 }
 
-=======
-function AvatarByLevel(userinfo, callback) {
-	var actInd = Titanium.UI.createActivityIndicator();
-	actInd.message = 'Loading...';
-	//message will only shows in android.
-	actInd.show();
-	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
-	var items_json = "";
-	var items_length = 0;
-	var httpclientt = require('/ui/common/Functions/function');
-	httpclientt.requestServer({
-		success : function(e) {
-			items_json = JSON.parse(this.responseText);
-			items_length = items_json.Record.length;
-			if (items_json.Record != undefined) {
-				var rowViewHeight = screenWidth * 0.189;
-				var tabledata = [];
-				var bg_image = '';
-				var avatar_image = "";
-
-				for (var i = 0; i < items_json.Record.length; i++) {
-					if (items_json.Record[i].GENDER == 'f') {
-						bg_image = '/assets/freind_list_female.png'
-						avatar_image = "female_icon";
-					} else {
-						bg_image = '/assets/freind_list_male.png'
-						avatar_image = "male_icon";
-					}
-					var rowView = Ti.UI.createTableViewRow({
-						height : rowViewHeight,
-						uid : items_json.Record[i].UID,
-						index : i,
-						backgroundImage : bg_image,
-						zIndex : 10
-					});
-					rowView.addEventListener('longclick', function(e) {
-						Titanium.Media.vibrate();
-						var SendFriendRequest = require('/ui/common/MenuScreen/SendFriendRequest');
-						var sendfriendrequest = new SendFriendRequest(userinfo, items_json.Record[e.row.index]);
-						sendfriendrequest.open({
-							modal : true
-						});
-					});
-                    rowView.addEventListener('click', function(e) {
-                        Titanium.Media.vibrate();
-                        var SendFriendRequest = require('/ui/common/MenuScreen/SendFriendRequest');
-                        var sendfriendrequest = new SendFriendRequest(userinfo, items_json.Record[e.row.index]);
-                        sendfriendrequest.open({
-                            modal : true
-                        });
-                    });
-
-					var return_imageview = Titanium.UI.createImageView({
-						image : '/assets/' + avatar_image + '.png',
-						width : '15%',
-						top : '2px',
-						right : '2%'
-					});
-					rowView.add(return_imageview);
-
-					var level_label = Ti.UI.createLabel({
-						text : 'LVL '+items_json.Record[i].LEVEL,
-						font : {
-							fontSize : '12dip'
-						},
-						color : '#b3fad0',
-						right : '20%',
-						top : '5%'
-					});
-					rowView.add(level_label);
-
-					var gold_imageview = Titanium.UI.createImageView({
-						image : '/assets/miGoldWide_up.png',
-						right : '35%',
-						width : '12%',
-						height : '40%',
-						zIndex : 100
-					});
-					rowView.add(gold_imageview);
-					
-					var gold_label = Ti.UI.createLabel({
-						text :items_json.Record[i].NUM_OF_GOLDS,
-						font : {
-							fontSize : '12dip'
-						},
-						color : '#b3fad0',
-						right : '20%',
-					});
-					rowView.add(gold_label);
-
-
-					var online_label = Ti.UI.createLabel({
-						text : 'ONLINE',
-						font : {
-							fontSize : '12dip'
-						},
-						color : '#b3fad0',
-						bottom : '5%',
-						right : '20%',
-					});
-					rowView.add(online_label);
-					var name_label = Ti.UI.createLabel({
-						text : items_json.Record[i].NAME,
-						font : {
-							fontSize : '16dip'
-						},
-						color : '#b3fad0',
-						left : '8px',
-						top : '5%',
-						width : '45%'
-					});
-					rowView.add(name_label);
-                    var status_message_label = Ti.UI.createLabel({
-                        text : items_json.Record[i].STATUS_MESSAGE,
-                        font : {
-                            fontSize : '11dip'
-                        },
-                        color : '#b3fad0',
-                        left : '8px',
-                        width : '45%'
-                    });
-                    rowView.add(status_message_label);
-
-					tabledata.push(rowView);
-				}//end of for loop
-
-				tableview = Ti.UI.createTableView({
-					data : tabledata,
-					width : '100%',
-					height : '56%',
-					top : '13%'
-				});
-				actInd.hide();
-				callback(tableview);
-			}
-		},
-		method : 'GET',
-		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/get_avatar_list.php?uid=" + userinfo.Record[0].UID +"&gender=m&gold=0",
-
-	});
-
-}
-
->>>>>>> New version
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
-module.exports = AvatarByLevel; 
+module.exports = AvatarByMale; 

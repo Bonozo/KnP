@@ -247,10 +247,7 @@ function FreindInfo(userinfo, friendinfo) {
 						top : '12%',
 						right : '0%',
 						image : '/assets/K_fullbody_bad.png',
-<<<<<<< HEAD
 						width : '48%',
-=======
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 						height : '79.5%',
 						zIndex : 500
 					});
@@ -261,11 +258,7 @@ function FreindInfo(userinfo, friendinfo) {
 						top : '12%',
 						right : '0%',
 						image : '/assets/hdpi_female_character.png',
-<<<<<<< HEAD
 						height : '79.5%',
-=======
-						height : '75%',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 						width : '51%',
 						zIndex : 500
 					});
@@ -325,13 +318,13 @@ function FreindInfo(userinfo, friendinfo) {
 			Ti.API.debug("STATUS: " + this.status);
 			Ti.API.debug("TEXT: " + this.responseText);
 			Ti.API.debug("ERROR: " + e.error);
-			Ti.API.debug("URL: " + "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + friendinfo.UID);
+			Ti.API.debug("URL: " + "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + friendinfo.UID);
 			alert('There was an error retrieving the remote data. Try again.');
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + friendinfo.UID
-		//url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + 10000007 + "",
+		url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + friendinfo.UID
+		//url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + 10000007 + "",
 
 	});
 
@@ -412,7 +405,7 @@ function FreindInfo(userinfo, friendinfo) {
             switch (e.index) {
                 case 0:
                     actInd.show();
-                    var unfriend_url = "http://therealmattharmon.com/knp/unfriend_friend.php?uid=" + userinfo.Record[0].UID+'&friend_uid='+friendinfo.UID;
+                    var unfriend_url = "http://bonozo.com:8080/knp/unfriend_friend.php?uid=" + userinfo.Record[0].UID+'&friend_uid='+friendinfo.UID;
                     var httpclientt = require('ui/iphone/Functions/function');
                     httpclientt.requestServer({
                         success : function(e) {
@@ -448,7 +441,7 @@ function FreindInfo(userinfo, friendinfo) {
 
 	var isFriends = function(callback){
 			var httpclientt = require('ui/iphone/Functions/function');
-			_url = "http://therealmattharmon.com/knp/is_friend.php?uid1="+userinfo.Record[0].UID+"&uid2="+friend_uid; 
+			_url = "http://bonozo.com:8080/knp/is_friend.php?uid1="+userinfo.Record[0].UID+"&uid2="+friend_uid; 
 			httpclientt.requestServer({
 				success : function(e) {
 					items_json = JSON.parse(this.responseText);

@@ -157,7 +157,7 @@ function crafting(userinfojson) {
 							switch (e.index) {
 								case 0:
 									actInd.show();
-									var create_craft_url = "http://therealmattharmon.com/knp/create_craft.php?uid=" + userinfojson.Record[0].UID + "&craft_id=" + e.source.craft_id + "";
+									var create_craft_url = "http://bonozo.com:8080/knp/create_craft.php?uid=" + userinfojson.Record[0].UID + "&craft_id=" + e.source.craft_id + "";
 
 									var httpclientt = require('ui/iphone/Functions/function');
 									httpclientt.requestServer({
@@ -222,7 +222,7 @@ function crafting(userinfojson) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/get_craft_ingredients.php",
+		url : "http://bonozo.com:8080/knp/get_craft_ingredients.php",
 
 	});
     var httpclientt = require('ui/iphone/Functions/function');
@@ -237,7 +237,7 @@ function crafting(userinfojson) {
         },
         method : 'GET',
         contentType : 'text/xml',
-        url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfojson.Record[0].UID + "",
+        url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfojson.Record[0].UID + "",
     });
 	
 

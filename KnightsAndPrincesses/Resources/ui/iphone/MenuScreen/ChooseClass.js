@@ -27,7 +27,7 @@ function ChooseClass() {
             },
             method : 'GET',
             contentType : 'text/xml',
-            url : "http://therealmattharmon.com/knp/sign_up.php?email=" + email_value + "&password=" +password_value + "&name=" + name_value + "&gender=" + gender_value+"&device_token="+device_token_value
+            url : "http://bonozo.com:8080/knp/sign_up.php?email=" + email_value + "&password=" +password_value + "&name=" + name_value + "&gender=" + gender_value+"&device_token="+device_token_value
         });
     }
     function InsertUidAndToken(email_value,uid,token,callback){
@@ -50,7 +50,7 @@ function ChooseClass() {
             },
             method : 'GET',
             contentType : 'text/xml',
-            url : "http://therealmattharmon.com/knp/insert_uid_token.php?email=" + email_value + "&uid=" + uid + "&token=" + token
+            url : "http://bonozo.com:8080/knp/insert_uid_token.php?email=" + email_value + "&uid=" + uid + "&token=" + token
         });
     }
 
@@ -293,7 +293,7 @@ function ChooseClass() {
             },
             method : 'GET',
             contentType : 'text/xml',
-            url : "http://therealmattharmon.com/knp/sign_up.php?email=" + email_text.value + "&password=" +password_text.value+ "&name=" + name_text.value + "&gender=" + gender+"&device_token="
+            url : "http://bonozo.com:8080/knp/sign_up.php?email=" + email_text.value + "&password=" +password_text.value+ "&name=" + name_text.value + "&gender=" + gender+"&device_token="
         });
 			
 	}

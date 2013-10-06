@@ -216,7 +216,7 @@ function OptionsScreen(userinfo) {
     }
 
     function ServerLogin(device_token_value, user_id, callback) {
-        var set_notification_url = "http://therealmattharmon.com/knp/set_notification.php?uid=" + userinfo.Record[0].UID + "&device_token=" + device_token_value + "&user_id=" + user_id;
+        var set_notification_url = "http://bonozo.com:8080/knp/set_notification.php?uid=" + userinfo.Record[0].UID + "&device_token=" + device_token_value + "&user_id=" + user_id;
         var httpclientt = require('ui/iphone/Functions/function');
         httpclientt.requestServer({
             success : function(e) {
@@ -258,12 +258,12 @@ function OptionsScreen(userinfo) {
             },
             method : 'GET',
             contentType : 'text/xml',
-            url : "http://therealmattharmon.com/knp/insert_uid_token.php?email=" + email_value + "&uid=" + uid + "&token=" + token
+            url : "http://bonozo.com:8080/knp/insert_uid_token.php?email=" + email_value + "&uid=" + uid + "&token=" + token
         });
     }
 */
     var Notification_button = '';
-    var get_notification_set_url = "http://therealmattharmon.com/knp/get_notification_setting.php?uid=" + userinfo.Record[0].UID;
+    var get_notification_set_url = "http://bonozo.com:8080/knp/get_notification_setting.php?uid=" + userinfo.Record[0].UID;
     //alert(set_avatar_appearance_url);
     var httpclientt = require('ui/iphone/Functions/function');
     httpclientt.requestServer({
@@ -295,11 +295,7 @@ function OptionsScreen(userinfo) {
     });
     view.add(selected_menu_label);
     var version_label = Titanium.UI.createLabel({
-<<<<<<< HEAD
         text : 'v0.3.44',
-=======
-        text : 'v0.3.39',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
         bottom : '16%',
         left : '84.8%',
         textAlign : 'center',
@@ -312,17 +308,10 @@ function OptionsScreen(userinfo) {
     view.add(version_label);
     var gender = userinfo.Record[0].GENDER;
     var user_appearence_view = Ti.UI.createView({
-<<<<<<< HEAD
         width : '65%',
         height : '90%',
         right : '50%',
         //left : '0',
-=======
-       // width : '35%',
-       height : '85%',
-        right : '60%',
-        left : '0',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
         top : '5%',
         zIndex : 500
 
@@ -332,7 +321,6 @@ function OptionsScreen(userinfo) {
             height : '100%',
             width : '100%',
             top : '0%',
-<<<<<<< HEAD
             image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[3].IMAGE + '.png',
             //bottom : '0%'
             zIndex : 500
@@ -352,50 +340,24 @@ function OptionsScreen(userinfo) {
             width : '100%',
             top : '0%',
             image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[1].IMAGE + '.png',
-=======
-            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[3].IMAGE + '.png',
-            //bottom : '0%'
-            //zIndex : 500
-        });
-        user_appearence_view.add(dress_imageview);
-        var face_imageview = Titanium.UI.createImageView({
-            height : '25%',
-            width : '100%',
-            top : '10%',
-            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[1].IMAGE + '.png',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //bottom : '0%'
             //zIndex : 600
         });
         user_appearence_view.add(face_imageview);
         var hair_imageview = Titanium.UI.createImageView({
-<<<<<<< HEAD
             height : '100%',
             width : '100%',
             top : '0%',
             image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '_front.png',
-=======
-            height : '25%',
-            width : '100%',
-            top : '10%',
-            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '.png',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //bottom : '0%'
             //zIndex : 700
         });
         user_appearence_view.add(hair_imageview);
         var jwel_imageview = Titanium.UI.createImageView({
-<<<<<<< HEAD
             height : '100%',
             width : '100%',
             top : '0%',
             image : '/assets/princess/' + userinfo.Record[0].USER_APPEARANCE[2].IMAGE + '.png',
-=======
-            height : '25%',
-            width : '100%',
-            top : '10%',
-            image : '/assets/' + userinfo.Record[0].USER_APPEARANCE[2].IMAGE + '.png',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //bottom : '0%'
             //zIndex : 500
         });
@@ -432,7 +394,6 @@ function OptionsScreen(userinfo) {
             //bottom : '0%'
         });
         user_appearence_view.add(shield_imageview);
-<<<<<<< HEAD
         var back_hair_imageview = Titanium.UI.createImageView({
             height : '100%',
             width : '100%',
@@ -448,32 +409,17 @@ function OptionsScreen(userinfo) {
             width : '100%',
             left : '0%',
             top : '0%',
-=======
-        var face_imageview = Titanium.UI.createImageView({
-            height : '20%',
-            width : '100%',
-            left : '0%',
-            top : '19%',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[1].IMAGE + '.png',
             //bottom : '0%'
             //zIndex : 600
         });
         user_appearence_view.add(face_imageview);
         var hair_imageview = Titanium.UI.createImageView({
-<<<<<<< HEAD
             height : '100%',
             width : '100%',
             left : '0%',
             top : '0%',
             image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '_front.png',
-=======
-           height : '10.9%',
-            width : '100%',
-            left : '0%',
-            top : '22%',
-            image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[0].IMAGE + '.png',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //bottom : '0%'
             //zIndex : 700
         });
@@ -481,10 +427,7 @@ function OptionsScreen(userinfo) {
         var weapon_imageview = Titanium.UI.createImageView({
             height : '100%',
             width : '100%',
-<<<<<<< HEAD
             left : '0%',
-=======
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             top : '0%',
             image : '/assets/knight/' + userinfo.Record[0].USER_APPEARANCE[3].IMAGE + '.png',
             //bottom : '0%'
@@ -498,11 +441,7 @@ function OptionsScreen(userinfo) {
             width : '100%',
             top : "5%",
             left : '0%',
-<<<<<<< HEAD
             image : (gender == 'm') ? '/assets/knight/knight_default.png' : '/assets/hdpi_female_character_Image2.png',
-=======
-            image : (gender == 'm') ? '/assets/K_fullbody_bad.png' : '/assets/hdpi_female_character_Image2.png',
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             //zIndex : 500
         });
         user_appearence_view.add(character_imageview);
@@ -742,7 +681,7 @@ function OptionsScreen(userinfo) {
                     ResetClassscreen.open();
 
                     actInd.show();
-                    var reset_option_url = "http://therealmattharmon.com/knp/reset_option.php?uid=" + userinfo.Record[0].UID;
+                    var reset_option_url = "http://bonozo.com:8080/knp/reset_option.php?uid=" + userinfo.Record[0].UID;
                     var httpclientt = require('ui/iphone/Functions/function');
                     httpclientt.requestServer({
                         success : function(e) {

@@ -4,14 +4,14 @@ function Customization(json, name) {
     function hideLoader() {
         images_counter++;
         if (images_counter >= 7) {
-            actInd.hide();
+            //actInd.hide();
         }
     }
 
-    var actInd = Titanium.UI.createActivityIndicator();
-    actInd.message = 'Loading...';
+    //var //actInd = Titanium.UI.createActivityIndicator();
+    //actInd.message = 'Loading...';
     //message will only shows in android.
-    actInd.show();
+    //actInd.show();
 
     var customization_win = Ti.UI.createWindow({
         backgroundGradient : {

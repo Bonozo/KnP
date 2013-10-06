@@ -1,5 +1,5 @@
-//http://therealmattharmon.com/knp/friendship_notifications_action.php?uid=10000005&friend_uid=10000007&action=DENIED
-//http://therealmattharmon.com/knp/friendship_notifications_action.php?uid=10000005&friend_uid=10000007&action=FRIENDS
+//http://bonozo.com:8080/knp/friendship_notifications_action.php?uid=10000005&friend_uid=10000007&action=DENIED
+//http://bonozo.com:8080/knp/friendship_notifications_action.php?uid=10000005&friend_uid=10000007&action=FRIENDS
 function openNewTable(userinfojson, activeTable, callback) {
 	var TableView = require('ui/iphone/MenuScreen/' + activeTable);
 	TableView(userinfojson, function(Tableview) {
@@ -121,13 +121,9 @@ function FreindsScreen(userinfo) {
 
 	var req_notification = '';
 	var new_request_imageview;
-<<<<<<< HEAD
 	var gift_imageview = null;
-=======
-	var gift_imageview;
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 	var gift_icon = '';
-    var get_notification_url = "http://therealmattharmon.com/knp/get_notifications.php?uid=" + userinfo.Record[0].UID;
+    var get_notification_url = "http://bonozo.com:8080/knp/get_notifications.php?uid=" + userinfo.Record[0].UID;
     var httpclientt = require('ui/iphone/Functions/function');
     httpclientt.requestServer({
         success : function(e) {
@@ -176,11 +172,7 @@ function FreindsScreen(userinfo) {
     //}
     
     Ti.App.addEventListener("gift_Notification",function(){
-<<<<<<< HEAD
 		if (gift_icon && gift_imageview != null) {
-=======
-		if (gift_icon) {
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 			gift_imageview.hide();
 		}
     }); 

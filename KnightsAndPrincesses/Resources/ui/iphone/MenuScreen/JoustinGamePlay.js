@@ -100,7 +100,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
     });
     scene.add(energy_bar_right);
 
-<<<<<<< HEAD
 	var textsprite = quicktigame2d.createTextSprite({
 		text : 'Lorem ipsum',
         x : getPixelFromPercent('x',85),
@@ -109,8 +108,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		
 	}); 
     scene.add(textsprite);
-=======
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
     var bg_image = quicktigame2d.createSpriteSheet({
         image : 'assets/games/jousting/spritesheet_grass.png',
         width : 400,
@@ -174,7 +171,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
         // Start the game
         game.start();
     });
-            var _url = "http://therealmattharmon.com/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + 
+            var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + 
             "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
 
         var items_json = "";
@@ -243,10 +240,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
         
 
         timer = setInterval(function(){
-<<<<<<< HEAD
         	
-=======
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             initknightSprite();
             
             knight_image.show();
@@ -256,11 +250,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
             //if(sprite_count>=6){
                 sound.play();
             //}
-<<<<<<< HEAD
 		textsprite.text =  Titanium.Platform.availableMemory;
-=======
-
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
             
         },3000);
 
@@ -301,7 +291,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
         if (!played) {
             //alert(_assign_quest_id);
 
-            _url = "http://therealmattharmon.com/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
+            _url = "http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
             httpclientt.requestServer({
                 success : function(e) {
                     items_json = JSON.parse(this.responseText);

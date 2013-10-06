@@ -63,7 +63,7 @@ function FreindListForGift(userinfo, selected_item, callback) {
 							switch (e.index) {
 								case 0:
 									actInd.show();
-									var reset_option_url = "http://therealmattharmon.com/knp/send_gift.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + e.source.uid + "&gift_id=" + selected_item.id + "&gift_type=" + selected_item.type;
+									var reset_option_url = "http://bonozo.com:8080/knp/send_gift.php?sender_id=" + userinfo.Record[0].UID + "&receiver_id=" + e.source.uid + "&gift_id=" + selected_item.id + "&gift_type=" + selected_item.type;
 									var httpclientt = require('ui/iphone/Functions/function');
 									httpclientt.requestServer({
 										success : function(e) {
@@ -132,7 +132,7 @@ function FreindListForGift(userinfo, selected_item, callback) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/friends_list.php?uid=" + userinfo.Record[0].UID,
+		url : "http://bonozo.com:8080/knp/friends_list.php?uid=" + userinfo.Record[0].UID,
 
 	});
 };

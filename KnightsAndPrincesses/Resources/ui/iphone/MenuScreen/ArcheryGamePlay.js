@@ -136,7 +136,7 @@ function ArcheryGamePlay(quest_status, quest_id, userinfo) {
 
         
     });
-            var _url = "http://therealmattharmon.com/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + 
+            var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + 
             "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
 
         var items_json = "";
@@ -161,7 +161,7 @@ function ArcheryGamePlay(quest_status, quest_id, userinfo) {
         if (!played) {
             //alert(_assign_quest_id);
 
-            _url = "http://therealmattharmon.com/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
+            _url = "http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
             httpclientt.requestServer({
                 success : function(e) {
                     items_json = JSON.parse(this.responseText);

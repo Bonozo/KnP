@@ -63,7 +63,7 @@ function kandp(userinfo) {
 
     var httpclientt = require('ui/iphone/Functions/function');
     function getGold(callback) {
-        var get_golds = "http://therealmattharmon.com/knp/get_golds.php?uid=" + userinfo.Record[0].UID;
+        var get_golds = "http://bonozo.com:8080/knp/get_golds.php?uid=" + userinfo.Record[0].UID;
         httpclientt.requestServer({
             success : function(e) {
                 items_json = JSON.parse(this.responseText);
@@ -80,7 +80,7 @@ function kandp(userinfo) {
 
     var selected_item = {};
     getGold(function(my_gold) {
-        var _url = "http://therealmattharmon.com/knp/get_store_inventories.php";
+        var _url = "http://bonozo.com:8080/knp/get_store_inventories.php";
         httpclientt.requestServer({
             success : function(e) {
                 items_json = JSON.parse(this.responseText);
@@ -177,7 +177,7 @@ function kandp(userinfo) {
                                         //alert(userinfo.Record[0].UID+"::"+selected_item.invID+"::"+selected_item.req_gold);
 
                                         actInd.show();
-                                        var send_gift_url = "http://therealmattharmon.com/knp/purchase_inventory.php?uid=" + userinfo.Record[0].UID + "&inv_id=" + selected_item.invID + "&req_golds=" + selected_item.req_gold;
+                                        var send_gift_url = "http://bonozo.com:8080/knp/purchase_inventory.php?uid=" + userinfo.Record[0].UID + "&inv_id=" + selected_item.invID + "&req_golds=" + selected_item.req_gold;
                                         var httpclientt = require('ui/iphone/Functions/function');
 
                                         httpclientt.requestServer({
@@ -293,11 +293,7 @@ function kandp(userinfo) {
         right : '2.7%',
         bottom : '10.3%'
     });
-<<<<<<< HEAD
     //view.add(spell_button);
-=======
-    view.add(spell_button);
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 
     var armor_button = Ti.UI.createButton({
         backgroundImage : '/assets/button_smallLong_UP.png',
@@ -310,11 +306,7 @@ function kandp(userinfo) {
         right : '20.8%',
         bottom : '10.3%'
     });
-<<<<<<< HEAD
    // view.add(armor_button);
-=======
-    view.add(armor_button);
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 
     var supplies_button = Ti.UI.createButton({
         backgroundImage : '/assets/button_smallLong_UP.png',
@@ -327,11 +319,7 @@ function kandp(userinfo) {
         right : '37.9%',
         bottom : '10.3%'
     });
-<<<<<<< HEAD
    // view.add(supplies_button);
-=======
-    view.add(supplies_button);
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 
     var gifts_button = Ti.UI.createButton({
         backgroundImage : '/assets/button_smallLong_UP.png',
@@ -344,11 +332,7 @@ function kandp(userinfo) {
         right : '55%',
         bottom : '10.3%'
     });
-<<<<<<< HEAD
    // view.add(gifts_button);
-=======
-    view.add(gifts_button);
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 
     var sort_label = Ti.UI.createLabel({
         text : 'SORT',
@@ -360,11 +344,7 @@ function kandp(userinfo) {
             fontSize : '12'
         }
     });
-<<<<<<< HEAD
   //  view.add(sort_label);
-=======
-    view.add(sort_label);
->>>>>>> e105b5ec68096981140025cd6ae2dc1c7598964e
 
     var getmore_button = Ti.UI.createButton({
         backgroundImage : '/assets/button_smallLong_UP.png',
@@ -401,7 +381,7 @@ function kandp(userinfo) {
                     //alert(userinfo.Record[0].UID+"::"+selected_item.invID+"::"+selected_item.req_gold);
 
                     actInd.show();
-                    var send_gift_url = "http://therealmattharmon.com/knp/purchase_gold.php?uid=" + userinfo.Record[0].UID + "&num_of_golds=400";
+                    var send_gift_url = "http://bonozo.com:8080/knp/purchase_gold.php?uid=" + userinfo.Record[0].UID + "&num_of_golds=400";
                     var httpclientt = require('ui/iphone/Functions/function');
 
                     httpclientt.requestServer({
@@ -453,7 +433,7 @@ function kandp(userinfo) {
         },
         method : 'GET',
         contentType : 'text/xml',
-        url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID + "",
+        url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID + "",
     });
 
     return view;

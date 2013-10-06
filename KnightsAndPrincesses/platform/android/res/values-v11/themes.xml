@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- A simple theme based on the default theme for Android API level 10 and below -->
+	<style name="Theme.KNP" parent="android:Theme">
+		<item name="android:soundEffectsEnabled">false</item>
+	</style>
+</resources>
+

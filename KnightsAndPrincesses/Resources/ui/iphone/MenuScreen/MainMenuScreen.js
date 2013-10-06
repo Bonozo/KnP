@@ -64,7 +64,7 @@ function MainMenuScreen(userinfojson) {
         },
         method : 'GET',
         contentType : 'text/xml',
-        url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfojson.Record[0].UID + "",
+        url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfojson.Record[0].UID + "",
     });
 
     MainScreen.body = openNewBody(userinfojson, active_screen);

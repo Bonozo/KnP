@@ -173,7 +173,7 @@ function FreindQuestTab(userinfo, callback) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://therealmattharmon.com/knp/knp_get_friend_quests.php?uid=" + userinfo.Record[0].UID,
+		url : "http://bonozo.com:8080/knp/knp_get_friend_quests.php?uid=" + userinfo.Record[0].UID,
 
 	});
 

@@ -1,9 +1,9 @@
 function FriendRequestAction(userinfo, friendJson) {
 
-    var actInd = Titanium.UI.createActivityIndicator();
-    actInd.message = 'Loading...';
+    //var //actInd = Titanium.UI.createActivityIndicator();
+    //actInd.message = 'Loading...';
     //message will only shows in android.
-    actInd.show();
+    //actInd.show();
 
     var self = Ti.UI.createWindow({
         orientation : Ti.UI.PORTRAIT,
@@ -110,7 +110,7 @@ function FriendRequestAction(userinfo, friendJson) {
     });
     Infoview.add(text_label);
 
-    var freind_info = "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + friendJson.UID;
+    var freind_info = "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + friendJson.UID;
     var httpclientt = require('/ui/common/Functions/function');
     httpclientt.requestServer({
         success : function(e) {
@@ -124,7 +124,7 @@ function FriendRequestAction(userinfo, friendJson) {
                     user_id = items_json.Record[0].USER_ID;
                     text_label = items_json.Record[0].STATUS_MESSAGE;
 
-                    actInd.hide();
+                    //actInd.hide();
                 }
             }
         },
@@ -328,7 +328,7 @@ function FriendRequestAction(userinfo, friendJson) {
     var rowViewHeight = screenWidth * 0.175;
     var selected_item = [];
     var httpclientt = require('/ui/common/Functions/function');
-    var _url = "http://therealmattharmon.com/knp/get_all_quests.php";
+    var _url = "http://bonozo.com:8080/knp/get_all_quests.php";
     httpclientt.requestServer({
         success : function(e) {
             items_json = JSON.parse(this.responseText);
@@ -430,7 +430,7 @@ function FriendRequestAction(userinfo, friendJson) {
                     zIndex : 200
                 });
                 view.add(tableview);
-                actInd.hide();
+                //actInd.hide();
             }
             Ti.App.fireEvent('update_xp', {
                 clicked_item : 'StatusScreen'
@@ -492,8 +492,8 @@ function FriendRequestAction(userinfo, friendJson) {
 
     view.add(accept_req);
     accept_req.addEventListener('click', function(e) {
-        actInd.show();
-        var _url = "http://therealmattharmon.com/knp/friendship_notifications_action.php?uid=" + friendJson.UID + "&friend_uid=" + userinfo.Record[0].UID + "&action=FRIENDS";
+        //actInd.show();
+        var _url = "http://bonozo.com:8080/knp/friendship_notifications_action.php?uid=" + friendJson.UID + "&friend_uid=" + userinfo.Record[0].UID + "&action=FRIENDS";
         var items_json = "";
         var items_length = 0;
         var httpclientt = require('/ui/common/Functions/function');
@@ -501,7 +501,7 @@ function FriendRequestAction(userinfo, friendJson) {
             success : function(e) {
                 items_json = JSON.parse(this.responseText);
                 if (items_json.Record != undefined) {
-                    actInd.hide();
+                    //actInd.hide();
                     Ti.App.fireEvent('update_friend_list', {
                         activeScreen : 'FriendRequestAction'
                     });
@@ -582,9 +582,9 @@ function FriendRequestAction(userinfo, friendJson) {
 
                 switch (e.index) {
                     case 0:
-                        actInd.show();
-                        //var assign_quest_url = "http://therealmattharmon.com/knp/assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "" + "&assign_to_uid=" + friendJson.UID + "" + "&quest_ids=" + e.source.quest_id + "&message=N/A";
-                        var assign_quest_url = "http://therealmattharmon.com/knp/knp_assign_quests.php?assign_by_uid=" + userinfo.Record[0].UID + "&assign_to_uid=" + friendJson.UID + "&quest_ids=" + quest_ids + "&message=" + Ti.Network.encodeURIComponent(name_text.value) + "&num_of_hours=" + num_of_hours + "&status=INCOMPLETE_FRIEND&user_id=" + user_id + "";
+                        //actInd.show();
+                        //var assign_quest_url = "http://bonozo.com:8080/knp/assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "" + "&assign_to_uid=" + friendJson.UID + "" + "&quest_ids=" + e.source.quest_id + "&message=N/A";
+                        var assign_quest_url = "http://bonozo.com:8080/knp/knp_assign_quests.php?assign_by_uid=" + userinfo.Record[0].UID + "&assign_to_uid=" + friendJson.UID + "&quest_ids=" + quest_ids + "&message=" + Ti.Network.encodeURIComponent(name_text.value) + "&num_of_hours=" + num_of_hours + "&status=INCOMPLETE_FRIEND&user_id=" + user_id + "";
                         var httpclientt = require('/ui/common/Functions/function');
                         httpclientt.requestServer({
                             success : function(e) {
@@ -594,7 +594,7 @@ function FriendRequestAction(userinfo, friendJson) {
                                         alert(items_json.Record[0].Message);
                                         name_text.value = '';
 
-                                        actInd.hide();
+                                        //actInd.hide();
                                     }
                                 }
                             },
@@ -651,8 +651,8 @@ function FriendRequestAction(userinfo, friendJson) {
     decline_req.addEventListener('click', function(e) {
 
         //message will only shows in android.
-        actInd.show();
-        var _url = "http://therealmattharmon.com/knp/friendship_notifications_action.php?uid=" + friendJson.UID + "&friend_uid=" + userinfo.Record[0].UID + "&action=DENIED";
+        //actInd.show();
+        var _url = "http://bonozo.com:8080/knp/friendship_notifications_action.php?uid=" + friendJson.UID + "&friend_uid=" + userinfo.Record[0].UID + "&action=DENIED";
         //&="+friendJson.UID+"";
         var items_json = "";
         var items_length = 0;
@@ -661,7 +661,7 @@ function FriendRequestAction(userinfo, friendJson) {
             success : function(e) {
                 items_json = JSON.parse(this.responseText);
                 if (items_json.Record != undefined) {
-                    actInd.hide();
+                    //actInd.hide();
                     Ti.App.fireEvent('update_friend_list', {
                         activeScreen : 'FriendRequestAction'
                     });
@@ -691,7 +691,7 @@ function FriendRequestAction(userinfo, friendJson) {
         clicked_item : 'FriendRequestAction'
     });
 
-    var avatar_info = "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID;
+    var avatar_info = "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID;
     var httpclientt = require('/ui/common/Functions/function');
     httpclientt.requestServer({
         success : function(e) {
@@ -708,7 +708,7 @@ function FriendRequestAction(userinfo, friendJson) {
         url : avatar_info
     });
 
-    actInd.hide();
+    //actInd.hide();
 
     return self;
 }

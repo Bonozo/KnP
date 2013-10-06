@@ -8,6 +8,8 @@ exports.requestServer = function requestServer(e) {
 	httpClient.onload = e.success;
 	httpClient.onerror = function(e) {
 		Ti.API.info('Error Response: ' + this.responseText);
+		// e.error;
+		alert(e.error);
 		//progress.hide();
 	};
 	httpClient.open(e.method, e.url);

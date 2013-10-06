@@ -184,7 +184,7 @@ function ProgressBar(userinfo_json) {
 			},
 			method : 'GET',
 			contentType : 'text/xml',
-			url : "http://therealmattharmon.com/knp/get_avatar_info.php?uid=" + userinfo_json.Record[0].UID + "",
+			url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfo_json.Record[0].UID + "",
 		});
 	});
 	return view;
