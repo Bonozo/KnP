@@ -21,6 +21,9 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	game.debug = true;
 	var loop = true;
 
+	var jousting_battle_music = Titanium.Media.createSound({
+		url : '/sounds/jousting_battle_music.mp3'
+	});
 	var metal_bang_sound = Titanium.Media.createSound({
 		url : '/sounds/metal_bang.mp3'
 	});
@@ -158,8 +161,8 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/balance_bar.png',
 		width : getPixelFromPercent('x', 35),
 		height : getPixelFromPercent('x', 35),
-		x : getPixelFromPercent('x', 40),
-		y : getPixelFromPercent('y', 40),
+		x : getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35),
+		y : getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35),
 		z : 6
 	});
 	var bar_button_down = quicktigame2d.createSprite({
@@ -225,12 +228,16 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	});
 	
 	// Create an ImageView.
-	var rating_width = getPixelFromPercent('x', 60);
+	var rating_width = getPixelFromPercent('x', 30);
 	var rating_height = rating_width / 4.81818182;
 	var rating_image = Ti.UI.createImageView({
 		// image : 'assets/games/ratings/5_star_ratings.png',
 		width : rating_width,
 		height : rating_height,
+
+		left :  getPixelFromPercent('x', '34'),
+		top : getPixelFromPercent('x', '15') + ((getRespectiveHeight(getPixelFromPercent('x', '50'),1.3)) / 2),
+
 		visible : false,
 		zIndex : 990
 	});
@@ -243,11 +250,22 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		y : getPixelFromPercent('y', 52),
 		z : 3
 	});
+	var rail_highlight_image = quicktigame2d.createSprite({
+		image : 'assets/games/jousting/rail_highlight.png',
+		width : 200,
+		height : 187,
+		x : 0, //getPixelFromPercent('x', 0),
+		y : getPixelFromPercent('y', 52),
+		z : 4
+	});
 	var knight_transformation = quicktigame2d.createTransform();
 	var KnightRun = function() {
 		setTimeout(function() {
 			if(!play_game)
 				return;
+			lance_green.hide();
+			move_sliders_randomly();
+			
 			if (shot_number > 4) {
 				var p1 = (points / 500) * 100;
 				var p2 = Math.ceil(5 * (p1 / 100));
@@ -283,9 +301,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 							rating_image.image = '/assets/games/ratings/5_star_ratings_5.png';
 							break;
 					}
-					// rating_image.frame = (4 - (p2 - 1));
-					// rating_image.scale(0.75);
-					// rating_image.show();
 					rating_image.visible = true;
 
 					setTimeout(function(){
@@ -391,35 +406,33 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		game.start();
 	});
 
-	// var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
-	// var items_json = "";
-	// var items_length = 0;
-	// var httpclientt = require('/ui/common/Functions/function');
-	// httpclientt.requestServer({
-		// success : function(e) {
-			// items_json = JSON.parse(this.responseText);
-			// items_length = items_json.Record.length;
-			// if (items_json.Record != undefined) {
-				// _assign_quest_id = items_json.Record[0].ASSIGN_QUEST_ID;
-			// }
-		// },
-		// method : 'GET',
-		// contentType : 'text/xml',
-		// url : _url
-	// });
-
+	var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
+	var items_json = "";
+	var items_length = 0;
+	var httpclientt = require('/ui/common/Functions/function');
+	httpclientt.requestServer({
+		success : function(e) {
+			items_json = JSON.parse(this.responseText);
+			items_length = items_json.Record.length;
+			if (items_json.Record != undefined) {
+				_assign_quest_id = items_json.Record[0].ASSIGN_QUEST_ID;
+			}
+		},
+		method : 'GET',
+		contentType : 'text/xml',
+		url : _url
+	});
 
 	var sprite_count = 0;
 	game.addEventListener('onloadsprite', function(e) {
 		sprite_count++;
 		//alert('Sprite Load! '+sprite_count);
 	});
+	
 	var flag = 0;
 	var flag2 = 0;
 	var knight_image_ratio = 1.30612245;
 	
-	(function(){
-	})();
 	var horizontal_bar_left_to_right = quicktigame2d.createTransform();
 	var horizontal_bar_right_to_left = quicktigame2d.createTransform();
 	var vertical_bar_top_to_bottom = quicktigame2d.createTransform();
@@ -427,73 +440,94 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 
 	
 	var bar_move_first_iteration = true;
-	var move_bars_randomly = function(){
-		if(!play_game)
-			return;
-
-		horizontal_bar.x = balance_bar.x;
-		vertical_bar.y = balance_bar.y;
-		
-		horizontal_bar.transform(horizontal_bar_left_to_right);
-		vertical_bar.transform(vertical_bar_top_to_bottom);
-		setTimeout(function(){
-			if(!play_game)
-				return;
-			vertical_bar.transform(vertical_bar_bottom_to_top);
-			horizontal_bar.transform(horizontal_bar_right_to_left);
-		},1000);
-		move_vertical_bar_randomly();
-		alert((balance_bar.width / 2));
-	}
 
 	function randomXToY(minVal, maxVal) {
 		var randVal = minVal + (Math.random() * (maxVal - minVal));
 		return Math.round(randVal);
 	}
-	var move_vertical_bar_randomly = function(){
+	var current_random_slider_x;
+	var current_random_slider_y;
+	var slider_move_right = true;
+	var slider_move_left = true;
+	
+	function get_random_x_value(){
+		current_random_slider_x = randomXToY(0,balance_bar.width);
+	}
+	function get_random_y_value(){
+		current_random_slider_y = randomXToY(0,balance_bar.height);
+	}
+	var move_sliders_randomly = function(){
 		setTimeout(function(){
 			if(!play_game)
 				return;
+			horizontal_bar.x = (slider_move_right)
+			
+		},25);
+		
+		balance_bar.x = getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35);
+		balance_bar.y = getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35);
+		
+		horizontal_bar.y = balance_bar.y + (balance_bar.height / 2) - (horizontal_bar.height / 2);
+		vertical_bar.x = balance_bar.x + (balance_bar.width / 2) - (vertical_bar.width / 2);
+		horizontal_bar.x = balance_bar.x;
+		vertical_bar.y = balance_bar.y;
 
-			
-			
-			vertical_bar_top_to_bottom.duration = 1000;
-			vertical_bar_top_to_bottom.y = balance_bar.y + balance_bar.height - randomXToY(0,(balance_bar.height / 2));//Math.ceil(Math.random(0, (balance_bar.height / 2)));
-	
-	
-			horizontal_bar.transform(horizontal_bar_left_to_right);
-			vertical_bar.transform(vertical_bar_top_to_bottom);
-			setTimeout(function(){
-				if(!play_game)
-					return;
-				vertical_bar.transform(vertical_bar_bottom_to_top);
-				horizontal_bar.transform(horizontal_bar_right_to_left);
-			},1000);
-			move_vertical_bar_randomly();
-		},2000);
+		bar_button_down.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_down.width / 2);
+		bar_button_down.y = balance_bar.y + balance_bar.height - (bar_button_down.height / 2);
+		
+		bar_button_up.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_up.width / 2);
+		bar_button_up.y = balance_bar.y - (bar_button_down.height / 2);
+		
+		bar_button_left.x = balance_bar.x - (bar_button_left.width / 2);
+		bar_button_left.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_left.height / 2);
+		
+		bar_button_right.x = balance_bar.x + balance_bar.width - (bar_button_right.width / 2);
+		bar_button_right.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_right.height / 2);
+		
+		var new_x = balance_bar.x + randomXToY((balance_bar.width / 2),balance_bar.width);
+		horizontal_bar_left_to_right.duration = (new_x - horizontal_bar.x) * 5;
+		horizontal_bar_left_to_right.x = new_x;
+		horizontal_bar.transform(horizontal_bar_left_to_right);
+
+		var new_y = balance_bar.y + randomXToY((balance_bar.height / 2),balance_bar.height);
+		vertical_bar_top_to_bottom.duration = (vertical_bar.y - new_y) * 5;
+		vertical_bar_top_to_bottom.y = balance_bar.y + balance_bar.height - randomXToY(0,(balance_bar.height / 2));//Math.ceil(Math.random(0, (balance_bar.height / 2)));
+		vertical_bar.transform(vertical_bar_top_to_bottom);
+
 	}
 	horizontal_bar_left_to_right.addEventListener('complete',function(){
-		var new_x = balance_bar.x + randomXToY(0,(balance_bar.width / 2));
-		horizontal_bar_right_to_left.duration = (horizontal_bar.x - new_x) * 100;
+		var new_x = balance_bar.x + balance_bar.width;//randomXToY(0,balance_bar.width);
+		horizontal_bar_right_to_left.duration = ((horizontal_bar.x > new_x))?(horizontal_bar.x - new_x) * 5 : (new_x - horizontal_bar.x) * 50;
 		horizontal_bar_right_to_left.x = new_x;// balance_bar.x + randomXToY(0,(balance_bar.width / 2));//Math.ceil(Math.random(0, (balance_bar.width / 2)));
 		horizontal_bar.transform(horizontal_bar_right_to_left);
 	});
 	horizontal_bar_right_to_left.addEventListener('complete',function(){
-		var new_x = balance_bar.x + balance_bar.width - randomXToY(0,(balance_bar.width / 2));
-		horizontal_bar_left_to_right.duration = (new_x - horizontal_bar.x) * 100;
+		var new_x = balance_bar.x;// + randomXToY(0,balance_bar.width);
+		horizontal_bar_left_to_right.duration = ((horizontal_bar.x > new_x))?(horizontal_bar.x - new_x) * 5 : (new_x - horizontal_bar.x) * 5;
 		horizontal_bar_left_to_right.x = new_x;
 		horizontal_bar.transform(horizontal_bar_left_to_right);
 	});
 	vertical_bar_top_to_bottom.addEventListener('complete',function(){
-		var new_y = balance_bar.y + randomXToY(0,(balance_bar.height / 2));
-		vertical_bar_bottom_to_top.duration = (vertical_bar.y - new_y) * 100;
+		var new_y = balance_bar.y + balance_bar.height;// randomXToY(0, balance_bar.height);
+		vertical_bar_bottom_to_top.duration = (vertical_bar.y > new_y)?(vertical_bar.y - new_y) * 5 : (new_y - vertical_bar.y) * 5;
 		vertical_bar_bottom_to_top.y = new_y;
 		vertical_bar.transform(vertical_bar_bottom_to_top);
 	});
+	vertical_bar_bottom_to_top.addEventListener('complete',function(){
+		var new_y = balance_bar.y;// + randomXToY(0, balance_bar.height);
+		vertical_bar_top_to_bottom.duration = (vertical_bar.y > new_y)?(vertical_bar.y - new_y) * 10 : (new_y - vertical_bar.y) * 10;
+		vertical_bar_top_to_bottom.y = new_y;
+		vertical_bar.transform(vertical_bar_top_to_bottom);
+	});
 	window.addEventListener("open", function() {
 
-		scene.add(lance_green);
 		
+		jousting_battle_music.play();
+		jousting_battle_music.setLooping(true);
+
+		lance_green.hide();
+		scene.add(lance_green);
+		 
 		var sky_image_respective_height = getPixelFromPercent('y', 55);
 		var sky_image_respective_width = knight_image_respective_height * 2;
 		
@@ -511,7 +545,10 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		knight_image.animate([0, 1, 2, 3, 4, 5, 6, 7], 50, -1, 0);
 		scene.add(knight_image);
 		
-		move_bars_randomly();
+		move_sliders_randomly();
+		//move_bars_randomly();
+		balance_bar.x = getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35);
+		balance_bar.y = getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35);
 		scene.add(balance_bar);
 		
 		bar_button_down.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_down.width / 2);
@@ -536,12 +573,16 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		scene.add(horizontal_bar);
 		scene.add(vertical_bar);
 
-		// KnightRun();
+		KnightRun();
 		rails_image.animate([0, 1, 2, 3], 100, -1, 0);
 		bg_image.animate([0, 1, 2, 3], 100, -1, 0);
 		
 		bg_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 400, 100), ScaleSpriteFromPercentage(winHeight, 197, 45), 0, 0);
 		scene.add(bg_image);
+		rail_highlight_image.alpha = 0.5;
+		rail_highlight_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
+		scene.add(rail_highlight_image);
+		
 		rails_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
 		scene.add(rails_image);
 		var activity = window.activity;
@@ -550,6 +591,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		});
 		activity.addEventListener('pause', function(e) {
 			play_game = false;
+			jousting_battle_music.stop();
 			horse_gollap_noise_sound.stop();
 			KnightRun = function() {
 			};
@@ -639,11 +681,22 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	window.add(somelabel);
 
 	var tapped = false;
+	var bar_up_botton_tapped = false;
+	var bar_down_botton_tapped = false;
+	var bar_left_botton_tapped = false;
+	var bar_right_botton_tapped = false;
 	game.addEventListener('touchstart', function(e) {
+		if(sound_settings == 'ON')
+			whoosh_sound.play();
+		lance_green.x = e.x;
+		lance_green.y = e.y;
+		
+		tapped = false;
 		var coordinates = {
 			x : e.x, 
 			y : e.y
 		};
+
 		var bar_up_botton = {
 			left : bar_button_up.x,
 			top : bar_button_up.y,
@@ -668,49 +721,31 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 			width : bar_button_right.width,
 			height : bar_button_right.height
 		};
+		var transform  = quicktigame2d.createTransform();
+		transform.duration = 200;
+
 		if(isCollide(coordinates,bar_up_botton)){
-			balance_bar.y -= 5;
-			horizontal_bar.y -= 5;
-			bar_button_down.y -= 5;
-			bar_button_left.y -= 5;
-			bar_button_right.y -= 5;
-			bar_button_up.y -= 5;
+			transform.y = vertical_bar.y - 5;
+			vertical_bar.transform(transform);
 			return;
 		}
 		if(isCollide(coordinates,bar_down_botton)){
-			balance_bar.y += 5;
-			horizontal_bar.y += 5;
-			bar_button_down.y += 5;
-			bar_button_left.y += 5;
-			bar_button_right.y += 5;
-			bar_button_up.y += 5;
+			transform.y = vertical_bar.y + 5;
+			vertical_bar.transform(transform);
 			return;
 		}
 		if(isCollide(coordinates,bar_left_botton)){
-			balance_bar.x -= 5;
-			vertical_bar.x -= 5;
-			bar_button_down.x -= 5;
-			bar_button_left.x -= 5;
-			bar_button_right.x -= 5;
-			bar_button_up.x -= 5;
+			transform.x = vertical_bar.x - 5;
+			horizontal_bar.transform(transform);
 			return;
 		}
 		if(isCollide(coordinates,bar_right_botton)){
-			balance_bar.x += 5;
-			vertical_bar.x += 5;
-			bar_button_down.x += 5;
-			bar_button_left.x += 5;
-			bar_button_right.x += 5;
-			bar_button_up.x += 5;
+			transform.x = vertical_bar.x + 5;
+			horizontal_bar.transform(transform);
 			return;
 		}
-		return;
 		
-		if(sound_settings == 'ON')
-			whoosh_sound.play();
-		lance_green.x = e.x;// - (lance_green.width / 2);
-		lance_green.y = e.y;// - (lance_green.height / 2);
-		tapped = false;
+		return;
 		if (knight_image.contains(e.x, e.y)) {
 			
 			var new_width = knight_image.width * knight_image.scaleX;
@@ -870,13 +905,14 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		
 	};
 	
-	var scroll_width = getPixelFromPercent('x', 70);
-	var scroll_height = scroll_height * 1.3;
+	// var scroll_width = getPixelFromPercent('x', 70);
+	// var scroll_height = scroll_height * 1.3;
 	var alertView = Ti.UI.createImageView({
 		image : '/assets/games/scroll.png',
-		width : getPixelFromPercent('x', '85'),
-		height :getRespectiveHeight(getPixelFromPercent('x', '85'),1.3),
+		width : getPixelFromPercent('x', '50'),
+		height :getRespectiveHeight(getPixelFromPercent('x', '50'),1.3),
 		visible : false,
+		top : '10%',
 		zIndex : 900
 	});
 	window.add(alertView);
@@ -884,14 +920,15 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	var message = Ti.UI.createLabel({
 		color : '#000000',
 		font : {
-			fontSize : '14dip',
+			fontSize : '12dip',
 			fontWeight : 'bold'
 		},
 		textAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
-		left : '22%',
+		left :  getPixelFromPercent('x', '30'),
+		top : '15%',
 		visible : false,
-		width : '48%',
-		height : '100%',
+		width : getPixelFromPercent('x', '40'),
+		height : getRespectiveHeight(getPixelFromPercent('x', '40'),1.3),
 		zIndex : 950
 	});
 	window.add(message);
