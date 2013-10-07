@@ -144,18 +144,18 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/horizontal_bar.png',
 		width : getPixelFromPercent('x', 5),
 		height : getPixelFromPercent('x', 5),
-		x : getPixelFromPercent('x', 2.5),//Math.random(0,winWidth),
-		y : getPixelFromPercent('y', 5),
-		z : 6
+		x : getPixelFromPercent('x', 100),//Math.random(0,winWidth),
+		y : getPixelFromPercent('y', 100),
+		z : 7
 	});
 
 	var vertical_bar = quicktigame2d.createSprite({
 		image : 'assets/games/jousting/vertical_bar.png',
 		width : getPixelFromPercent('x', 5),
 		height : getPixelFromPercent('x', 5),
-		x : winWidth - getPixelFromPercent('x', 2.5),
-		y : getPixelFromPercent('y', 5),
-		z : 6
+		x : getPixelFromPercent('x', 100),
+		y : getPixelFromPercent('y', 100),
+		z : 7
 	});
 	var balance_bar = quicktigame2d.createSprite({
 		image : 'assets/games/jousting/balance_bar.png',
@@ -163,7 +163,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		height : getPixelFromPercent('x', 35),
 		x : getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35),
 		y : getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35),
-		z : 6
+		z : 7
 	});
 	var bar_button_down = quicktigame2d.createSprite({
 		image : 'assets/games/jousting/bar_button_down.png',
@@ -171,7 +171,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		height : getPixelFromPercent('x', 10),
 		x : getPixelFromPercent('x', 10),
 		y : getPixelFromPercent('y', 10),
-		z : 6
+		z : 8
 	});
 
 	var bar_button_left = quicktigame2d.createSprite({
@@ -180,7 +180,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		height : getPixelFromPercent('x', 10),
 		x : getPixelFromPercent('x', 100),
 		y : getPixelFromPercent('y', 100),
-		z : 6
+		z : 8
 	});
 
 	var bar_button_right = quicktigame2d.createSprite({
@@ -189,7 +189,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		height : getPixelFromPercent('x',10),
 		x : getPixelFromPercent('x', 100),
 		y : getPixelFromPercent('y', 100),
-		z : 6
+		z : 8
 	});
 
 	var bar_button_up = quicktigame2d.createSprite({
@@ -198,14 +198,14 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		height : getPixelFromPercent('x', 10),
 		x : getPixelFromPercent('x', 100),
 		y : getPixelFromPercent('y', 100),
-		z : 6
+		z : 8
 	});
 
 	var lance_green = quicktigame2d.createSprite({
 		image : 'assets/games/jousting/lance.png',
 		width : getPixelFromPercent('x', 30),
 		height : getPixelFromPercent('y', 35),
-		z : 6
+		z : 7
 	});
 
 	var knightImageRatio = 1.30612245;
@@ -433,14 +433,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	var flag2 = 0;
 	var knight_image_ratio = 1.30612245;
 	
-	var horizontal_bar_left_to_right = quicktigame2d.createTransform();
-	var horizontal_bar_right_to_left = quicktigame2d.createTransform();
-	var vertical_bar_top_to_bottom = quicktigame2d.createTransform();
-	var vertical_bar_bottom_to_top = quicktigame2d.createTransform();
-
-	
-	var bar_move_first_iteration = true;
-
 	function randomXToY(minVal, maxVal) {
 		var randVal = minVal + (Math.random() * (maxVal - minVal));
 		return Math.round(randVal);
@@ -448,105 +440,61 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	var current_random_slider_x;
 	var current_random_slider_y;
 	var slider_move_right = true;
-	var slider_move_left = true;
+	var slider_move_bottom = true;
+	var smallest_move = 5;
 	
 	function get_random_x_value(){
-		current_random_slider_x = randomXToY(0,balance_bar.width);
+		return randomXToY(balance_bar.x, (balance_bar.x + balance_bar.width));
 	}
 	function get_random_y_value(){
-		current_random_slider_y = randomXToY(0,balance_bar.height);
+		return randomXToY(balance_bar.y, (balance_bar.y + balance_bar.height));
 	}
 	var move_sliders_randomly = function(){
 		setTimeout(function(){
 			if(!play_game)
 				return;
-			horizontal_bar.x = (slider_move_right)
+			if(slider_move_right){
+				horizontal_bar.x += smallest_move;
+				if(horizontal_bar.x >= current_random_slider_x){
+					slider_move_right = false;
+					current_random_slider_x = get_random_x_value();
+				}
+			}
+			else{
+				horizontal_bar.x -= smallest_move;
+				if(horizontal_bar.x <= current_random_slider_x){
+					slider_move_right = true;
+					current_random_slider_x = get_random_x_value;
+				}
+			}
+			move_sliders_randomly();
 			
 		},25);
-		
-		balance_bar.x = getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35);
-		balance_bar.y = getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35);
-		
-		horizontal_bar.y = balance_bar.y + (balance_bar.height / 2) - (horizontal_bar.height / 2);
-		vertical_bar.x = balance_bar.x + (balance_bar.width / 2) - (vertical_bar.width / 2);
-		horizontal_bar.x = balance_bar.x;
-		vertical_bar.y = balance_bar.y;
-
-		bar_button_down.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_down.width / 2);
-		bar_button_down.y = balance_bar.y + balance_bar.height - (bar_button_down.height / 2);
-		
-		bar_button_up.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_up.width / 2);
-		bar_button_up.y = balance_bar.y - (bar_button_down.height / 2);
-		
-		bar_button_left.x = balance_bar.x - (bar_button_left.width / 2);
-		bar_button_left.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_left.height / 2);
-		
-		bar_button_right.x = balance_bar.x + balance_bar.width - (bar_button_right.width / 2);
-		bar_button_right.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_right.height / 2);
-		
-		var new_x = balance_bar.x + randomXToY((balance_bar.width / 2),balance_bar.width);
-		horizontal_bar_left_to_right.duration = (new_x - horizontal_bar.x) * 5;
-		horizontal_bar_left_to_right.x = new_x;
-		horizontal_bar.transform(horizontal_bar_left_to_right);
-
-		var new_y = balance_bar.y + randomXToY((balance_bar.height / 2),balance_bar.height);
-		vertical_bar_top_to_bottom.duration = (vertical_bar.y - new_y) * 5;
-		vertical_bar_top_to_bottom.y = balance_bar.y + balance_bar.height - randomXToY(0,(balance_bar.height / 2));//Math.ceil(Math.random(0, (balance_bar.height / 2)));
-		vertical_bar.transform(vertical_bar_top_to_bottom);
-
 	}
-	horizontal_bar_left_to_right.addEventListener('complete',function(){
-		var new_x = balance_bar.x + balance_bar.width;//randomXToY(0,balance_bar.width);
-		horizontal_bar_right_to_left.duration = ((horizontal_bar.x > new_x))?(horizontal_bar.x - new_x) * 5 : (new_x - horizontal_bar.x) * 50;
-		horizontal_bar_right_to_left.x = new_x;// balance_bar.x + randomXToY(0,(balance_bar.width / 2));//Math.ceil(Math.random(0, (balance_bar.width / 2)));
-		horizontal_bar.transform(horizontal_bar_right_to_left);
-	});
-	horizontal_bar_right_to_left.addEventListener('complete',function(){
-		var new_x = balance_bar.x;// + randomXToY(0,balance_bar.width);
-		horizontal_bar_left_to_right.duration = ((horizontal_bar.x > new_x))?(horizontal_bar.x - new_x) * 5 : (new_x - horizontal_bar.x) * 5;
-		horizontal_bar_left_to_right.x = new_x;
-		horizontal_bar.transform(horizontal_bar_left_to_right);
-	});
-	vertical_bar_top_to_bottom.addEventListener('complete',function(){
-		var new_y = balance_bar.y + balance_bar.height;// randomXToY(0, balance_bar.height);
-		vertical_bar_bottom_to_top.duration = (vertical_bar.y > new_y)?(vertical_bar.y - new_y) * 5 : (new_y - vertical_bar.y) * 5;
-		vertical_bar_bottom_to_top.y = new_y;
-		vertical_bar.transform(vertical_bar_bottom_to_top);
-	});
-	vertical_bar_bottom_to_top.addEventListener('complete',function(){
-		var new_y = balance_bar.y;// + randomXToY(0, balance_bar.height);
-		vertical_bar_top_to_bottom.duration = (vertical_bar.y > new_y)?(vertical_bar.y - new_y) * 10 : (new_y - vertical_bar.y) * 10;
-		vertical_bar_top_to_bottom.y = new_y;
-		vertical_bar.transform(vertical_bar_top_to_bottom);
-	});
 	window.addEventListener("open", function() {
 
-		
 		jousting_battle_music.play();
 		jousting_battle_music.setLooping(true);
 
 		lance_green.hide();
 		scene.add(lance_green);
-		 
-		var sky_image_respective_height = getPixelFromPercent('y', 55);
-		var sky_image_respective_width = knight_image_respective_height * 2;
-		
-		sky_image.x = 0;//- (sky_image_respective_width - winWidth) / 2;
+
+		sky_image.x = 0;
 		sky_image.y = 0;
 		sky_image.scaleFromCenter(ScaleSpriteFromPercentage(winHeight, 200, 55), ScaleSpriteFromPercentage(winHeight, 200, 55), 0, 0);
 		scene.add(sky_image);
 		
 		var knight_image_respective_height = getPixelFromPercent('y', 20);
-		var knight_image_respective_width = knight_image_respective_height * 0.765625;
+		var knight_image_respective_width = (knight_image_respective_height * 0.765625);
 		
 		knight_image.x = getPixelFromPercent('x', 52) - knight_image_respective_width;
 		knight_image.y = getPixelFromPercent('y', 58) - knight_image_respective_height;
 		knight_image.hide();
 		knight_image.animate([0, 1, 2, 3, 4, 5, 6, 7], 50, -1, 0);
 		scene.add(knight_image);
+
 		
 		move_sliders_randomly();
-		//move_bars_randomly();
 		balance_bar.x = getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35);
 		balance_bar.y = getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35);
 		scene.add(balance_bar);
@@ -568,12 +516,15 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		scene.add(bar_button_right);
 		
 		vertical_bar.x = balance_bar.x + (balance_bar.width / 2) - (vertical_bar.width / 2);
+		vertical_bar.y = balance_bar.y;
+		
+		horizontal_bar.x = balance_bar.x;
 		horizontal_bar.y = balance_bar.y + (balance_bar.height / 2) - (horizontal_bar.height / 2);
 
 		scene.add(horizontal_bar);
 		scene.add(vertical_bar);
 
-		KnightRun();
+		//KnightRun();
 		rails_image.animate([0, 1, 2, 3], 100, -1, 0);
 		bg_image.animate([0, 1, 2, 3], 100, -1, 0);
 		
@@ -585,8 +536,9 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		
 		rails_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
 		scene.add(rails_image);
-		var activity = window.activity;
 		
+
+		var activity = window.activity;
 		activity.addEventListener('resume', function(e) {
 		});
 		activity.addEventListener('pause', function(e) {
@@ -905,8 +857,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		
 	};
 	
-	// var scroll_width = getPixelFromPercent('x', 70);
-	// var scroll_height = scroll_height * 1.3;
 	var alertView = Ti.UI.createImageView({
 		image : '/assets/games/scroll.png',
 		width : getPixelFromPercent('x', '50'),
