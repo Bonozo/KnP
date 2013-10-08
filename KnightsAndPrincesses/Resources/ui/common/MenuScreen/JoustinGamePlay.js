@@ -34,6 +34,13 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	var trumpet_win_sound = Titanium.Media.createSound({
 		url : '/sounds/trumpet_win.mp3'
 	});
+	var horse_gollap_noise_sound = Titanium.Media.createSound({
+		url : '/sounds/horse_gollap_noise.mp3',
+		looping : true
+	});
+	var whoosh_sound = Titanium.Media.createSound({
+		url : '/sounds/whoosh.mp3'
+	});
 
 	var shot_number = 0; var points = 0; var curr_points = 0;
 	var shapes = new Array();
@@ -45,13 +52,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	game.pushScene(scene);
 	var timer = 0;
 	var TOUCH_SCALE = 1;
-	var horse_gollap_noise_sound = Titanium.Media.createSound({
-		url : '/sounds/horse_gollap_noise.mp3',
-		looping : true
-	});
-	var whoosh_sound = Titanium.Media.createSound({
-		url : '/sounds/whoosh.mp3'
-	});
 
 	function getPixelFromPercent(axis, percent) {
 		if (axis == 'x') {
@@ -79,6 +79,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/XPBar.png',
 		height : getPixelFromPercent('y', 5),
 		width : getPixelFromPercent('x', 100),
+		tag : "scoreboard",
 		x : 0,
 		y : 0,
 		z : 4
@@ -115,6 +116,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/sky_image.png',
 		width : 400,//getPixelFromPercent('x', 100),
 		height : 200,//getPixelFromPercent('y', 55),
+		tag : "sky",
 		x : getPixelFromPercent('x', 100),
 		y : getPixelFromPercent('y', 100),
 		z : 0
@@ -124,6 +126,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/spritesheet_grass.png',
 		width : 400,
 		height : 197,
+		tag : "spritesheet_grass",
 		x : getPixelFromPercent('x', 0),
 		y : getPixelFromPercent('y', 55),
 		z : 1
@@ -134,8 +137,9 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	var lanceImageWidth = getRespectiveWidth(lanceImageHeight, lanceImageRatio);
 	var lance = quicktigame2d.createSprite({
 		image : 'assets/Joust_TargetingOnTarget.png',
-		width : lanceImageWidth, // getPixelFromPercent('x', 30),
-		height : lanceImageHeight, // getPixelFromPercent('y', 30)
+		width : lanceImageWidth, 
+		height : lanceImageHeight, 
+		tag : "lance",
 		x : 0,
 		y : 0,
 		z : 6
@@ -144,6 +148,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/horizontal_bar.png',
 		width : getPixelFromPercent('x', 5),
 		height : getPixelFromPercent('x', 5),
+		tag : "horizontal_bar",
 		x : getPixelFromPercent('x', 100),//Math.random(0,winWidth),
 		y : getPixelFromPercent('y', 100),
 		z : 7
@@ -152,6 +157,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/vertical_bar.png',
 		width : getPixelFromPercent('x', 5),
 		height : getPixelFromPercent('x', 5),
+		tag : "vertical_bar",
 		x : getPixelFromPercent('x', 100),
 		y : getPixelFromPercent('y', 100),
 		z : 7
@@ -160,6 +166,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/balance_bar.png',
 		width : getPixelFromPercent('x', 35),
 		height : getPixelFromPercent('x', 35),
+		tag : "balance_bar",
 		x : getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35),
 		y : getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35),
 		z : 7
@@ -168,6 +175,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/bar_button_down.png',
 		width : getPixelFromPercent('x', 10),
 		height : getPixelFromPercent('x', 10),
+		tag : "bar_button_down",
 		x : getPixelFromPercent('x', 10),
 		y : getPixelFromPercent('y', 10),
 		z : 8
@@ -177,6 +185,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/bar_button_left.png',
 		width : getPixelFromPercent('x', 10),
 		height : getPixelFromPercent('x', 10),
+		tag : "bar_button_left",
 		x : getPixelFromPercent('x', 100),
 		y : getPixelFromPercent('y', 100),
 		z : 8
@@ -186,6 +195,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/bar_button_right.png',
 		width : getPixelFromPercent('x', 10),
 		height : getPixelFromPercent('x',10),
+		tag : "bar_button_right",
 		x : getPixelFromPercent('x', 100),
 		y : getPixelFromPercent('y', 100),
 		z : 8
@@ -195,6 +205,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/bar_button_up.png',
 		width : getPixelFromPercent('x', 10),
 		height : getPixelFromPercent('x', 10),
+		tag : "bar_button_up",
 		x : getPixelFromPercent('x', 100),
 		y : getPixelFromPercent('y', 100),
 		z : 8
@@ -204,6 +215,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/lance.png',
 		width : 298,
 		height : 534,
+		tag : "lance_green",
 		z : 7
 	});
 
@@ -221,6 +233,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/ldpi_horse_spritesheet.png',
 		width : knightSprite.width,
 		height : knightSprite.height,
+		tag : "knight_image",
 		x : getPixelFromPercent('x', 100),// - knight_image_respective_width, //39),
 		y : getPixelFromPercent('y', 100),// - knight_image_respective_height,
 		z : 2
@@ -245,6 +258,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/spritesheet_rail.png',
 		width : 200,
 		height : 187,
+		tag : "rails_image",
 		x : 0, //getPixelFromPercent('x', 0),
 		y : getPixelFromPercent('y', 52),
 		z : 3
@@ -253,6 +267,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		image : 'assets/games/jousting/rail_highlight.png',
 		width : 200,
 		height : 187,
+		tag : "rail_highlight_image",
 		x : 0, //getPixelFromPercent('x', 0),
 		y : getPixelFromPercent('y', 52),
 		z : 4
@@ -324,14 +339,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 			if (shot_number > 4 || knight_image == undefined || knight_image == null || knight_image == "" || getPixelFromPercent == undefined || !loop)
 				return;
 
-			horizontal_bar.show();
-			vertical_bar.show();
-			balance_bar.show();
-			bar_button_down.show();
-			bar_button_left.show();
-			bar_button_right.show();
-			bar_button_up.show();
-			lance_green.show();
 
 			rails_image.animate([0, 1, 2, 3], 100, -1, 0);
 			bg_image.animate([0, 1, 2, 3], 100, -1, 0);
@@ -413,6 +420,14 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 					return;
 				message.visible = false;
 				alertView.visible = false;
+				horizontal_bar.show();
+				vertical_bar.show();
+				balance_bar.show();
+				bar_button_down.show();
+				bar_button_left.show();
+				bar_button_right.show();
+				bar_button_up.show();
+				lance_green.show();
 				KnightRun();
 			},3000);
 		},3000);
@@ -425,6 +440,10 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		game.registerForMultiTouch();
 		//actInd.hide();
 		game.start();
+		
+		start_game();
+		
+
 	});
 
 	var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
@@ -445,10 +464,24 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	});
 
 	var sprite_count = 0;
-	game.addEventListener('onloadsprite', function(e) {
-		sprite_count++;
-		//alert('Sprite Load! '+sprite_count);
-	});
+	var sprites_tag = [
+		"scoreboard",
+		"sky",
+		"spritesheet_grass",
+		"lance",
+		"horizontal_bar",
+		"vertical_bar",
+		"balance_bar",
+		"bar_button_down",
+		"bar_button_left",
+		"bar_button_right",
+		"bar_button_up",
+		"lance_green",
+		"knight_image",
+		"rails_image",
+		"rail_highlight_image"
+	];
+	var loaded_sprites = 0;
 	
 	var flag = 0;
 	var flag2 = 0;
@@ -508,84 +541,9 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 				}
 			}
 			move_sliders_randomly();
-		},150);
+		},100);
 	}
 	window.addEventListener("open", function() {
-		jousting_battle_music.play();
-		jousting_battle_music.setLooping(true);
-
-		lance_green.hide();
-		scene.add(lance_green);
-
-		sky_image.x = 0;
-		sky_image.y = 0;
-		sky_image.scaleFromCenter(ScaleSpriteFromPercentage(winHeight, 200, 55), ScaleSpriteFromPercentage(winHeight, 200, 55), 0, 0);
-		scene.add(sky_image);
-		
-		var knight_image_respective_height = getPixelFromPercent('y', 20);
-		var knight_image_respective_width = (knight_image_respective_height * 0.765625);
-		
-		knight_image.x = getPixelFromPercent('x', 52) - knight_image_respective_width;
-		knight_image.y = getPixelFromPercent('y', 58) - knight_image_respective_height;
-		knight_image.hide();
-		knight_image.animate([0, 1, 2, 3, 4, 5, 6, 7], 50, -1, 0);
-		scene.add(knight_image);
-
-		
-		balance_bar.x = getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35);
-		balance_bar.y = getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35);
-		scene.add(balance_bar);
-		
-		bar_button_down.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_down.width / 2);
-		bar_button_down.y = balance_bar.y + balance_bar.height - (bar_button_down.height / 2);
-		scene.add(bar_button_down);
-		
-		bar_button_up.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_up.width / 2);
-		bar_button_up.y = balance_bar.y - (bar_button_down.height / 2);
-		scene.add(bar_button_up);
-		
-		bar_button_left.x = balance_bar.x - (bar_button_left.width / 2);
-		bar_button_left.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_left.height / 2);
-		scene.add(bar_button_left);
-		
-		bar_button_right.x = balance_bar.x + balance_bar.width - (bar_button_right.width / 2);
-		bar_button_right.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_right.height / 2);
-		scene.add(bar_button_right);
-		
-		vertical_bar.x = balance_bar.x + (balance_bar.width / 2) - (vertical_bar.width / 2);
-		vertical_bar.y = balance_bar.y;
-		
-		horizontal_bar.x = balance_bar.x;
-		horizontal_bar.y = balance_bar.y + (balance_bar.height / 2) - (horizontal_bar.height / 2);
-
-		scene.add(horizontal_bar);
-		scene.add(vertical_bar);
-		
-		move_sliders_randomly();
-		
-		KnightRun();
-		rails_image.animate([0, 1, 2, 3], 100, -1, 0);
-		bg_image.animate([0, 1, 2, 3], 100, -1, 0);
-		
-		bg_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 400, 100), ScaleSpriteFromPercentage(winHeight, 197, 45), 0, 0);
-		scene.add(bg_image);
-		rail_highlight_image.alpha = 0.5;
-		rail_highlight_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
-		scene.add(rail_highlight_image);
-		
-		/*
-		x : 0, //getPixelFromPercent('x', 0),
-		y : getPixelFromPercent('y', 52),
-		 */
-		lance_green.x = (rail_highlight_image.width * rail_highlight_image.scaleX) / 5;
-		lance_green.y = getPixelFromPercent('y', 40);
-		lance_green.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 298, 32),ScaleSpriteFromPercentage(winHeight, 534, 32), 0, 0);
-		lance_green.show();
-		
-		rails_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
-		scene.add(rails_image);
-		
-
 		var activity = window.activity;
 		activity.addEventListener('resume', function(e) {
 		});
@@ -722,23 +680,23 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		};
 
 		if(isCollide(coordinates,bar_up_botton)){
-			vertical_bar.y -= (smallest_move * 2);
-			lance_green.y -= (smallest_move * 2);
+			vertical_bar.y -= (smallest_move * 4);
+			lance_green.y -= (smallest_move * 4);
 			return;
 		}
 		if(isCollide(coordinates,bar_down_botton)){
-			vertical_bar.y += (smallest_move * 2);
-			lance_green.y += (smallest_move * 2);
+			vertical_bar.y += (smallest_move * 4);
+			lance_green.y += (smallest_move * 4);
 			return;
 		}
 		if(isCollide(coordinates,bar_left_botton)){
-			horizontal_bar.x -= (smallest_move * 2);
-			lance_green.x -= (smallest_move * 2);
+			horizontal_bar.x -= (smallest_move * 4);
+			lance_green.x -= (smallest_move * 4);
 			return;
 		}
 		if(isCollide(coordinates,bar_right_botton)){
-			horizontal_bar.x += (smallest_move * 2);
-			lance_green.x += (smallest_move * 2);
+			horizontal_bar.x += (smallest_move * 4);
+			lance_green.x += (smallest_move * 4);
 			return;
 		}
 		return;
@@ -903,6 +861,14 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 			setTimeout(function(){
 				if(!play_game)
 					return;
+				horizontal_bar.show();
+				vertical_bar.show();
+				balance_bar.show();
+				bar_button_down.show();
+				bar_button_left.show();
+				bar_button_right.show();
+				bar_button_up.show();
+				lance_green.show();
 				message.visible = false;
 				alertView.visible = false;
 				KnightRun();
@@ -951,6 +917,91 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		KnightRun();
 	});
 	window.add(ok_button);
+	var start_game = function(){
+
+		lance_green.hide();
+		scene.add(lance_green);
+
+		sky_image.x = 0;
+		sky_image.y = 0;
+		sky_image.scaleFromCenter(ScaleSpriteFromPercentage(winHeight, 200, 55), ScaleSpriteFromPercentage(winHeight, 200, 55), 0, 0);
+		scene.add(sky_image);
+		
+		var knight_image_respective_height = getPixelFromPercent('y', 20);
+		var knight_image_respective_width = (knight_image_respective_height * 0.765625);
+		
+		knight_image.x = getPixelFromPercent('x', 52) - knight_image_respective_width;
+		knight_image.y = getPixelFromPercent('y', 58) - knight_image_respective_height;
+		knight_image.hide();
+		knight_image.animate([0, 1, 2, 3, 4, 5, 6, 7], 50, -1, 0);
+		scene.add(knight_image);
+
+		
+		balance_bar.x = getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35);
+		balance_bar.y = getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35);
+		scene.add(balance_bar);
+		
+		bar_button_down.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_down.width / 2);
+		bar_button_down.y = balance_bar.y + balance_bar.height - (bar_button_down.height / 2);
+		scene.add(bar_button_down);
+		
+		bar_button_up.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_up.width / 2);
+		bar_button_up.y = balance_bar.y - (bar_button_down.height / 2);
+		scene.add(bar_button_up);
+		
+		bar_button_left.x = balance_bar.x - (bar_button_left.width / 2);
+		bar_button_left.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_left.height / 2);
+		scene.add(bar_button_left);
+		
+		bar_button_right.x = balance_bar.x + balance_bar.width - (bar_button_right.width / 2);
+		bar_button_right.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_right.height / 2);
+		scene.add(bar_button_right);
+		
+		vertical_bar.x = balance_bar.x + (balance_bar.width / 2) - (vertical_bar.width / 2);
+		vertical_bar.y = balance_bar.y;
+		
+		horizontal_bar.x = balance_bar.x;
+		horizontal_bar.y = balance_bar.y + (balance_bar.height / 2) - (horizontal_bar.height / 2);
+
+		scene.add(horizontal_bar);
+		scene.add(vertical_bar);
+		
+		move_sliders_randomly();
+		
+		rails_image.animate([0, 1, 2, 3], 100, -1, 0);
+		bg_image.animate([0, 1, 2, 3], 100, -1, 0);
+		
+		bg_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 400, 100), ScaleSpriteFromPercentage(winHeight, 197, 45), 0, 0);
+		scene.add(bg_image);
+		rail_highlight_image.alpha = 0.5;
+		rail_highlight_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
+		scene.add(rail_highlight_image);
+		
+		/*
+		x : 0, //getPixelFromPercent('x', 0),
+		y : getPixelFromPercent('y', 52),
+		 */
+		lance_green.x = (rail_highlight_image.width * rail_highlight_image.scaleX) / 5;
+		lance_green.y = getPixelFromPercent('y', 40);
+		lance_green.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 298, 64),ScaleSpriteFromPercentage(winHeight, 534, 64), 0, 0);
+		lance_green.show();
+		
+		rails_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
+		scene.add(rails_image);
+		
+	};
+	game.addEventListener('onloadsprite', function(e) {
+		loaded_sprites++;
+		if(loaded_sprites >= (sprites_tag.length - 1)){
+			jousting_battle_music.play();
+			jousting_battle_music.setLooping(true);
+			KnightRun();
+		}
+		// for (var i=0; i < sprites_tag.length; i++) {
+		  // if (e.tag == sprites_tag[i]) {
+		  // }
+		// };
+	});
 
 	window.add(game);
 	window.open({
