@@ -284,81 +284,84 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		if (quicktigame2d == undefined || quicktigame2d == null)
 			return;
 		knight_image.scale((knight_image_respective_width / knightSprite.width), (knight_image_respective_height / knightSprite.height));//, 0, 0);
-		horizontal_bar.show();
-		vertical_bar.show();
-		balance_bar.show();
-		bar_button_down.show();
-		bar_button_left.show();
-		bar_button_right.show();
-		bar_button_up.show();
-		knight_image.x = getPixelFromPercent('x', 52) - knight_image_respective_width;
-		knight_image.y = getPixelFromPercent('y', 58) - knight_image_respective_height;
-		move_sliders_randomly();
+		if (shot_number > 4) {
+			var p1 = (points / 500) * 100;
+			var p2 = Math.ceil(5 * (p1 / 100));
+
+			set_quest_complete(p2 * 50, function(quest_name, rewards) {
+				if(p2 > 3)
+					trumpet_win_sound.play();
+				else
+					trumpet_lose_sound.play();
+					
+				message.visible = false;
+				// message.top -= getPixelFromPercent('y',5);
+				// message.text = "You have earned " + points + "points.";
+				// message.visible = true;
+				alertView.visible = true;
+				horizontal_bar.hide();
+				vertical_bar.hide();
+				balance_bar.hide();
+				lance_green.hide();
+				bar_button_down.hide();
+				bar_button_left.hide();
+				bar_button_right.hide();
+				bar_button_up.hide();
+				switch(p2){
+					case 0:
+						rating_image.image = '/assets/games/ratings/5_star_ratings_1.png';
+						break;
+					case 1:
+						rating_image.image = '/assets/games/ratings/5_star_ratings_1.png';
+						break;
+					case 2:
+						rating_image.image = '/assets/games/ratings/5_star_ratings_2.png';
+						break;
+					case 3:
+						rating_image.image = '/assets/games/ratings/5_star_ratings_3.png';
+						break;
+					case 4:
+						rating_image.image = '/assets/games/ratings/5_star_ratings_4.png';
+						break;
+					case 5:
+						rating_image.image = '/assets/games/ratings/5_star_ratings_5.png';
+						break;
+				}
+				rating_image.visible = true;
+
+				setTimeout(function(){
+					window.close();
+				}, 4000);
+			});
+
+			knight_image.stop();
+			knight_image.clearTransforms();
+			bg_image.stop();
+			rails_image.stop();
+
+			return;
+		}
+		else{
+			horizontal_bar.show();
+			vertical_bar.show();
+			balance_bar.show();
+			bar_button_down.show();
+			bar_button_left.show();
+			bar_button_right.show();
+			bar_button_up.show();
+			knight_image.x = getPixelFromPercent('x', 52) - knight_image_respective_width;
+			knight_image.y = getPixelFromPercent('y', 58) - knight_image_respective_height;
+			move_sliders_randomly();
+		}
 
 		lance_hit = false;
 		setTimeout(function() {
 			if(!play_game)
 				return;
 			//lance_green.hide();
-			if (shot_number > 4) {
-				var p1 = (points / 500) * 100;
-				var p2 = Math.ceil(5 * (p1 / 100));
-
-				set_quest_complete(p2 * 50, function(quest_name, rewards) {
-					if(p2 > 3)
-						trumpet_win_sound.play();
-					else
-						trumpet_lose_sound.play();
-						
-					message.visible = false;
-					alertView.visible = true;
-					horizontal_bar.hide();
-					vertical_bar.hide();
-					balance_bar.hide();
-					lance_green.hide();
-					bar_button_down.hide();
-					bar_button_left.hide();
-					bar_button_right.hide();
-					bar_button_up.hide();
-					switch(p2){
-						case 0:
-							rating_image.image = '/assets/games/ratings/5_star_ratings_1.png';
-							break;
-						case 1:
-							rating_image.image = '/assets/games/ratings/5_star_ratings_1.png';
-							break;
-						case 2:
-							rating_image.image = '/assets/games/ratings/5_star_ratings_2.png';
-							break;
-						case 3:
-							rating_image.image = '/assets/games/ratings/5_star_ratings_3.png';
-							break;
-						case 4:
-							rating_image.image = '/assets/games/ratings/5_star_ratings_4.png';
-							break;
-						case 5:
-							rating_image.image = '/assets/games/ratings/5_star_ratings_5.png';
-							break;
-					}
-					rating_image.visible = true;
-
-					setTimeout(function(){
-						window.close();
-					}, 4000);
-				});
-
-				knight_image.stop();
-				knight_image.clearTransforms();
-				bg_image.stop();
-				rails_image.stop();
-
-				return;
-			}
 			if (shot_number > 4 || knight_image == undefined || knight_image == null || knight_image == "" || getPixelFromPercent == undefined || !loop)
 				return;
-
-
-
+			
 			var new_width = knight_image.width * knight_image.scaleX;
 			var old_width = knight_image.width;
 			
@@ -519,7 +522,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		x : 0, //getPixelFromPercent('x', 0),
 		y : getPixelFromPercent('y', 52),
 		 */
-		lance_green.x = (rail_highlight_image.width * rail_highlight_image.scaleX) / 5;
+		lance_green.x = 0;//getPixelFromPercent('x',10);
 		lance_green.y = getPixelFromPercent('y', 40);
 		lance_green.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 298, 64),ScaleSpriteFromPercentage(winHeight, 534, 64), 0, 0);
 		lance_green.show();
@@ -639,8 +642,9 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 				center_y : new_y + (knight_image.height * knight_image.scaleY / 2)
 			};
 			if(
-				(knight_params.center_x >= (rail_highlight_image.x + (40 * (rail_highlight_image.width * rail_highlight_image.scaleX)/100)) && 
-				knight_params.center_x <= (rail_highlight_image.x + (60 * (rail_highlight_image.width * rail_highlight_image.scaleX)/100))) && !lance_hit// &&
+				knight_params.center_x >= (getPixelFromPercent('x', 5)) && 
+				knight_params.center_x <= getPixelFromPercent('x',15) && 
+				!lance_hit// &&
 			   	// (knight_params.center_y >= (rail_highlight_image.y + (40 * (rail_highlight_image.height * rail_highlight_image.scaleY)/100)) && 
 			   	// knight_params.center_y <= (rail_highlight_image.y + (60 * (rail_highlight_image.height * rail_highlight_image.scaleY)/100)))
 			  ){
@@ -707,18 +711,21 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 				bar_button_right.hide();
 				bar_button_up.hide();
 				//lance_green.hide();
+				
+				setTimeout(function(){
 					message.visible = true;
 					alertView.visible = true;
 					points_label.text = "Total points : " + (points += curr_points);
-			
-						setTimeout(function(){
-							if(!play_game)
-								return;
-							message.visible = false;
-							alertView.visible = false;
-							KnightRun();
-							
-						},3000);
+					knight_image.hide();
+					setTimeout(function(){
+						if(!play_game)
+							return;
+						message.visible = false;
+						alertView.visible = false;
+						KnightRun();
+						
+					},3000);
+				},3000);
 			}
 			if(!lance_hit){
 				move_sliders_randomly();
