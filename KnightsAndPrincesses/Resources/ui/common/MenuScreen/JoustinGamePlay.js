@@ -43,9 +43,10 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	});
 
 	var shot_number = 0; var points = 0; var curr_points = 0;
-	var shapes = new Array();
 	var played = false;
-
+	var horizontal_bar_points_region;
+	var vertical_bar_points_region;
+	
 	var scene = quicktigame2d.createScene();
 
 	// add your scene to game view
@@ -274,17 +275,35 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	});
 	var knight_transformation = quicktigame2d.createTransform();
 	var KnightRun = function() {
+		rails_image.animate([0, 1, 2, 3], 100, -1, 0);
+		bg_image.animate([0, 1, 2, 3], 100, -1, 0);
+		knight_image.hide();
+		knight_image.animate([0, 1, 2, 3, 4, 5, 6, 7], 50, -1, 0);
+		var knight_image_respective_height = getPixelFromPercent('y', 10);
+		var knight_image_respective_width = knight_image_respective_height * 0.765625;
+		if (quicktigame2d == undefined || quicktigame2d == null)
+			return;
+		knight_image.scale((knight_image_respective_width / knightSprite.width), (knight_image_respective_height / knightSprite.height));//, 0, 0);
+		horizontal_bar.show();
+		vertical_bar.show();
+		balance_bar.show();
+		bar_button_down.show();
+		bar_button_left.show();
+		bar_button_right.show();
+		bar_button_up.show();
+		knight_image.x = getPixelFromPercent('x', 52) - knight_image_respective_width;
+		knight_image.y = getPixelFromPercent('y', 58) - knight_image_respective_height;
+		move_sliders_randomly();
+
+		lance_hit = false;
 		setTimeout(function() {
 			if(!play_game)
 				return;
 			//lance_green.hide();
-			move_sliders_randomly();
-			
 			if (shot_number > 4) {
 				var p1 = (points / 500) * 100;
 				var p2 = Math.ceil(5 * (p1 / 100));
 
-					// message.text = "Star ranking : " + p2 + " out of 5.";
 				set_quest_complete(p2 * 50, function(quest_name, rewards) {
 					if(p2 > 3)
 						trumpet_win_sound.play();
@@ -301,7 +320,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 					bar_button_left.hide();
 					bar_button_right.hide();
 					bar_button_up.hide();
-//					alert("Star ranking : " + p2 + " out of 5.");
 					switch(p2){
 						case 0:
 							rating_image.image = '/assets/games/ratings/5_star_ratings_1.png';
@@ -340,17 +358,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 				return;
 
 
-			rails_image.animate([0, 1, 2, 3], 100, -1, 0);
-			bg_image.animate([0, 1, 2, 3], 100, -1, 0);
-			knight_image.animate([0, 1, 2, 3, 4, 5, 6, 7], 50, -1, 0);
-			var knight_image_respective_height = getPixelFromPercent('y', 10);
-			var knight_image_respective_width = knight_image_respective_height * 0.765625;
-			if (quicktigame2d == undefined || quicktigame2d == null)
-				return;
-			knight_image.scale((knight_image_respective_width / knightSprite.width), (knight_image_respective_height / knightSprite.height));//, 0, 0);
-
-			knight_image.x = getPixelFromPercent('x', 52) - knight_image_respective_width;
-			knight_image.y = getPixelFromPercent('y', 58) - knight_image_respective_height;
 
 			var new_width = knight_image.width * knight_image.scaleX;
 			var old_width = knight_image.width;
@@ -376,6 +383,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 				knight_image.show();
 			
 			
+			knight_image.show();
 			knight_transformation.duration = 3000;
 			knight_transformation.easing = quicktigame2d.ANIMATION_CURVE_EASE_IN;
 			knight_image_respective_height = getPixelFromPercent('y', 90);
@@ -383,13 +391,12 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 			
 			knight_transformation.scaleX = (knight_image_respective_width / knightSprite.width) * 1.5;
 			knight_transformation.scaleY = (knight_image_respective_height / knightSprite.height) * 1.5;
-
+			
 			knight_transformation.move(getPixelFromPercent('x', 0) - knight_image_respective_width, getPixelFromPercent('y', 55));
 			if(sound_settings == 'ON'){
 				horse_gollap_noise_sound.play();
 				horse_gollap_noise_sound.setLooping(true);
 			}
-				
 			knight_image.transform(knight_transformation);
 			shot_number++;
 			shot_number_label.text = "Shot # " + shot_number;
@@ -428,7 +435,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 				bar_button_right.show();
 				bar_button_up.show();
 				lance_green.show();
-				KnightRun();
 			},3000);
 		},3000);
 	});
@@ -441,7 +447,85 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		//actInd.hide();
 		game.start();
 		
-		start_game();
+
+		lance_green.hide();
+		scene.add(lance_green);
+
+		sky_image.x = 0;
+		sky_image.y = 0;
+		sky_image.scaleFromCenter(ScaleSpriteFromPercentage(winHeight, 200, 55), ScaleSpriteFromPercentage(winHeight, 200, 55), 0, 0);
+		scene.add(sky_image);
+		
+		var knight_image_respective_height = getPixelFromPercent('y', 20);
+		var knight_image_respective_width = (knight_image_respective_height * 0.765625);
+		
+		knight_image.x = getPixelFromPercent('x', 52) - knight_image_respective_width;
+		knight_image.y = getPixelFromPercent('y', 58) - knight_image_respective_height;
+		knight_image.hide();
+		knight_image.animate([0, 1, 2, 3, 4, 5, 6, 7], 50, -1, 0);
+		scene.add(knight_image);
+		
+		balance_bar.x = getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35);
+		balance_bar.y = getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35);
+		scene.add(balance_bar);
+		horizontal_bar_points_region = {
+			x_left : balance_bar.x + (25 * balance_bar.width * balance_bar.scaleX / 100),
+			x_right : balance_bar.x + (75 * balance_bar.width * balance_bar.scaleX / 100),
+			x_width : (balance_bar.x + (75 * balance_bar.width * balance_bar.scaleX / 100)) - (balance_bar.x + (75 * balance_bar.width * balance_bar.scaleX / 100)) 
+		};
+		vertical_bar_points_region = {
+			y_top : balance_bar.y + (25 * balance_bar.height * balance_bar.scaleY / 100),
+			y_bottom : balance_bar.y + (75 * balance_bar.height * balance_bar.scaleY / 100),
+			y_height : (balance_bar.y + (75 * balance_bar.height * balance_bar.scaleY / 100)) - (balance_bar.y + (25 * balance_bar.height * balance_bar.scaleY / 100))
+		};
+		
+		bar_button_down.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_down.width / 2);
+		bar_button_down.y = balance_bar.y + balance_bar.height - (bar_button_down.height / 2);
+		scene.add(bar_button_down);
+		
+		bar_button_up.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_up.width / 2);
+		bar_button_up.y = balance_bar.y - (bar_button_down.height / 2);
+		scene.add(bar_button_up);
+		
+		bar_button_left.x = balance_bar.x - (bar_button_left.width / 2);
+		bar_button_left.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_left.height / 2);
+		scene.add(bar_button_left);
+		
+		bar_button_right.x = balance_bar.x + balance_bar.width - (bar_button_right.width / 2);
+		bar_button_right.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_right.height / 2);
+		scene.add(bar_button_right);
+		
+		vertical_bar.x = balance_bar.x + (balance_bar.width / 2) - (vertical_bar.width / 2);
+		vertical_bar.y = balance_bar.y;
+		
+		horizontal_bar.x = balance_bar.x;
+		horizontal_bar.y = balance_bar.y + (balance_bar.height / 2) - (horizontal_bar.height / 2);
+
+		scene.add(horizontal_bar);
+		scene.add(vertical_bar);
+		
+		move_sliders_randomly();
+		
+		rails_image.animate([0, 1, 2, 3], 100, -1, 0);
+		bg_image.animate([0, 1, 2, 3], 100, -1, 0);
+		
+		bg_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 400, 100), ScaleSpriteFromPercentage(winHeight, 197, 45), 0, 0);
+		scene.add(bg_image);
+		rail_highlight_image.alpha = 0.5;
+		rail_highlight_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
+		scene.add(rail_highlight_image);
+		
+		/*
+		x : 0, //getPixelFromPercent('x', 0),
+		y : getPixelFromPercent('y', 52),
+		 */
+		lance_green.x = (rail_highlight_image.width * rail_highlight_image.scaleX) / 5;
+		lance_green.y = getPixelFromPercent('y', 40);
+		lance_green.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 298, 64),ScaleSpriteFromPercentage(winHeight, 534, 64), 0, 0);
+		lance_green.show();
+		
+		rails_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
+		scene.add(rails_image);
 		
 
 	});
@@ -503,6 +587,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	function get_random_y_value(){
 		return randomXToY(balance_bar.y, (balance_bar.y + balance_bar.height));
 	}
+	var lance_hit = false;
 	var move_sliders_randomly = function(){
 		setTimeout(function(){
 			if(!play_game)
@@ -540,7 +625,104 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 					current_random_slider_y = randomXToY(balance_bar.y + (balance_bar.height / 2), (balance_bar.y + balance_bar.height));
 				}
 			}
-			move_sliders_randomly();
+			
+			var new_width = knight_image.width * knight_image.scaleX;
+			var old_width = knight_image.width;
+			var new_x = knight_image.x - (new_width - old_width) / 2;
+			
+			var new_height = knight_image.height * knight_image.scaleY;
+			var old_height = knight_image.height;
+			var new_y = knight_image.y - (new_height - old_height) / 2;
+
+			var knight_params = {
+				center_x : new_x + (knight_image.width * knight_image.scaleX / 2),
+				center_y : new_y + (knight_image.height * knight_image.scaleY / 2)
+			};
+			if(
+				(knight_params.center_x >= (rail_highlight_image.x + (40 * (rail_highlight_image.width * rail_highlight_image.scaleX)/100)) && 
+				knight_params.center_x <= (rail_highlight_image.x + (60 * (rail_highlight_image.width * rail_highlight_image.scaleX)/100))) && !lance_hit// &&
+			   	// (knight_params.center_y >= (rail_highlight_image.y + (40 * (rail_highlight_image.height * rail_highlight_image.scaleY)/100)) && 
+			   	// knight_params.center_y <= (rail_highlight_image.y + (60 * (rail_highlight_image.height * rail_highlight_image.scaleY)/100)))
+			  ){
+			  	lance_hit = true;
+			  	whoosh_sound.play();
+				knight_image.stop();
+				horse_gollap_noise_sound.stop();
+				knight_image.clearTransforms();
+				curr_points = 0;
+				if(horizontal_bar.x >= horizontal_bar_points_region.x_left && horizontal_bar.x <= horizontal_bar_points_region.x_right){
+					//calculate for x
+					if(horizontal_bar.x > (balance_bar.x + (balance_bar.width * balance_bar.scaleX / 2))){ // bar is on right side
+						var a = balance_bar.x + (balance_bar.width * balance_bar.scaleX / 2);
+						var b = (balance_bar.x + (balance_bar.width * balance_bar.scaleX));
+						var c = horizontal_bar.x;
+						var d = b - a;
+						var e = c - a;
+						var percentage = (e / d * 100) / 2;
+						curr_points = curr_points + (50 - Math.round(percentage));
+					}
+					else{ // bar is on left side
+						var a = balance_bar.x;
+						var b = (balance_bar.x + (balance_bar.width * balance_bar.scaleX / 2));
+						var c = horizontal_bar.x;
+						var d = b - a;
+						var e = c - a;
+						var percentage = (e / d * 100) / 2;
+						curr_points = curr_points + (Math.round(percentage));
+					}
+				}
+				if(vertical_bar.y >= vertical_bar_points_region.y_top && vertical_bar.y <= vertical_bar_points_region.y_bottom){
+					//calculate for y
+					if(vertical_bar.y > (balance_bar.y + (balance_bar.height * balance_bar.scaleY / 2))){ // bar is on bottom side
+						var a = balance_bar.y + (balance_bar.height * balance_bar.scaleY / 2);
+						var b = (balance_bar.y + balance_bar.height * balance_bar.scaleY);
+						var c = vertical_bar.y;
+						var d = b - a;
+						var e = c - a;
+						var percentage = (e / d * 100) / 2;
+						curr_points = curr_points + (50 - Math.round(percentage));
+						// alert(Math.round(percentage));
+					}
+					else{ // bar is on top side
+						var a = balance_bar.y;
+						var b = (balance_bar.y + (balance_bar.height * balance_bar.scaleY / 2));
+						var c = horizontal_bar.y;
+						var d = b - a;
+						var e = c - a;
+						var percentage = (e / d * 100) / 2;
+						curr_points = curr_points + (Math.round(percentage));
+						// alert(Math.round(percentage));
+					}
+				}
+
+				if(sound_settings == 'ON')
+					metal_bang_sound.play();
+				//points = curr_points;
+				message.text = 'You have earned '+curr_points+' more points.\nGet ready for the next shot.';
+				horizontal_bar.hide();
+				vertical_bar.hide();
+				balance_bar.hide();
+				bar_button_down.hide();
+				bar_button_left.hide();
+				bar_button_right.hide();
+				bar_button_up.hide();
+				//lance_green.hide();
+					message.visible = true;
+					alertView.visible = true;
+					points_label.text = "Total points : " + (points += curr_points);
+			
+						setTimeout(function(){
+							if(!play_game)
+								return;
+							message.visible = false;
+							alertView.visible = false;
+							KnightRun();
+							
+						},3000);
+			}
+			if(!lance_hit){
+				move_sliders_randomly();
+			}
 		},100);
 	}
 	window.addEventListener("open", function() {
@@ -551,8 +733,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 			play_game = false;
 			jousting_battle_music.stop();
 			horse_gollap_noise_sound.stop();
-			KnightRun = function() {
-			};
 		});
 		activity.addEventListener('destroy', function(e) {
 		});
@@ -680,70 +860,61 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		};
 
 		if(isCollide(coordinates,bar_up_botton)){
-			vertical_bar.y -= (smallest_move * 4);
-			lance_green.y -= (smallest_move * 4);
+			bar_up_botton_tapped = true;
+			bar_button_up.x += 5;
+			bar_button_up.y += 5;
+			vertical_bar.y -= (smallest_move * 6);
+			lance_green.y -= (smallest_move * 6);
 			return;
 		}
 		if(isCollide(coordinates,bar_down_botton)){
-			vertical_bar.y += (smallest_move * 4);
-			lance_green.y += (smallest_move * 4);
+			bar_button_down.x += 5;
+			bar_button_down.y += 5;
+			bar_down_botton_tapped = true;
+			vertical_bar.y += (smallest_move * 6);
+			lance_green.y += (smallest_move * 6);
 			return;
 		}
 		if(isCollide(coordinates,bar_left_botton)){
-			horizontal_bar.x -= (smallest_move * 4);
-			lance_green.x -= (smallest_move * 4);
+			bar_button_left.x += 5;
+			bar_button_left.y += 5;
+			bar_left_botton_tapped = true;
+			horizontal_bar.x -= (smallest_move * 6);
+			lance_green.x -= (smallest_move * 6);
 			return;
 		}
 		if(isCollide(coordinates,bar_right_botton)){
-			horizontal_bar.x += (smallest_move * 4);
-			lance_green.x += (smallest_move * 4);
+			bar_button_right.x += 5;
+			bar_button_right.y += 5;
+			bar_right_botton_tapped = true;
+			horizontal_bar.x += (smallest_move * 6);
+			lance_green.x += (smallest_move * 6);
 			return;
 		}
-		return;
-		if (knight_image.contains(e.x, e.y)) {
-			
-			var new_width = knight_image.width * knight_image.scaleX;
-			var old_width = knight_image.width;
-			var new_x = knight_image.x - (new_width - old_width) / 2;
-			
-			var new_height = knight_image.height * knight_image.scaleY;
-			var old_height = knight_image.height;
-			var new_y = knight_image.y - (new_height - old_height) / 2;
-			
-			if(old_width == new_width){
-				var new_x = knight_image.x;
-				var new_y = knight_image.y;
-			}
-			somelabel.text = "(" + new_x + ", " + new_y + ")";
-			var knight_params = {
-				x : new_x,
-				y : new_y,
-				width : knight_image.width * knight_image.scaleX,
-				height : knight_image.height * knight_image.scaleY
-			};
-			somelabel.text = "(" + lance_green.x + ", " + lance_green.y + ")";
-			var lance_params = {
-				x : lance_green.x,
-				y : lance_green.y
-			};
-			knight_image.stop();
-			rails_image.stop();
-			bg_image.stop();
-			knight_image.stop();
-			horse_gollap_noise_sound.stop();
-			knight_image.clearTransforms();
-			collisionDetection_knight_lance(knight_params, lance_params);
-		}
-		return;
-		tapped = true;
-		lance_green.x = e.x - (lance_green.width / 2);
-		lance_green.y = e.y - (lance_green.height / 2);
-		lance_green.show();
-		somelabel.text = "(" + lance_green.x + ", " + lance_green.y + ")";
 	});
 	game.addEventListener('touchmove', function(e) {
 	});
 	game.addEventListener('touchend', function(e) {
+		if(bar_up_botton_tapped){
+			bar_button_up.x -= 5;
+			bar_button_up.y -= 5;
+			bar_up_botton_tapped = false;
+		}
+		if(bar_down_botton_tapped){
+			bar_button_down.x -= 5;
+			bar_button_down.y -= 5;
+			bar_down_botton_tapped = false;
+		}
+		if(bar_left_botton_tapped){
+			bar_button_left.x -= 5;
+			bar_button_left.y -= 5;
+			bar_left_botton_tapped = false;
+		}
+		if(bar_right_botton_tapped){
+			bar_button_right.x -= 5;
+			bar_button_right.y -= 5;
+			bar_right_botton_tapped = false;
+		}
 	});
 	var JoustingKnightSkinParams = require('/ui/common/games/JoustingKnightSkinParams');
 	var knight_skin_params = new JoustingKnightSkinParams();
@@ -753,130 +924,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 			return true;
 		return false;
 	};
-	var collisionDetection_knight_lance = function(_knight_params, lance_params) {
-		var current_knight_head_params = {
-			left : _knight_params.x + (knight_skin_params.head.left * _knight_params.width / 100),
-			top : _knight_params.y + (knight_skin_params.head.top * _knight_params.height / 100),
-			width : (_knight_params.width * knight_skin_params.head.width / 100),
-			height : (_knight_params.height * knight_skin_params.head.height / 100)
-		};
-		var current_knight_shoulder_left_params = {
-			left : _knight_params.x + (knight_skin_params.shoulder_left.left * _knight_params.width / 100),
-			top : _knight_params.y + (knight_skin_params.shoulder_left.top * _knight_params.height / 100),
-			width : (_knight_params.width * knight_skin_params.shoulder_left.width / 100),
-			height : (_knight_params.height * knight_skin_params.shoulder_left.height / 100)
-		};
-		var current_knight_shoulder_right_params = {
-			left : _knight_params.x + (knight_skin_params.shoulder_right.left * _knight_params.width / 100),
-			top : _knight_params.y + (knight_skin_params.shoulder_right.top * _knight_params.height / 100),
-			width : (_knight_params.width * knight_skin_params.shoulder_right.width / 100),
-			height : (_knight_params.height * knight_skin_params.shoulder_right.height / 100)
-		};
-		var current_knight_arm_right_params = {
-			left : _knight_params.x + (knight_skin_params.arm_right.left * _knight_params.width / 100),
-			top : _knight_params.y + (knight_skin_params.arm_right.top * _knight_params.height / 100),
-			width : (_knight_params.width * knight_skin_params.arm_right.width / 100),
-			height : (_knight_params.height * knight_skin_params.arm_right.height / 100)
-		};
-		var current_knight_shield_1_params = {
-			left : _knight_params.x + (knight_skin_params.shield_1.left * _knight_params.width / 100),
-			top : _knight_params.y + (knight_skin_params.shield_1.top * _knight_params.height / 100),
-			width : (_knight_params.width * knight_skin_params.shield_1.width / 100),
-			height : (_knight_params.height * knight_skin_params.shield_1.height / 100)
-		};
-		var current_knight_shield_2_params = {
-			left : _knight_params.x + (knight_skin_params.shield_2.left * _knight_params.width / 100),
-			top : _knight_params.y + (knight_skin_params.shield_2.top * _knight_params.height / 100),
-			width : (_knight_params.width * knight_skin_params.shield_2.width / 100),
-			height : (_knight_params.height * knight_skin_params.shield_2.height / 100)
-		};
-		var current_knight_shield_3_params = {
-			left : _knight_params.x + (knight_skin_params.shield_3.left * _knight_params.width / 100),
-			top : _knight_params.y + (knight_skin_params.shield_3.top * _knight_params.height / 100),
-			width : (_knight_params.width * knight_skin_params.shield_3.width / 100),
-			height : (_knight_params.height * knight_skin_params.shield_3.height / 100)
-		};
-		var current_knight_shield_4_params = {
-			left : _knight_params.x + (knight_skin_params.shield_4.left * _knight_params.width / 100),
-			top : _knight_params.y + (knight_skin_params.shield_4.top * _knight_params.height / 100),
-			width : (_knight_params.width * knight_skin_params.shield_4.width / 100),
-			height : (_knight_params.height * knight_skin_params.shield_4.height / 100)
-		};
-		var current_knight_leg_left_params = {
-			left : _knight_params.x + (knight_skin_params.leg_left.left * _knight_params.width / 100),
-			top : _knight_params.y + (knight_skin_params.leg_left.top * _knight_params.height / 100),
-			width : (_knight_params.width * knight_skin_params.leg_left.width / 100),
-			height : (_knight_params.height * knight_skin_params.leg_left.height / 100)
-		};
-		var current_knight_leg_right_1_params = {
-			left : _knight_params.x + (knight_skin_params.leg_right_1.left * _knight_params.width / 100),
-			top : _knight_params.y + (knight_skin_params.leg_right_1.top * _knight_params.height / 100),
-			width : (_knight_params.width * knight_skin_params.leg_right_1.width / 100),
-			height : (_knight_params.height * knight_skin_params.leg_right_1.height / 100)
-		};
-		var current_knight_leg_right_2_params = {
-			left : _knight_params.x + (knight_skin_params.leg_right_2.left * _knight_params.width / 100),
-			top : _knight_params.y + (knight_skin_params.leg_right_2.top * _knight_params.height / 100),
-			width : (_knight_params.width * knight_skin_params.leg_right_2.width / 100),
-			height : (_knight_params.height * knight_skin_params.leg_right_2.height / 100)
-		};
-
-		if (isCollide(lance_params, current_knight_head_params)) {
-			points_label.text = "Total points : " + (points += 50);
-			curr_points = 50;
-			message.text = 'You have earned '+curr_points+' more points.\nGet ready for the next shot.';
-		} else if (isCollide(lance_params, current_knight_shoulder_left_params) || isCollide(lance_params, current_knight_shoulder_right_params) || isCollide(lance_params, current_knight_arm_right_params)) {
-			points_label.text = "Total points : " + (points += 75);
-			curr_points = 75;
-			message.text = 'You have earned '+curr_points+' more points.\nGet ready for the next shot.';
-		} else if (isCollide(lance_params, current_knight_shield_1_params) || isCollide(lance_params, current_knight_shield_2_params) || isCollide(lance_params, current_knight_shield_3_params) || isCollide(lance_params, current_knight_shield_4_params)) {
-			points_label.text = "Total points : " + (points += 100);
-			if(sound_settings == 'ON')
-				metal_bang_sound.play();
-			curr_points = 100;
-			message.text = 'You have earned '+curr_points+' more points.\nGet ready for the next shot.';
-		} else if (isCollide(lance_params, current_knight_leg_left_params) || isCollide(lance_params, current_knight_leg_right_1_params) || isCollide(lance_params, current_knight_leg_right_2_params)) {
-			points_label.text = "Total points : " + (points += 25);
-			curr_points = 25;
-			message.text = 'You have earned '+curr_points+' more points.\nGet ready for the next shot.';
-		}
-		else{
-			message.text = 'You earned no more points.\nGet ready for the next shot.';
-		}
-		setTimeout(function(){
-			if(!play_game)
-				return;
-			message.visible = true;
-			alertView.visible = true;
-			
-			horizontal_bar.hide();
-			vertical_bar.hide();
-			balance_bar.hide();
-			bar_button_down.hide();
-			bar_button_left.hide();
-			bar_button_right.hide();
-			bar_button_up.hide();
-			lance_green.hide();
-
-			setTimeout(function(){
-				if(!play_game)
-					return;
-				horizontal_bar.show();
-				vertical_bar.show();
-				balance_bar.show();
-				bar_button_down.show();
-				bar_button_left.show();
-				bar_button_right.show();
-				bar_button_up.show();
-				lance_green.show();
-				message.visible = false;
-				alertView.visible = false;
-				KnightRun();
-			},3000);
-		},3000);
-		
-	};
-	
 	var alertView = Ti.UI.createImageView({
 		image : '/assets/games/scroll.png',
 		width : getPixelFromPercent('x', '50'),
@@ -914,80 +961,9 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		backgroundImage : '/assets/button_small_UP.png'
 	});
 	ok_button.addEventListener('click', function(e) {
-		KnightRun();
 	});
 	window.add(ok_button);
-	var start_game = function(){
-
-		lance_green.hide();
-		scene.add(lance_green);
-
-		sky_image.x = 0;
-		sky_image.y = 0;
-		sky_image.scaleFromCenter(ScaleSpriteFromPercentage(winHeight, 200, 55), ScaleSpriteFromPercentage(winHeight, 200, 55), 0, 0);
-		scene.add(sky_image);
-		
-		var knight_image_respective_height = getPixelFromPercent('y', 20);
-		var knight_image_respective_width = (knight_image_respective_height * 0.765625);
-		
-		knight_image.x = getPixelFromPercent('x', 52) - knight_image_respective_width;
-		knight_image.y = getPixelFromPercent('y', 58) - knight_image_respective_height;
-		knight_image.hide();
-		knight_image.animate([0, 1, 2, 3, 4, 5, 6, 7], 50, -1, 0);
-		scene.add(knight_image);
-
-		
-		balance_bar.x = getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35);
-		balance_bar.y = getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35);
-		scene.add(balance_bar);
-		
-		bar_button_down.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_down.width / 2);
-		bar_button_down.y = balance_bar.y + balance_bar.height - (bar_button_down.height / 2);
-		scene.add(bar_button_down);
-		
-		bar_button_up.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_up.width / 2);
-		bar_button_up.y = balance_bar.y - (bar_button_down.height / 2);
-		scene.add(bar_button_up);
-		
-		bar_button_left.x = balance_bar.x - (bar_button_left.width / 2);
-		bar_button_left.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_left.height / 2);
-		scene.add(bar_button_left);
-		
-		bar_button_right.x = balance_bar.x + balance_bar.width - (bar_button_right.width / 2);
-		bar_button_right.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_right.height / 2);
-		scene.add(bar_button_right);
-		
-		vertical_bar.x = balance_bar.x + (balance_bar.width / 2) - (vertical_bar.width / 2);
-		vertical_bar.y = balance_bar.y;
-		
-		horizontal_bar.x = balance_bar.x;
-		horizontal_bar.y = balance_bar.y + (balance_bar.height / 2) - (horizontal_bar.height / 2);
-
-		scene.add(horizontal_bar);
-		scene.add(vertical_bar);
-		
-		move_sliders_randomly();
-		
-		rails_image.animate([0, 1, 2, 3], 100, -1, 0);
-		bg_image.animate([0, 1, 2, 3], 100, -1, 0);
-		
-		bg_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 400, 100), ScaleSpriteFromPercentage(winHeight, 197, 45), 0, 0);
-		scene.add(bg_image);
-		rail_highlight_image.alpha = 0.5;
-		rail_highlight_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
-		scene.add(rail_highlight_image);
-		
-		/*
-		x : 0, //getPixelFromPercent('x', 0),
-		y : getPixelFromPercent('y', 52),
-		 */
-		lance_green.x = (rail_highlight_image.width * rail_highlight_image.scaleX) / 5;
-		lance_green.y = getPixelFromPercent('y', 40);
-		lance_green.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 298, 64),ScaleSpriteFromPercentage(winHeight, 534, 64), 0, 0);
-		lance_green.show();
-		
-		rails_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
-		scene.add(rails_image);
+	function start_game(){
 		
 	};
 	game.addEventListener('onloadsprite', function(e) {
