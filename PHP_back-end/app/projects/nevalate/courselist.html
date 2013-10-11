@@ -1,0 +1,76 @@
+<!doctype html>
+<html manifest="html5_storage.manifest">
+<title>Class Schedule</title>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+
+<script type="text/javascript">   
+
+	
+ $(document).ready(function () 
+
+{
+ 	    var username =  localStorage.getItem('username');
+            $('#username').append("<span>"+username+"</span>");
+          
+          var param1 = $.urlParam('course');; 
+            var dataString = 'course='+param1;
+
+            $.ajax
+            ({
+            type: "POST",
+            url: "get_course.php",
+            data: dataString,
+            cache: false,
+            success: function(data)
+            {
+                $('#courselist').html(data);
+
+            }
+            });
+
+      
+});
+
+ $.urlParam = function(name){
+    var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    return results[1] || 0;
+}
+ 
+
+
+</script>
+</head>
+<body>
+    <form name="profileform" id="profileform" >
+        
+
+<table width="700px"   border='0' cellspacing='0' cellpadding='0' align="center">
+    <tr >
+        <td align="left" >
+             <div id="username">Welcome </div>
+        </td>       
+    </tr>
+</table>  
+
+<table width="700px" border='0' cellspacing='40' cellpadding='0' align="center">
+    <tr align="center">
+         <td >
+             <div>Please choose courses: </div>
+         </td>
+    </tr>
+    <tr>
+         <td align="center">
+              <div id="courselist">
+                  
+            </div>  
+         </td>
+    </tr>
+
+        
+</table>
+       
+    </form>
+</body> 
+</html>

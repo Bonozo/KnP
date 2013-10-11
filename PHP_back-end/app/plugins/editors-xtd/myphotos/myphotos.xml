@@ -1,0 +1,16 @@
+<?xml version="1.8" encoding="utf-8"?>
+<install version="1.8.2" type="plugin" group="editors-xtd" method="upgrade">
+	<name>Editor Button - My Photos</name>
+	<author>JomSocial</author>
+	<creationDate>March 2011</creationDate>
+	<copyright>Copyright 2008 - 2010 by Slashes &amp; Dots Sdn Bhd. All rights reserved</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>support@azrul.com</authorEmail>
+	<authorUrl>http://www.jomsocial.com</authorUrl>
+	<version>1.8.2</version>
+	<description>Editor Button - My Photos</description>
+	<files>
+		<filename plugin="myphotos">myphotos.php</filename>
+	</files>
+	<params />
+</install>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<extension type="component" version="1.6" method="upgrade">
+    <name>COM_MOBIRATE</name>
+    <copyright>2010 Municipality of Umea, Sweden</copyright>
+    <author>Magnus Häggström - Omicron Ceti AB</author>
+    <creationDate>17/02/2010</creationDate>
+    <license>GNU General Public License version 2.0</license>
+    <version>2.1.2</version>
+    <description>This component is designed for mobile websites and enables user rating and comments.</description>
+    
+    <scriptfile>installerscript.php</scriptfile>
+
+    <!-- installation part -->
+    <install>
+        <sql>
+            <file charset="utf8" driver="mysql">sql/install.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file charset="utf8" driver="mysql">sql/uninstall.sql</file>
+        </sql>
+    </uninstall>
+    <update>
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+    </update>
+
+    <!-- user part -->
+    <files folder="site">
+        <filename>controller.php</filename>
+        <filename>index.html</filename>
+        <filename>router.php</filename>
+        <filename>mobirate.php</filename>
+        <folder>helpers</folder>
+        <folder>models</folder>
+        <folder>views</folder>
+    </files>
+
+    <languages folder="language">
+        <language tag="en-GB">en-GB.com_mobirate.ini</language>
+        <language tag="sv-SE">sv-SE.com_mobirate.ini</language>
+    </languages>
+    
+    <media destination="com_mobirate" folder="media">
+         <filename>index.html</filename>
+         <folder>images</folder>
+         <folder>css</folder>
+    </media>
+
+    <!-- administration part -->
+    <administration>
+    
+    <menu  
+    	view="list"
+    	img="../media/com_mobirate/images/mobirate_icon.png">COM_MOBIRATE</menu> 
+    <submenu>
+    	<menu  
+    		view="list" 
+    		img="../media/com_mobirate/images/mobirate_icon_manage.png" 
+    		alt="MobiRate/Manage">COM_MOBIRATE_MANAGE</menu>
+    	<menu  
+    		view="onoff" 
+    		img="../media/com_mobirate/images/mobirate_icon_onoff.png" 
+    		alt="MobiRate/Enable">COM_MOBIRATE_ENABLE</menu>
+    	<menu 
+    		view="binding" 
+    		img="../media/com_mobirate/images/mobirate_icon_binding.png" 
+    		alt="MobiRate/Binding">COM_MOBIRATE_BINDING</menu>
+    	<menu 
+    		view="about" 
+    		img="../media/com_mobirate/images/mobirate_icon_about.png" 
+    		alt="MobiRate/About">COM_MOBIRATE_ABOUT</menu>
+    </submenu>
+
+    <files folder="admin">
+        <filename>config.xml</filename>
+        <filename>access.xml</filename>
+        <filename>controller.php</filename>
+        <filename>index.html</filename>
+        <filename>mobirate.php</filename>
+        <folder>helpers</folder>
+        <folder>models</folder>
+        <folder>tables</folder>
+        <folder>views</folder>
+        <folder>sql</folder> 
+    </files>
+
+    <languages folder="language/admin">
+        <language tag="en-GB">en-GB.com_mobirate.sys.ini</language>
+        <language tag="en-GB">en-GB.com_mobirate.ini</language>
+    </languages>
+
+    </administration>
+    
+    <config>
+    	<fields>
+    		<fieldset name="component">
+    			<field name="globalenable" default="1" />
+    		</fieldset>
+			<fieldset name="posting">
+		        <field name="addstatus" default="1" />
+		        <field name="sendnotifymail" default="0" />
+		        <field name="notifymailaddr" default="" />
+		        <field name="alwaysconfirm" default="1" />
+			</fieldset>
+			<fieldset name="dispay">
+		        <field name="nofratings" default="3" />
+		    </fieldset>
+    	</fields>
+    </config>
+
+</extension>

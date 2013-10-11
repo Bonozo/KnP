@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Springfield Map Prototype</title>
+<!--Adobe Edge Runtime-->
+    <script type="text/javascript" src="edge_includes/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="edge_includes/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="edge_includes/edge.0.1.3.min.js"></script>
+    <script type="text/javascript" src="edge_includes/edge.symbol.0.1.3.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="loadingscreen_edge.js"></script>
+    <script type="text/javascript" charset="utf-8" src="loadingscreen_edgeActions.js"></script>
+    <link rel="stylesheet" href="loadingscreen_edge.css" />
+<!--Adobe Edge Runtime End-->
+    <script type="text/javascript">
+        <!--//--><![CDATA[//><!--
+            var images = new Array()
+            function preload() {
+                for (i = 0; i < preload.arguments.length; i++) {
+                    images[i] = new Image()
+                    images[i].src = preload.arguments[i]
+                }
+            }
+            preload("images/loading.png", "images/BackgroundElements.png", "images/Building_Annies.png", "images/Building_AutoWorld.png", "images/Building_BaitBox.png", "images/Building_Baptist.png", "images/Building_BlvdDiner.png", "images/Building_Bookstore.png", "images/Building_Booster.png", "images/Building_Braums.png", "images/Building_Brown.png", "images/Building_Chamber.png", "images/Building_Chubby.png", "images/Building_CinoccaLaw.png", "images/Building_Coop.png", "images/Building_Ellis.png", "images/Building_GradeSchool.png", "images/Building_HighSchool.png", "images/Building_HistCenter.png", "images/Building_Jiffy.png", "images/Building_MethodistChurch.png", "images/Building_Mills.png", "images/Building_Monument.png", "images/Building_PigglyWiggly.png", "images/Building_PostOffice.png", "images/Building_QT.png", "images/Building_Roxy.png", "images/Building_Sonic.png", "images/Building_Subway.png", "images/Building_Tractor.png", "images/Building_Trips.png", "images/Building_Vance.png", "images/Building_Vivs.png", "images/Building_Ukes.png", "images/FG_Elements.png");
+            preload("images/Building_Annies_hover.png", "images/Building_AutoWorld_hover.png", "images/Building_BaitBox_hover.png", "images/Building_Baptist_hover.png", "images/Building_BlvdDiner_hover.png", "images/Building_Bookstore_hover.png", "images/Building_Booster_hover.png", "images/Building_Braums_hover.png", "images/Building_Brown_hover.png", "images/Building_Chamber_hover.png", "images/Building_Chubby_hover.png", "images/Building_CinoccaLaw_hover.png", "images/Building_Coop_hover.png", "images/Building_Ellis_hover.png", "images/Building_GradeSchool_hover.png", "images/Building_HighSchool_hover.png", "images/Building_HistCenter_hover.png", "images/Building_Jiffy_hover.png", "images/Building_MethodistChurch_hover.png", "images/Building_Mills_hover.png", "images/Building_Monument_hover.png", "images/Building_PigglyWiggly_hover.png", "images/Building_PostOffice_hover.png", "images/Building_QT_hover.png", "images/Building_Roxy_hover.png", "images/Building_Sonic_hover.png", "images/Building_Subway_hover.png", "images/Building_Tractor_hover.png", "images/Building_Trips_hover.png", "images/Building_Vance_hover.png", "images/Building_Vivs_hover.png", "images/Building_Ukes_hover.png");
+        //--><!]]>
+    </script>
+<meta http-equiv="refresh" content="5;url=springfield.html">
+
+</head><body style="margin:0;padding:0;">
+    <div id="stage" class="EDGE-44691064">
+    </div>
+    <div class="hidden">
+
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="content" method="upgrade">
+<name>Content - Discussit</name>
+<creationDate>14/12/11</creationDate>
+<author>Peter Bennett</author>
+<authorEmail>peter@dis.cuss.it</authorEmail>
+<authorUrl>http://dis.cuss.it</authorUrl>
+<copyright>Copyright Discussit</copyright>
+<license>--</license>
+<version>1.2</version>
+<description>Discussit JSWidget - Joomla! implementation</description>
+<files>
+   <filename plugin="plg_discussit">plg_discussit.php</filename>
+   <folder>OAuth</folder>
+   <folder>extensions</folder>
+</files>
+<config>
+	<fields name="params" addfieldpath="/plugins/content/plg_discussit/extensions">
+		<fieldset name="basic">
+		   <field name="Key" type="hidden" default="" label="Key" description="" />
+  		   <field name="ShowViewAdd" type="text" default="" label="View Comments Link" description="Link to display under comments (optional)"></field>
+		   <field name="poweredBy" type="radio" default="1" label="Enable DiscussIt Link" description="This enables or disables the 'Powered by DiscussIt' link that is shown below the plugin">
+		  		<option value="0">No</option>
+  				<option value="1">Yes</option>
+		   </field>
+		   <field name="Sections" type="category" extension="com_content" default="" label="Show in Categories:" description="" size="12" multiple="true"/>
+		   <field name="Langs" type="langs" default="en" label="Default Language" description="Select the Language of the plugin" />
+		   <field name="widgetWidth" type="text" default="0" label="Widget Width" description="Width of your widget in pixels - default is 600 - MUST BE A NUMERICAL VALUE - set to 0 for AUTO" size="10" />
+   		   <field name="widgetMargin" type="text" default="0" label="Widget Top Margin" description="Margin at the top of your widget in pixels - default is 0 - MUST BE A NUMERICAL VALUE" size="10" />
+   		   <field name="disabledText" type="textarea" default="" label="Comments Disabled Message" description="Choose a message to display when comments are disabled on an article" rows="2" cols="24" />
+		  
+		   <field name="siteID" type="hidden" default="" label="siteID" description=""/>
+		   <field name="widgetID" type="hidden" default="" label="widgetID" description=""/>
+		   <field name="clientID" type="hidden" default="" label="clientID" description=""/>
+		   <field name="clientSecret" type="hidden" default="" label="clientSecret" description=""/>
+		   <field name="refreshToken" type="hidden" default="" label="refreshToken" description=""/>
+		   <field name="showcomments" type="hidden" default="1" label="" description=""/>
+		   <field name="anonview" type="radio" default="0" label="Log-in to view comments" description="">
+		      <option value="0">No</option>
+              <option value="1">Yes</option>
+		   </field>
+           <field name="anonpost" type="radio" default="0" label="Log-in to post comments" description="">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+           </field>
+           <field name="showcomments" type="hidden" default="1" label="" description=""/>
+		</fieldset>
+	</fields>
+</config>
+
+
+</extension>

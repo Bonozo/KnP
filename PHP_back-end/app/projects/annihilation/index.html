@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Annihilation Celebration</title>
+	<script type="text/javascript" charset="utf-8" src="phonegap-1.4.0.js"></script>
+	<script type="text/javascript" charset="utf-8" src="ChildBrowser.js"></script>
+    <script type="text/javascript">
+
+	// If you want to prevent dragging, uncomment this section
+	function preventBehavior(e) 
+	{ 
+      e.preventDefault(); 
+    };
+	document.addEventListener("touchmove", preventBehavior, false);
+	
+	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+	for more details -jm */
+	/*
+	function handleOpenURL(url)
+	{
+		// TODO: do something with the url passed in.
+	}
+	*/
+	
+	function onBodyLoad()
+	{		
+		document.addEventListener("deviceready", onDeviceReady, false);
+	}
+	
+	/* When this function is called, PhoneGap has been initialized and is ready to roll */
+	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+	for more details -jm */
+	function onDeviceReady()
+	{
+		// do your thing!
+        if( window.PhoneGap )
+        {
+        //var m2= new Media('audio/menubackgroundaudio.mp3');m2.play();
+ <!--
+	var head = document.getElementsByTagName('head')[0];
+	
+	script = document.createElement('script');
+	script.src = 'index_edgePreload.js';
+	script.type = 'text/javascript';
+	head.appendChild(script);
+    -->
+            var cb = ChildBrowser.install();
+            //if(cb != null)
+            //{
+            //    window.plugins.childBrowser.showWebPage("http://google.com");
+            //}
+            //else
+            //{
+            //    navigator.notification.alert( ":(" );
+            //}
+            
+         }
+	}
+    
+    var sfx=[];
+    function SoundDone(id)
+    {
+        navigator.notification.alert( id );
+        if( sfx[id] && sfx[id]["sfx"] )
+        {
+            sfx[id]["playing"] = false;
+        }
+    }
+    
+    window.playSound = function( id, filepath )
+    {
+        if( sfx[id] && sfx[id]["sfx"] )
+        {
+            sfx[id]["sfx"].seekTo(0);
+        }
+        else
+        {
+            sfx[id] = [];
+            sfx[id]["sfx"] = new Media( filepath + '.mp3' );
+        }
+        sfx[id]["loops"] = false;
+        sfx[id]["sfx"].play();
+        sfx[id]["playing"] = true;
+    }
+
+    window.loopSound = function( id, filepath )
+    {
+        if( sfx[id] && sfx[id]["sfx"] )
+        {
+            sfx[id]["sfx"].seekTo(0);
+        }
+        else
+        {
+            sfx[id] = [];
+            sfx[id]["sfx"] = new Media( filepath + '.mp3' );
+        }
+        sfx[id]["loops"] = true;
+        sfx[id]["sfx"].play( { numberOfLoops: 9999 } );
+        sfx[id]["playing"] = true;
+    }
+        
+    window.stopSound = function( id )
+    {
+        if( sfx[id] && sfx[id]["sfx"] )
+        {
+            sfx[id]["sfx"].stop();
+            sfx[id]["sfx"].release();
+
+            sfx[id]["sfx"] = null;
+            sfx[id]["playing"] = null;
+            sfx[id]["loops"] = null;
+            sfx[id] = null;
+        }
+    }
+    
+    var buttonIdx = 1;
+    window.playButtonSound = function()
+    {
+        playSound( "buttonSound" + buttonIdx, "audio/buttonsound" + buttonIdx );
+
+        buttonIdx = buttonIdx + 1;
+        if( buttonIdx > 11 )
+        {
+            buttonIdx = 1;
+        }
+    }
+
+    window.pauseAllSound = function( pause )
+    {
+        for(var i in sfx)
+        {
+            if( sfx[i] && sfx[i]["sfx"] && (sfx[i]["playing"]==true) )
+            {
+                if( sfx[i]["loops"] == true )
+                {
+                    if( pause == true )
+                    {
+                        sfx[i]["sfx"].pause();
+                    }
+                    else
+                    {
+                        sfx[i]["sfx"].play( { numberOfLoops: 9999 } );
+                    }                    
+                }
+                else
+                {
+                    stopSound( i );
+                }
+                
+                /*
+                if( pause == true )
+                {
+                    sfx[i]["sfx"].pause();
+                }
+                else
+                {
+                    if( sfx[i]["loops"] == true )
+                    {
+                        sfx[i]["sfx"].play( { numberOfLoops: 9999 } );
+                    }
+                    else
+                    {
+                        sfx[i]["sfx"].play();
+                    }
+                }
+                */
+            }
+        }
+    }
+    
+    window.stopAllSound = function()
+    {
+        for(var i in sfx)
+        {
+            stopSound( i );
+        }
+    }
+        
+    window.messageBox = function( txt )
+    {
+        navigator.notification.alert( txt );
+    }
+    
+    window.openURL = function ( url )
+    {
+        window.plugins.childBrowser.showWebPage( url );
+    }
+    
+    </script>
+<!--Adobe Edge Runtime-->
+    <script type="text/javascript" charset="utf-8" src="annihilation_edgePreload.js"></script>
+    <style>
+        .edgeLoad-EDGE-23165460 { display:none; }
+    </style>
+<!--Adobe Edge Runtime End-->
+
+</head>
+<body onload="onBodyLoad()" style="margin:0;padding:0;" bgcolor=black link=red>
+	<div id="Stage" class="EDGE-23165460">
+	</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+http://dev.techlabpro.com/videosystems/
+
+
+http://dev.techlabpro.com/wirelessaccess/
+pass:admin911
+user:techlabp_wireles
+database:techlabp_wireless
+
+
+http://dev.techlabpro.com/badgereaders/
+pass:admin911
+username:techlabp_badgere
+database:techlabp_badgere
+
+
+http://dev.techlabpro.com/biometricaccess/
+pass:admin911
+username:techlabp_biomet
+database:techlabp_biomet
+
+
+http://dev.techlabpro.com/electronicaccesscontrols/
+pass:admin911
+username:techlabp_electro
+database:techlabp_electro
+
+
+http://dev.techlabpro.com/networkvideocontrollers/
+pass:admin911
+username:techlabp_network
+database:techlabp_network
+
+
+http://dev.techlabpro.com/smartaccesscontrol/
+pass:admin911
+username:techlabp_smart
+database:techlabp_smart
+
+
+
+jude.atalobhor@tamy.co
+
+
+
+
+<p>Dear Administrator,</p>
+<p>Below is a message from %V_FROM_NAME%</p>
+<p>Message is directed to %V_LIST_DATA% department</p>
+<p>Message:%V_MESSAGE_DATA%</p>
+<p>Email: %V_FROM_EMAIL%</p>
+<p>Contact No. %V_FIELD4_DATA%</p>
+
+
+First Name*
+Last Name*
+Email address*
+Mobile no.*
+Company
+Address*
+Message * 
+Security code*
+
+$this->data->from_name = JRequest::getVar('from_name',$user_name);
+
+bonozogames@gmail.com

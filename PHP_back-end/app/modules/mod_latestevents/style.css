@@ -1,0 +1,76 @@
+ul.latestevents .event-date div + div {
+	background:none repeat scroll 0 0 #DDDDDD;
+	border-top:1px solid #BBBBBB;
+	font-size:80%;
+	padding:3px 0;
+}
+
+ul.latestevents .event-date{
+	float: left;
+}
+
+ul.latestevents .event-date div {
+	background:none repeat scroll 0 0 #EEEEEE;
+	font:bold 18px Arial,sans-serif;
+	padding:8px 0;
+	text-align:center;
+}
+
+ul.latestevents li {
+	margin-top:10px;
+	padding-top:10px;
+	background: none !important;
+	list-style: none;
+	z-index: 0;
+}
+
+	ul.latestevents li + li {
+		border-top:1px solid #DDDDDD;
+	}
+
+ul.latestevents .event-date {
+	border:1px solid #BBBBBB;
+	width:40px;
+}
+
+ul.latestevents .event-detail {
+	margin-left:55px;
+}
+
+ul.latestevents .avatar {
+	height:auto;
+	width:40px;
+}
+
+ul.latestevents .profile-event-actions{
+	text-align: right;
+	margin-top: 10px;
+}
+
+ul.latestevents .profile-event-actions a + a {
+	border-left: 1px solid #000;
+	padding-left: 5px;
+}
+
+ul.latestevents .profile-events-info {
+	float:left;
+}
+
+ul.latestevents  .profile-events-action{
+	text-align: right;
+	outline:medium none;
+	padding:0 5px;
+}
+
+ul.latestevents .profile-events-action a {
+	background:none repeat scroll 0 0 transparent;
+	padding-left:10px;
+}
+
+ul.latestevents .profile-events-footer {
+	margin:0;
+	border-top:1px solid #DDDDDD;
+	font-size:90%;
+	padding: 5px 0 0;
+	margin: 10px 0 0;
+}

@@ -1,0 +1,16 @@
+div#application-eventlist .nopost {
+	position: relative;
+	min-height: 16px;
+}
+
+div#application-eventlist .icon-nopost {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+div#application-eventlist .content-nopost {
+	display: block;
+	margin: 0 0 0 24px;
+	padding: 0 0 5px;
+}

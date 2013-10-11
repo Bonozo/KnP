@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="package" version="1.6">
+	<name>MobiRate</name>
+	<packagename>mobirate</packagename> 
+    <copyright>2010 Municipality of Umea, Sweden</copyright>
+    <packager>Magnus Häggström - Omicron Ceti AB</packager>
+    <creationDate>12/10/2010</creationDate>
+    <license>GNU General Public License version 2.0</license>
+    <version>2.1.2</version>
+    <description>This extension is designed for mobile websites and enables user rating and comments.</description>
+	<files>
+		<file type="component" id="com_mobirate">com_mobirate.zip</file>
+		<file type="plugin" id="mobirate" group="content">plg_content_mobirate.zip</file>
+	</files>
+</extension>

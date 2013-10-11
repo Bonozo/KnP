@@ -1,0 +1,170 @@
+<!doctype html>
+<html manifest="html5_storage.manifest">
+<title>Class Schedule</title>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+
+<script type="text/javascript">   
+
+function getdata(thisvalue,table)
+{
+      if (table =='course')
+          {
+             var faculty = $("#faculty").val();
+             thisvalue   = thisvalue+'-'+faculty;
+          }
+      var dataString = 'data='+thisvalue+'&table='+ table;
+  
+        $.ajax
+        ({
+        type: "POST",
+        url: "get_data.php",
+        data: dataString,
+        cache: false,
+        success: function(html)
+        {
+          $('.'+table).html(html);
+        }
+        
+        });
+
+       
+
+}
+  
+	
+$(function() 
+{
+ 	$("#profileform").click(function(){
+
+       		clearLocal();
+                // Bit of generic data to test if saved data exists on page load
+                localStorage.setItem("flag", "set");
+                var data = $("#profileform").serializeArray();
+                $.each(data, function(i, obj) {
+					// HTML5 magic!!
+					localStorage.setItem(obj.name, obj.value);
+				});
+                 
+	});
+        
+     $("#course").change(function() {
+           var Values = $("#course").val();
+
+          window.location = "courselist.html?course="+Values;
+      });
+      
+     var username =   localStorage.getItem('username');
+     $('#username').append("<span>"+username+"</span>");
+     /* $(document).ready(function(){
+                
+			
+			
+			// Same iteration stuff as before
+			var data = $("#profileform").serializeArray();
+			var d;
+			// Only the only way we can select is by the name attribute, but jQuery is down with that.
+			$.each(data, function(i, obj) {
+				d = d+localStorage.getItem(obj.name); $("[name='" + obj.name +"']").val(localStorage.getItem(obj.name));
+			});
+			alert(d);
+		
+                }); */
+});
+
+ 
+
+
+</script>
+</head>
+<body>
+    <form name="profileform" id="profileform" >
+        
+
+<table width="700px"   border='0' cellspacing='0' cellpadding='0' align="center">
+    <tr >
+        <td align="left" >
+             <div id="username">Welcome </div>
+        </td>       
+    </tr>
+</table>  
+
+<table width="700px" border='0' cellspacing='40' cellpadding='0' align="center">
+    <tr align="center">
+         <td >
+             <div>Select Country: </div>
+         </td>
+         <td align="left">
+              <div><Select  name="country" id="country" class="country" onchange="getdata(this.value,'institution')"> 
+                            <option value="NA">N/A</option>
+                            <option value="United States">United States</option>
+                            <option value="India">India </option>
+                            <option value="China">China</option>
+                            <option value="Japan">Japan </option>
+                            <option value="Russia">Russia</option>
+                            <option value="Africa">Africa </option>
+                   </select >
+            </div>  
+         </td>
+    </tr>    
+    <tr align="center">
+        <td >
+            <div>Select Institution </div>
+         </td>
+         <td align="left">
+              <div> 
+                <Select  name="institution" id="institution" class="institution" onchange="getdata(this.value,'faculty')"> 
+                         <option selected="selected">--Select institution--</option>
+                </select>
+            </div> 
+            </td>
+    </tr>    
+    <tr align="center">
+        <td align="center">
+            <div>Select Faculty  </div>
+         </td>
+         <td align="left">
+             <div>
+                 <Select name="faculty" id="faculty" class="faculty" > 
+                         <option value="NA">N/A</option>
+                 </select>
+            </div> 
+            </td>
+    </tr>    
+    <tr align="center">
+        <td >
+
+            <div>Select Status  </div>
+         </td>
+         <td align="left">
+             <div>
+                 <Select id="status" name="status" onchange="getdata(this.value,'course')"> 
+                         <option value="NA">N/A</option>
+                         <option value="Yes">Yes</option>
+                         <option value="No">No</option>
+                 </select>
+            </div>
+            </td>
+    </tr>    
+    <tr align="center">
+        <td >
+            <div>Select Course </div>
+         </td>
+         <td align="left">
+             <div>
+                <Select id="course" name="course" class="course"> 
+                        <option value="NA">N/A</option>
+                 </select>
+            </div>
+            </td>
+    </tr>    
+    <tr>
+        <td>
+
+        
+</table>
+        
+    </form>
+</body> 
+</html>

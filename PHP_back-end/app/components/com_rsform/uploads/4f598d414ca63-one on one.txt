@@ -1,0 +1,8 @@
+<div class="coching">
+<div class="coching_text" style="text-align: left;">he One on One Coaching Program is for those agents who desire to be   among the best of the best! This is for the 17% of the agents who are   controlling 83% of the..<br /> <a href="index.php?option=com_content&amp;view=article&amp;id=9&amp;Itemid=54"><strong>Rea</strong><strong>d More&gt;&gt;</strong></a></div>
+<p style="text-align: center;"><a href="index.php?option=com_content&amp;view=article&amp;id=9&amp;Itemid=54"><img alt="platinum" src="images/stories/platinum.jpg" height="96" width="100" /></a></p>
+</div>
+
+#page-bg {
+    background: url("../images/light/page-bg.png") repeat-x scroll 50% 0 transparent;
+}

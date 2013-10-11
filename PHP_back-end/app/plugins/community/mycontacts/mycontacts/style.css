@@ -1,0 +1,111 @@
+#mycontacts_container {}
+#mycontacts_container .clearfix {
+	clear: both;
+}
+
+#mycontacts_container .leftside {
+	float: left;
+}
+#mycontacts_container .rightside {
+	float: right;
+}
+#mycontacts_container .leftside, .rightside {
+	width: 49%;
+}
+
+
+#mycontacts_container .contact_key {
+	font-size: 90%;
+	color: #444;
+}
+
+#mycontacts_container .contact_value {
+	font-size: 95%;
+	font-weight: 700;
+}
+
+#mycontacts_container .block {
+	float: left;
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+#mycontacts_container #mycontacts_imlist {
+	border-top: solid 1px #eee;
+	display: block;
+	float: left;
+	padding: 10px 0;
+	margin-top: 10px;
+	width: 100%;
+}
+
+#mycontacts_container .icons {
+	width: 25%;
+	float: left;
+	margin-bottom: 10px;
+}
+
+#mycontacts_container .icon {
+	text-indent: 20px;
+	background: transparent url(icons-16x16.png) no-repeat 0 0;
+	line-height: 16px;
+}
+
+#mycontacts_container .icon_skype {
+	background-position: 0 0;	
+}
+
+#mycontacts_container .icon_google {
+	background-position: 0 -20px;	
+}
+
+#mycontacts_container .icon_yim {
+	background-position: 0 -40px;	
+}
+
+#mycontacts_container .icon_msn {
+	background-position: 0 -60px;	
+}
+
+#mycontacts_container .icon_aim {
+	background-position: 0 -80px;	
+}
+
+#mycontacts_container .icon_icq {
+	background-position: 0 -100px;	
+}
+
+#mycontacts_container .im_info {
+	font-size: 90%;
+	color: #555;
+}
+
+.app-widget #mycontacts_container .leftside,
+.app-widget #mycontacts_container .rightside {
+	width: auto;
+	float: none;
+}
+
+.app-widget #mycontacts_container .contact_key {
+	float: none;
+	width: auto;
+	background:none repeat scroll 0 0 transparent;
+	color:#777777;
+	font-size:90%;
+	line-height:normal;
+	padding: 0;
+}
+
+.app-widget #mycontacts_container .contact_value {
+	float: none;
+	font-size: 90%;
+	padding: 0;
+	width: auto;
+	font-weight: normal;
+	color: #222222;
+}
+.app-widget #mycontacts_container .icons {
+	float: left;
+	width: 50%;
+}

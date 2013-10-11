@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Directly accessing Street View data</title>
+    <link href="css/default.css" rel="stylesheet">
+    <script src="js/latlon.js">/* Latitude/Longitude formulae */</script>
+    <script src="js/geo.js">/* Geodesy representation conversions */</script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+var map;
+var berkeley = new google.maps.LatLng(35.190838,-106.485633);
+var sv = new google.maps.StreetViewService();
+
+var speed = 0;
+var timerHandle;
+
+var markersArray = [];
+
+var panorama;
+
+function initialize() {
+
+  panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'));
+
+  // Set up the map
+  var mapOptions = {
+    center: berkeley,
+    zoom: 16,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    streetViewControl: false
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  // getPanoramaByLocation will return the nearest pano when the
+  // given radius is 50 meters or less.
+  google.maps.event.addListener(map, 'click', function(event) {      
+      sv.getPanoramaByLocation(event.latLng, 50, processSVData);
+  });
+}
+
+function processSVData(data, status) {
+  if (status == google.maps.StreetViewStatus.OK) {
+
+    var marker = new google.maps.Marker({
+      position: data.location.latLng,
+      map: map,
+      title: data.location.description
+    });
+
+    markersArray.push(marker);
+
+    panorama.setPano(data.location.pano);
+    
+    panorama.setVisible(true);
+
+    google.maps.event.addListener(marker, 'click', function() {
+
+      var markerPanoID = data.location.pano;
+      // Set the Pano to use the passed panoID
+      panorama.setPano(markerPanoID);
+      /*panorama.setPov({
+        heading: 270,
+        pitch: 0
+      });*/
+      panorama.setVisible(true);
+    });
+  } else {
+    alert('Street View data not found for this location.');
+  }
+}
+
+function clearOverlays() {
+  for (var i = 0; i < markersArray.length; i++ ) {
+    markersArray[i].setMap(null);
+  }
+  markersArray = [];
+}
+
+function dest(lat1, lon1, brng, d){
+  var R = 6371; // km
+
+  brng = (brng * Math.PI) / 180;
+  
+  d = d / 1000;
+  
+  lat1 = lat1.toRad();
+  
+  lon1 = lon1.toRad();
+  
+  var lat2 = Math.asin( Math.sin(lat1)*Math.cos(d/R) + 
+          Math.cos(lat1)*Math.sin(d/R)*Math.cos(brng) );
+  var lon2 = lon1 + Math.atan2(Math.sin(brng)*Math.sin(d/R)*Math.cos(lat1), 
+                 Math.cos(d/R)-Math.sin(lat1)*Math.sin(lat2));
+                
+  lat2 = lat2.toDeg();
+  lon2 = lon2.toDeg();
+                 
+  return {"lat":lat2, "lon":lon2};
+}
+  
+function runner(){
+  if(typeof(panorama.getPosition()) == "undefined"){
+    sv.getPanoramaByLocation(berkeley, 30, processSVData);
+  } else {
+    var current = panorama.getPosition();
+    var brng = panorama.getPov().heading;
+    var displacement = 30;
+    
+    var target = dest(current.jb, current.kb, brng, displacement);
+    
+    var posMarker = new google.maps.LatLng(target.lat, target.lon);
+    
+    sv.getPanoramaByLocation(posMarker, 30, processSVData);
+  }
+  
+  if(speed > 0){
+    timerHandle = setTimeout("runner()", speed);
+  }
+}
+  
+function changeLabel(){
+  if(speed == 0){
+    document.getElementById("btnAcc").innerHTML = "Move Forward";
+  } else {
+    document.getElementById("btnAcc").innerHTML = "Accelerate";
+  }
+  
+  setTimeout("changeLabel()", 100);
+}
+  
+timerHandle = setTimeout("runner()", 1000);  
+  
+setTimeout("changeLabel()", 100);
+  
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+    
+    <style type="text/css">      
+      button {
+          height: 35px;
+          margin: 5px;
+          cursor: pointer;
+          font-size: 14px;
+          font-weight: 300;
+          min-width: 150px;
+      }
+
+      button.blue {
+          color: #fff;
+          -moz-transition: none 0s ease 0s;
+          border: 0 none;
+          border-radius: 10px;
+          box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 1px 5px rgba(0, 0, 0, 0.25);
+          color: #FFFFFF;
+          padding: 1px 5px;
+          background-color: #006DCC;
+          background-image: -moz-linear-gradient(center top , #0088CC, #0044CC);
+          background-repeat: repeat-x;
+          border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+          text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+      }
+
+      button.blue:hover {
+          color: #ffffee;
+          background-color: #006DCC;
+          background-image: -moz-linear-gradient(center top , #0088EE, #0044EE);
+          background-repeat: repeat-x;
+      }
+
+      button.blue:active {
+          -moz-user-select:none;
+          -moz-user-focus:disabled;
+          color: #ffffcc;
+          background-color: #006DCC;
+          background-image: -moz-linear-gradient(center top , #CC8800, #CC4400);
+          background-repeat: repeat-x;
+          border: 1px inset #000;
+          margin-left: 4px;
+          margin-right: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map-canvas" style="width: 45%; height: 80%;float:left; margin-left: 5%; margin-top: 2%;"></div>
+    <div id="pano" style="width: 45%; height: 80%;float:left; margin-top: 2%;"></div>
+    
+    <div style="text-align: center;">
+      <button style="margin-top: 20px;" class="blue" 
+        onclick="panorama.setPov({'heading':panorama.getPov().heading - 10, 'pitch':panorama.getPov().pitch})">
+        Turn Left
+      </button>
+      <button id="btnDecel" style="margin-top: 20px;" class="blue" onclick="clearTimeout(timerHandle); speed += 1000; runner();">
+        Decelerate
+      </button>
+      <button style="margin-top: 20px;" class="blue" onclick="clearTimeout(timerHandle); speed = 0;">Stop</button>
+      <button id="btnAcc" style="margin-top: 20px;" class="blue" 
+        onclick="clearTimeout(timerHandle); if(speed - 1000 > 0){speed -= 1000;} else {speed = 1000} runner();">
+          Move Forward
+      </button>
+      <button style="margin-top: 20px;" class="blue" 
+        onclick="panorama.setPov({'heading':panorama.getPov().heading + 10, 'pitch':panorama.getPov().pitch})">
+        Turn Right
+      </button>
+      <br />
+      <button style="margin-top: 10px;" class="blue" 
+        onclick="clearOverlays()">
+        Clear Markers
+      </button>
+    </div>
+  </body>
+</html>
+
+

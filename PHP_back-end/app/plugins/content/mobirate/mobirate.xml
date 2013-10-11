@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="content">
+	<name>Content - MobiRate</name>
+	<author>Magnus Häggström, Omicron Ceti AB</author>
+	<creationDate>Februari 2010</creationDate>
+	<copyright>Copyright (C) 2005 - 2008 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>visitas@omicron.se</authorEmail>
+	<authorUrl>www.omicron.se</authorUrl>
+	<version>2.1.2</version>
+	<description>Content plugin for comments and rating</description>
+	<languages>
+		<language tag="en-GB">en-GB.plg_content_mobirate.ini</language>
+		<language tag="sv-SE">sv-SE.plg_content_mobirate.ini</language>
+	</languages>
+	<files>
+		<filename plugin="mobirate">mobirate.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldsset name="basic">
+				<field name="displayafter" type="radio" default="1" label="PLG_MOBIRATE_DISPLAY_AFTER_CONTENT" description="PLG_MOBIRATE_DISPLAY_AFTER_CONTENT_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+				<field name="displayaverage" type="radio" default="1" label="PLG_MOBIRATE_DISPLAY_AVERAGE" description="PLG_MOBIRATE_DISPLAY_AVERAGE_DESC">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+			</fieldsset>
+		</fields>
+	</config>
+</extension>

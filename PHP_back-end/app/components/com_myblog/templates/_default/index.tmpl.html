@@ -1,0 +1,83 @@
+<!-- Blog Entries Start -->
+<div id="myBlog-content">
+<?php
+if ($entry and is_array($entry) and count($entry) != 0)
+{
+	foreach ($entry as $e)
+	{
+?>
+	<!-- Entry -->
+	<div class="postSummary" id="post-<?php echo $e['id']; ?>">
+		<!-- Post Top Summary -->
+		<div class="postSummary-top">
+			<ul class="postSummary-meta">
+				<li class="title">
+					<h2><a href="<?php echo $e['permalink']; ?>"><?php echo $e['title']; ?></a></h2>
+					<p>
+					<a href="<?php echo $e['authorLink']; ?>" title="<?php echo JText::_('COM_MY_VIEW_ALL_POSTS_BY');?>" class="author-link"><?php echo $e['author']; ?></a>
+						<?php
+							if( $categoryDisplay )
+							{
+						?>
+						<?php echo JText::sprintf('COM_MY_POSTED_IN' , $e['jcategory'] ); ?>
+						<?php
+							}
+						?>
+					<?php echo JText::sprintf('COM_MY_POSTED_ON', $e['createdFormatted']); ?>
+					<br><?php echo JText::sprintf('COM_MY_TAGGED_IN' , $e['categories'] ); ?>					
+					</p>
+					</li>
+				<li>
+					<?php
+						if(!empty($e['avatar']))
+						{
+					?>
+					<div class="userAvatar">
+						<?php echo $e['avatar']; ?>
+					</div>			
+					<?php
+						}
+					?>
+				</li>
+			</ul>				
+		</div>
+		<!-- Post Teaser Text -->
+		<div class="postSummary-teaser">
+			<?php echo $e['text']; ?>
+			<!-- Post Footer -->						
+			<p class="postSummary-footer">
+			<?php
+				if (isset($e['comments']) && $e['comments']!="")
+				{
+			?>
+				<a href="<?php echo $e['permalink']; ?>#comments" class="postSummary-comments"><?php echo $e['comments']; ?></a>
+			<?php
+				}
+			?>
+
+			<?php
+				// IF NEED readmore
+				if ($e['readmore']=="1")
+				{
+			?>
+			    <a href="<?php echo $e['permalink']; ?><?php echo $showAnchor; ?>" class="postSummary-readmore"><?php echo JText::_('COM_MY_READMORE');?></a>
+			<?php
+				}
+			?>
+			</p>
+		</div>
+		<!-- Post Divider -->
+		<hr class="postEntry-divider" />
+	</div>
+	<div class="clear"></div>
+<?php
+	}
+}
+else
+{
+?>
+	<div><?php echo JText::_('COM_MY_NO_BLOG_ENTRY_CREATED');?></div>
+<?php
+}
+?>
+</div>

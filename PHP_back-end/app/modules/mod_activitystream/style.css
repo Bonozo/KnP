@@ -1,0 +1,49 @@
+.joms-newsfeed-item {
+	display: block;
+	margin: 0;
+	padding: 5px 0 25px !important;
+	
+	position: relative;
+	overflow: hidden;
+	border-bottom: 1px dotted #ccc;
+	}
+.joms-newsfeed-item .newsfeed-avatar {
+	width: 40px;
+	float: left;
+	}
+.joms-newsfeed-item .newsfeed-favicon {
+	width: 20px;
+	position: absolute;
+	right: 0;
+	bottom: 3px;
+	}
+	.no-avatar .newsfeed-favicon { top: 6px; left: 2px; }
+.joms-newsfeed-item .newsfeed-content {
+    margin: 0 0 0 45px;
+    }
+    .no-avatar .newsfeed-content { margin: 0 0 0 25px; }
+.joms-newsfeed-item .newsfeed-date {
+	position: absolute;
+	bottom: 2px;
+	left: 0;
+	}
+.joms-newsfeed-item .newsfeed-content-top {
+	margin: 0;
+	}
+.joms-newsfeed-item .newsfeed-remove  {
+    display:none;
+    position:absolute;
+    right:0;
+    top:7px;
+    }
+
+.joms-newsfeed-item .cDetailList, .joms-newsfeed-item .cDetailList li {
+	background:none repeat scroll 0 0 transparent !important;
+	line-height:17px;
+	list-style:none outside none;
+	margin:0;
+	padding:0;
+	display: inline;
+}
+
+.joms-newsfeed-item .newsfeed-content-hidden{display:none;margin:8px 0px 0 0;padding:5px;background:#f2f2f2; line-height: 1.3}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="plugin" group="community" method="upgrade">
+	<name>Input Link</name>
+	<author>JomSocial Team</author>
+	<creationDate>March 2011</creationDate>
+	<copyright>Copyright 2008 - 2010 by Slashes &amp; Dots Sdn Bhd. All rights reserved</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>support@azrul.com</authorEmail>
+	<authorUrl>www.azrul.com</authorUrl>
+	<version>2.0.0</version>
+	<isapplication>false</isapplication>
+	<isbrowsable>false</isbrowsable>
+	<description>
+		Autmatically parse links into a clickable link for walls.
+		<![CDATA[
+		To enable thumbshots, you will need to ensure that the affiliation code is added in your footer. 
+		
+		<a href="http://www.thumbshots.com" target="_blank" title="This site uses Thumbshots previews">This site uses Thumbshots previews</a>
+		]]>
+	</description>
+	<files>
+		<file plugin="inputlink">inputlink.php</file>
+	</files>
+	
+	<params>		
+	</params>
+</install>

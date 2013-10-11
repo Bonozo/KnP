@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="content" method="upgrade">
+    <name>YouTube</name>
+    <author>Maik Heinelt</author>
+    <creationDate>04 February 2011</creationDate>
+    <copyright>2011 Maik Heinelt, http://www.heinelt.info</copyright>
+    <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <authorEmail>maik@heinelt.info</authorEmail>
+    <authorUrl>www.heinelt.info</authorUrl>
+    <version>1.1</version>
+    <description>PLG_YOUTUBE_EXT_DESC</description>
+    
+    <files>
+        <filename plugin="youtube">youtube.php</filename>
+    </files>
+
+	<languages folder="language">
+		<language tag="de-DE">de-DE.plg_content_youtube.sys.ini</language>
+		<language tag="de-DE">de-DE.plg_content_youtube.ini</language>
+		<language tag="en-GB">en-GB.plg_content_youtube.sys.ini</language>
+		<language tag="en-GB">en-GB.plg_content_youtube.ini</language>
+		<language tag="pt-BR">pt-BR.plg_content_youtube.sys.ini</language>
+		<language tag="pt-BR">pt-BR.plg_content_youtube.ini</language>
+	</languages>
+	
+	<config>
+		<fields name="params">
+		
+			<fieldset name="basic">
+				<field name="dheight" type="text"
+					default="300"
+					size="5"
+					description="PLG_YOUTUBE_DESC_DEFHEIGHT"
+					label="PLG_YOUTUBE_LBL_DEFHEIGHT"
+				/>
+				
+				
+				<field name="dwidth" type="text"
+					default="400"
+					size="5"
+					description="PLG_YOUTUBE_DESC_DEFWIDTH"
+					label="PLG_YOUTUBE_LBL_DEFWIDTH"
+				/>
+			</fieldset>
+			
+		</fields>
+	</config>
+	
+	<updateservers>
+		<server
+			type="extension"
+			priority="1"
+			name="Extensions from www.heinelt.info"
+		>
+		http://heinelt.info/jupdates/j1.6/plg_youtube.xml
+		</server>
+	</updateservers>
+</extension>

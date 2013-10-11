@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/module-install.dtd">
+<install version="1.5" type="module" client="site" method="upgrade">
+	<name>Upcoming Events</name>
+	<author>Mark Lee</author>
+	<creationDate>March 2011</creationDate>
+	<copyright>Copyright (C) 2008 - 2010 JomSocial. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>support@jomsocial.com</authorEmail>
+	<authorUrl>http://www.jomsocial.com</authorUrl>	
+	<version>2.0.0</version>
+	<description>Displays recent events from the site</description>
+	<files>
+		<filename module="mod_latestevents">mod_latestevents.php</filename>
+		<filename>mod_latestevents.xml</filename>
+		<filename>index.html</filename>
+		<filename>style.css</filename>
+		<folder>tmpl</folder>
+	</files>
+	<params>
+		<param name="cache" type="hidden" default="0" label="Caching" description="Disable global caching." />
+		<param name="customCache" type="list" default="1" label="Caching" description="Select whether to cache the content of this module.">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="total" type="text" size="3" default="10" label="Total Events" description="Total number of events to be displayed within the module" />
+		<param name="tipslength" type="text" size="3" default="500" label="Description Length" description="Set the length for the description in tooltips" />
+		<param name="type" type="list" default="all" label="Include Group Events" description="Select whether to include group events as well.">
+			<option value="all">Yes</option>
+			<option value="profile">No</option>
+		</param>
+		<param name="past" type="list" default="1" label="Show Past Events" description="Select whether to include past events as well.">
+			<option value="0">Yes</option>
+			<option value="1">No</option>
+		</param>
+		<param name="ordering" type="list" default="1" label="Events Ordering" description="Select Event Ordering method">
+			<option value="latest">Latest</option>
+			<option value="alphabetical">Alphabetical</option>
+			<option value="startdate">Start date</option>
+		</param>
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+	</params>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="cache" type="hidden" default="0" label="Caching" description="Disable global caching." />
+				<field name="customCache" type="list" default="1" label="Caching" description="Select whether to cache the content of this module.">
+					<option value="1">Yes</option>
+					<option value="0">No</option>
+				</field>
+				<field name="total" type="text" size="3" default="10" label="Total Events" description="Total number of events to be displayed within the module" />
+				<field name="tipslength" type="text" size="3" default="500" label="Description Length" description="Set the length for the description in tooltips" />
+				<field name="type" type="list" default="all" label="Include Group Events" description="Select whether to include group events as well.">
+					<option value="all">Yes</option>
+					<option value="profile">No</option>
+				</field>
+				<field name="past" type="list" default="1" label="Show Past Events" description="Select whether to include past events as well.">
+					<option value="0">Yes</option>
+					<option value="1">No</option>
+				</field>
+				<field name="ordering" type="list" default="1" label="Events Ordering" description="Select Event Ordering method">
+					<option value="latest">Latest</option>
+					<option value="alphabetical">Alphabetical</option>
+					<option value="startdate">Start date</option>
+				</field>
+				<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+			</fieldset>
+		</fields>
+	</config>
+</install>
