@@ -1,0 +1,23 @@
+{
+	"target": "simulator",
+	"deployType": "development",
+	"deviceFamily": "iphone",
+	"iosSdkPath": "/Users/mohsin/Downloads/mobilesdk-2/mobilesdk/osx/3.1.1.GA/iphone",
+	"appGuid": "67fdca33-590b-498d-bd4e-1fc3a8be0f37",
+	"tiCoreHash": "77157e1ffaec640cf559356a147b6a4c",
+	"modulesHash": "1cf0590b59bc60b2898aa21afe0a7d5d",
+	"nativeModulesHash": "cd4fbe60e65ed58e4376496237e5ef50",
+	"gitHash": "f7592c1",
+	"name": "KnightsAndPrincesses",
+	"id": "com.bonozo.knp",
+	"analytics": false,
+	"publisher": "Mohsin",
+	"url": "http://www.bonozo.com",
+	"version": "1.0",
+	"description": "not specified",
+	"copyright": "2012 by Mohsin",
+	"guid": "67fdca33-590b-498d-bd4e-1fc3a8be0f37",
+	"skipJSMinification": true,
+	"forceCopy": false,
+	"forceCopyAll": false
+}
