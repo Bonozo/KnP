@@ -493,7 +493,7 @@ function LoginWindow() {
 		width : "75%",
 		value : Ti.App.Properties.getString('knp_email'), //"robot1@email.com",
 		borderRadius : 0,
-		backgroundColor : "#FFFFFF",
+		// backgroundColor : "#FFFFFF",
 		borderColor : "#333333",
 		// keyboardType : Ti.UI.KEYBOARD_DEFAULT,
 		// left : "15%",
@@ -518,7 +518,7 @@ function LoginWindow() {
 	}
 
 	var passwordField = Titanium.UI.createTextField({
-		backgroundColor : "#FFFFFF",
+		// backgroundColor : "#FFFFFF",
 		height : '10%',
 		font : {
 			fontSize : '12dip'
@@ -529,8 +529,8 @@ function LoginWindow() {
 		value : Ti.App.Properties.getString('knp_password'), //"robot1@email.com",
 		borderRadius : 0,
 		borderColor : "#333333",
+		passwordMask : true,
 		top : "65%"
-
 		// height : '7%',
 		// hintText : "Password",
 		// backgroundColor : '#FFFFFF',
@@ -564,7 +564,7 @@ function LoginWindow() {
 
 	win.add(passwordField);
 	var rememberCheckBox = Ti.UI.createSwitch({
-		top : "71.5%",
+		top : "73.5%",
 		style : (osname === 'android') ? Ti.UI.Android.SWITCH_STYLE_CHECKBOX : "",
 		height : 'auto',
 		left : "12%",
@@ -682,7 +682,7 @@ function LoginWindow() {
 
 	var signInButton = Ti.UI.createButton({
 		color : '#761f56',
-		title : "SIGN IN",
+		title : "Sign In",
 		top : "82%",
 		color : "white",
 		width : "75%",

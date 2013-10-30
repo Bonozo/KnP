@@ -259,6 +259,13 @@ function MenuIcons(active_screen) {
 		});
         clearQuestIntervals();
 	});
+	Ti.App.addEventListener('menu_changed',function(data){
+		iconstatus_imageview_bg.left = data.icon_shade_left;
+		Ti.App.fireEvent('menu_active', {
+			clicked_item : data.screen
+		});
+        clearQuestIntervals();
+	});
 	var selected_menu_label = Titanium.UI.createLabel({
 		text : 'Settings',
 		bottom : '0%',
