@@ -6,10 +6,10 @@ function Leaderboards(userinfo) {
 		width : "100%"
 	});
 	var tabledata = [];
-	
-    var ScreenHeight = Titanium.Platform.displayCaps.platformHeight;
-    var screenWidth = Titanium.Platform.displayCaps.platformWidth;
-    var rowViewHeight = screenWidth * 0.190;
+
+	var ScreenHeight = Titanium.Platform.displayCaps.platformHeight;
+	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
+	var rowViewHeight = screenWidth * 0.190;
 	var get_avatar_tasks_url = "http://bonozo.com:8080/knp/get_avatar_tasks.php?uid=" + userinfo.Record[0].UID;
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
@@ -20,7 +20,9 @@ function Leaderboards(userinfo) {
 			var active_task_name = Ti.UI.createLabel({
 				text : items_json.Record.TASK_DESCRIPTION.NAME,
 				color : '#b3fad0',
-				font : {fontSize:'20dip'},
+				font : {
+					fontSize : '20dip'
+				},
 				top : '5%',
 				textAlign : 'center'
 			});
@@ -28,30 +30,56 @@ function Leaderboards(userinfo) {
 			var incomplete = false;
 			if (items_json.Record.TASK_DETAILS != undefined) {
 				var tasks = items_json.Record.TASK_DETAILS;
-			    for (var i = 0; i < tasks.length; i++) {
-			    	var checkbox_image = "";
-			    	if(tasks[i].STATUS == "PENDING"){
-			    		incomplete = true;
-			    		checkbox_image = "tradeToggle_no.png";
-			            var rowView = Ti.UI.createTableViewRow({
-			                height : rowViewHeight,	
-			                className : 'task_list',	
-			                index : i,
-			                backgroundImage : '/assets/overlayItemList_highlight.png',
-			                zIndex : 10
-			            });
-			    	}
-			    	else{
-			    		checkbox_image = "tradeToggle_yes.png";
-			            var rowView = Ti.UI.createTableViewRow({
-			                height : rowViewHeight,
-			                className : 'task_list',
-			                index : i,
-			                backgroundImage : '/assets/overlayItemList.png',
-			                zIndex : 10
-			            });
-			    	}
-			    	
+				for (var i = 0; i < tasks.length; i++) {
+					var checkbox_image = "";
+					var row_image = "";
+					if (tasks[i].STATUS == "PENDING") {
+						incomplete = true;
+						checkbox_image = "tradeToggle_no.png";
+						row_image = "overlayItemList_highlight.png";
+						// var rowView = Ti.UI.createTableViewRow({
+							// height : rowViewHeight,
+							// className : 'task_list',
+							// index : i,
+							// backgroundImage : '/assets/overlayItemList_highlight.png',
+							// zIndex : 10
+						// });
+					} else {
+						checkbox_image = "tradeToggle_yes.png";
+						row = "overlayItemList.png";
+						// var rowView = Ti.UI.createTableViewRow({
+							// height : rowViewHeight,
+							// className : 'task_list',
+							// index : i,
+							// backgroundImage : '/assets/overlayItemList.png',
+							// zIndex : 10
+						// });
+					}
+					var rowView = Ti.UI.createTableViewRow({
+						height : rowViewHeight,
+						className : 'task_list',
+						index : i,
+						SCREEN : tasks[i].SCREEN,
+						SCREEN_TYPE : tasks[i].SCREEN_TYPE,
+						ICON_SHADE_LEFT : tasks[i].ICON_SHADE_LEFT,
+						backgroundImage : '/assets/' + row_image,
+						zIndex : 10
+					});
+					rowView.addEventListener('click', function(e){
+						if(e.row.SCREEN_TYPE == "LIGHTWEIGHT"){
+							Ti.App.fireEvent('menu_changed', {
+								icon_shade_left : e.row.ICON_SHADE_LEFT + "%",
+								screen : e.row.SCREEN
+							});
+						}
+						else{
+							var TaskScreen = require('/ui/common/MenuScreen/' + e.row.SCREEN);
+							var taskscreen = new TaskScreen(userinfo);
+							taskscreen.open();
+						}
+ 
+					});
+
 					// Create an ImageView.
 					var checkboxImage = Ti.UI.createImageView({
 						image : '/assets/' + checkbox_image,
@@ -59,36 +87,38 @@ function Leaderboards(userinfo) {
 						left : '2%'
 					});
 					rowView.add(checkboxImage);
-					
-			        var gift_label = Ti.UI.createLabel({
-			            text : tasks[i].TASK,
-			            font : {
-			                fontSize : '16dip'
-			            },
-			            color : '#b3fad0',
-			            width : '85%',
-			            left : '15%'
-			        });
-			        rowView.add(gift_label);
-			        
-			        tabledata.push(rowView);
-			    }//end of for loop
-				
-				if(incomplete){
-				    var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
-		
-				        data : tabledata,
-				        width : '100%',
-				        height : '70%',
-				        top : '15%'
-				    });
-				    view.add(tableview);
-				}
-				else{
+
+					var gift_label = Ti.UI.createLabel({
+						text : tasks[i].TASK,
+						font : {
+							fontSize : '16dip'
+						},
+						color : '#b3fad0',
+						width : '85%',
+						left : '15%'
+					});
+					rowView.add(gift_label);
+
+					tabledata.push(rowView);
+				}//end of for loop
+
+				if (incomplete) {
+					var tableview = Ti.UI.createTableView({
+						backgroundColor : 'transparent',
+						separatorColor : 'transparent',
+						data : tabledata,
+						width : '100%',
+						height : '70%',
+						top : '15%'
+					});
+					view.add(tableview);
+				} else {
 					var task_completed_label = Ti.UI.createLabel({
 						text : 'You have completed all the tasks. \nNew tasks are in under development.',
 						color : '#b3fad0',
-						font : {fontSize:'18dip'},
+						font : {
+							fontSize : '18dip'
+						},
 						textAlign : 'center'
 					});
 					view.add(task_completed_label);
@@ -105,4 +135,4 @@ function Leaderboards(userinfo) {
 
 }
 
-module.exports = Leaderboards; 
+module.exports = Leaderboards;
