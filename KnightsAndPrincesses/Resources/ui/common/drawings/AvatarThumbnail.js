@@ -4,6 +4,7 @@ function AvatarThumbnail(thumbnail_properties, userappearance, gender, index, ca
 	var settings = new Settings();
 	var avatar_config = {};
 	var friend_thumbnail = Ti.UI.createView(thumbnail_properties);
+	var thumbnail_id = Math.random(99,99999) * 42;
 	avatar_config.gender = gender;
 	avatar_config.thumb = true;
 	avatar_config.main_view = {
@@ -20,7 +21,7 @@ function AvatarThumbnail(thumbnail_properties, userappearance, gender, index, ca
 		};
 		var avatar = new Avatar(avatar_config);
 		friend_thumbnail.add(avatar);
-		callback(friend_thumbnail, index);
+		callback(friend_thumbnail, index,thumbnail_id);
 	} else if (userappearance != '' && gender == 'm') {
 		avatar_config.appearence = {
 			dress : '/assets/knight/thumbnail/' + userappearance[2].IMAGE + '.png',
@@ -33,7 +34,7 @@ function AvatarThumbnail(thumbnail_properties, userappearance, gender, index, ca
 		};
 		var avatar = new Avatar(avatar_config);
 		friend_thumbnail.add(avatar);
-		callback(friend_thumbnail, index);
+		callback(friend_thumbnail, index,thumbnail_id);
 	} else {
 		if (gender == 'f') {
 			var Defaults = require('/ui/common/drawings/Defaults');
@@ -47,7 +48,7 @@ function AvatarThumbnail(thumbnail_properties, userappearance, gender, index, ca
 				};
 				var avatar = new Avatar(avatar_config);
 				friend_thumbnail.add(avatar);
-				callback(friend_thumbnail, index);
+				callback(friend_thumbnail, index,thumbnail_id);
 			});
 		} else {
 			var Defaults = require('/ui/common/drawings/Defaults');
@@ -63,10 +64,15 @@ function AvatarThumbnail(thumbnail_properties, userappearance, gender, index, ca
 				};
 				var avatar = new Avatar(avatar_config);
 				friend_thumbnail.add(avatar);
-				callback(friend_thumbnail, index);
+				callback(friend_thumbnail, index,thumbnail_id);
 			});
 		}
 	}
+	// Ti.App.addEventListener('avatar_table_changed',function(data){
+		// friend_thumbnail.remove(avatar);
+		// friend_thumbnail = null;
+	    // Ti.App.fireEvent('data_removed', data);
+	// });
 	return;
 }
 

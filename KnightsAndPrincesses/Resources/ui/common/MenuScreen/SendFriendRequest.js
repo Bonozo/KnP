@@ -186,7 +186,7 @@ function SendFriendRequest(userinfo, friendJson) {
 	});
 	view.add(sendmsg_textbox);
 
-	var cancel_button = Ti.UI.createButton({
+	var cancel_button = Ti.UI.createButton({ color: '#761f56',
 		title : 'Cancel',
 		color : '#5c2a64',
 		textAlign : 'center',
@@ -202,7 +202,7 @@ function SendFriendRequest(userinfo, friendJson) {
 	});
 	view.add(cancel_button);
 
-	var send_button = Ti.UI.createButton({
+	var send_button = Ti.UI.createButton({ color: '#761f56',
 		title : 'Send Request',
 		color : '#5c2a64',
 		textAlign : 'center',
@@ -287,7 +287,7 @@ function SendFriendRequest(userinfo, friendJson) {
 	 });
 	 add_friend_view.add(sendmsg_textbox);
 
-	 var send_button = Ti.UI.createButton({
+	 var send_button = Ti.UI.createButton({ color: '#761f56',
 	 title : 'Send Request',
 	 color : '#5c2a64',
 	 textAlign : 'center',
@@ -328,7 +328,7 @@ function SendFriendRequest(userinfo, friendJson) {
 	 });
 	 });
 
-	 var cancel_button = Ti.UI.createButton({
+	 var cancel_button = Ti.UI.createButton({ color: '#761f56',
 	 title : 'Cancel',
 	 color : '#5c2a64',
 	 textAlign : 'center',

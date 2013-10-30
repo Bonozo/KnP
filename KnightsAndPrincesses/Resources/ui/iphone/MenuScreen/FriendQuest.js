@@ -174,7 +174,7 @@ var countDown =  function(h, m , s, fn_tick, fn_end  ) {
 						});
 						rowView.add(row_label);
 					} else {
-						var StartQuestButton = Ti.UI.createButton({
+						var StartQuestButton = Ti.UI.createButton({ color: '#761f56',
 							backgroundImage : '/assets/button_small_UP.png',
 							left : rowview_height + (rowview_height / 2) + 'px',
 							width : rowview_height * 2,
@@ -202,7 +202,8 @@ var countDown =  function(h, m , s, fn_tick, fn_end  ) {
 					tabledata.push(rowView);
 				}
 
-				tableview = Ti.UI.createTableView({
+				tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 					separatorColor : 'transparent',
                         backgroundColor : 'transparent',
 					data : tabledata,
@@ -294,7 +295,7 @@ var countDown =  function(h, m , s, fn_tick, fn_end  ) {
 	view.add(friendsstatus_label);
 
 /*
-	var viewFriends_button = Ti.UI.createButton({
+	var viewFriends_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_small_UP.png',
 		top : '19.8%',
 		left : '10%',
@@ -380,7 +381,7 @@ var countDown =  function(h, m , s, fn_tick, fn_end  ) {
 			});
 	}
 	isFriends(function(bool){
-		var messages_button = Ti.UI.createButton({
+		var messages_button = Ti.UI.createButton({ color: '#761f56',
 			backgroundImage : '/assets/button_small_UP.png',
 			top : '19.8%',
 			left : '51.7%',

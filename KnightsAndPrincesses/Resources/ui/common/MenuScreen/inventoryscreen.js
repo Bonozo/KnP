@@ -116,7 +116,7 @@ function Inventoryscreen(userinfo) {
 	});
 	view.add(value_label);
 
-	var crafting_button = Titanium.UI.createButton({
+	var crafting_button = Titanium.UI.createButton({color: '#761f56',
 		backgroundImage : '/assets/button_small_UP.png',
 		title : 'Crafting',
 		height : '6%',
@@ -231,14 +231,14 @@ function Inventoryscreen(userinfo) {
 						}
 						tableviewData.push(tablerowview);
 					}
-					var tableview = Ti.UI.createTableView({
+					var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 						data : tableviewData,
 						zIndex : 100,
 						separatorColor : 'transparent',
 						width : tableviewwidth_percent + '%',
 						height : '35%',
-						bottom : '20%',
-						left : '16%'
+						bottom : '20%'
 					});
 					TableviewCallback(tableview);
 					//view.add(tableview);
@@ -252,7 +252,7 @@ function Inventoryscreen(userinfo) {
 					});
 					view.add(center_view);
 
-					var gift_button = Titanium.UI.createButton({
+					var gift_button = Titanium.UI.createButton({color: '#761f56',
 						backgroundImage : '/assets/button_small_UP.png',
 						title : 'Gift',
 						height : '6%',
@@ -274,8 +274,7 @@ function Inventoryscreen(userinfo) {
 			},
 			method : 'GET',
 			contentType : 'text/xml',
-			url : _url,
-
+			url : _url
 		});
 
 	}
@@ -307,11 +306,11 @@ function Inventoryscreen(userinfo) {
 	});
 
 	view.add(curr_inv_image);
-	var knpstore = Titanium.UI.createButton({
-		bottom : "8%",
-		backgroundImage : "/assets/button_smallLong_HIGHLIGHTED.png",
+	var knpstore = Titanium.UI.createButton({color: '#761f56',
+		top : '33.5%',
+		left : '5%',
+		backgroundImage : '/assets/button_small_UP.png',
 		height : "8%",
-		left : "16%",
 		zIndex : 5000,
 		//size:"10dip",
 		title : "K&P Store",

@@ -15,14 +15,19 @@ function LoginWindow() {
 	var osname = Ti.Platform.osname;
 	var admin_login = false;
 	function getToken(callback) {
-		CloudPush.retrieveDeviceToken({
-			success : function deviceTokenSuccess(e) {
-				callback(true, e.deviceToken);
-			},
-			error : function deviceTokenError(e) {
-				callback(false, e.message);
-			}
-		});
+		if (osname === 'android') {
+			CloudPush.retrieveDeviceToken({
+				success : function deviceTokenSuccess(e) {
+					callback(true, e.deviceToken);
+				},
+				error : function deviceTokenError(e) {
+					callback(false, e.message);
+				}
+			});
+			return;
+		}
+		// for iOS
+		callback(true, Titanium.Network.remoteDeviceUUID);
 	}
 
 	function CloudLogin(login_value, password_value, callback) {
@@ -327,13 +332,14 @@ function LoginWindow() {
 	var win = Ti.UI.createWindow();
 	win.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 	var actInd = Titanium.UI.createActivityIndicator({
+		color : '#333333',
 		zIndex : 600
 	});
 	actInd.message = 'Signing In...';
 	//win.add(actInd);
 
-	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
-	var screenHeight = Titanium.Platform.displayCaps.platformHeight;
+	var winWidth = Titanium.Platform.displayCaps.platformWidth;
+	var winHeight = Titanium.Platform.displayCaps.platformHeight;
 
 	function getPixelFromPercent(axis, percent) {
 		if (axis == 'x') {
@@ -350,7 +356,7 @@ function LoginWindow() {
 		borderWidth : '5dip',
 		visible : false,
 		height : '8%',
-		width : (screenWidth / 2),
+		width : (winWidth / 2),
 		zIndex : 700
 	});
 	var activityIndicator = Ti.UI.createActivityIndicator({
@@ -360,7 +366,7 @@ function LoginWindow() {
 			fontSize : '14dip',
 			fontWeight : 'bold'
 		},
-		message : 'Signing in...',
+		message : 'Loading...',
 		style : (Ti.Platform.name === 'iPhone OS') ? Ti.UI.iPhone.ActivityIndicatorStyle.DARK : Ti.UI.ActivityIndicatorStyle.DARK,
 		height : '100%',
 		width : '100%'
@@ -422,6 +428,7 @@ function LoginWindow() {
 	});
 	//win.add(debuggers);
 	var newUserButton = Ti.UI.createButton({
+		color : '#761f56',
 		title : "New User?",
 		color : "white",
 		top : "44%",
@@ -430,7 +437,6 @@ function LoginWindow() {
 		height : "10%",
 		backgroundGradient : {
 			type : 'linear',
-			colors : ['#21653d', '#00321f'],
 			startPoint : {
 				x : '0%',
 				y : '0%'
@@ -439,9 +445,31 @@ function LoginWindow() {
 				x : '0%',
 				y : '100%'
 			},
-			backFillStart : false
+			colors : [{
+				color : '#21653d',
+				offset : 0.0
+			}, {
+				color : '#00321f',
+				offset : 0.25
+			}, {
+				color : '#21653d',
+				offset : 1.0
+			}],
 		},
-		opacity : 0.5,
+
+		/*backgroundGradient : {
+		 type : 'linear',
+		 colors : ['#21653d', '#00321f'],
+		 startPoint : {
+		 x : '0%',
+		 y : '0%'
+		 },
+		 endPoint : {
+		 x : '0%',
+		 y : '100%'
+		 },
+		 backFillStart : false
+		 },*/
 		borderColor : '#b3fad0',
 		borderRadius : '7',
 		borderWidth : '1dip'
@@ -453,27 +481,80 @@ function LoginWindow() {
 		chooseClass = new ChooseClass();
 		chooseClass.open();
 	});
-
+	
+	
 	var emailField = Titanium.UI.createTextField({
-		height : 'auto',
+		height : '10%',
+		font : {
+			fontSize : '12dip'
+		},
 		hintText : "Email",
+		left : '12.5%',
 		width : "75%",
 		value : Ti.App.Properties.getString('knp_email'), //"robot1@email.com",
+		borderRadius : 0,
+		backgroundColor : "#FFFFFF",
+		borderColor : "#333333",
+		// keyboardType : Ti.UI.KEYBOARD_DEFAULT,
 		// left : "15%",
-		top : "57%"
+		// backgroundColor : '#FFFFFF',
+		// borderColor : "#333333",
+		top : "55%"
 	});
 	win.add(emailField);
+	if (osname === 'iphone' || osname === 'ipad') {
+		emailField.addEventListener('focus', function() {
+			win.animate({
+				bottom : getPixelFromPercent('y', 30),
+				duration : 500
+			});
+		});
+		emailField.addEventListener('blur', function() {
+			win.animate({
+				bottom : 0,
+				duration : 500
+			});
+		});
+	}
 
 	var passwordField = Titanium.UI.createTextField({
-		height : 'auto',
+		backgroundColor : "#FFFFFF",
+		height : '10%',
+		font : {
+			fontSize : '12dip'
+		},
 		hintText : "Password",
-		// value : Ti.App.Properties.getString('knp_password'), //'test',
+		left : '12.5%',
 		width : "75%",
-		// left : "15%",
-		top : "67%",
-		passwordMask : true
-	});
+		value : Ti.App.Properties.getString('knp_password'), //"robot1@email.com",
+		borderRadius : 0,
+		borderColor : "#333333",
+		top : "65%"
 
+		// height : '7%',
+		// hintText : "Password",
+		// backgroundColor : '#FFFFFF',
+		// borderColor : "#333333",
+		// // value : Ti.App.Properties.getString('knp_password'), //'test',
+		// width : "75%",
+		// // left : "15%",
+		// top : "67%",
+		// passwordMask : true
+	});
+	if (osname === 'iphone' || osname === 'ipad') {
+		passwordField.addEventListener('focus', function() {
+			win.animate({
+				bottom : getPixelFromPercent('y', 30),
+				duration : 500
+			});
+		});
+		passwordField.addEventListener('blur', function() {
+			win.animate({
+				bottom : 0,
+				duration : 500
+			});
+		});
+	}
 	if (osname !== 'android') {
 		passwordField.borderRadius = '5';
 		passwordField.backgroundColor = '#FFFFFF';
@@ -483,7 +564,7 @@ function LoginWindow() {
 
 	win.add(passwordField);
 	var rememberCheckBox = Ti.UI.createSwitch({
-		top : "73.5%",
+		top : "71.5%",
 		style : (osname === 'android') ? Ti.UI.Android.SWITCH_STYLE_CHECKBOX : "",
 		height : 'auto',
 		left : "12%",
@@ -508,14 +589,27 @@ function LoginWindow() {
 
 	// Create a Button.
 	var forget_password_btn = Ti.UI.createButton({
+		color : '#761f56',
 		title : 'Forget Password',
 		height : 'auto',
 		width : "75%",
 		color : '#FFF',
 		top : '92%',
+		// backgroundGradient : {
+		// type : 'linear',
+		// colors : ['#21653d', '#00321f'],
+		// startPoint : {
+		// x : '0%',
+		// y : '0%'
+		// },
+		// endPoint : {
+		// x : '0%',
+		// y : '100%'
+		// },
+		// backFillStart : false
+		// },
 		backgroundGradient : {
 			type : 'linear',
-			colors : ['#21653d', '#00321f'],
 			startPoint : {
 				x : '0%',
 				y : '0%'
@@ -524,20 +618,28 @@ function LoginWindow() {
 				x : '0%',
 				y : '100%'
 			},
-			backFillStart : false
+			colors : [{
+				color : '#21653d',
+				offset : 0.0
+			}, {
+				color : '#00321f',
+				offset : 0.25
+			}, {
+				color : '#21653d',
+				offset : 1.0
+			}],
 		},
-		opacity : 0.5,
 		borderColor : '#b3fad0',
 		borderRadius : '7',
 		borderWidth : '1dip'
 		// backgroundImage : "/assets/overlayItemList.png"
 	});
 	forget_password_btn.addEventListener('click', function() {
-		if(emailField.value == ""){
+		if (emailField.value == "") {
 			alert('Please enter your email address');
 			return;
 		}
-		
+
 		activityIndicator.show();
 		activityIndicatorView.visible = true;
 		activityIndicator.message = "Sending code...";
@@ -549,7 +651,7 @@ function LoginWindow() {
 				activityIndicator.hide();
 				activityIndicatorView.visible = false;
 
-				if(retreive_code_json.Record.Error == 1){
+				if (retreive_code_json.Record.Error == 1) {
 					alert(retreive_code_json.Record.Message);
 					return;
 				}
@@ -560,13 +662,13 @@ function LoginWindow() {
 				});
 				alertDialog.show();
 				alertDialog.addEventListener('click', function(e) {
-					
+
 					var ForgetPassword = require('/ui/common/MenuScreen/ForgetPassword');
 					forgetpassword = new ForgetPassword(emailField.value);
 					forgetpassword.open({
 						modal : true
-					}); 
-	
+					});
+
 				});
 			},
 			method : 'GET',
@@ -575,20 +677,32 @@ function LoginWindow() {
 
 		});
 
-
 	});
 	win.add(forget_password_btn);
 
 	var signInButton = Ti.UI.createButton({
+		color : '#761f56',
 		title : "SIGN IN",
 		top : "82%",
 		color : "white",
 		width : "75%",
 		// left : "15%",
 		height : "8%",
+		// backgroundGradient : {
+		// type : 'linear',
+		// colors : ['#21653d', '#00321f'],
+		// startPoint : {
+		// x : '0%',
+		// y : '0%'
+		// },
+		// endPoint : {
+		// x : '0%',
+		// y : '100%'
+		// },
+		// backFillStart : false
+		// },
 		backgroundGradient : {
 			type : 'linear',
-			colors : ['#21653d', '#00321f'],
 			startPoint : {
 				x : '0%',
 				y : '0%'
@@ -597,14 +711,30 @@ function LoginWindow() {
 				x : '0%',
 				y : '100%'
 			},
-			backFillStart : false
+			colors : [{
+				color : '#21653d',
+				offset : 0.0
+			}, {
+				color : '#00321f',
+				offset : 0.25
+			}, {
+				color : '#21653d',
+				offset : 1.0
+			}],
 		},
-		opacity : 0.5,
 		borderColor : '#b3fad0',
 		borderRadius : '7',
 		borderWidth : '1dip'
 		// backgroundImage : "/assets/overlayItemList.png"
 	});
+	(function() {
+		if (osname === 'iphone' || osname === 'ipad') {
+			newUserButton.backgroundImage = "/assets/overlayItemList.png";
+			forget_password_btn.backgroundImage = "/assets/overlayItemList.png";
+			signInButton.backgroundImage = "/assets/overlayItemList.png";
+			// signInButton.backgroundColor = '#21653d';
+		}
+	})();
 	win.add(signInButton);
 	signInButton.addEventListener('touchstart', function(e) {
 		// signInButton.color = "black";
@@ -615,6 +745,7 @@ function LoginWindow() {
 	});
 	//   //actInd.hide();
 	signInButton.addEventListener('click', function(e) {
+		// JoustinGamePlay(quest_status, quest_id, userinfo);
 		if (emailField.value == "" && passwordField.value == "") {
 			alert('All fields are required!');
 		} else {
@@ -624,11 +755,17 @@ function LoginWindow() {
 			activityIndicatorView.visible = true;
 			emailField.value = emailField.value.toLowerCase();
 			getToken(function(success, token) {
-				//alert( token);return;
+				// alert(token);return;
 				if (success) {
+					token = (osname === 'iphone' || osname === 'ipad') ? "" : token;
+
 					ServerLogin(emailField.value, passwordField.value, token, '0.4.01', function(success, json) {
 						if (osname === 'iphone' || osname === 'ipad') {
-							if (json.Record[0].GENDER == 'r') {
+							Ti.App.Properties.setString('uid', json[0].UID);
+							if (json[0].GENDER == 'r') {
+								json = {
+									Record : json
+								};
 								var ResetClass = require('/ui/common/MenuScreen/ResetClass');
 								var ResetClassscreen = new ResetClass(json);
 								ResetClassscreen.open();
@@ -637,6 +774,9 @@ function LoginWindow() {
 									activityIndicatorView.visible = false;
 								});
 							} else {
+								json = {
+									Record : json
+								};
 								var MainMenuScreen = require('/ui/common/MenuScreen/MainMenuScreen');
 								MainMenu = new MainMenuScreen(json);
 								MainMenu.open();
@@ -842,6 +982,13 @@ function LoginWindow() {
 	win.addEventListener('android:back', function(e) {
 		var activity = Titanium.Android.currentActivity;
 		activity.finish();
+	});
+	win.addEventListener("open", function() {
+		if (Ti.Platform.name === 'iPhone OS') {
+			newUserButton.backgroundColor = '#1a3425';
+			signInButton.backgroundColor = '#1a3425';
+			forget_password_btn.backgroundColor = '#1a3425';
+		}
 	});
 	if (osname === 'android') {
 		CloudPush.addEventListener('callback', function(evt) {

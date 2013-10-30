@@ -199,7 +199,7 @@ function FreindInfo(userinfo, friendinfo) {
 	});
 		QuestView.add(assign_quest_label);
 /*
-	var choosequests_btn = Ti.UI.createButton({
+	var choosequests_btn = Ti.UI.createButton({ color: '#761f56',
 		title : 'CHOOSE QUEST',
 		font : {
 			fontSize : '12dip'
@@ -264,7 +264,7 @@ function FreindInfo(userinfo, friendinfo) {
 					});
 					view.add(female_character_imageview);
 				}
-                var messages_button = Ti.UI.createButton({
+                var messages_button = Ti.UI.createButton({ color: '#761f56',
                     backgroundImage : '/assets/button_small_UP.png',
                     top : '19.8%',
                     left : '51.7%',
@@ -375,7 +375,7 @@ function FreindInfo(userinfo, friendinfo) {
 	});
 	//view.add(onlineStatus_label);
 
-	var unFriends_button = Ti.UI.createButton({
+	var unFriends_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_small_UP.png',
 		top : '19.8%',
 		left : '10%',

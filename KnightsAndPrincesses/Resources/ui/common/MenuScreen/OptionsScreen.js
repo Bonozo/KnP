@@ -1,4 +1,5 @@
 function OptionsScreen(userinfo) {
+	var osname = Ti.Platform.osname;
 	var admin_login = false;
 
 	var view = Titanium.UI.createView({
@@ -8,26 +9,32 @@ function OptionsScreen(userinfo) {
 		backgroundImage : '/assets/inventoryBackground.png'
 
 	});
-	var CloudPush = require('ti.cloudpush');
-	CloudPush.debug = true;
-	CloudPush.enabled = true;
-	CloudPush.showTrayNotificationsWhenFocused = true;
-	CloudPush.focusAppOnPush = false;
-
-	var deviceToken;
-	var check_notification = '';
-
-	var Cloud = require('ti.cloud');
-	Cloud.debug = true;
+	if (osname === 'android') {
+		var CloudPush = require('ti.cloudpush');
+		CloudPush.debug = true;
+		CloudPush.enabled = true;
+		CloudPush.showTrayNotificationsWhenFocused = true;
+		CloudPush.focusAppOnPush = false;
+	
+		var deviceToken;
+		var check_notification = '';
+	
+		var Cloud = require('ti.cloud');
+		Cloud.debug = true;
+	}
 	function getToken(callback) {
-		CloudPush.retrieveDeviceToken({
-			success : function deviceTokenSuccess(e) {
-				callback(true, e.deviceToken);
-			},
-			error : function deviceTokenError(e) {
-				callback(false, e.message);
-			}
-		});
+		if (osname === 'android') {
+			CloudPush.retrieveDeviceToken({
+				success : function deviceTokenSuccess(e) {
+					callback(true, e.deviceToken);
+				},
+				error : function deviceTokenError(e) {
+					callback(false, e.message);
+				}
+			});
+			return;
+		}
+		callback(true,Titanium.Network.remoteDeviceUUID);
 	}
 
 	function CloudLogin(login_value, password_value, callback) {
@@ -505,7 +512,7 @@ function OptionsScreen(userinfo) {
 	///ui for option screen
 
 	var sound_settings = (Ti.App.Properties.getString('knp_sound') == undefined || Ti.App.Properties.getString('knp_sound') == '' || Ti.App.Properties.getString('knp_sound') == null)?'ON':Ti.App.Properties.getString('knp_sound');
-	var sound_button = Titanium.UI.createButton({
+	var sound_button = Titanium.UI.createButton({ color: '#761f56',
 		top : "7%",
 		height : "10%",
 		title : "SOUND " + sound_settings,
@@ -535,7 +542,7 @@ function OptionsScreen(userinfo) {
 	});
 	
 	view.add(sound_button);
-	var Music_button = Titanium.UI.createButton({
+	var Music_button = Titanium.UI.createButton({color: '#761f56',
 		top : "19%",
 		height : "9%",
 		title : "MUSIC ON",
@@ -560,7 +567,7 @@ function OptionsScreen(userinfo) {
 		backgroundImage : '/assets/button_smallLong_UP.png',
 	});
 	view.add(Music_button);
-	Notification_button = Titanium.UI.createButton({
+	Notification_button = Titanium.UI.createButton({color: '#761f56',
 		top : "31%",
 		height : "9%",
 		title : "NOTIFICATION ",
@@ -606,30 +613,31 @@ function OptionsScreen(userinfo) {
 			switch (e.index) {
 				case 0:
 					////actInd.show();
-					getToken(function(success, token) {
-						if (check_notification == "ON") {//Do Unsubscribe
-							CloudSearchUser(userinfo.Record[0].EMAIL, function(success, last_user_id) {
-								if (success) {
-									CloudUnsubscribeUser(last_user_id, 'alert', token, function(success, message) {
-										ServerLogin(token, last_user_id, function(success, json) {
-											//actInd.hide();
-											alert("Notification settings changed.");
+					if (osname === 'android') {
+						getToken(function(success, token) {
+							if (check_notification == "ON") {//Do Unsubscribe
+								CloudSearchUser(userinfo.Record[0].EMAIL, function(success, last_user_id) {
+									if (success) {
+										CloudUnsubscribeUser(last_user_id, 'alert', token, function(success, message) {
+											ServerLogin(token, last_user_id, function(success, json) {
+												//actInd.hide();
+												alert("Notification settings changed.");
+											});
+	
 										});
-
-									});
-								}
-							});
-
-						} else if (check_notification == "OFF") {//Do Subscribe
-							CloudSubscribeUser(userinfo.Record[0].EMAIL, 'alert', token, function(success, uid) {
-								ServerLogin(token, uid, function(success, json) {
-									////actInd.hide();
-									alert("Notification settings changed.");
+									}
 								});
-							});
-						}
+							} else if (check_notification == "OFF") {//Do Subscribe
+								CloudSubscribeUser(userinfo.Record[0].EMAIL, 'alert', token, function(success, uid) {
+									ServerLogin(token, uid, function(success, json) {
+										////actInd.hide();
+										alert("Notification settings changed.");
+									});
+								});
+							}
+						});
+					}
 
-					});
 
 					break;
 				//This will never be reached, if you specified cancel for index 1
@@ -645,7 +653,7 @@ function OptionsScreen(userinfo) {
 
 	});
 
-	var Report_button = Titanium.UI.createButton({
+	var Report_button = Titanium.UI.createButton({color: '#761f56',
 		top : "43%",
 		height : "9%",
 		title : "REPORT ABUSE",
@@ -670,7 +678,7 @@ function OptionsScreen(userinfo) {
 		backgroundImage : '/assets/button_smallLong_UP.png',
 	});
 	view.add(Report_button);
-	var Reset_button = Titanium.UI.createButton({
+	var Reset_button = Titanium.UI.createButton({color: '#761f56',
 		top : "55%",
 		height : "9%",
 		title : "RESET GAME",
@@ -772,20 +780,22 @@ function OptionsScreen(userinfo) {
 	view.add(bottom);
 	*/
 	//module for bottom bar
-	CloudPush.addEventListener('callback', function(evt) {
-		//alert(evt);
-		//alert(evt.payload);
-	});
-
-	CloudPush.addEventListener('trayClickLaunchedApp', function(evt) {
-		//Ti.API.info('Tray Click Launched App (app was not running)');
-		//alert('Tray Click Launched App (app was not running');
-	});
-
-	CloudPush.addEventListener('trayClickFocusedApp', function(evt) {
-		//Ti.API.info('Tray Click Focused App (app was already running)');
-		//alert('Tray Click Focused App (app was already running)');
-	});
+	if (osname === 'android') {
+		CloudPush.addEventListener('callback', function(evt) {
+			//alert(evt);
+			//alert(evt.payload);
+		});
+	
+		CloudPush.addEventListener('trayClickLaunchedApp', function(evt) {
+			//Ti.API.info('Tray Click Launched App (app was not running)');
+			//alert('Tray Click Launched App (app was not running');
+		});
+	
+		CloudPush.addEventListener('trayClickFocusedApp', function(evt) {
+			//Ti.API.info('Tray Click Focused App (app was already running)');
+			//alert('Tray Click Focused App (app was already running)');
+		});
+	}
 
 	return view;
 };

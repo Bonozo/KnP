@@ -4,12 +4,25 @@ function MainMenuScreen(userinfojson) {
 		return Body(userinfojson);
 	}
 
+	function isiOS4Plus() {
+		if (Titanium.Platform.name == 'iPhone OS') {
+			var version = Titanium.Platform.version.split(".");
+			var major = parseInt(version[0]);
+			// can only test this support on a 3.2+ device
+			if (major >= 4) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	var osname = Ti.Platform.osname;
 	var active_screen = "StatusScreen";
 	var MainScreen = [];
 	var json = userinfojson;
 
 	var main_window = Titanium.UI.createWindow({
-		touchEnabled : false,
+		// touchEnabled : false,
 		backgroundImage : '/assets/inventoryBackground.png'
 	});
 	main_window.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
@@ -27,15 +40,55 @@ function MainMenuScreen(userinfojson) {
 		}
 	}
 
-	var SECONDS = 5;
-	// every 5 seconds
-	var service_intent = Titanium.Android.createServiceIntent({
-		url : 'services/notificationservice.js'
-	});
-	service_intent.putExtra('interval', SECONDS * 1000);
-	// Needs to be milliseconds
-	service_intent.putExtra('uid', userinfojson.Record[0].UID);
-	Titanium.Android.startService(service_intent);
+	if (osname === 'iphone' || osname === 'ipad') {
+		if (isiOS4Plus()) {
+
+			var service;
+			Ti.App.Properties.setString('service_enabled', true);
+			service = Ti.App.iOS.registerBackgroundService({
+				url : 'services/notificationservice.js'
+			});
+			Ti.API.info("registered background service = " + service);
+
+			// Ti.App.iOS.addEventListener('notification',function(e){
+			// You can use this event to pick up the info of the noticiation.
+			// Also to collect the 'userInfo' property data if any was set
+			// Ti.API.info("local notification received: "+JSON.stringify(e));
+			// });
+
+			// fired when an app resumes from suspension
+			// Ti.App.addEventListener('resume', function(e) {
+			// Ti.API.info("app is resuming from the background");
+			// });
+			Ti.App.addEventListener('pause', function(e) {
+				Ti.API.info("app has pause from foreground");
+				// this will unregister the service if the user just opened the app
+				// ie: not via the notification 'OK' button..
+				if (service != null) {
+					Ti.App.Properties.setString('service_enabled', false);
+					service.stop();
+					service.unregister();
+				}
+				//Titanium.UI.iPhone.appBadge = null;
+			});
+
+			// Ti.App.addEventListener('pause', function(e) {
+			// Ti.API.info("app was paused from the foreground");
+
+			// });
+		}
+
+	} else {
+		var SECONDS = 5;
+		// every 5 seconds
+		var service_intent = Titanium.Android.createServiceIntent({
+			url : 'services/notificationservice.js'
+		});
+		service_intent.putExtra('interval', SECONDS * 1000);
+		// Needs to be milliseconds
+		service_intent.putExtra('uid', userinfojson.Record[0].UID);
+		Titanium.Android.startService(service_intent);
+	}
 
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var screenHeight = Titanium.Platform.displayCaps.platformHeight;
@@ -87,7 +140,6 @@ function MainMenuScreen(userinfojson) {
 			var Footer = require('ui/common/menus/Footer');
 			MainScreen.footer = Footer(userinfojson);
 			Footer = null;
-
 			main_window.add(MainScreen.header);
 			main_window.add(MainScreen.footer);
 

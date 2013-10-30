@@ -127,7 +127,6 @@ function FriendQuest(userinfo, friend_uid, friend_quest_info, is_completed) {
 	var ScreenHeight = Titanium.Platform.displayCaps.platformHeight;
 	var rowview_height = ScreenHeight * (12 / 100);
 
-
 	function updateQuestsList() {
 		httpclientt.requestServer({
 
@@ -174,7 +173,7 @@ function FriendQuest(userinfo, friend_uid, friend_quest_info, is_completed) {
 						});
 						rowView.add(row_label);
 					} else {
-						var StartQuestButton = Ti.UI.createButton({
+						var StartQuestButton = Ti.UI.createButton({ color: '#761f56',
 							backgroundImage : '/assets/button_small_UP.png',
 							left : rowview_height + (rowview_height / 2) + 'px',
 							width : rowview_height * 2,
@@ -202,6 +201,8 @@ function FriendQuest(userinfo, friend_uid, friend_quest_info, is_completed) {
 				}
 
 				tableview = Ti.UI.createTableView({
+					backgroundColor : 'transparent',
+					separatorColor : 'transparent',
 					data : tabledata,
 					width : '70%',
 					height : '40%',
@@ -352,7 +353,7 @@ function FriendQuest(userinfo, friend_uid, friend_quest_info, is_completed) {
 		});
 	}
 	isFriends(function(bool) {
-		var messages_button = Ti.UI.createButton({
+		var messages_button = Ti.UI.createButton({ color: '#761f56',
 			backgroundImage : '/assets/button_small_UP.png',
 			top : '19.8%',
 			left : '51.7%',

@@ -153,7 +153,7 @@ function ForgetPassword(email_address) {
 	});
 	main_view.add(retypePasswordTextField);
 
-	var resetPasswordBtn = Ti.UI.createButton({
+	var resetPasswordBtn = Ti.UI.createButton({ color: '#761f56',
 		title : "Reset Password",
 		top : "80%",
 		color : "white",
@@ -230,7 +230,7 @@ function ForgetPassword(email_address) {
 			url : "http://bonozo.com:8080/knp/reset_password.php?" + "email=" + Ti.Network.encodeURIComponent(email_address) + "&code=" + Ti.Network.encodeURIComponent(validationCodeTextField.value) + "&password=" + Ti.Network.encodeURIComponent(passwordTextField.value)
 		});
 	});
-	var getCodeBtn = Ti.UI.createButton({
+	var getCodeBtn = Ti.UI.createButton({ color: '#761f56',
 		title : "Retreive Code",
 		top : "80%",
 		color : "white",

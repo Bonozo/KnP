@@ -7,7 +7,7 @@ function Inventoryscreen(userinfo) {
 	});
 
 	// Create a Button.
-	var aButton = Ti.UI.createButton({
+	var aButton = Ti.UI.createButton({ color: '#761f56',
 		title : 'aButton',
 		height : '20%',
 		width : '60%',
@@ -240,7 +240,7 @@ function Inventoryscreen(userinfo) {
 	});
 	view.add(value_label);
 
-	var crafting_button = Ti.UI.createButton({
+	var crafting_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_small_UP.png',
 		title : 'Crafting',
 		height : '6%',
@@ -354,7 +354,8 @@ function Inventoryscreen(userinfo) {
 						tableviewData.push(tablerowview);
 
 					}
-					var tableview = Ti.UI.createTableView({
+					var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 						data : tableviewData,
 						separatorColor : 'transparent',
 						backgroundColor : 'transparent',

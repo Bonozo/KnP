@@ -1,10 +1,29 @@
 //http://bonozo.com:8080/knp/friendship_notifications_action.php?uid=10000005&friend_uid=10000007&action=DENIED
 //http://bonozo.com:8080/knp/friendship_notifications_action.php?uid=10000005&friend_uid=10000007&action=FRIENDS
 function FreindsScreen(userinfo) {
+	var tabledata = [];
+	var rowView = [];
+	function releaseOldTable(callback){
+		tabledata = [];
+		rowView = [];
+		// Ti.API.info('rowView.length : ' + rowView.length);
+		// for (var i=0; i < rowView.length; i++) {
+		  // var views = rowView[i].getChildren();
+		  // rowView[i].removeAllChildren();
+		  // Ti.API.info('views.length : ' + views.length);
+		  // for (var j=0; j < views.length; j++) {
+			// views[j] = null;
+		  // }
+		  // rowView[i] = null;
+		// }
+		callback();
+	}
 	function openNewTable(userinfojson, activeTable, callback) {
-		var TableView = require('ui/common/MenuScreen/' + activeTable);
-		TableView(userinfojson, function(Tableview) {
-			callback(Tableview);
+		releaseOldTable(function(){
+			var TableView = require('ui/common/MenuScreen/' + activeTable);
+			TableView(userinfojson, tabledata, rowView, function(Tableview) {
+				callback(Tableview);
+			});
 		});
 	}
 
@@ -87,7 +106,7 @@ function FreindsScreen(userinfo) {
 
 	///////////////////////////////////////////////////////////////////////////////////
 
-	var gift_notification = Titanium.UI.createButton({
+	var gift_notification = Titanium.UI.createButton({color: '#761f56',
 		title : "Gift Notifications",
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		left : "2%",
@@ -170,7 +189,7 @@ function FreindsScreen(userinfo) {
 		}
 	});
 
-	var request_button = Ti.UI.createButton({
+	var request_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9dip'
@@ -183,6 +202,19 @@ function FreindsScreen(userinfo) {
 		zIndex : 900
 	});
 	view.add(request_button);
+	// Ti.App.addEventListener('data_removed',function(data){
+	    // activeTable = data.new_table;
+		// main_table_view.data = null;
+		// view.remove(main_table_view);
+		// main_table_view = null;
+		// openNewTable(userinfo, activeTable, function(tableview) {
+			// main_table_view = tableview;
+			// view.add(main_table_view);
+			// process_list = !process_list;
+			// activityIndicator.hide();
+			// activityIndicatorView.visible = false;
+		// });
+	// });
 	function fireTableChangeEvent(newTable){
 	    // Ti.App.fireEvent('avatar_table_changed', {
 	        // release_table 	: activeTable,
@@ -231,7 +263,7 @@ function FreindsScreen(userinfo) {
 		}
 	});
 
-	var myfriend_button = Ti.UI.createButton({
+	var myfriend_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9dip'
@@ -262,7 +294,7 @@ function FreindsScreen(userinfo) {
 			// });
 		}
 	});
-	var female_button = Ti.UI.createButton({
+	var female_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9dip'
@@ -294,7 +326,7 @@ function FreindsScreen(userinfo) {
 		}
 	});
 
-	var male_button = Ti.UI.createButton({
+	var male_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9dip'
@@ -326,7 +358,7 @@ function FreindsScreen(userinfo) {
 		}
 	});
 
-	var online_button = Ti.UI.createButton({
+	var online_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9dip'
@@ -340,7 +372,7 @@ function FreindsScreen(userinfo) {
 	});
 	view.add(online_button);
 
-	var coin_button = Ti.UI.createButton({
+	var coin_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9dip'
@@ -372,7 +404,7 @@ function FreindsScreen(userinfo) {
 		}
 	});
 
-	var level_button = Ti.UI.createButton({
+	var level_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9dip'

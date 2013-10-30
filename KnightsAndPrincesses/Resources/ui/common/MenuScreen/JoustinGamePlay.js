@@ -1,4 +1,5 @@
 function JoustinGamePlay(quest_status, quest_id, userinfo) {
+	var osname = Ti.Platform.osname;
 	var sound_settings = (Ti.App.Properties.getString('knp_sound') == undefined || Ti.App.Properties.getString('knp_sound') == '' || Ti.App.Properties.getString('knp_sound') == null)?'ON':Ti.App.Properties.getString('knp_sound');
 	var window = Ti.UI.createWindow({
 		orientation : Ti.UI.PORTRAIT,
@@ -732,17 +733,24 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 			}
 		},100);
 	}
+	window.addEventListener("close",function(){
+		play_game = false;
+		jousting_battle_music.stop();
+		horse_gollap_noise_sound.stop();
+	});
 	window.addEventListener("open", function() {
-		var activity = window.activity;
-		activity.addEventListener('resume', function(e) {
-		});
-		activity.addEventListener('pause', function(e) {
-			play_game = false;
-			jousting_battle_music.stop();
-			horse_gollap_noise_sound.stop();
-		});
-		activity.addEventListener('destroy', function(e) {
-		});
+		if(osname === 'android'){
+			var activity = window.activity;
+			activity.addEventListener('resume', function(e) {
+			});
+			activity.addEventListener('pause', function(e) {
+				play_game = false;
+				jousting_battle_music.stop();
+				horse_gollap_noise_sound.stop();
+			});
+			activity.addEventListener('destroy', function(e) {
+			});
+		}
 	});
 	game.addEventListener('click', function(e) {
 		return;
@@ -956,7 +964,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		zIndex : 950
 	});
 	window.add(message);
-	var ok_button = Ti.UI.createButton({
+	var ok_button = Ti.UI.createButton({ color: '#761f56',
 		title : 'Ok',
 		color : '#000000',
 		textAlign : 'center',

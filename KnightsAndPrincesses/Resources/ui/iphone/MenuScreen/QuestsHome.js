@@ -157,7 +157,7 @@ function QuestsHome(userinfo) {
 	});
 
 	view.add(sortby_lbl);
-	var my_quest = Ti.UI.createButton({
+	var my_quest = Ti.UI.createButton({ color: '#761f56',
 		backgroundGradient : {
 			type : 'linear',
 			colors : [' #A42B76', '#E39bc8'],
@@ -195,7 +195,7 @@ function QuestsHome(userinfo) {
 		});
 	});
 
-	var freind_quest = Ti.UI.createButton({
+	var freind_quest = Ti.UI.createButton({ color: '#761f56',
 		backgroundGradient : {
 			type : 'linear',
 			colors : [' #A42B76', '#E39bc8'],
@@ -233,7 +233,7 @@ function QuestsHome(userinfo) {
 		});
 	});
 
-	var quest_log = Ti.UI.createButton({
+	var quest_log = Ti.UI.createButton({ color: '#761f56',
 		backgroundGradient : {
 			type : 'linear',
 			colors : [' #A42B76', '#E39bc8'],

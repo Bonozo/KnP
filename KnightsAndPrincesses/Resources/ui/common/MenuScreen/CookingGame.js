@@ -85,7 +85,7 @@ function CookingGame(quest_status, quest_id, userinfo) {
 	
     
     // Create a Button.
-    var userExistingRecipes = Ti.UI.createButton({
+    var userExistingRecipes = Ti.UI.createButton({ color: '#761f56',
         title : 'Use Existing Recipe',
         top : '20%',
         backgroundImage : '/assets/button_large_UP.png',
@@ -230,7 +230,8 @@ function CookingGame(quest_status, quest_id, userinfo) {
 	                    tabledata.push(rowView);
 	                }//end of for loop
 					
-	                tableview = Ti.UI.createTableView({
+	                tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 	                    data : tabledata,
 	                    width : '100%',
 	                    height : '65%',
@@ -321,7 +322,8 @@ function CookingGame(quest_status, quest_id, userinfo) {
 	                    tabledata.push(rowView);
 	                }//end of for loop
 	
-	                tableview = Ti.UI.createTableView({
+	                tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 	                    data : tabledata,
 	                    width : '100%',
 	                    height : '65%',

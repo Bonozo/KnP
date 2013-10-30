@@ -156,7 +156,8 @@ function FreindQuestTab(userinfo, callback) {
 					tabledata.push(rowView[row_counter]);
 				}//end of for loop
 
-				fq_tableview = Ti.UI.createTableView({
+				fq_tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 					data : tabledata,
 					width : '100%',
 					height : '100%',

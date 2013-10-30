@@ -237,7 +237,7 @@ function FreindInfo(userinfo, friendinfo) {
 			createAvatarPicture(friend_json, {}, function(avatar_picture) {
 				view.add(avatar_picture);
 			});
-			var messages_button = Ti.UI.createButton({
+			var messages_button = Ti.UI.createButton({ color: '#761f56',
 				backgroundImage : '/assets/button_small_UP.png',
 				top : '19.8%',
 				left : '51.7%',
@@ -353,7 +353,7 @@ function FreindInfo(userinfo, friendinfo) {
 	});
 	//view.add(onlineStatus_label);
 
-	var unFriends_button = Ti.UI.createButton({
+	var unFriends_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_small_UP.png',
 		top : '19.8%',
 		left : '10%',

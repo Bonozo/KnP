@@ -47,6 +47,10 @@ if (Ti.version < 1.8 ) {
 			Window = require('ui/iphone/LoginWindow');
 		}
 *///	}
+// var JoustinGamePlay = require('/ui/common/MenuScreen/JoustinGamePlay');
+// var joustingameplay = new JoustinGamePlay("","","");
+// joustingameplay.open();
+// return;
 Window = require('ui/handheld/android/LoginWindow');
 	var win1 = new Window();
 	win1.open();

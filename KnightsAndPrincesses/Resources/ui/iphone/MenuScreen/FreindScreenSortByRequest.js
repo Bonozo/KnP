@@ -144,7 +144,8 @@ function sortfreind(userinfo, coininfo) {
 		tabledata.push(rowView);
 	}//end of for loop
 
-	var tableview = Ti.UI.createTableView({
+	var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 		data : tabledata,
 		width : '100%'
 	});

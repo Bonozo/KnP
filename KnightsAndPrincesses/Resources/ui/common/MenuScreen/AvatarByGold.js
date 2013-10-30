@@ -1,11 +1,11 @@
-function AvatarByGold(userinfo, callback) {
+function AvatarByGold(userinfo, tabledata, rowView, callback) {
 	var gender = '';
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var items_json = "";
 	var items_length = 0;
 	var tableview = "";
-	var rowView = [];
-	var tabledata = [];
+	// var rowView = [];
+	//var tabledata = [];
 	var avatar_images = [];
 	var AvatarThumbnail = require('/ui/common/drawings/AvatarThumbnail');
 	var httpclientt = require('/ui/common/Functions/function');
@@ -27,7 +27,7 @@ function AvatarByGold(userinfo, callback) {
 					rowView[i] = Ti.UI.createTableViewRow({
 						height : rowViewHeight,
 						uid : items_json.Record[i].UID,
-						className : 'Friendlist',
+						className : 'GoldFriendlist',
 						genes : items_json.Record[i].GENDER,
 						index : i,
 						backgroundImage : bg_image,
@@ -135,7 +135,8 @@ function AvatarByGold(userinfo, callback) {
 					tabledata.push(rowView[i]);
 				}//end of for loop
 
-				tableview = Ti.UI.createTableView({
+				tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 					data : tabledata,
 					width : '100%',
 					height : '66%',

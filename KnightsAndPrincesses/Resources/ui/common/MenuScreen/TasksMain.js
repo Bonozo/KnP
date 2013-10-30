@@ -75,7 +75,8 @@ function Leaderboards(userinfo) {
 			    }//end of for loop
 				
 				if(incomplete){
-				    var tableview = Ti.UI.createTableView({
+				    var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 				        data : tabledata,
 				        width : '100%',
 				        height : '70%',

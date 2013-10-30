@@ -444,8 +444,6 @@ function LoginWindow() {
 	});
 	win.add(passwordField);
 	passwordField.addEventListener('focus', function() {
-
-		//setSoftKeyboardOnFocus = Titanium.UI.iPhone.NavigationGroup.setSoftKeyboardOnFocus;
 		win.animate({
 			bottom : 166,
 			duration : 500
@@ -475,7 +473,7 @@ function LoginWindow() {
 		left : "15%"
 	});
 	// win.add(rememberlabel);
-	var signInButton = Ti.UI.createButton({
+	var signInButton = Ti.UI.createButton({ color: '#761f56',
 		title : "SIGN IN",
 		top : "90%",
 		color : "white",
@@ -540,7 +538,7 @@ function LoginWindow() {
 	});
 	actInd.hide();
 
-	var newUserButton = Ti.UI.createButton({
+	var newUserButton = Ti.UI.createButton({ color: '#761f56',
 		title : "New User?",
 		color : "white",
 		top : "50%",

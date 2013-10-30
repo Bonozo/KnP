@@ -1,15 +1,24 @@
 Logfile initialized
 [INFO] logfile = /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses/build.log
-[DEBUG] /Users/mohsin/Downloads/mobilesdk-2/mobilesdk/osx/3.1.1.GA/android/builder.py install KnightsAndPrincesses /Users/mohsin/Documents/android-sdk-mac_x86/sdk /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses com.bonozo.knp 4
+[DEBUG] /Users/mohsin/Downloads/mobilesdk-2/mobilesdk/osx/3.1.1.GA/android/builder.py simulator KnightsAndPrincesses /Users/mohsin/Documents/android-sdk-mac_x86/sdk /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses com.bonozo.knp 4 QVGA
+[INFO] Launching Android emulator...one moment
+[DEBUG] From: /Users/mohsin/Documents/android-sdk-mac_x86/sdk/tools/emulator
+[DEBUG] SDCard: /Users/mohsin/.titanium/android2.sdcard
+[DEBUG] AVD ID: 4
+[DEBUG] AVD Skin: QVGA
+[DEBUG] AVD ABI: armeabi
+[DEBUG] SDK: /Users/mohsin/Documents/android-sdk-mac_x86/sdk
+[INFO] Building KnightsAndPrincesses for Android ... one moment
+[INFO] Emulator is running.
 [INFO] Titanium SDK version: 3.1.1 (06/15/13 16:09 f7592c1)
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 1 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.017420 seconds on emulator to get ready
-[DEBUG] com.bonozo.knp installed? False
+[DEBUG] waited 0.021051 seconds on emulator to get ready
+[DEBUG] com.bonozo.knp installed? True
 [INFO] Copying CommonJS modules...
 [INFO] Copying project resources..
-[TRACE] COPYING MODIFIED FILE: /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses/Resources/ui/common/MenuScreen/JoustinGamePlay.js => /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses/build/android/bin/assets/Resources/ui/common/MenuScreen/JoustinGamePlay.js
+[TRACE] COPYING MODIFIED FILE: /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses/Resources/ui/handheld/android/LoginWindow.js => /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses/build/android/bin/assets/Resources/ui/handheld/android/LoginWindow.js
 [DEBUG] LiveView not enabled
 [TRACE] Generating Java Classes
 [DEBUG] Processing Android resource drawables
@@ -81,6 +90,7 @@ Logfile initialized
 [DEBUG] from resource zip => assets/Resources/assets/games/jousting/lance.png
 [DEBUG] from resource zip => assets/Resources/assets/games/jousting/ldpi_horse_spritesheet copy.png
 [DEBUG] from resource zip => assets/Resources/assets/games/jousting/ldpi_horse_spritesheet.png
+[DEBUG] from resource zip => assets/Resources/assets/games/jousting/rail_highlight.png
 [DEBUG] from resource zip => assets/Resources/assets/games/jousting/rails_sprite.png
 [DEBUG] from resource zip => assets/Resources/assets/games/jousting/rails_sprite_old.png
 [DEBUG] from resource zip => assets/Resources/assets/games/jousting/ship.png
@@ -663,6 +673,7 @@ Logfile initialized
 [DEBUG] from resource zip => assets/Resources/sounds/arrow_miss.mp3
 [DEBUG] from resource zip => assets/Resources/sounds/friendship_request_bell.mp3
 [DEBUG] from resource zip => assets/Resources/sounds/horse_gollap_noise.mp3
+[DEBUG] from resource zip => assets/Resources/sounds/jousting_battle_music.mp3
 [DEBUG] from resource zip => assets/Resources/sounds/message_bell.mp3
 [DEBUG] from resource zip => assets/Resources/sounds/metal_bang.mp3
 [DEBUG] from resource zip => assets/Resources/sounds/trumpet_lose.mp3
@@ -694,6 +705,7 @@ Logfile initialized
 [DEBUG] from resource zip => assets/Resources/ui/common/MenuScreen/FriendRequestAction.js
 [DEBUG] from resource zip => assets/Resources/ui/common/MenuScreen/GiftFromMessage.js
 [DEBUG] from resource zip => assets/Resources/ui/common/MenuScreen/GiftNotifications.js
+[DEBUG] from resource zip => assets/Resources/ui/common/MenuScreen/GoldPurchase.js
 [DEBUG] from resource zip => assets/Resources/ui/common/MenuScreen/InventoryGifting.js
 [DEBUG] from resource zip => assets/Resources/ui/common/MenuScreen/Inventoryscreen.js
 [DEBUG] from resource zip => assets/Resources/ui/common/MenuScreen/JoustinGamePlay.js
@@ -841,12 +853,17 @@ Logfile initialized
 [DEBUG] installing native lib: /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses/modules/android/com.googlecode.quicktigame2d/1.3/libs/armeabi/libcom.googlecode.quicktigame2d.so
 [DEBUG] installing native lib: /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses/modules/android/com.googlecode.quicktigame2d/1.3/libs/armeabi-v7a/libcom.googlecode.quicktigame2d.so
 [DEBUG] installing native lib: /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses/modules/android/com.googlecode.quicktigame2d/1.3/libs/x86/libcom.googlecode.quicktigame2d.so
-[DEBUG] installing native lib: /Users/mohsin/Downloads/mobilesdk-2/modules/android/ti.cloudpush/2.0.7/libs/armeabi/libti.cloudpush.so
-[DEBUG] installing native lib: /Users/mohsin/Downloads/mobilesdk-2/modules/android/ti.cloudpush/2.0.7/libs/armeabi-v7a/libti.cloudpush.so
+[DEBUG] installing native lib: /Users/mohsin/Downloads/mobilesdk-2/modules/android/ti.cloudpush/2.2.0/libs/armeabi/libti.cloudpush.so
+[DEBUG] installing native lib: /Users/mohsin/Downloads/mobilesdk-2/modules/android/ti.cloudpush/2.2.0/libs/armeabi-v7a/libti.cloudpush.so
+[DEBUG] installing native lib: /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses/modules/android/ti.inappbilling/2.2.0/libs/armeabi/libti.inappbilling.so
+[DEBUG] installing native lib: /Users/mohsin/Documents/Titanium_Studio_Workspace/Knights And Princesses/modules/android/ti.inappbilling/2.2.0/libs/armeabi-v7a/libti.inappbilling.so
 [DEBUG] installing native SDK libs
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 1 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.020002 seconds on emulator to get ready
-[INFO] Installing application on device
-[INFO] Application installed. Launch from drawer on Home Screen
+[DEBUG] waited 0.021204 seconds on emulator to get ready
+[INFO] Installing application on emulator
+[INFO] Launching application ... KnightsAndPrincesses
+[TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.bonozo.knp/.KnightsandprincessesActivity }
+
+[INFO] Deployed KnightsAndPrincesses ... Application should be running.

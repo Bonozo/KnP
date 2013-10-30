@@ -23,7 +23,7 @@ function RemoveNotification(inv_trans_id,index) {
 		textAlign : Ti.UI.TEXT_ALIGNMENT_CENTER
 	});
 	view.add(sure);
-	var cancel_button = Ti.UI.createButton({
+	var cancel_button = Ti.UI.createButton({ color: '#761f56',
 		title : 'Cancel',
 		color : '#000000',
 		textAlign : 'center',
@@ -78,7 +78,7 @@ function RemoveNotification(inv_trans_id,index) {
 		}, interval);
 	}
 	
-	var remove_button = Ti.UI.createButton({
+	var remove_button = Ti.UI.createButton({ color: '#761f56',
 		title : 'Remove',
 		color : '#000000',
 		textAlign : 'center',

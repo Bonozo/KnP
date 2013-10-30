@@ -156,7 +156,8 @@ function GiftFromMessage(userinfo,freind_uid) {
 						tableviewData.push(tablerowview);
 
 					}
-					var tableview = Ti.UI.createTableView({
+					var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 						separatorColor : 'transparent',
                         backgroundColor : 'transparent',
 						data : tableviewData,

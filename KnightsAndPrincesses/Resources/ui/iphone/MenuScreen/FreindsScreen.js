@@ -177,7 +177,7 @@ function FreindsScreen(userinfo) {
 		}
     }); 
 	
-	var request_button = Ti.UI.createButton({
+	var request_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9'
@@ -199,7 +199,7 @@ function FreindsScreen(userinfo) {
 		});
 	});
 
-	var myfriend_button = Ti.UI.createButton({
+	var myfriend_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9'
@@ -219,7 +219,7 @@ function FreindsScreen(userinfo) {
 			view.add(main_table_view);
 		});
 	});
-	var female_button = Ti.UI.createButton({
+	var female_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9'
@@ -240,7 +240,7 @@ function FreindsScreen(userinfo) {
 		});
 	});
 
-	var male_button = Ti.UI.createButton({
+	var male_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9'
@@ -261,7 +261,7 @@ function FreindsScreen(userinfo) {
 		});
 	});
 
-	var online_button = Ti.UI.createButton({
+	var online_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9'
@@ -274,7 +274,7 @@ function FreindsScreen(userinfo) {
 	});
 	view.add(online_button);
 
-	var coin_button = Ti.UI.createButton({
+	var coin_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9'
@@ -295,7 +295,7 @@ function FreindsScreen(userinfo) {
 		});
 	});
 
-	var level_button = Ti.UI.createButton({
+	var level_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
 		font : {
 			fontSize : '9'

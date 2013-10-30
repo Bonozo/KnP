@@ -73,7 +73,8 @@ function MyQuest(userinfo, callback) {
     var choosequests_btn;
     var num_of_quests_lbl;
     var tabledata = [];
-    var tableview = Ti.UI.createTableView({
+    var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
     	separatorColor : 'transparent',
         backgroundColor : 'transparent',
         width : '100%',
@@ -187,7 +188,7 @@ function MyQuest(userinfo, callback) {
                         });
                         rowView.add(expired_label);
                     } else {//not expired
-                        choosequests_btn = Ti.UI.createButton({
+                        choosequests_btn = Ti.UI.createButton({ color: '#761f56',
                             title : 'CHOOSE QUEST',
                             height : rowViewHeight / 3,
                             top : rowViewHeight / 3,
@@ -433,7 +434,7 @@ function MyQuest(userinfo, callback) {
                                 });
                                 rowView.add(expired_label);
                             } else {//not expired
-                                choosequests_btn = Ti.UI.createButton({
+                                choosequests_btn = Ti.UI.createButton({ color: '#761f56',
                                     title : 'CHOOSE QUEST',
                                     height : rowViewHeight / 3,
                                     top : rowViewHeight / 3,

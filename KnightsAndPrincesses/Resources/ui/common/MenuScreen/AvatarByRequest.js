@@ -1,6 +1,6 @@
-function AvatarByRequest(userinfo, callback) {
+function AvatarByRequest(userinfo, tabledata, rowView, callback) {
     var request_counter = 0;
-	var rowView = [];
+	// var rowView = [];
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var items_json = "";
 	var items_length = 0;
@@ -14,7 +14,7 @@ function AvatarByRequest(userinfo, callback) {
 			items_length = items_json.Record.length;
 			if (items_json.Record != undefined) {
 				var rowViewHeight = screenWidth * 0.189;
-				var tabledata = [];
+				//var tabledata = [];
 				var bg_image = '';
 				for (var i = 0; i < items_json.Record.length; i++) {
 				    request_counter++;
@@ -148,7 +148,8 @@ function AvatarByRequest(userinfo, callback) {
 					tabledata.push(rowView[i]);
 				}//end of for loop
 
-				tableview = Ti.UI.createTableView({
+				tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 					data : tabledata,
 					width : '100%',
 					height : '66%',

@@ -694,7 +694,7 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 			// aiming_current_point_y = aiming_initial_point_y;
 
 			// Create a Button.
-			var reset = Ti.UI.createButton({
+			var reset = Ti.UI.createButton({ color: '#761f56',
 				title : 'Reset',
 				top : getPixelFromPercent('y', 10),
 				zIndex : 900

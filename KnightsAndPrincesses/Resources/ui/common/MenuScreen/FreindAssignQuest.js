@@ -422,7 +422,8 @@ function FreindAssignQuest(userinfo, friend_uid) {
 					tabledata.push(rowView);
 				}
 
-				var tableview = Ti.UI.createTableView({
+				var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 					data : tabledata,
 					width : '100%',
 					height : '28%',
@@ -462,7 +463,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	view.add(name_text);
 
 
-	var assign_quest = Ti.UI.createButton({
+	var assign_quest = Ti.UI.createButton({ color: '#761f56',
 		backgroundGradient : {
 			type : 'linear',
 			colors : [' #A42B76', '#E39bc8'],

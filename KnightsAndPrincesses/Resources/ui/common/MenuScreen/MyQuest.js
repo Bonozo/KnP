@@ -74,6 +74,8 @@ function MyQuest(userinfo, callback) {
 	var num_of_quests_lbl;
 	var tabledata = [];
 	var tableview = Ti.UI.createTableView({
+		backgroundColor : 'transparent',
+		separatorColor : 'transparent',
 		width : '100%',
 		height : '100%',
 		top : '2%'
@@ -183,7 +185,7 @@ function MyQuest(userinfo, callback) {
 						});
 						rowView[row_counter].add(expired_label);
 					} else {//not expired
-						choosequests_btn = Ti.UI.createButton({
+						choosequests_btn = Ti.UI.createButton({ color: '#761f56',
 							title : 'CHOOSE QUEST',
 							height : rowHeight / 3,
 							top : rowHeight / 3,
@@ -373,7 +375,7 @@ function MyQuest(userinfo, callback) {
 							}, update_items_json.Record.NEW[i].USER_APPEARANCE, update_items_json.Record.NEW[i].GENDER, row_counter, function(avatar_imageview, callback_index) {
 								rowView[callback_index].add(avatar_imageview);
 							});
-							
+
 							//Create a Label.
 							var num_of_friends = Ti.UI.createLabel({
 								color : '#5afd9b',
@@ -386,8 +388,7 @@ function MyQuest(userinfo, callback) {
 								text : update_items_json.Record.NEW[i].NUM_OF_FRIENDS
 							});
 							rowView[row_counter].add(num_of_friends);
-							
-							
+
 							if (update_items_json.Record.NEW[i].STATUS == 'EXPIRE') {//quest expired
 								expired_label = Ti.UI.createLabel({
 									text : 'TIME\nEXPIRED',
@@ -401,7 +402,7 @@ function MyQuest(userinfo, callback) {
 								});
 								rowView[row_counter].add(expired_label);
 							} else {//not expired
-								choosequests_btn = Ti.UI.createButton({
+								choosequests_btn = Ti.UI.createButton({ color: '#761f56',
 									title : 'CHOOSE QUEST',
 									height : rowHeight / 3,
 									top : rowHeight / 3,
@@ -448,7 +449,6 @@ function MyQuest(userinfo, callback) {
 								}
 
 							}
-							
 
 							// Create a Label.
 							rewards_lbl = Ti.UI.createLabel({

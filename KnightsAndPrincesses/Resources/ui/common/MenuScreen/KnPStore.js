@@ -1,4 +1,15 @@
 function KnPStore(userinfo) {
+
+    function getPixelFromPercent(axis, percent) {
+        if (axis == 'x') {
+            return winWidth * percent / 100;
+        } else if (axis == 'y') {
+            return winHeight * percent / 100;
+        }
+    }
+
+	// var InAppBilling = require('ti.inappbilling');
+
     var view = Ti.UI.createWindow({
         backgroundImage : '/assets/inventoryBackground.png',
         navBarHidden : true,
@@ -18,14 +29,6 @@ function KnPStore(userinfo) {
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var screenHeight = Titanium.Platform.displayCaps.platformHeight;
 	var main_view = Ti.UI.createView();
-
-    function getPixelFromPercent(axis, percent) {
-        if (axis == 'x') {
-            return winWidth * percent / 100;
-        } else if (axis == 'y') {
-            return winHeight * percent / 100;
-        }
-    }
 
 	var activityIndicatorView = Titanium.UI.createView({
 		backgroundColor : '#FFFFFF',
@@ -259,7 +262,8 @@ function KnPStore(userinfo) {
                         tabledata.push(rowView);
 
                     }
-                    var tableview = Ti.UI.createTableView({
+                    var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
                         data : tabledata,
                         width : '100%',
                         height : '72.3%',
@@ -283,7 +287,7 @@ function KnPStore(userinfo) {
     });
 
 
-    var spell_button = Ti.UI.createButton({
+    var spell_button = Ti.UI.createButton({ color: '#761f56',
         backgroundImage : '/assets/button_smallLong_UP.png',
         font : {
             fontSize : '9dip'
@@ -296,7 +300,7 @@ function KnPStore(userinfo) {
     });
   //  view.add(spell_button);
 
-    var armor_button = Ti.UI.createButton({
+    var armor_button = Ti.UI.createButton({ color: '#761f56',
         backgroundImage : '/assets/button_smallLong_UP.png',
         font : {
             fontSize : '9dip'
@@ -309,7 +313,7 @@ function KnPStore(userinfo) {
     });
 //    view.add(armor_button);
 
-    var supplies_button = Ti.UI.createButton({
+    var supplies_button = Ti.UI.createButton({ color: '#761f56',
         backgroundImage : '/assets/button_smallLong_UP.png',
         font : {
             fontSize : '9dip'
@@ -322,7 +326,7 @@ function KnPStore(userinfo) {
     });
 //    view.add(supplies_button);
 
-    var gifts_button = Ti.UI.createButton({
+    var gifts_button = Ti.UI.createButton({ color: '#761f56',
         backgroundImage : '/assets/button_smallLong_UP.png',
         font : {
             fontSize : '9dip'
@@ -347,7 +351,7 @@ function KnPStore(userinfo) {
     });
  //   view.add(sort_label);
 
-    var getmore_button = Ti.UI.createButton({
+    var getmore_button = Ti.UI.createButton({ color: '#761f56',
         backgroundColor : '#9c5b00',
         color : '#dcbf21',
         title : 'Get More Gold',
@@ -361,6 +365,11 @@ function KnPStore(userinfo) {
     });
     view.add(getmore_button);
     getmore_button.addEventListener('click', function(e) {
+		var GoldPurchase = require('ui/common/MenuScreen/GoldPurchase');
+		var goldpurchase = new GoldPurchase(userinfo);
+		goldpurchase.open();
+    	return;
+    	
         var ConfirmationAlert = Titanium.UI.createAlertDialog({
             title : 'Click \'Yes\' to Purchase Gold.',
             message : 'Are you Sure?',
@@ -370,7 +379,6 @@ function KnPStore(userinfo) {
         ConfirmationAlert.show();
         ConfirmationAlert.addEventListener('click', function(e) {
             Titanium.API.info('e = ' + JSON.stringify(e));
-
             //Clicked cancel, first check is for iphone, second for android
             if (e.cancel === e.index || e.cancel === true) {
                 return;

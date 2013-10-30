@@ -236,7 +236,7 @@ function SceneryCustomization(userinfo) {
 
 	});
 	//view.add(decoration_label);
-	var leftarrow_decoration = Titanium.UI.createButton({
+	var leftarrow_decoration = Titanium.UI.createButton({color: '#761f56',
 		top : "15%",
 		backgroundImage : "/assets/iconControlArrowRight.png",
 		height : "6%",
@@ -244,7 +244,7 @@ function SceneryCustomization(userinfo) {
 		width : "8%"
 	});
 	//view.add(leftarrow_decoration);
-	var rightarrow_decoration = Titanium.UI.createButton({
+	var rightarrow_decoration = Titanium.UI.createButton({color: '#761f56',
 		top : "15%",
 		backgroundImage : "/assets/iconControlArrowLeft.png",
 		height : "6%",
@@ -262,7 +262,7 @@ function SceneryCustomization(userinfo) {
 
 	});
 	//view.add(style_label);
-	var leftarrow_style = Titanium.UI.createButton({
+	var leftarrow_style = Titanium.UI.createButton({color: '#761f56',
 		top : "32%",
 		backgroundImage : "/assets/iconControlArrowRight.png",
 		height : "6%",
@@ -270,7 +270,7 @@ function SceneryCustomization(userinfo) {
 		width : "8%"
 	});
 	//view.add(leftarrow_style);
-	var rightarrow_style = Titanium.UI.createButton({
+	var rightarrow_style = Titanium.UI.createButton({color: '#761f56',
 		top : "32%",
 		backgroundImage : "/assets/iconControlArrowLeft.png",
 		height : "6%",
@@ -288,7 +288,7 @@ function SceneryCustomization(userinfo) {
 
 	});
 	//view.add(Color_label);
-	var leftarrow_color = Titanium.UI.createButton({
+	var leftarrow_color = Titanium.UI.createButton({color: '#761f56',
 		top : "50%",
 		backgroundImage : "/assets/iconControlArrowRight.png",
 		height : "6%",
@@ -296,7 +296,7 @@ function SceneryCustomization(userinfo) {
 		width : "8%"
 	});
 	//view.add(leftarrow_color);
-	var rightarrow_color = Titanium.UI.createButton({
+	var rightarrow_color = Titanium.UI.createButton({color: '#761f56',
 		top : "50%",
 		backgroundImage : "/assets/iconControlArrowLeft.png",
 		height : "6%",

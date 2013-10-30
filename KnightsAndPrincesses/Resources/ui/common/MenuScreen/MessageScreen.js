@@ -247,7 +247,8 @@ function MessageScreen(userinfo, friend_uid, friend_gender, friend_name, friendi
 		
 						}
 		
-						tableview = Ti.UI.createTableView({
+						tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 							top : '5.5%',
 							height : '80%',
 							width : '100%',

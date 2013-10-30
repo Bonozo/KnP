@@ -247,7 +247,8 @@ function GiftNotifications(userinfo) {
 					tabledata.push(rowView);
 				}//end of for loop
 
-				tableview = Ti.UI.createTableView({
+				tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 					data : tabledata,
 					width : '100%',
 					height : '90%',

@@ -75,7 +75,7 @@ function CookingMainGame(userinfo,recipe_id){
 				}
 				
 				// Create a Button.
-				var bake_button = Ti.UI.createButton({
+				var bake_button = Ti.UI.createButton({ color: '#761f56',
 			        title : 'Bake',
 			        bottom : '12%',
 			        right : '10%',

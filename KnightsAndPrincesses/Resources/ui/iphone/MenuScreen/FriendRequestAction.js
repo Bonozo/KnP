@@ -425,7 +425,8 @@ function FriendRequestAction(userinfo, friendJson) {
                     counter++;
                 }
 
-                var tableview = Ti.UI.createTableView({
+                var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
                     separatorColor : 'transparent',
                     backgroundColor : 'transparent',
                     data : tabledata,
@@ -467,7 +468,7 @@ function FriendRequestAction(userinfo, friendJson) {
     view.add(namescroll);
     view.add(name_text);
 
-    var accept_req = Ti.UI.createButton({
+    var accept_req = Ti.UI.createButton({ color: '#761f56',
         backgroundGradient : {
             type : 'linear',
             colors : [' #A42B76', '#E39bc8'],
@@ -532,7 +533,7 @@ function FriendRequestAction(userinfo, friendJson) {
         });
     });
 
-    var assign_quest = Ti.UI.createButton({
+    var assign_quest = Ti.UI.createButton({ color: '#761f56',
         backgroundGradient : {
             type : 'linear',
             colors : [' #A42B76', '#E39bc8'],
@@ -627,7 +628,7 @@ function FriendRequestAction(userinfo, friendJson) {
 
     });
 
-    var decline_req = Ti.UI.createButton({
+    var decline_req = Ti.UI.createButton({ color: '#761f56',
         backgroundGradient : {
             type : 'linear',
             colors : [' #A42B76', '#E39bc8'],

@@ -194,7 +194,8 @@ function crafting(userinfojson) {
 					tabledata.push(rowView);
 				}//end of for loop
 
-				var tableview = Ti.UI.createTableView({
+				var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 					data : tabledata,
 					width : '100%',
 					height : '70.3%',

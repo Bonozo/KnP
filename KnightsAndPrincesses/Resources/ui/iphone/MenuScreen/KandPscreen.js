@@ -239,7 +239,8 @@ function kandp(userinfo) {
                         tabledata.push(rowView);
 
                     }
-                    var tableview = Ti.UI.createTableView({
+                    var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
                     	//separatorColor: 'transparent',
                     	//separatorStyle : 'transparent',// backgroundColor: '#FFFFFF' ,
                         data : tabledata,
@@ -282,7 +283,7 @@ function kandp(userinfo) {
      view.add(down_imageview);
      */
 
-    var spell_button = Ti.UI.createButton({
+    var spell_button = Ti.UI.createButton({ color: '#761f56',
         backgroundImage : '/assets/button_smallLong_UP.png',
         font : {
             fontSize : '12'
@@ -295,7 +296,7 @@ function kandp(userinfo) {
     });
     //view.add(spell_button);
 
-    var armor_button = Ti.UI.createButton({
+    var armor_button = Ti.UI.createButton({ color: '#761f56',
         backgroundImage : '/assets/button_smallLong_UP.png',
         font : {
             fontSize : '12'
@@ -308,7 +309,7 @@ function kandp(userinfo) {
     });
    // view.add(armor_button);
 
-    var supplies_button = Ti.UI.createButton({
+    var supplies_button = Ti.UI.createButton({ color: '#761f56',
         backgroundImage : '/assets/button_smallLong_UP.png',
         font : {
             fontSize : '12'
@@ -321,7 +322,7 @@ function kandp(userinfo) {
     });
    // view.add(supplies_button);
 
-    var gifts_button = Ti.UI.createButton({
+    var gifts_button = Ti.UI.createButton({ color: '#761f56',
         backgroundImage : '/assets/button_smallLong_UP.png',
         font : {
             fontSize : '12'
@@ -346,7 +347,7 @@ function kandp(userinfo) {
     });
   //  view.add(sort_label);
 
-    var getmore_button = Ti.UI.createButton({
+    var getmore_button = Ti.UI.createButton({ color: '#761f56',
         backgroundImage : '/assets/button_smallLong_UP.png',
         
         title : 'Get More Gold',

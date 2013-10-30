@@ -1,11 +1,11 @@
-function AvatarByFriends(userinfo, callback) {
+function AvatarByFriends(userinfo, tabledata, rowView, callback) {
 	var gender = '';
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var items_json = "";
 	var items_length = 0;
 	var tableview = "";
-	var rowView = [];
-	var tabledata = [];
+	// var rowView = [];
+	//var tabledata = [];
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var screenHeight = Titanium.Platform.displayCaps.platformHeight;
 	var main_view = Ti.UI.createView();
@@ -66,7 +66,7 @@ function AvatarByFriends(userinfo, callback) {
 					rowView[i] = Ti.UI.createTableViewRow({
 						height : rowViewHeight,
 						uid : items_json.Record[i].UID,
-						className : 'Friendlist',
+						className : 'FriendFriendlist',
 						genes : items_json.Record[i].GENDER,
 						index : i,
 						backgroundImage : bg_image,
@@ -173,7 +173,8 @@ function AvatarByFriends(userinfo, callback) {
 					tabledata.push(rowView[i]);
 				}//end of for loop
 
-				tableview = Ti.UI.createTableView({
+				tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 					zIndex : 300,
 					data : tabledata,
 					width : '100%',

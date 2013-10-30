@@ -150,7 +150,8 @@ function AvatarByFriends(userinfo, callback) {
 					tabledata.push(rowView);
 				}//end of for loop
 
-				tableview = Ti.UI.createTableView({
+				tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 					separatorColor : 'transparent',
                         backgroundColor : 'transparent',
 					data : tabledata,

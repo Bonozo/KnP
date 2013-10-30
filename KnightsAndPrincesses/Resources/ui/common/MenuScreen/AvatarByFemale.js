@@ -1,16 +1,17 @@
-function AvatarByFemale(userinfo, callback) {
+function AvatarByFemale(userinfo, tabledata, rowView, callback) {
 	var gender = '';
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var items_json = "";
 	var items_length = 0;
-	var tableview = Ti.UI.createTableView({
+	var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
+		
 					width : '100%',
 					height : '66%',
 					top : '2%'
 				});
-	//var AvatarThumbnail = require('/ui/common/drawings/AvatarThumbnail');
-	var rowView = [];
-	var tabledata = [];
+	var AvatarThumbnail = require('/ui/common/drawings/AvatarThumbnail');
+	// var rowView = [];
+	//var tabledata = [];
 	var avatar_images = [];
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
@@ -30,7 +31,7 @@ function AvatarByFemale(userinfo, callback) {
 					rowView[i] = Ti.UI.createTableViewRow({
 						height : rowViewHeight,
 						uid : items_json.Record[i].UID,
-						className : 'Friendlist',
+						className : 'FemaleFriendlist',
 						genes : items_json.Record[i].GENDER,
 						index : i,
 						backgroundImage : bg_image,
@@ -52,15 +53,15 @@ function AvatarByFemale(userinfo, callback) {
 						var freindinfo = new FreindInfo(userinfo, items_json.Record[e.row.index]);
 						freindinfo.open();
 					});
-					// AvatarThumbnail({
-						// width : '12%',
-						// height : '85.5%',
-						// top : '4.8px',
-						// right : '3%'
-					// }, items_json.Record[i].USER_APPEARANCE, items_json.Record[i].GENDER, i, function(avatar_imageview,index) {
-						// avatar_images[index] = avatar_imageview;
-						// rowView[index].add(avatar_images[index]);
-					// });
+					AvatarThumbnail({
+						width : '12%',
+						height : '85.5%',
+						top : '4.8px',
+						right : '3%'
+					}, items_json.Record[i].USER_APPEARANCE, items_json.Record[i].GENDER, i, function(avatar_imageview,index) {
+						avatar_images[index] = avatar_imageview;
+						rowView[index].add(avatar_images[index]);
+					});
 
 					var row_imageview = Titanium.UI.createImageView({
 						image : '/assets/' + avatar_image + '.png',
