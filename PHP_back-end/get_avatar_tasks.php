@@ -26,7 +26,7 @@ if(isset($_GET))
 
 		
 		$sql = "
-			SELECT TM.TASK_ID, TM.NAME, TM.DESCRIPTION, TD.ID AS 'TASK_DETAIL_ID', TD.TASK
+			SELECT TM.TASK_ID, TM.NAME, TM.DESCRIPTION, TD.ID AS 'TASK_DETAIL_ID', TD.TASK, TD.SCREEN, TD.SCREEN_TYPE, TD.ICON_SHADE_LEFT
 			FROM `TASK_MAIN` TM, `TASK_DETAILS` TD
 			WHERE TM.TASK_ID = TD.TASK_ID
 			AND TM.TASK_ID = :task_id
@@ -53,6 +53,9 @@ if(isset($_GET))
 			
 			$details[$counter]['ID'] = $post['TASK_ID'];
 			$details[$counter]['TASK'] = $post['TASK'];
+			$details[$counter]['SCREEN'] = $post['SCREEN'];
+			$details[$counter]['SCREEN_TYPE'] = $post['SCREEN_TYPE'];
+			$details[$counter]['ICON_SHADE_LEFT'] = $post['ICON_SHADE_LEFT'];
 			$details[$counter]['TASK_DETAIL_ID'] = $post['TASK_DETAIL_ID'];
 			$counter++;
 		}
