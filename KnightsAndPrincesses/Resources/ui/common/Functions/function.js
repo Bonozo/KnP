@@ -9,7 +9,8 @@ exports.requestServer = function requestServer(e) {
 	httpClient.onerror = function(e) {
 		Ti.API.info('Error Response: ' + this.responseText);
 		// e.error;
-		alert(e.error);
+		// alert(e.error);
+		//(e.error + "\n" + e.url);
 		//progress.hide();
 	};
 	httpClient.open(e.method, e.url);
@@ -24,6 +25,9 @@ exports.requestServer = function requestServer(e) {
 			httpClient.send();
 
 	} else {
-		alert('No Network.')
+		if(!Ti.App.Properties.getBool('internet_error')){
+			alert('No Network.');
+		}
+		Ti.App.Properties.setBool('internet_error', true);
 	}
 }

@@ -86,7 +86,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		y : 0,
 		z : 4
 	});
-	scene.add(scoreboard_bg_imageview);
 
 	var shot_number_label = Ti.UI.createLabel({
 		text : 'Shot # 0',
@@ -444,6 +443,9 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	});
 	// Onload event is called when the game is loaded.
 	game.addEventListener('onload', function(e) {
+		winWidth = game.screen.width;// Ti.Platform.displayCaps.platformWidth;
+		winHeight = game.screen.height;// Ti.Platform.displayCaps.platformHeight;
+		//alert("game size equals " + game.screen.width + "x" + game.screen.height);
 		// We should calculate the view scale because game.size.width and height may be changed due to the parent layout.
 		TOUCH_SCALE = game.screen.width / game.size.width;
 		// Enable MultiTouch support
@@ -451,6 +453,9 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		//actInd.hide();
 		game.start();
 		
+		scoreboard_bg_imageview.height = getPixelFromPercent('y', 5);
+		scoreboard_bg_imageview.width = getPixelFromPercent('x', 100);
+		scene.add(scoreboard_bg_imageview);
 
 		lance_green.hide();
 		scene.add(lance_green);
@@ -459,7 +464,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		sky_image.y = 0;
 		sky_image.scaleFromCenter(ScaleSpriteFromPercentage(winHeight, 200, 55), ScaleSpriteFromPercentage(winHeight, 200, 55), 0, 0);
 		scene.add(sky_image);
-		
 		var knight_image_respective_height = getPixelFromPercent('y', 20);
 		var knight_image_respective_width = (knight_image_respective_height * 0.765625);
 		
@@ -471,6 +475,8 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		
 		balance_bar.x = getPixelFromPercent('x', 90) - getPixelFromPercent('x', 35);
 		balance_bar.y = getPixelFromPercent('y', 90) - getPixelFromPercent('x', 35);
+		balance_bar.width = getPixelFromPercent('x', 35);
+		balance_bar.height = getPixelFromPercent('x', 35);
 		scene.add(balance_bar);
 		horizontal_bar_points_region = {
 			x_left : balance_bar.x + (25 * balance_bar.width * balance_bar.scaleX / 100),
@@ -483,25 +489,37 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 			y_height : (balance_bar.y + (75 * balance_bar.height * balance_bar.scaleY / 100)) - (balance_bar.y + (25 * balance_bar.height * balance_bar.scaleY / 100))
 		};
 		
+		bar_button_down.width = getPixelFromPercent('x', 10);
+		bar_button_down.height = getPixelFromPercent('x', 10);
 		bar_button_down.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_down.width / 2);
 		bar_button_down.y = balance_bar.y + balance_bar.height - (bar_button_down.height / 2);
 		scene.add(bar_button_down);
 		
+		bar_button_up.width = getPixelFromPercent('x', 10);
+		bar_button_up.height = getPixelFromPercent('x',10);
 		bar_button_up.x = balance_bar.x + (balance_bar.width / 2) - (bar_button_up.width / 2);
 		bar_button_up.y = balance_bar.y - (bar_button_down.height / 2);
 		scene.add(bar_button_up);
 		
+		bar_button_left.width = getPixelFromPercent('x', 10);
+		bar_button_left.height = getPixelFromPercent('x', 10);
 		bar_button_left.x = balance_bar.x - (bar_button_left.width / 2);
 		bar_button_left.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_left.height / 2);
 		scene.add(bar_button_left);
 		
+		bar_button_right.width = getPixelFromPercent('x', 10);
+		bar_button_right.height = getPixelFromPercent('x',10);
 		bar_button_right.x = balance_bar.x + balance_bar.width - (bar_button_right.width / 2);
 		bar_button_right.y = balance_bar.y + (balance_bar.height / 2) - (bar_button_right.height / 2);
 		scene.add(bar_button_right);
 		
+		vertical_bar.width = getPixelFromPercent('x', 5);
+		vertical_bar.height = getPixelFromPercent('x', 5);
 		vertical_bar.x = balance_bar.x + (balance_bar.width / 2) - (vertical_bar.width / 2);
 		vertical_bar.y = balance_bar.y;
 		
+		horizontal_bar.width = getPixelFromPercent('x', 5);
+		horizontal_bar.height = getPixelFromPercent('x', 5);
 		horizontal_bar.x = balance_bar.x;
 		horizontal_bar.y = balance_bar.y + (balance_bar.height / 2) - (horizontal_bar.height / 2);
 
@@ -511,10 +529,14 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		move_sliders_randomly();
 		
 		rails_image.animate([0, 1, 2, 3], 100, -1, 0);
+
+		bg_image.x = getPixelFromPercent('x', 0);
+		bg_image.y = getPixelFromPercent('y', 55);
 		bg_image.animate([0, 1, 2, 3], 100, -1, 0);
-		
 		bg_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 400, 100), ScaleSpriteFromPercentage(winHeight, 197, 45), 0, 0);
 		scene.add(bg_image);
+		
+		rail_highlight_image.y = getPixelFromPercent('y', 52);
 		rail_highlight_image.alpha = 0.5;
 		rail_highlight_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
 		scene.add(rail_highlight_image);
@@ -528,6 +550,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		lance_green.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 298, 64),ScaleSpriteFromPercentage(winHeight, 534, 64), 0, 0);
 		lance_green.show();
 		
+		rails_image.y = getPixelFromPercent('y', 52);
 		rails_image.scaleFromCenter(ScaleSpriteFromPercentage(winWidth, 200, 50), ScaleSpriteFromPercentage(winHeight, 187, 48), 0, 0);
 		scene.add(rails_image);
 		
@@ -842,7 +865,22 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 			// whoosh_sound.play();
 		// lance_green.x = e.x;
 		// lance_green.y = e.y;
+
+		var _gameWidth = game.screen.width;
+		var _gameHeight = game.screen.height;
+		var _winWidth = Titanium.Platform.displayCaps.platformWidth;
+		var _winHeight = Titanium.Platform.displayCaps.platformHeight;
 		
+		if(_gameWidth > _winWidth){
+			e.x = (_gameWidth / _winWidth) * e.x; 
+			e.y = (_gameHeight / _winHeight) * e.y; 
+		}
+		else{
+			e.x = (_winWidth / _gameWidth) * e.x; 
+			e.y = (_winHeight / _gameHeight) * e.y; 
+		}
+		
+
 		tapped = false;
 		var coordinates = {
 			x : e.x, 
@@ -873,7 +911,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 			width : bar_button_right.width,
 			height : bar_button_right.height
 		};
-
 		if(isCollide(coordinates,bar_up_botton)){
 			bar_up_botton_tapped = true;
 			bar_button_up.x += 5;

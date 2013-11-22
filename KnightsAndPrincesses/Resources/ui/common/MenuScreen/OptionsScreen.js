@@ -772,6 +772,38 @@ function OptionsScreen(userinfo) {
 		});
 
 	});
+	var Logout_button = Titanium.UI.createButton({color: '#761f56',
+		top : "67%",
+		height : "9%",
+		title : "LOG OUT",
+		width : "60%",
+		/*        borderColor : "#a42b76",
+		 borderRadius : 6,
+		 borderWidth : 3,
+		 backgroundGradient : {
+		 type : 'linear',
+		 colors : [' #e49cc9', '#a52b76'],
+		 startPoint : {
+		 x : '50%',
+		 y : '100%'
+		 },
+		 endPoint : {
+		 x : '50%',
+		 y : '0%'
+		 },
+		 backFillStart : false
+		 }
+		 */
+		backgroundImage : '/assets/button_smallLong_UP.png',
+	});
+	view.add(Logout_button);
+	Logout_button.addEventListener('click',function(){
+		Ti.App.Properties.setBool('signed_in',false);
+		Ti.App.fireEvent('close_window');
+		var LoginScreen = require('ui/handheld/android/LoginWindow');
+		var LoginScreen = new LoginScreen();
+		LoginScreen.open();
+	});
 	////ui for option screen
 	/*
 	//module for bottom bar

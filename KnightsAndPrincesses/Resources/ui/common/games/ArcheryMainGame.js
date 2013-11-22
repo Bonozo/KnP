@@ -1,5 +1,6 @@
 function ArcheryMainGame(quest_status, quest_id, userinfo) {
-	var sound_settings = (Ti.App.Properties.getString('knp_sound') == undefined || Ti.App.Properties.getString('knp_sound') == '' || Ti.App.Properties.getString('knp_sound') == null)?'ON':Ti.App.Properties.getString('knp_sound');
+	var osname = Ti.Platform.osname;
+	var sound_settings = (Ti.App.Properties.getString('knp_sound') == undefined || Ti.App.Properties.getString('knp_sound') == '' || Ti.App.Properties.getString('knp_sound') == null) ? 'ON' : Ti.App.Properties.getString('knp_sound');
 	function getPixelFromPercent(axis, percent) {
 		if (axis == 'x') {
 			return winWidth * percent / 100;
@@ -20,6 +21,7 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 	function getRespectiveWidth(height, ratio) {
 		return height / ratio;
 	}
+
 	var window = Ti.UI.createWindow({
 		orientation : Ti.UI.PORTRAIT,
 		navBarHidden : true,
@@ -48,7 +50,7 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 	var game_play = true;
 	var bird_chirps_first_run = true;
 	var background_music_loop = function() {
-		if(sound_settings == 'OFF')
+		if (sound_settings == 'OFF')
 			return;
 		if (!bird_chirps_first_run)
 			setTimeout(function() {
@@ -98,8 +100,10 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 	var shapes = new Array();
 
 	var scene = quicktigame2d.createScene();
-	var winWidth = Ti.Platform.displayCaps.platformWidth;
-	var winHeight = Ti.Platform.displayCaps.platformHeight;
+	var winWidth;
+	// = Ti.Platform.displayCaps.platformWidth;
+	var winHeight;
+	// = Ti.Platform.displayCaps.platformHeight;
 	game.pushScene(scene);
 
 	var TOUCH_SCALE = 1;
@@ -154,16 +158,15 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 		zIndex : 990
 	});
 	window.add(rating_image);
-	
-	// var rating_image = quicktigame2d.createSpriteSheet({
-		// image : 'assets/games/5_star_ratings.png',
-		// width : 256,
-		// height : 55,
-		// x : getPixelFromPercent('x', 40) - (256/2),// - knight_image_respective_width, //39),
-		// y : getPixelFromPercent('y', 50) - (55/2),// - knight_image_respective_height,
-		// z : 9
-	// });
 
+	// var rating_image = quicktigame2d.createSpriteSheet({
+	// image : 'assets/games/5_star_ratings.png',
+	// width : 256,
+	// height : 55,
+	// x : getPixelFromPercent('x', 40) - (256/2),// - knight_image_respective_width, //39),
+	// y : getPixelFromPercent('y', 50) - (55/2),// - knight_image_respective_height,
+	// z : 9
+	// });
 
 	var points_label = Ti.UI.createLabel({
 		text : 'Total points : 0',
@@ -210,24 +213,73 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 		//ambient_bird_chirps_sound.play();
 	});
 	game.addEventListener('onload', function(e) {
-		if(sound_settings == 'ON')
+		if (sound_settings == 'ON')
 			ambient_bird_chirps_sound.play();
+		winWidth = game.screen.width;
+		// Ti.Platform.displayCaps.platformWidth;
+		winHeight = game.screen.height;
+		// Ti.Platform.displayCaps.platformHeight;
 		//background_music_loop();
-
 		TOUCH_SCALE = game.screen.width / game.size.width;
 
 		game.registerForMultiTouch();
-		// initObjects();
-		//
-		// bullsEyeImageView.transform(transform_bulseye);
-		//
-		// backgroundView.transform(background_transform);
-		//
-		// initObjects();
-		// scene.add(backgroundView);
-		//
-		/* Start the game */
 		game.start();
+
+		backgroundView.width = winWidth;
+		backgroundView.height = winHeight;
+
+		bullsEyeWidth = getPixelFromPercent('x', 30);
+		bullsEyeImageView.width = bullsEyeWidth;
+		bullsEyeImageView.height = bullsEyeWidth;
+		bullsEyeImageView.x = getPixelFromPercent('x', 50) - (bullsEyeWidth / 2);
+		bullsEyeImageView.y = getPixelFromPercent('y', 50) - (bullsEyeWidth / 2);
+
+		scoreboard_bg_imageview.height = getPixelFromPercent('y', 5);
+		scoreboard_bg_imageview.width = getPixelFromPercent('x', 100);
+
+		bowImageWidth = getPixelFromPercent('x', 55);
+		bowImageHeight = getRespectiveHeight(bowImageWidth, bowImageRatio);
+		bowImageView.width = bowImageWidth;
+		bowImageView.height = bowImageHeight;
+		bowImageView.x = aim_current_point_x;
+		bowImageView.y = winHeight - ((bowImageHeight * 3 / 4) + aim_current_point_y);
+
+		arrowImageWidth = getPixelFromPercent('x', 20);
+		arrowImageHeight = getRespectiveHeight(arrowImageWidth, arrowImageRatio);
+		arrowImageView.width = arrowImageWidth;
+		arrowImageView.height = arrowImageHeight;
+		arrowImageView.x = getPixelFromPercent('x', 53) - (arrowImageWidth / 2) + aim_current_point_x;
+		arrowImageView.y = winHeight - ((arrowImageHeight * 3 / 4) + aim_current_point_y);
+
+		aiming_current_point_y = arrowImageView.y;
+		aiming_initial_point_y = arrowImageView.y;
+		aiming_final_point_y = arrowImageView.y + 60;
+
+		indicator_y_ImageHeight = getPixelFromPercent('y', 32);
+		indicator_y_ImageWidth = getRespectiveWidth(indicator_y_ImageHeight, indicator_y_ImageRatio);
+		indicator_y_bg.width = indicator_y_ImageWidth;
+		indicator_y_bg.height = indicator_y_ImageHeight;
+		indicator_y_bg.x = (winWidth - getPixelFromPercent('x', 6));
+		indicator_y_bg.y = getPixelFromPercent('y', 15);
+
+		indicator_pointer_ImageWidth = getPixelFromPercent('x', 10);
+		indicator_pointer_ImageHeight = getRespectiveHeight(indicator_pointer_ImageWidth, indicator_pointer_ImageRatio);
+		indicator_y_pointer.width = indicator_pointer_ImageWidth;
+		indicator_y_pointer.height = indicator_pointer_ImageHeight;
+		indicator_y_pointer.x = (winWidth - getPixelFromPercent('x', 10));
+		indicator_y_pointer.y = indicator_y_bg.y + (indicator_y_bg.height / 2) - (indicator_pointer_ImageHeight / 2);
+
+		indicator_x_ImageWidth = getPixelFromPercent('x', 50);
+		indicator_x_ImageHeight = getRespectiveHeight(indicator_x_ImageWidth, indicator_x_ImageRatio);
+		indicator_x_bg.width = indicator_x_ImageWidth;
+		indicator_x_bg.height = indicator_x_ImageHeight;
+		indicator_x_bg.x = getPixelFromPercent('x', 6);
+		indicator_x_bg.y = (winHeight - getPixelFromPercent('y', 6));
+
+		indicator_x_pointer.width = indicator_pointer_ImageWidth;
+		indicator_x_pointer.height = indicator_pointer_ImageHeight;
+		indicator_x_pointer.x = (getPixelFromPercent('x', 6) / 2) + indicator_x_ImageWidth;
+		indicator_x_pointer.y = (winHeight - getPixelFromPercent('y', 6) - (indicator_pointer_ImageHeight / 2));
 
 	});
 	/*
@@ -397,14 +449,28 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 	scene.add(indicator_x_pointer);
 	var indicator_x_pointer_tapped = false;
 	var aiming_tapped = false;
-	var aiming_current_point_y = arrowImageView.y;
-	var aiming_initial_point_y = arrowImageView.y;
-	var aiming_final_point_y = arrowImageView.y + 60;
+	var aiming_current_point_y;// = arrowImageView.y;
+	var aiming_initial_point_y;// = arrowImageView.y;
+	var aiming_final_point_y;// = arrowImageView.y + 60;
 	var aiming_starting_point = {};
 	var shot_fired = false;
 	game.addEventListener('touchstart', function(e) {
 		// someLabel.text = "(" + (winWidth - getPixelFromPercent('y', 4.5)) + ", " + getPixelFromPercent('x', 10) + "): " + indicator_pointer_ImageWidth + "x" + indicator_pointer_ImageHeight;
 		//'touchstart : ' + e.x + ',' + e.y;
+		// Ti.Platform.displayCaps.platformWidth;
+		var _gameWidth = game.screen.width;
+		var _gameHeight = game.screen.height;
+		var _winWidth = Titanium.Platform.displayCaps.platformWidth;
+		var _winHeight = Titanium.Platform.displayCaps.platformHeight;
+
+		if (_gameWidth > _winWidth) {
+			e.x = (_gameWidth / _winWidth) * e.x;
+			e.y = (_gameHeight / _winHeight) * e.y;
+		} else {
+			e.x = (_winWidth / _gameWidth) * e.x;
+			e.y = (_winHeight / _gameHeight) * e.y;
+		}
+
 		if (is_object_clicked(e.x, e.y, indicator_y_pointer)) {
 			indicator_y_pointer_tapped = true;
 		} else if (is_object_clicked(e.x, e.y, indicator_x_pointer)) {
@@ -418,16 +484,30 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 			}
 		}
 
-		Ti.API.info(e.y);
+		//Ti.API.info(e.y);
+		Ti.API.info(arrowImageView.y);
 	});
 	var last_moved_points = {};
 	var arrow_position_points = 0;
 	var aiming_power = 0;
 	game.addEventListener('touchmove', function(e) {
+		var _gameWidth = game.screen.width;
+		var _gameHeight = game.screen.height;
+		var _winWidth = Titanium.Platform.displayCaps.platformWidth;
+		var _winHeight = Titanium.Platform.displayCaps.platformHeight;
+
+		if (_gameWidth > _winWidth) {
+			e.x = (_gameWidth / _winWidth) * e.x;
+			e.y = (_gameHeight / _winHeight) * e.y;
+		} else {
+			e.x = (_winWidth / _gameWidth) * e.x;
+			e.y = (_winHeight / _gameHeight) * e.y;
+		}
 		// someLabel.text = "(" + (winWidth - getPixelFromPercent('y', 4.5)) + ", " + getPixelFromPercent('x', 10) + "): " + indicator_pointer_ImageWidth + "x" + indicator_pointer_ImageHeight;
 		/*
-		 * Indicator pointer 'y'
-		 */
+		* Indicator pointer 'y'
+		*/
+		// Ti.Platform.displayCaps.platformWidth;
 		if (indicator_y_pointer_tapped && e.y >= indicator_y_min_value && e.y <= indicator_y_max_value) {
 			if ((e.y % modulus_value) >= (-movment_tolerence_rate) || (e.y % modulus_value) < movment_tolerence_rate) {
 				if (last_moved_points.y < e.y) {// Sliding down
@@ -451,6 +531,7 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 			aiming_current_point_y = arrowImageView.y;
 			aiming_initial_point_y = arrowImageView.y;
 			aiming_final_point_y = arrowImageView.y + 60;
+			Ti.API.info("first");
 		}
 		/*
 		 * Indicator pointer 'x'
@@ -475,32 +556,49 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 			}
 			someLabel.text = aim_current_point_x + " > " + aim_initial_point_x + " > " + aim_final_point_x;
 			indicator_x_pointer.x = e.x;
+			Ti.API.info("second");
 		} else if (aiming_tapped && last_moved_points.y < e.y) {// Sliding aim down
 			if (aiming_current_point_y < (aiming_final_point_y - 1)) {
-				if(sound_settings == 'ON')
+				if (sound_settings == 'ON')
 					arrow_draw_sound.play();
 				aiming_power++;
 				aiming_current_point_y++;
 			}
 			arrowImageView.y = aiming_current_point_y;
 			someLabel.text = aiming_current_point_y + " :: " + aiming_initial_point_y + " :: " + aiming_final_point_y;
+			Ti.API.info("third");
 		} else if (aiming_tapped && last_moved_points.y > e.y) {// Sliding aim up
 			if (aiming_current_point_y > (aiming_initial_point_y + 1)) {
-				if(sound_settings == 'ON')
+				if (sound_settings == 'ON')
 					arrow_draw_sound.play();
 				aiming_current_point_y--;
 				aiming_power--;
 			}
 			arrowImageView.y = aiming_current_point_y;
 			someLabel.text = aiming_current_point_y + " :: " + aiming_initial_point_y + " :: " + aiming_final_point_y;
+			Ti.API.info("fourth");
 		} else {
+			Ti.API.info("fifth");
 			// aiming_tapped = false;
 		}
 		someLabel.text = bullsEyeImageView.collidesWith(arrowImageView);
 		last_moved_points.x = e.x;
 		last_moved_points.y = e.y;
+		//Ti.API.info(arrowImageView.y);
 	});
 	game.addEventListener('touchend', function(e) {
+		var _gameWidth = game.screen.width;
+		var _gameHeight = game.screen.height;
+		var _winWidth = Titanium.Platform.displayCaps.platformWidth;
+		var _winHeight = Titanium.Platform.displayCaps.platformHeight;
+
+		if (_gameWidth > _winWidth) {
+			e.x = (_gameWidth / _winWidth) * e.x;
+			e.y = (_gameHeight / _winHeight) * e.y;
+		} else {
+			e.x = (_winWidth / _gameWidth) * e.x;
+			e.y = (_winHeight / _gameHeight) * e.y;
+		}
 		// someLabel.text = "(" + (winWidth - getPixelFromPercent('y', 4.5)) + ", " + getPixelFromPercent('x', 10) + "): " + indicator_pointer_ImageWidth + "x" + indicator_pointer_ImageHeight;
 		if (indicator_y_pointer_tapped) {
 			indicator_y_pointer_tapped = false;
@@ -528,10 +626,10 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 			transformation.z = 4;
 			arrowImageView.transform(transformation);
 			someLabel.text = ((winHeight - aiming_current_point_y) * 7 / 5) + (getPixelFromPercent('x', 40));
-			if(sound_settings == 'ON')
+			if (sound_settings == 'ON')
 				arrow_fly_sound.play();
 			setTimeout(function() {
-				if(!game_play)
+				if (!game_play)
 					return;
 				total_number_of_shots++;
 				arrow_fly_sound.stop();
@@ -597,7 +695,7 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 						}
 					}
 				}
-				if(sound_settings == 'ON'){
+				if (sound_settings == 'ON') {
 					if (hit)
 						arrow_hit_sound.play();
 					else
@@ -609,14 +707,14 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 					var p2 = Math.ceil(5 * (p1 / 100));
 
 					set_quest_complete(p2 * 50, function(quest_name, rewards) {
-						if(p2 > 3)
+						if (p2 > 3)
 							trumpet_win_sound.play();
 						else
 							trumpet_lose_sound.play();
 
 						alertView.visible = true;
-//						alert("Star ranking : " + p2 + " out of 5.");
-						switch(p2){
+						//						alert("Star ranking : " + p2 + " out of 5.");
+						switch(p2) {
 							case 0:
 								rating_image.image = '/assets/games/ratings/5_star_ratings_1.png';
 								break;
@@ -649,29 +747,29 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 					return;
 				}
 				setTimeout(function() {
-					if(!game_play)
+					if (!game_play)
 						return;
 					alertView.visible = true;
 					message.text = (points_earned != 0) ? ("You have earned " + points_earned + " more points!\nGet ready for the next shot.") : "You earned no point.\nGet ready for the next shot.";
 					message.visible = true;
 					// pointsDialog.show();
 					setTimeout(function(e) {
-						if(!game_play)
+						if (!game_play)
 							return;
 						alertView.visible = false;
 						message.visible = false;
 						points_label.text = "Total points : " + total_points_earned;
 						shot_number_label.text = "Shot # " + total_number_of_shots;
-	
+
 						arrow_position_points = 0;
 						aiming_power = 0;
 						points_earned = 0;
 						someLabel.text = bullsEyeImageView.collidesWith(arrowImageView);
 						aim_initial_point_y = 0, aim_final_point_y = 40, aim_current_point_y = 20;
 						aim_initial_point_x = -40, aim_final_point_x = 0, aim_current_point_x = -20;
-	
+
 						aiming_current_point_y = aiming_initial_point_y;
-	
+
 						bowImageView.y = winHeight - ((bowImageHeight * 3 / 4) + aim_current_point_y);
 						bowImageView.x = aim_current_point_x;
 						arrowImageView.z = 6;
@@ -679,7 +777,7 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 						//winHeight - (bowImageHeight + aim_current_point_y);
 						arrowImageView.x = getPixelFromPercent('x', 53) - (arrowImageWidth / 2) + aim_current_point_x;
 						arrowImageView.y = winHeight - ((arrowImageHeight * 3 / 4) + aim_current_point_y);
-	
+
 						aiming_current_point_y = arrowImageView.y;
 						aiming_initial_point_y = arrowImageView.y;
 						aiming_final_point_y = arrowImageView.y + 60;
@@ -694,7 +792,8 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 			// aiming_current_point_y = aiming_initial_point_y;
 
 			// Create a Button.
-			var reset = Ti.UI.createButton({ color: '#761f56',
+			var reset = Ti.UI.createButton({
+				color : '#761f56',
 				title : 'Reset',
 				top : getPixelFromPercent('y', 10),
 				zIndex : 900
@@ -731,35 +830,44 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 			//window.add(reset);
 
 		}
+		Ti.API.info(arrowImageView.y);
 	});
 	var gameloop_timeline = 0;
+	window.addEventListener("close", function() {
+		game_play = false;
+		ambient_bird_chirps_sound.stop();
+	});
+
 	window.addEventListener("open", function() {
 		// rating_image.hide();
 		// scene.add(rating_image);
 
-		var activity = window.activity;
-		activity.addEventListener('resume', function(e) {
-			// updateTimerID = setInterval(function() {
-			// if ((gameloop_timeline % 41000) == 0)
-			// ambient_bird_chirps_sound.play();
-			// }, 1000);
-		});
-		activity.addEventListener('pause', function(e) {
-			game_play = false;
-			ambient_bird_chirps_sound.stop();
-		});
-		activity.addEventListener('destroy', function(e) {
-			game_play = false;
-			ambient_bird_chirps_sound.stop();
-		});
+		if (osname === 'android') {
+			var activity = window.activity;
+			activity.addEventListener('resume', function(e) {
+				// updateTimerID = setInterval(function() {
+				// if ((gameloop_timeline % 41000) == 0)
+				// ambient_bird_chirps_sound.play();
+				// }, 1000);
+			});
+			activity.addEventListener('pause', function(e) {
+				game_play = false;
+				ambient_bird_chirps_sound.stop();
+			});
+			activity.addEventListener('destroy', function(e) {
+				game_play = false;
+				ambient_bird_chirps_sound.stop();
+			});
+		}
 	});
 	//var aiming_tolerence_rate = 65;
 
 	function is_hit_circle(x, y, a, b, r, aiming_tolerence_rate) {
+		Ti.API.info(x + ", " + y + ", " + a + ", " + b + ", " + r + ", " + aiming_tolerence_rate);
 		var left_side = Math.pow((x - a), 2) + Math.pow((y - b), 2);
 		var right_side = Math.pow(r, 2);
-		Ti.API.info(x + ", " + y + ", " + a + ", " + b + ", " + r);
-		Ti.API.info(left_side + ", " + right_side);
+		//Ti.API.info(x + ", " + y + ", " + a + ", " + b + ", " + r);
+		//Ti.API.info(left_side + ", " + right_side);
 		return (left_side == right_side || (left_side >= right_side && left_side <= (right_side + aiming_tolerence_rate)
 		) || (left_side < right_side && left_side >= (right_side - aiming_tolerence_rate)
 		)
@@ -776,7 +884,7 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 	var alertView = Ti.UI.createImageView({
 		image : '/assets/games/scroll.png',
 		width : getPixelFromPercent('x', '85'),
-		height :getRespectiveHeight(getPixelFromPercent('x', '85'),1.3),
+		height : getRespectiveHeight(getPixelFromPercent('x', '85'), 1.3),
 		zIndex : 890,
 		visible : false
 	});
@@ -796,7 +904,7 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 		zIndex : 900
 	});
 	window.add(message);
-	
+
 	window.add(game);
 
 	window.open({

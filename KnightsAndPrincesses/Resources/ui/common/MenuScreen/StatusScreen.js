@@ -1,4 +1,15 @@
 function StatusScreen(userinfo) {
+	var osname = Ti.Platform.osname;
+
+	var winWidth = Titanium.Platform.displayCaps.platformWidth;
+	var winHeight = Titanium.Platform.displayCaps.platformHeight;
+	function getPixelFromPercent(axis, percent) {
+		if (axis == 'x') {
+			return winWidth * percent / 100;
+		} else if (axis == 'y') {
+			return winHeight * percent / 100;
+		}
+	}
 
 	var view = Ti.UI.createView({
 		width : '100%',
@@ -184,6 +195,20 @@ function StatusScreen(userinfo) {
 		zIndex : 600
 	});
 	view.add(status_textbox);
+	if (osname === 'iphone' || osname === 'ipad') {
+		status_textbox.addEventListener('focus', function() {
+			status_textbox.animate({
+				bottom : getPixelFromPercent('y', 50),
+				duration : 500
+			});
+		});
+		status_textbox.addEventListener('blur', function() {
+			status_textbox.animate({
+				bottom : '19%',
+				duration : 500
+			});
+		});
+	}
 	status_textbox.addEventListener('return',function(){
 		if (status_textbox.value != "") {
 			var set_status_url = "http://bonozo.com:8080/knp/set_status_message.php?uid=" + userinfo.Record[0].UID + "&set_status=" + Ti.Network.encodeURIComponent(status_textbox.value);
@@ -193,6 +218,8 @@ function StatusScreen(userinfo) {
 					items_json = JSON.parse(this.responseText);
 					if (items_json.Record != undefined) {
 						//alert(items_json.Record.Message);
+						userinfo.Record[0].STATUS_MESSAGE = status_textbox.value;
+						Ti.App.fireEvent('update_xp',userinfo);
 					}
 				},
 				method : 'GET',

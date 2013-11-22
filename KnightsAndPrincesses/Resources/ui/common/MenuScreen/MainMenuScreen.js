@@ -26,7 +26,9 @@ function MainMenuScreen(userinfojson) {
 		backgroundImage : '/assets/inventoryBackground.png'
 	});
 	main_window.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
-
+	Ti.App.addEventListener('close_window',function(){
+		main_window.close();
+	});
 	var images_counter = 0;
 	function hideLoader() {
 		images_counter++;
@@ -46,20 +48,20 @@ function MainMenuScreen(userinfojson) {
 			var service;
 			Ti.App.Properties.setString('service_enabled', true);
 			service = Ti.App.iOS.registerBackgroundService({
-				url : 'services/notificationservice.js'
+				url : 'notificationservice.js'
 			});
 			Ti.API.info("registered background service = " + service);
 
-			// Ti.App.iOS.addEventListener('notification',function(e){
-			// You can use this event to pick up the info of the noticiation.
-			// Also to collect the 'userInfo' property data if any was set
-			// Ti.API.info("local notification received: "+JSON.stringify(e));
-			// });
+			Ti.App.iOS.addEventListener('notification', function(e) {
+				// You can use this event to pick up the info of the noticiation.
+				// Also to collect the 'userInfo' property data if any was set
+				Ti.API.info("local notification received: " + JSON.stringify(e));
+			});
 
 			// fired when an app resumes from suspension
-			// Ti.App.addEventListener('resume', function(e) {
-			// Ti.API.info("app is resuming from the background");
-			// });
+			Ti.App.addEventListener('resume', function(e) {
+				Ti.API.info("app is resuming from the background");
+			});
 			Ti.App.addEventListener('pause', function(e) {
 				Ti.API.info("app has pause from foreground");
 				// this will unregister the service if the user just opened the app
