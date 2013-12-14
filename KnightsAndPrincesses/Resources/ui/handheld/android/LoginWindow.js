@@ -500,28 +500,33 @@ function LoginWindow() {
 		width : "75%",
 		value : Ti.App.Properties.getString('knp_email'), //"robot1@email.com",
 		borderRadius : 0,
-		// backgroundColor : "#FFFFFF",
 		borderColor : "#333333",
 		backgroundColor : '#FFFFFF',
 		keyboardType : Ti.UI.KEYBOARD_EMAIL,
-		// left : "15%",
-		// backgroundColor : '#FFFFFF',
-		// borderColor : "#333333",
 		top : "55%"
 	});
 	win.add(emailField);
 	if (osname === 'iphone' || osname === 'ipad') {
 		emailField.addEventListener('focus', function() {
-			win.animate({
-				bottom : getPixelFromPercent('y', 30),
+			emailField.animate({
+				top : "45%",
 				duration : 500
 			});
+			
+			// win.animate({
+				// bottom : getPixelFromPercent('y', 30),
+				// duration : 500
+			// });
 		});
 		emailField.addEventListener('blur', function() {
-			win.animate({
-				bottom : 0,
+			emailField.animate({
+				top : "55%",
 				duration : 500
 			});
+			// win.animate({
+				// bottom : 0,
+				// duration : 500
+			// });
 		});
 	}
 
@@ -552,17 +557,38 @@ function LoginWindow() {
 	});
 	if (osname === 'iphone' || osname === 'ipad') {
 		passwordField.addEventListener('focus', function() {
-			win.animate({
-				bottom : getPixelFromPercent('y', 30),
+			passwordField.animate({
+				top : "45%",
 				duration : 500
 			});
+			
+			// win.animate({
+				// bottom : getPixelFromPercent('y', 30),
+				// duration : 500
+			// });
 		});
 		passwordField.addEventListener('blur', function() {
-			win.animate({
-				bottom : 0,
+			passwordField.animate({
+				top : "65%",
 				duration : 500
 			});
+			// win.animate({
+				// bottom : 0,
+				// duration : 500
+			// });
 		});
+		// passwordField.addEventListener('focus', function() {
+			// win.animate({
+				// bottom : getPixelFromPercent('y', 30),
+				// duration : 500
+			// });
+		// });
+		// passwordField.addEventListener('blur', function() {
+			// win.animate({
+				// bottom : 0,
+				// duration : 500
+			// });
+		// });
 	}
 	if (osname !== 'android') {
 		passwordField.borderRadius = '5';

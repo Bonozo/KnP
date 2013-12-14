@@ -4,8 +4,8 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	var window = Ti.UI.createWindow({
 		orientation : Ti.UI.PORTRAIT,
 		navBarHidden : true,
-		fullscreen : true
-
+		fullscreen : true,
+		statusBarStyle : Titanium.UI.iPhone.statusBarHidden
 	});
 	window.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 	var play_game = true;
@@ -289,6 +289,13 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 			var p2 = Math.ceil(5 * (p1 / 100));
 
 			set_quest_complete(p2 * 50, function(quest_name, rewards) {
+				if(quest_name == null || rewards == null){
+					alert('Your internet connection is down!');
+					setTimeout(function(){
+						window.close();
+					}, 2000);
+					return;
+				}
 				if(p2 > 3)
 					trumpet_win_sound.play();
 				else
@@ -784,6 +791,10 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		}
 	});
 	function set_quest_complete(num_of_golds, callback) {
+		if(!Ti.Network.online){
+			callback(null, null);
+			return;
+		}
 		_url = "http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
 		httpclientt.requestServer({
 			success : function(e) {

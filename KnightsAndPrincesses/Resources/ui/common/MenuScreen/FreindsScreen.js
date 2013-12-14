@@ -4,8 +4,8 @@ function FreindsScreen(userinfo) {
 	var tabledata = [];
 	var rowView = [];
 	function releaseOldTable(callback){
-		tabledata = [];
-		rowView = [];
+		tabledata.length = 0;// [];
+		rowView.length = 0;//  = [];
 		// Ti.API.info('rowView.length : ' + rowView.length);
 		// for (var i=0; i < rowView.length; i++) {
 		  // var views = rowView[i].getChildren();

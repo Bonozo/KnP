@@ -10,7 +10,7 @@ exports.requestServer = function requestServer(e) {
 		Ti.API.info('Error Response: ' + this.responseText);
 		// e.error;
 		// alert(e.error);
-		//(e.error + "\n" + e.url);
+		(e.error + "\n" + e.url);
 		//progress.hide();
 	};
 	httpClient.open(e.method, e.url);

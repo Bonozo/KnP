@@ -8,8 +8,8 @@ function AvatarThumbnail(thumbnail_properties, userappearance, gender, index, ca
 	avatar_config.gender = gender;
 	avatar_config.thumb = true;
 	avatar_config.main_view = {
-		width : 100, //settings.avatar_thumb_width,
-		height : 100//settings.avatar_thumb_height,
+		width : 100, 	//settings.avatar_thumb_width,
+		height : 100	//settings.avatar_thumb_height,
 	};
 	if (userappearance != '' && gender == 'f') {
 		avatar_config.appearence = {

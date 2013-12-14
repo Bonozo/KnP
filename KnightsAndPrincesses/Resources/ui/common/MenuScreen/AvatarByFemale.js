@@ -3,12 +3,13 @@ function AvatarByFemale(userinfo, tabledata, rowView, callback) {
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var items_json = "";
 	var items_length = 0;
-	var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
-		
-					width : '100%',
-					height : '66%',
-					top : '2%'
-				});
+	var tableview = Ti.UI.createTableView({
+		backgroundColor : 'transparent',
+		separatorColor : 'transparent',
+		width : '100%',
+		height : '66%',
+		top : '2%'
+	});
 	var AvatarThumbnail = require('/ui/common/drawings/AvatarThumbnail');
 	// var rowView = [];
 	//var tabledata = [];
@@ -58,7 +59,7 @@ function AvatarByFemale(userinfo, tabledata, rowView, callback) {
 						height : '85.5%',
 						top : '4.8px',
 						right : '3%'
-					}, items_json.Record[i].USER_APPEARANCE, items_json.Record[i].GENDER, i, function(avatar_imageview,index) {
+					}, items_json.Record[i].USER_APPEARANCE, items_json.Record[i].GENDER, i, function(avatar_imageview, index) {
 						avatar_images[index] = avatar_imageview;
 						rowView[index].add(avatar_images[index]);
 					});
@@ -136,8 +137,9 @@ function AvatarByFemale(userinfo, tabledata, rowView, callback) {
 					tabledata.push(rowView[i]);
 				}//end of for loop
 
-				tableview.data = tabledata;//
-				
+				tableview.data = tabledata;
+				//
+
 				//actInd.hide();
 				callback(tableview);
 				AvatarThumbnail = null;
@@ -145,12 +147,13 @@ function AvatarByFemale(userinfo, tabledata, rowView, callback) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://bonozo.com:8080/knp/get_avatar_list.php?uid=" + userinfo.Record[0].UID +"&gender=f&gold=0"
+		url : "http://bonozo.com:8080/knp/get_avatar_list.php?uid=" + userinfo.Record[0].UID + "&gender=f&gold=0"
 	});
 	// Ti.App.addEventListener('avatar_table_changed',function(data){
-		// if(data.release_table != 'AvatarByFemale')return;
-		// Ti.App.fireEvent('render_table',{});
+	// if(data.release_table != 'AvatarByFemale')return;
+	// Ti.App.fireEvent('render_table',{});
 	// });
 	return;
 }
-module.exports = AvatarByFemale; 
+
+module.exports = AvatarByFemale;
