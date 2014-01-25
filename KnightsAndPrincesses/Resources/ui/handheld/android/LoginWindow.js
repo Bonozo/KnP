@@ -15,20 +15,26 @@
 
 function LoginWindow() {
 	Ti.App.Properties.setBool('internet_error', false);
+
 	var osname = Ti.Platform.osname;
 	var admin_login = false;
 	function getToken(callback) {
+		callback(true, Titanium.Platform.id);
+		return;
 		if (osname === 'android') {
 			CloudPush.retrieveDeviceToken({
 				success : function deviceTokenSuccess(e) {
 					callback(true, e.deviceToken);
 				},
 				error : function deviceTokenError(e) {
+					alert(">>" + JSON.stringify(e));
 					callback(false, e.message);
 				}
 			});
 			return;
 		}
+		callback(Titanium.Platform.id);
+		return;
 		// for iOS
 		callback(true, Titanium.Network.remoteDeviceUUID);
 	}
@@ -244,16 +250,19 @@ function LoginWindow() {
 
 	function ServerLogin(email_value, password_value, device_token_value, app_version_value, callback) {
 		var httpclientt = require('/ui/common/Functions/function');
+		Ti.API.info("http://bonozo.com:8080/knp/?email=" + email_value + "&password=" + password_value + "&version=" + app_version_value + "&device_token=" + device_token_value);
 		httpclientt.requestServer({
 			success : function(e) {
 				var json = JSON.parse(this.responseText);
 				if (json.Record != undefined) {
 					if (remember) {
+						Ti.App.Properties.setBool('signed_in', true);
 						Ti.App.Properties.setString('knp_email', emailField.value);
 						Ti.App.Properties.setString('knp_password', passwordField.value);
 						Ti.App.Properties.setString('knp_sound', (Ti.App.Properties.getString('knp_sound') == null) ? "ON" : "OFF");
 					}
-					if(Ti.Platform.name === 'iPhone OS'){
+					if (Ti.Platform.name === 'iPhone OS') {
+						Ti.App.Properties.setBool('signed_in', true);
 						Ti.App.Properties.setString('knp_email', emailField.value);
 						Ti.App.Properties.setString('knp_password', passwordField.value);
 					}
@@ -285,10 +294,11 @@ function LoginWindow() {
 				var json = JSON.parse(this.responseText);
 				if (json.Record[0] != undefined) {
 					if (remember) {
+						Ti.App.Properties.setBool('signed_in', true);
 						Ti.App.Properties.setString('knp_email', emailField.value);
 						Ti.App.Properties.setString('knp_password', passwordField.value);
 						if (!Ti.App.Properties.getString('knp_sound')) {
-							Ti.App.Properties.setString('sound', 'ON')
+							Ti.App.Properties.setString('sound', 'ON');
 						}
 					}
 					//alert(JSON.stringify(json.Record[0]));
@@ -335,7 +345,6 @@ function LoginWindow() {
 		var Cloud = require('ti.cloud');
 		Cloud.debug = true;
 	}
-
 	var win = Ti.UI.createWindow();
 	win.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 	var actInd = Titanium.UI.createActivityIndicator({
@@ -362,6 +371,8 @@ function LoginWindow() {
 		borderColor : '#333333',
 		borderWidth : '5dip',
 		visible : false,
+		top : '46%',
+		left : (getPixelFromPercent('x', 50) - (winWidth / 4)),
 		height : '8%',
 		width : (winWidth / 2),
 		zIndex : 700
@@ -463,7 +474,6 @@ function LoginWindow() {
 				offset : 1.0
 			}],
 		},
-
 		/*backgroundGradient : {
 		 type : 'linear',
 		 colors : ['#21653d', '#00321f'],
@@ -488,8 +498,7 @@ function LoginWindow() {
 		chooseClass = new ChooseClass();
 		chooseClass.open();
 	});
-	
-	
+
 	var emailField = Titanium.UI.createTextField({
 		height : '8.5%',
 		font : {
@@ -498,12 +507,14 @@ function LoginWindow() {
 		hintText : "Email",
 		left : '12.5%',
 		width : "75%",
+		paddingLeft : 10,
 		value : Ti.App.Properties.getString('knp_email'), //"robot1@email.com",
 		borderRadius : 0,
 		borderColor : "#333333",
 		backgroundColor : '#FFFFFF',
 		keyboardType : Ti.UI.KEYBOARD_EMAIL,
-		top : "55%"
+		top : "55%",
+		zIndex : 10
 	});
 	win.add(emailField);
 	if (osname === 'iphone' || osname === 'ipad') {
@@ -512,10 +523,10 @@ function LoginWindow() {
 				top : "45%",
 				duration : 500
 			});
-			
+
 			// win.animate({
-				// bottom : getPixelFromPercent('y', 30),
-				// duration : 500
+			// bottom : getPixelFromPercent('y', 30),
+			// duration : 500
 			// });
 		});
 		emailField.addEventListener('blur', function() {
@@ -524,8 +535,8 @@ function LoginWindow() {
 				duration : 500
 			});
 			// win.animate({
-				// bottom : 0,
-				// duration : 500
+			// bottom : 0,
+			// duration : 500
 			// });
 		});
 	}
@@ -537,6 +548,7 @@ function LoginWindow() {
 			fontSize : '12dip'
 		},
 		hintText : "Password",
+		paddingLeft : 10,
 		left : '12.5%',
 		width : "75%",
 		value : Ti.App.Properties.getString('knp_password'), //"robot1@email.com",
@@ -544,7 +556,8 @@ function LoginWindow() {
 		borderColor : "#333333",
 		passwordMask : true,
 		backgroundColor : '#FFFFFF',
-		top : "65%"
+		top : "65%",
+		zIndex : 10
 		// height : '7%',
 		// hintText : "Password",
 		// backgroundColor : '#FFFFFF',
@@ -561,10 +574,10 @@ function LoginWindow() {
 				top : "45%",
 				duration : 500
 			});
-			
+
 			// win.animate({
-				// bottom : getPixelFromPercent('y', 30),
-				// duration : 500
+			// bottom : getPixelFromPercent('y', 30),
+			// duration : 500
 			// });
 		});
 		passwordField.addEventListener('blur', function() {
@@ -573,21 +586,21 @@ function LoginWindow() {
 				duration : 500
 			});
 			// win.animate({
-				// bottom : 0,
-				// duration : 500
+			// bottom : 0,
+			// duration : 500
 			// });
 		});
 		// passwordField.addEventListener('focus', function() {
-			// win.animate({
-				// bottom : getPixelFromPercent('y', 30),
-				// duration : 500
-			// });
+		// win.animate({
+		// bottom : getPixelFromPercent('y', 30),
+		// duration : 500
+		// });
 		// });
 		// passwordField.addEventListener('blur', function() {
-			// win.animate({
-				// bottom : 0,
-				// duration : 500
-			// });
+		// win.animate({
+		// bottom : 0,
+		// duration : 500
+		// });
 		// });
 	}
 	if (osname !== 'android') {
@@ -618,6 +631,7 @@ function LoginWindow() {
 		font : {
 			fontSize : '14dip'
 		},
+		zIndex : 5
 	});
 	if (osname === 'android')
 		win.add(rememberlabel);
@@ -630,19 +644,6 @@ function LoginWindow() {
 		width : "75%",
 		color : '#FFF',
 		top : '92%',
-		// backgroundGradient : {
-		// type : 'linear',
-		// colors : ['#21653d', '#00321f'],
-		// startPoint : {
-		// x : '0%',
-		// y : '0%'
-		// },
-		// endPoint : {
-		// x : '0%',
-		// y : '100%'
-		// },
-		// backFillStart : false
-		// },
 		backgroundGradient : {
 			type : 'linear',
 			startPoint : {
@@ -783,7 +784,9 @@ function LoginWindow() {
 		// JoustinGamePlay(quest_status, quest_id, userinfo);
 		perform_sign_in(emailField, passwordField);
 	});
-	function perform_sign_in(){
+	function perform_sign_in(emailField, passwordField) {
+		//alert(JSON.stringify(emailField) + "\n" + JSON.stringify(passwordField));
+		//return;
 		if (emailField.value == "" && passwordField.value == "") {
 			alert('All fields are required!');
 		} else {
@@ -793,13 +796,21 @@ function LoginWindow() {
 			activityIndicatorView.visible = true;
 			emailField.value = emailField.value.toLowerCase();
 			getToken(function(success, token) {
-				Ti.App.Properties.setBool('signed_in', true);
 				// alert(token);return;
 				if (success) {
-					token = (osname === 'iphone' || osname === 'ipad') ? "" : token;
-
+					//(osname === 'iphone' || osname === 'ipad') ? "" : token;
 					ServerLogin(emailField.value, passwordField.value, token, '0.4.01', function(success, json) {
+						if(!success){
+							actInd.hide();
+							activityIndicator.hide();
+							activityIndicator.message = "Signing in...";
+							activityIndicatorView.visible = false;
+							alert(json);
+							return;
+						}
+
 						if (osname === 'iphone' || osname === 'ipad') {
+
 							Ti.App.Properties.setString('uid', json[0].UID);
 							if (json[0].GENDER == 'r') {
 								json = {
@@ -1008,6 +1019,7 @@ function LoginWindow() {
 		}
 	}
 
+
 	Ti.App.addEventListener('close_screen', function(data) {
 		if (data.screen_name == 'choose_your_class' && chooseClass != null) {
 			chooseClass.close();
@@ -1045,18 +1057,32 @@ function LoginWindow() {
 			//alert('Tray Click Focused App (app was already running)');
 		});
 	}
-	if(Ti.App.Properties.getBool('signed_in')){
-		var emailField = {
-			value : Ti.App.Properties.getString('knp_email')
-		};
-		var passwordField = {
-			value : Ti.App.Properties.getString('knp_password')
-		};
-		perform_sign_in(emailField, passwordField);
-	}
-	Ti.App.Properties.setBool('signed_in',false);
+	(function() {
+		// alert(
+		// Ti.App.Properties.getBool('signed_in') + "\n" +
+		// Ti.App.Properties.getString('knp_email') + "\n" +
+		// Ti.App.Properties.getString('knp_password')
+		// );
+		if ((Ti.App.Properties.getBool('signed_in')) && (Ti.App.Properties.getString('knp_email') != null) && (Ti.App.Properties.getString('knp_password') != null)) {
 
+			var emailField = {
+				value : Ti.App.Properties.getString('knp_email')
+			};
+			var passwordField = {
+				value : Ti.App.Properties.getString('knp_password')
+			};
+			perform_sign_in(emailField, passwordField);
+		} else {
+			Ti.App.Properties.setBool('signed_in', false);
+		}
+	})();
+	Ti.App.addEventListener('signed_in', function() {
+		actInd.hide();
+		activityIndicator.hide();
+		activityIndicatorView.visible = false;
+	});
 	return win;
+
 }
 
 //make constructor function the public component interface
