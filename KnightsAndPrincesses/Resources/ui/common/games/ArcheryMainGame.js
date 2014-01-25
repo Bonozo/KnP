@@ -1,4 +1,4 @@
-function ArcheryMainGame(quest_status, quest_id, userinfo) {
+function ArcheryMainGame(quest_status, quest_id, userinfo, _assign_quest_id, single_player_game) {
 	var osname = Ti.Platform.osname;
 	var sound_settings = (Ti.App.Properties.getString('knp_sound') == undefined || Ti.App.Properties.getString('knp_sound') == '' || Ti.App.Properties.getString('knp_sound') == null) ? 'ON' : Ti.App.Properties.getString('knp_sound');
 	function getPixelFromPercent(axis, percent) {
@@ -268,7 +268,16 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 		indicator_y_pointer.height = indicator_pointer_ImageHeight;
 		indicator_y_pointer.x = (winWidth - getPixelFromPercent('x', 10));
 		indicator_y_pointer.y = indicator_y_bg.y + (indicator_y_bg.height / 2) - (indicator_pointer_ImageHeight / 2);
-
+		indicator_y_min_value = indicator_y_bg.y - (indicator_y_pointer.height / 2);
+		indicator_y_max_value = indicator_y_bg.y + indicator_y_bg.height - (indicator_y_pointer.height / 2);
+		total_aiming_points = indicator_y_max_value - indicator_y_min_value;
+		modulus_value = total_aiming_points / aim_final_point_y;
+		
+		Ti.API.info('indicator_y_pointer.x: ' + indicator_y_pointer.x);
+		Ti.API.info('indicator_y_pointer.y: ' + indicator_y_pointer.y);
+		Ti.API.info('indicator_y_pointer.width: ' + indicator_y_pointer.width);
+		Ti.API.info('indicator_y_pointer.height: ' + indicator_y_pointer.height);
+		
 		indicator_x_ImageWidth = getPixelFromPercent('x', 50);
 		indicator_x_ImageHeight = getRespectiveHeight(indicator_x_ImageWidth, indicator_x_ImageRatio);
 		indicator_x_bg.width = indicator_x_ImageWidth;
@@ -281,32 +290,34 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 		indicator_x_pointer.x = (getPixelFromPercent('x', 6) / 2) + indicator_x_ImageWidth;
 		indicator_x_pointer.y = (winHeight - getPixelFromPercent('y', 6) - (indicator_pointer_ImageHeight / 2));
 
+		indicator_x_min_value = indicator_x_bg.x - (indicator_x_pointer.width / 2);
+		indicator_x_max_value = indicator_x_bg.x + indicator_x_bg.width - (indicator_x_pointer.width / 2);
 	});
 	/*
 	 * Assigning Qusts
 	 *
 	 */
-	var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
-
-	var items_json = "";
-	var items_length = 0;
 	var httpclientt = require('/ui/common/Functions/function');
-	httpclientt.requestServer({
-		success : function(e) {
-			items_json = JSON.parse(this.responseText);
-			items_length = items_json.Record.length;
-			if (items_json.Record != undefined) {
-				_assign_quest_id = items_json.Record[0].ASSIGN_QUEST_ID;
-				//hideLoader();
-			}
-		},
-		method : 'GET',
-		contentType : 'text/xml',
-		url : _url,
-
-	});
+	if(single_player_game){
+		var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
+		var items_json = "";
+		var items_length = 0;
+		httpclientt.requestServer({
+			success : function(e) {
+				items_json = JSON.parse(this.responseText);
+				items_length = items_json.Record.length;
+				if (items_json.Record != undefined) {
+					_assign_quest_id = items_json.Record[0].ASSIGN_QUEST_ID;
+				}
+			},
+			method : 'GET',
+			contentType : 'text/xml',
+			url : _url
+		});
+	}
 	function set_quest_complete(num_of_golds, callback) {
 		_url = "http://bonozo.com:8080/knp/knp_set_quest_status.php?game_status=COMPLETE&quest_status=" + quest_status + "&assign_quest_id=" + _assign_quest_id + "&quest_id=" + quest_id + "&uid=" + userinfo.Record[0].UID + "&friend_uid=" + userinfo.Record[0].UID + "";
+		Ti.API.info(_url);
 		httpclientt.requestServer({
 			success : function(e) {
 				items_json = JSON.parse(this.responseText);
@@ -360,7 +371,6 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 		});
 	}
 
-
 	game.addEventListener('click', function(e) {
 		return;
 	});
@@ -396,6 +406,10 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 	window.add(someLabel);
 
 	function is_object_clicked(x, y, object) {
+		Ti.API.info('indicator_y_pointer.x: ' + indicator_y_pointer.x);
+		Ti.API.info('indicator_y_pointer.y: ' + indicator_y_pointer.y);
+		Ti.API.info('indicator_y_pointer.width: ' + indicator_y_pointer.width);
+		Ti.API.info('indicator_y_pointer.height: ' + indicator_y_pointer.height);
 		return (x >= object.x && x <= (object.x + object.width) && y >= object.y && y <= (object.y + object.height)) ? true : false;
 	}
 
@@ -407,10 +421,10 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 		y : indicator_y_bg.y + (indicator_y_bg.height / 2) - (indicator_pointer_ImageHeight / 2), //getPixelFromPercent('y', 4.5),
 		z : 510
 	});
-	var indicator_y_min_value = indicator_y_bg.y - (indicator_y_pointer.height / 2);
-	var indicator_y_max_value = indicator_y_bg.y + indicator_y_bg.height - (indicator_y_pointer.height / 2);
-	var total_aiming_points = indicator_y_max_value - indicator_y_min_value;
-	var modulus_value = total_aiming_points / aim_final_point_y;
+	var indicator_y_min_value;
+	var indicator_y_max_value;
+	var total_aiming_points;// = indicator_y_max_value - indicator_y_min_value;
+	var modulus_value;// = total_aiming_points / aim_final_point_y;
 	var movment_tolerence_rate = 0;
 
 	scene.add(indicator_y_pointer);
@@ -441,9 +455,9 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 		y : (winHeight - getPixelFromPercent('y', 6) - (indicator_pointer_ImageHeight / 2)), //getPixelFromPercent('y', 4.5),
 		z : 510
 	});
-	var indicator_x_min_value = indicator_x_bg.x - (indicator_x_pointer.width / 2);
-	var indicator_x_max_value = indicator_x_bg.x + indicator_x_bg.width - (indicator_x_pointer.width / 2);
-	var total_aiming_points = indicator_x_max_value - indicator_x_min_value;
+	var indicator_x_min_value;
+	var indicator_x_max_value;
+	var total_aiming_points;// = indicator_x_max_value - indicator_x_min_value;
 	var modulus_value = total_aiming_points / aim_final_point_y;
 	var movment_tolerence_rate = 0;
 	scene.add(indicator_x_pointer);
@@ -470,8 +484,21 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 			e.x = (_winWidth / _gameWidth) * e.x;
 			e.y = (_winHeight / _gameHeight) * e.y;
 		}
+		indicator_y_pointer.width = indicator_pointer_ImageWidth;
+		indicator_y_pointer.height = indicator_pointer_ImageHeight;
+		Ti.API.info('indicator_y_pointer.x: ' + indicator_y_pointer.x);
+		Ti.API.info('indicator_y_pointer.y: ' + indicator_y_pointer.y);
+		Ti.API.info('indicator_y_pointer.width: ' + indicator_y_pointer.width);
+		Ti.API.info('indicator_y_pointer.height: ' + indicator_y_pointer.height);
+		
 
 		if (is_object_clicked(e.x, e.y, indicator_y_pointer)) {
+
+/*
+x:615,y:353::::indicator_y_pointer.x:576,indicator_y_pointer.y:[object ComGooglecodeQuicktigame2dSprite],indicator_y_pointer.width:64,indicator_y_pointer.height:69
+ */
+			
+			
 			indicator_y_pointer_tapped = true;
 		} else if (is_object_clicked(e.x, e.y, indicator_x_pointer)) {
 			indicator_x_pointer_tapped = true;
@@ -493,6 +520,10 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 	game.addEventListener('touchmove', function(e) {
 		var _gameWidth = game.screen.width;
 		var _gameHeight = game.screen.height;
+		winWidth = game.screen.width;
+		// Ti.Platform.displayCaps.platformWidth;
+		winHeight = game.screen.height;
+
 		var _winWidth = Titanium.Platform.displayCaps.platformWidth;
 		var _winHeight = Titanium.Platform.displayCaps.platformHeight;
 
@@ -508,6 +539,7 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 		* Indicator pointer 'y'
 		*/
 		// Ti.Platform.displayCaps.platformWidth;
+		Ti.API.info(indicator_y_pointer_tapped+","+(e.y)+","+(indicator_y_min_value)+","+indicator_y_max_value);
 		if (indicator_y_pointer_tapped && e.y >= indicator_y_min_value && e.y <= indicator_y_max_value) {
 			if ((e.y % modulus_value) >= (-movment_tolerence_rate) || (e.y % modulus_value) < movment_tolerence_rate) {
 				if (last_moved_points.y < e.y) {// Sliding down
@@ -523,6 +555,7 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 					}
 				}
 			}
+			Ti.API.info(winHeight - ((bowImageHeight * 3 / 4) + aim_current_point_y));
 			bowImageView.y = winHeight - ((bowImageHeight * 3 / 4) + aim_current_point_y);
 			//winHeight - (bowImageHeight + aim_current_point_y);
 			arrowImageView.y = winHeight - ((arrowImageHeight * 3 / 4) + aim_current_point_y);
@@ -537,6 +570,7 @@ function ArcheryMainGame(quest_status, quest_id, userinfo) {
 		 * Indicator pointer 'x'
 		 */
 		else if (indicator_x_pointer_tapped && e.x >= indicator_x_min_value && e.x <= indicator_x_max_value) {
+				Ti.API.info('Condition true');
 			if ((e.x % modulus_value) >= (-movment_tolerence_rate) || (e.x % modulus_value) < movment_tolerence_rate) {
 				if (last_moved_points.x < e.x) {// Sliding right
 					if (aim_current_point_x < (aim_final_point_x + 1)) {

@@ -1,8 +1,8 @@
 function SendFriendRequest(userinfo, friendJson) {
 	if (friendJson.GENDER == 'f') {
-		var bg_image = '/assets/listFemaleInfo.png'
+		var bg_image = '/assets/listFemaleInfo.png';
 	} else {
-		var bg_image = '/assets/listMaleInfo.png'
+		var bg_image = '/assets/listMaleInfo.png';
 	}
 	//var //actInd = Titanium.UI.createActivityIndicator();
 	//actInd.message = 'Loading Main Screen...';
@@ -92,10 +92,10 @@ function SendFriendRequest(userinfo, friendJson) {
 	Infoview.add(freinds_label);
 
 	if (friendJson.GENDER == 'f') {
-		bg_image = '/assets/female_icon.png'
+		bg_image = '/assets/female_icon.png';
 		avatar_image = "female_icon";
 	} else {
-		bg_image = '/assets/male_icon.png'
+		bg_image = '/assets/male_icon.png';
 		avatar_image = "male_icon";
 	}
 
@@ -161,18 +161,19 @@ function SendFriendRequest(userinfo, friendJson) {
 
 	view.add(Infoview);
 	var addfriend_label = Ti.UI.createLabel({
-		text : 'ADD ' + friendJson.NAME + ' AS A FRIEND?',
+		text : 'Add ' + friendJson.NAME + ' AS A FRIEND?',
 		font : {
 			fontSize : '16dip'
 		},
 		color : '#abe6c7',
-		top : '32%',
+		top : '33%',
 		left : '5%'
 	});
 	view.add(addfriend_label);
 
 	var sendmsg_textbox = Titanium.UI.createTextField({
 		hintText : 'Send a Message to Your Friend \n (Optional)',
+		paddingLeft : 10,
 		font : {
 			fontSize : '13dip'
 		},
@@ -186,7 +187,8 @@ function SendFriendRequest(userinfo, friendJson) {
 	});
 	view.add(sendmsg_textbox);
 
-	var cancel_button = Ti.UI.createButton({ color: '#761f56',
+	var cancel_button = Ti.UI.createButton({
+		color : '#761f56',
 		title : 'Cancel',
 		color : '#5c2a64',
 		textAlign : 'center',
@@ -202,7 +204,8 @@ function SendFriendRequest(userinfo, friendJson) {
 	});
 	view.add(cancel_button);
 
-	var send_button = Ti.UI.createButton({ color: '#761f56',
+	var send_button = Ti.UI.createButton({
+		color : '#761f56',
 		title : 'Send Request',
 		color : '#5c2a64',
 		textAlign : 'center',
@@ -214,16 +217,15 @@ function SendFriendRequest(userinfo, friendJson) {
 	});
 	view.add(send_button);
 	send_button.addEventListener('click', function(e) {
-        var ConfirmationAlert = Titanium.UI.createAlertDialog({
-            title : 'You have atleast 5 golds to send request.',
-            message : 'Are you Sure?',
-            buttonNames : ['Yes', 'No'],
-            cancel : 1
-        });
-	    
-	    
+		var ConfirmationAlert = Titanium.UI.createAlertDialog({
+			title : 'You must have atleast 5 golds to send friend request.',
+			message : 'Are you Sure?',
+			buttonNames : ['Yes', 'No'],
+			cancel : 1
+		});
+
 		//actInd.show();
-		var _url = "http://bonozo.com:8080/knp/send_friend_request.php?uid=" + userinfo.Record[0].UID + "&friend_uid=" + friendJson.UID + "&user_id="+user_id+"";
+		var _url = "http://bonozo.com:8080/knp/send_friend_request.php?uid=" + userinfo.Record[0].UID + "&friend_uid=" + friendJson.UID + "&user_id=" + user_id + "";
 		var items_json = "";
 		var items_length = 0;
 		var httpclientt = require('/ui/common/Functions/function');
@@ -234,8 +236,7 @@ function SendFriendRequest(userinfo, friendJson) {
 				if (items_json.Record != undefined) {
 					//alert(userinfo.Record[0].EMAIL+":"+userinfo.Record[0].NAME+":"+user_id);
 
-					
-						//actInd.hide();
+					//actInd.hide();
 
 					// _assign_quest_id = items_json.Record[0].assign_quest_id;
 					// hideLoader();
@@ -256,7 +257,6 @@ function SendFriendRequest(userinfo, friendJson) {
 			url : _url,
 		});
 
-		
 	});
 
 	/*

@@ -1,4 +1,5 @@
-function JoustinGamePlay(quest_status, quest_id, userinfo) {
+function JoustinGamePlay(quest_status, quest_id, userinfo, _assign_quest_id, single_player_game) {
+
 	var osname = Ti.Platform.osname;
 	var sound_settings = (Ti.App.Properties.getString('knp_sound') == undefined || Ti.App.Properties.getString('knp_sound') == '' || Ti.App.Properties.getString('knp_sound') == null)?'ON':Ti.App.Properties.getString('knp_sound');
 	var window = Ti.UI.createWindow({
@@ -563,23 +564,25 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 		
 
 	});
-
-	var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
-	var items_json = "";
-	var items_length = 0;
+	
 	var httpclientt = require('/ui/common/Functions/function');
-	httpclientt.requestServer({
-		success : function(e) {
-			items_json = JSON.parse(this.responseText);
-			items_length = items_json.Record.length;
-			if (items_json.Record != undefined) {
-				_assign_quest_id = items_json.Record[0].ASSIGN_QUEST_ID;
-			}
-		},
-		method : 'GET',
-		contentType : 'text/xml',
-		url : _url
-	});
+	if(single_player_game){
+		var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
+		var items_json = "";
+		var items_length = 0;
+		httpclientt.requestServer({
+			success : function(e) {
+				items_json = JSON.parse(this.responseText);
+				items_length = items_json.Record.length;
+				if (items_json.Record != undefined) {
+					_assign_quest_id = items_json.Record[0].ASSIGN_QUEST_ID;
+				}
+			},
+			method : 'GET',
+			contentType : 'text/xml',
+			url : _url
+		});
+	}
 
 	var sprite_count = 0;
 	var sprites_tag = [
@@ -762,7 +765,7 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 				move_sliders_randomly();
 			}
 		},100);
-	}
+	};
 	window.addEventListener("close",function(){
 		play_game = false;
 		jousting_battle_music.stop();
@@ -1049,6 +1052,6 @@ function JoustinGamePlay(quest_status, quest_id, userinfo) {
 	});
 	return window;
 
-}
+};
 
 module.exports = JoustinGamePlay;

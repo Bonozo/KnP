@@ -1,21 +1,22 @@
 function Footer(userinfojson) {
-	function updateFooter(userinfojson) {
-	    var gender;
-	    if(userinfojson.Record[0].GENDER == 'm'){
-	        gender = 'KNIGHT';
-	    }
-	    else 
-	       gender = 'PRINCESS';
-		level_text.text = "LEVEL " + userinfojson.Record[0].LEVEL + "\n" + gender;
-		gold_quantity.text = userinfojson.Record[0].NUM_OF_GOLDS;
-		status_single.text = userinfojson.Record[0].MARITIAL_STATUS;
-		days_label.text = userinfojson.Record[0].ACCOUNT_AGE + '\nDays';
+	function updateFooter(_userinfojson) {
+		var gender;
+		if (userinfojson.Record[0].GENDER == 'm') {
+			gender = 'KNIGHT';
+		} else
+			gender = 'PRINCESS';
+		userinfojson = _userinfojson;
+		level_text.text = "LEVEL " + _userinfojson.Record[0].LEVEL;// + "\n" + gender;
+		gold_quantity.text = _userinfojson.Record[0].NUM_OF_GOLDS;
+		status_single.text = _userinfojson.Record[0].MARITIAL_STATUS;
+		days_label.text = _userinfojson.Record[0].ACCOUNT_AGE + '\nDays';
 	}
+
 	var view = Titanium.UI.createView({
 		bottom : '0%',
 		height : '10%',
 		width : '100%',
-		backgroundImage :'/assets/footerSlim_001.png',
+		backgroundImage : '/assets/footerSlim_001.png',
 		zIndex : 100
 	});
 	var iconGold_imageview = Titanium.UI.createImageView({
@@ -26,6 +27,11 @@ function Footer(userinfojson) {
 
 	});
 	view.add(iconGold_imageview);
+	iconGold_imageview.addEventListener('click', function(e) {
+		var KnPStore = require('ui/common/MenuScreen/KnPStore');
+		var kandp = new KnPStore(userinfojson);
+		kandp.open();
+	});
 
 	var gold_quantity = Titanium.UI.createLabel({
 		text : userinfojson.Record[0].NUM_OF_GOLDS,
@@ -34,33 +40,33 @@ function Footer(userinfojson) {
 		left : '16%',
 		zIndex : 500,
 		color : '#FFCC00',
-        font : {
-        	fontWeight:'bold',
-            fontSize :'15dip'
-        }
+		font : {
+			fontWeight : 'bold',
+			fontSize : 16
+		}
 	});
 	view.add(gold_quantity);
 	var level_text = Titanium.UI.createLabel({
-		text : "LEVEL " + userinfojson.Record[0].LEVEL + "\n" + userinfojson.Record[0].GENDER,
+		text : "LEVEL " + userinfojson.Record[0].LEVEL,// + "\n" + userinfojson.Record[0].GENDER,
 		height : '100%',
 		textAlign : 'centre',
-		color : "green",
+		color : "#5afd9b",
 		width : 'auto',
 		right : '46%',
-        font : {
-            fontSize :'12dip'
-        }
+		font : {
+			fontSize : '12dip'
+		}
 	});
 	view.add(level_text);
 	var status_single = Titanium.UI.createLabel({
 		text : userinfojson.Record[0].MARITIAL_STATUS,
 		height : '100%',
 		width : 'auto',
-		color : 'green',
+		color : '#5afd9b',
 		right : '25%',
-        font : {
-            fontSize : '12dip'
-        }
+		font : {
+			fontSize : '12dip'
+		}
 	});
 	view.add(status_single);
 
@@ -68,19 +74,19 @@ function Footer(userinfojson) {
 		height : '100%',
 		width : '11.3%',
 		right : '15.9%',
-		image : '/assets/iconMarrigeSingle.png',
+		image : '/assets/overlayCalendar.png',
 	});
-	view.add(bottom_coin);
+	// view.add(bottom_coin);
 
 	var days_label = Titanium.UI.createLabel({
-		backgroundImage : '/assets/overlayCalender.png',
+		// backgroundImage : '/assets/.png',
 		text : "0\nDays",
 		right : "2%",
-		color : 'green',
-        font : {
-        	fontWeight:'bold',
-            fontSize :'15dip'
-        }
+		color : '#5afd9b',
+		font : {
+			fontWeight : 'bold',
+			fontSize : '15dip'
+		}
 
 	});
 	view.add(days_label);
@@ -112,9 +118,9 @@ function Footer(userinfojson) {
 			url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfojson.Record[0].UID + ""
 		});
 	});
-    Ti.App.addEventListener('new_info', function(data) {
-    	updateFooter(data.userinfojson);
-    });
+	Ti.App.addEventListener('new_info', function(data) {
+		updateFooter(data.userinfojson);
+	});
 
 	return view;
 };

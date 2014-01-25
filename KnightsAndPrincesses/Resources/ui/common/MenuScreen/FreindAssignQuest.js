@@ -5,6 +5,20 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	//message will only shows in android.
 	//actInd.show();
 
+	var osname = Ti.Platform.osname;
+	var AvatarFemaleThumbnail = require('/ui/common/drawings/AvatarThumbnail');
+
+	var winWidth = Titanium.Platform.displayCaps.platformWidth;
+	var winHeight = Titanium.Platform.displayCaps.platformHeight;
+	function getPixelFromPercent(axis, percent) {
+		if (axis == 'x') {
+			return winWidth * percent / 100;
+		} else if (axis == 'y') {
+			return winHeight * percent / 100;
+		}
+	}
+
+
 	var self = Ti.UI.createWindow({
 		orientation : Ti.UI.PORTRAIT,
 		navBarHidden : true,
@@ -12,7 +26,39 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	});
 	self.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 
-	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
+	var activityIndicatorView = Titanium.UI.createView({
+		backgroundColor : '#FFFFFF',
+		borderRadius : 10,
+		borderColor : '#333333',
+		borderWidth : '5dip',
+		visible : false,
+		height : '8%',
+		width : (winWidth / 2),
+		left : getPixelFromPercent('x', 50) - (winWidth / 4),
+		top : getPixelFromPercent('x', 42),
+		zIndex : 700
+	});
+	var activityIndicator = Ti.UI.createActivityIndicator({
+		color : '#333333',
+		font : {
+			// fontFamily : 'Helvetica Neue',
+			fontSize : '14dip',
+			fontWeight : 'bold'
+		},
+		message : 'Loading...',
+		style : (Ti.Platform.name === 'iPhone OS') ? Ti.UI.iPhone.ActivityIndicatorStyle.DARK : Ti.UI.ActivityIndicatorStyle.DARK,
+		height : '100%',
+		width : '100%'
+	});
+	activityIndicatorView.add(activityIndicator);
+	self.add(activityIndicatorView);
+
+	(function() {
+		activityIndicator.show();
+		activityIndicatorView.visible = true;
+		activityIndicator.message = "Loading...";
+	})();
+
 	var gender;
 	var lvl;
 	var freinds;
@@ -41,14 +87,14 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		color : '#5afd9b',
 		font : {
 			fontWeight : 'bold',
-			fontSize : '14dip'
+			fontSize : '16dip'
 		},
 		zIndex : 100
 	});
 	header_view.add(name_label);
 
 	var menu_label = Titanium.UI.createLabel({
-		text : 'ASSIGN QUEST',
+		text : 'Assign Quest',
 		right : '15.6%',
 		textAlign : 'right',
 		color : '#5afd9b',
@@ -73,8 +119,8 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	var Infoview = Ti.UI.createView({
 		width : '100%',
 		top : '9%',
-		height : '16%',
-		backgroundColor : '#53e990'
+		height : '16%'
+		//backgroundColor : '#53e990'
 
 	});
 
@@ -83,7 +129,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		height : '96%',
 		width : '100%'
 	});
-	Infoview.add(imageview);
+	//Infoview.add(imageview);
 
 	var freind_name_label = Titanium.UI.createLabel({
 		top : '0',
@@ -91,15 +137,27 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		textAlign : 'right',
 		color : '#5afd9b',
 		font : {
-			fontSize : '14dip'
+			fontSize : '18dip',
+			fontWeight : 'bold'
 		}
 
 	});
 	Infoview.add(freind_name_label);
 
-	var text_label = Titanium.UI.createLabel({
-		text : 'IM IN IT TO WIN IT',
+	var status_label = Titanium.UI.createLabel({
+		text : '',
 		left : '2%',
+		textAlign : 'right',
+		color : '#5afd9b',
+		font : {
+			fontSize : '16dip'
+		}
+
+	});
+	Infoview.add(status_label);
+	var freinds_label = Titanium.UI.createLabel({
+		bottom : '0',
+		left : '10%',
 		textAlign : 'right',
 		color : '#5afd9b',
 		font : {
@@ -107,8 +165,20 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		}
 
 	});
-	Infoview.add(text_label);
+	Infoview.add(freinds_label);
+	
+	var friends_icon_image = Ti.UI.createImageView({
+		image : '/assets/iconFriends.png',
+		width : '7.5%',
+		height : '30%',
+		bottom : 0,
+		left : '2%'
+	});
+	Infoview.add(friends_icon_image);
+	
+
 	var bg_image;
+	var content_loads = 0;
 	var freind_info = "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + friend_uid;
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
@@ -116,12 +186,32 @@ function FreindAssignQuest(userinfo, friend_uid) {
 			items_json = JSON.parse(this.responseText);
 			if (items_json.Record != undefined) {
 				if (items_json.Record.Message != '') {
-					freind_name_label.text = items_json.Record[0].NAME
+					AvatarFemaleThumbnail({
+						width : '100%',
+						height : '100%',
+						top : '0dip',
+						right : '0%'
+					}, items_json.Record[0].USER_APPEARANCE, items_json.Record[0].GENDER, 0, function(avatar_imageview, index) {
+						// if(female_table_id != null){
+							freind_imageview.add(avatar_imageview);
+							// avatar_images[index] = avatar_imageview;
+							// rowView[index].add(avatar_images[index]);
+						// }
+					});
+
+
+					freind_name_label.text = items_json.Record[0].NAME;
+					status_label.text = items_json.Record[0].STATUS_MESSAGE;
 					gender = items_json.Record[0].GENDER;
 					level_label.text = 'LVL ' + items_json.Record[0].LEVEL;
-					freinds_label.text = items_json.Record[0].NUM_OF_FRIENDS;
+					freinds_label.text = items_json.Record[0].NUM_OF_FRIENDS + ' friend(s)';
 					gold_label.text = items_json.Record[0].NUM_OF_GOLDS;
 					user_id = items_json.Record[0].USER_ID;
+					content_loads++;
+					if(content_loads >= 2){
+						activityIndicator.hide();
+						activityIndicatorView.visible = false;
+					}
 					////actInd.hide();
 				}
 			}
@@ -131,17 +221,6 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		url : freind_info
 	});
 
-	var freinds_label = Titanium.UI.createLabel({
-		bottom : '0',
-		left : '2%',
-		textAlign : 'right',
-		color : '#5afd9b',
-		font : {
-			fontSize : '14dip'
-		}
-
-	});
-	Infoview.add(freinds_label);
 
 	if (gender == 'f') {
 		bg_image = '/assets/female_icon.png';
@@ -149,8 +228,8 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		bg_image = '/assets/male_icon.png';
 	}
 
-	var freind_imageview = Titanium.UI.createImageView({
-		image : bg_image,
+	var freind_imageview = Titanium.UI.createView({
+		// image : bg_image,
 		right : '0%',
 		width : '20%'
 	});
@@ -169,7 +248,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	Infoview.add(level_label);
 
 	var gold_label = Titanium.UI.createLabel({
-		right : '22%',
+		right : '30%',
 		textAlign : 'right',
 		color : '#5afd9b',
 		font : {
@@ -179,9 +258,9 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	});
 	var gold_imageview = Titanium.UI.createImageView({
 		image : '/assets/miGoldWide_up.png',
-		right : '30%',
-		width : '12%',
-		height : '40%'
+		right : '20%',
+		width : '8%',
+		height : '30%'
 	});
 	Infoview.add(gold_imageview);
 
@@ -207,7 +286,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		}
 
 	});
-	Infoview.add(online_label);
+	//Infoview.add(online_label);
 
 	view.add(Infoview);
 
@@ -224,7 +303,8 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		textAlign : 'right',
 		color : '#5afd9b',
 		font : {
-			fontSize : '14dip'
+			fontSize : '12dip',
+			fontWeight : 'bold'
 		},
 		zIndex : 100
 	});
@@ -232,10 +312,11 @@ function FreindAssignQuest(userinfo, friend_uid) {
 
 	// Create a Quest Label.
 	var questLabel = Ti.UI.createLabel({
-		text : 'QUESTS',
+		text : 'Selected Quests',
 		color : '#5AFD9B',
 		font : {
-			fontSize : '14dip'
+			fontSize : '12dip',
+			fontWeight : 'bold'
 		},
 		top : '31%',
 		left : '15%'
@@ -248,7 +329,8 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		text : num_of_quest,
 		color : '#5AFD9B',
 		font : {
-			fontSize : '12dip'
+			fontSize : '12dip',
+			fontWeight : 'bold'
 		},
 		top : '35%',
 		left : '20%'
@@ -257,10 +339,11 @@ function FreindAssignQuest(userinfo, friend_uid) {
 
 	// Create a Quest Label.
 	var timeLimitLabel = Ti.UI.createLabel({
-		text : 'TIME LIMIT',
+		text : 'Time limit (hours)',
 		color : '#5AFD9B',
 		font : {
-			fontSize : '14dip'
+			fontSize : '12dip',
+			fontWeight : 'bold'
 		},
 		top : '31%',
 		right : '15%'
@@ -272,7 +355,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		top : '35%',
 		right : '8%',
 		height : '7%',
-		width : '35%'
+		width : '40%'
 	});
 	view.add(timeLimitView);
 
@@ -297,12 +380,12 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	});
 
 	var timeLimitValueLabel = Ti.UI.createLabel({
-		text : num_of_hours,
+		text : num_of_hours,// + ' HOURS',
 		color : '#5AFD9B',
 		font : {
-			fontSize : '12dip'
+			fontSize : '12dip',
+			fontWeight : 'bold'
 		},
-		left : '25%',
 		textAlign : 'center'
 	});
 	timeLimitView.add(timeLimitValueLabel);
@@ -316,7 +399,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		left : '40%',
 		textAlign : 'center'
 	});
-	timeLimitView.add(hoursLabel);
+	//timeLimitView.add(hoursLabel);
 	var counter = 1;
 	var tabledata = [];
 	var ScreenHeight = Titanium.Platform.displayCaps.platformHeight;
@@ -325,6 +408,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 	var selected_item = [];
 	var httpclientt = require('/ui/common/Functions/function');
 	var _url = "http://bonozo.com:8080/knp/get_all_quests.php";
+	var checkboxImage = [];
 	httpclientt.requestServer({
 		success : function(e) {
 			items_json = JSON.parse(this.responseText);
@@ -332,7 +416,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 				for (var i = 0; i < items_json.Record.length; i++) {
 					var rowView = Titanium.UI.createTableViewRow({
 						backgroundImage : '/assets/listQuest001_up.png',
-						height : rowViewHeight + 'px',
+						height : (osname === 'iphone' || osname === 'ipad')?'37%':(rowViewHeight + 'px'),
 						quest_id : items_json.Record[i].QUEST_ID,
 						backgroundColor : '#0b4129',
 						quest_name : items_json.Record[i].QUEST_NAME,
@@ -345,11 +429,13 @@ function FreindAssignQuest(userinfo, friend_uid) {
 						// alert(e.row.quest_id+":"+e.row.selected);
 						if (e.row.selected == true) {
 							e.row.selected = false;
+							checkboxImage[e.row.index].image = '/assets/tradeToggle_no.png';
 							//e.row.backgroundColor = '';
 							delete selected_item[e.row.index];
 							num_of_quest--;
 						} else {
 							e.row.selected = true;
+							checkboxImage[e.row.index].image = '/assets/tradeToggle_yes.png';
 							//e.row.backgroundColor = '#0b4129';
 							selected_item[e.row.index] = e.row.quest_id;
 							num_of_quest++;
@@ -358,51 +444,60 @@ function FreindAssignQuest(userinfo, friend_uid) {
 
 					});
 
-					if(items_json.Record[i].QUEST_NAME == 'Archery'){
+					if (items_json.Record[i].QUEST_NAME == 'Archery') {
 						quest_image = '/assets/iconArchery.png';
-					}
-					else if(items_json.Record[i].QUEST_NAME == 'Sonnet'){
+					} else if (items_json.Record[i].QUEST_NAME == 'Sonnet') {
 						quest_image = '/assets/iconSonnet.png';
-					}
-					else if(items_json.Record[i].QUEST_NAME == 'Joust'){
+					} else if (items_json.Record[i].QUEST_NAME == 'Joust') {
 						quest_image = '/assets/iconJoust.png';
-					}
-					else if(items_json.Record[i].QUEST_NAME == 'Cooking'){
+					} else if (items_json.Record[i].QUEST_NAME == 'Cooking') {
 						quest_image = '/assets/iconThickBook.png';
 					}
-					
 
 					var rowImg = Ti.UI.createImageView({
 						image : quest_image,
 						height : rowViewHeight + 'px',
-						left : '28%'
+						left : '5%',
+						top : '5%'
 					});
-					rowView.add(rowImg);
+					// Create an ImageView.
+					checkboxImage[i] = Ti.UI.createImageView({
+						image : '/assets/tradeToggle_no.png',
+						width : '8%',
+						left : '2%',
+						top : '10%'
+					});
+					rowView.add(checkboxImage[i]);
+
+					//rowView.add(rowImg);
 					var quest_counter = Ti.UI.createLabel({
-						text : 'QUEST '+counter,
+						text : 'QUEST ' + counter,
 						color : '#083322',
 						font : {
-							fontSize : '12dip'
+							fontSize : '10dip',
+							fontWeight : 'bold'
 						},
-						bottom : '0',
-						left : '5%'
+						bottom : '8%',
+						left : '2%'
 					});
 					rowView.add(quest_counter);
 					var questname_label = Ti.UI.createLabel({
 						text : items_json.Record[i].QUEST_NAME,
 						color : '#5AFD9B',
 						font : {
-							fontSize : '16dip'
+							fontSize : '18dip',
+							fontWeight : 'bold'
 						},
-						top : '0',
-						left : '50%'
+						top : '10%',
+						left : '12%'
 					});
 					rowView.add(questname_label);
 					var questdesc_label = Ti.UI.createLabel({
 						text : items_json.Record[i].QUEST_DESCRIPTION,
 						color : '#5AFD9B',
 						font : {
-							fontSize : '16dip'
+							fontSize : '14dip',
+							fontWeight : 'bold'
 						},
 						right : '0%'
 					});
@@ -414,16 +509,17 @@ function FreindAssignQuest(userinfo, friend_uid) {
 						font : {
 							fontSize : '12dip'
 						},
-						bottom : '0',
-						left : '45%'
+						bottom : '3%'
+						//left : '45%'
 					});
 					rowView.add(tap_to_choose_label);
 					counter++;
 					tabledata.push(rowView);
 				}
 
-				var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
-		
+				var tableview = Ti.UI.createTableView({
+					backgroundColor : 'transparent',
+					separatorColor : 'transparent',
 					data : tabledata,
 					width : '100%',
 					height : '28%',
@@ -436,6 +532,11 @@ function FreindAssignQuest(userinfo, friend_uid) {
 			Ti.App.fireEvent('update_xp', {
 				clicked_item : 'StatusScreen'
 			});
+			content_loads++;
+			if(content_loads >= 2){
+				activityIndicator.hide();
+				activityIndicatorView.visible = false;
+			}
 		},
 		method : 'GET',
 		contentType : 'text/xml',
@@ -447,23 +548,47 @@ function FreindAssignQuest(userinfo, friend_uid) {
 		top : "70%",
 		width : "80%",
 		height : "12%",
-		image : '/assets/inputButton002_up.png'
+		image : '/assets/inputButton002_up.png',
+		zIndex : 800
 	});
 	var name_text = Titanium.UI.createTextField({
 		color : '#5AFD9B',
-		left : "25%",
+		// left : "15%",
 		top : "70%",
 		width : "70%",
 		hintText : "Your Message",
 		height : "12%",
 		paddingLeft : '3',
-		backgroundColor : 'transparent'
+		backgroundColor : 'transparent',
+		zIndex : 900
 	});
 	view.add(namescroll);
 	view.add(name_text);
+	if (osname === 'iphone' || osname === 'ipad') {
+		name_text.addEventListener('focus', function() {
+			namescroll.animate({
+				top : getPixelFromPercent('y', 40),
+				duration : 500
+			});
+			name_text.animate({
+				top : getPixelFromPercent('y', 40),
+				duration : 500
+			});
+		});
+		name_text.addEventListener('blur', function() {
+			namescroll.animate({
+				top : '70%',
+				duration : 500
+			});
+			name_text.animate({
+				top : '70%',
+				duration : 500
+			});
+		});
+	}
 
-
-	var assign_quest = Ti.UI.createButton({ color: '#761f56',
+	var assign_quest = Ti.UI.createButton({
+		color : '#761f56',
 		backgroundGradient : {
 			type : 'linear',
 			colors : [' #A42B76', '#E39bc8'],
@@ -478,16 +603,15 @@ function FreindAssignQuest(userinfo, friend_uid) {
 			backFillStart : false
 		},
 		font : {
-			fontSize : '9dip'
+			fontSize : '16dip',
+			fontWeight : 'bold'
 		},
 		borderColor : '#A42B76',
 		borderRadius : '2',
-		font : {
-			fontSize : '9dip'
-		},
-		title : 'ASSIGN QUESTS',
+		title : 'Assign Quest',
 		height : '6.5%',
-		bottom : '10%'
+		bottom : '11%',
+		width : '35%'
 	});
 	view.add(assign_quest);
 	assign_quest.addEventListener('click', function(e) {
@@ -521,9 +645,7 @@ function FreindAssignQuest(userinfo, friend_uid) {
 					case 0:
 						//actInd.show();
 						//var assign_quest_url = "http://bonozo.com:8080/knp/assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "" + "&assign_to_uid=" + friendJson.UID + "" + "&quest_ids=" + e.source.quest_id + "&message=N/A";
-						var assign_quest_url = "http://bonozo.com:8080/knp/knp_assign_quests.php?assign_by_uid=" + userinfo.Record[0].UID + 
-						"&assign_to_uid=" + friend_uid + "&quest_ids=" + quest_ids + 
-						"&message="+ Ti.Network.encodeURIComponent(name_text.value)	+"&num_of_hours="+num_of_hours+"&status=INCOMPLETE&user_id="+user_id+"";
+						var assign_quest_url = "http://bonozo.com:8080/knp/knp_assign_quests.php?assign_by_uid=" + userinfo.Record[0].UID + "&assign_to_uid=" + friend_uid + "&quest_ids=" + quest_ids + "&message=" + Ti.Network.encodeURIComponent(name_text.value) + "&num_of_hours=" + num_of_hours + "&status=INCOMPLETE&user_id=" + user_id + "";
 						var httpclientt = require('/ui/common/Functions/function');
 						httpclientt.requestServer({
 							success : function(e) {
@@ -531,19 +653,18 @@ function FreindAssignQuest(userinfo, friend_uid) {
 								if (items_json.Record != undefined) {
 									if (items_json.Record[0].Message != '') {
 
-                                        var alertDialog = Titanium.UI.createAlertDialog({
-                                            title : 'Assigned Quest.',
-                                            message : items_json.Record[0].Message,
-                                            buttonNames : ['OK']
-                                        });
-                                        alertDialog.show();
-                                        alertDialog.addEventListener('click', function(e) {
-                                            self.close();
-                                        }); 
+										var alertDialog = Titanium.UI.createAlertDialog({
+											title : 'Assigned Quest.',
+											message : items_json.Record[0].Message,
+											buttonNames : ['OK']
+										});
+										alertDialog.show();
+										alertDialog.addEventListener('click', function(e) {
+											self.close();
+										});
 
 										name_text.value = '';
-										
-																			
+
 										//actInd.hide();
 									}
 								}
@@ -570,7 +691,6 @@ function FreindAssignQuest(userinfo, friend_uid) {
 
 	});
 
-
 	var avatar_info = "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID;
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
@@ -580,9 +700,9 @@ function FreindAssignQuest(userinfo, friend_uid) {
 				var Footer = require('ui/common/menus/Footer');
 				var footer = Footer(items_json);
 				view.add(footer);
-					Ti.App.fireEvent('update_footer', {
-						clicked_item : 'FriendRequestAction'
-					});
+				Ti.App.fireEvent('update_footer', {
+					clicked_item : 'FriendRequestAction'
+				});
 
 			}
 

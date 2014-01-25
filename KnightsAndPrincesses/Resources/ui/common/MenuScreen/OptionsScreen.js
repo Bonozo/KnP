@@ -292,7 +292,7 @@ function OptionsScreen(userinfo) {
 	});
 
 	var version_label = Titanium.UI.createLabel({
-		text : 'v0.4.05',
+		text : 'v0.5.6',
 		bottom : '16%',
 		left : '84.8%',
 		textAlign : 'center',
@@ -309,7 +309,7 @@ function OptionsScreen(userinfo) {
 		width : '0.%',
 		bottom : '0%',
 		left : '0%',
-		image : '/assets/1.png',
+		image : '/assets/1.png'
 		//bottom : '0%'
 		//zIndex : 500
 	});
@@ -321,7 +321,6 @@ function OptionsScreen(userinfo) {
 		//left : '0',
 		top : '5%',
 		zIndex : 500
-
 	});
 	view.add(user_appearence_view);
 	var counter = 1;
@@ -510,12 +509,10 @@ function OptionsScreen(userinfo) {
 	view.add(button);
 	*/
 	///ui for option screen
-
-	var sound_settings = (Ti.App.Properties.getString('knp_sound') == undefined || Ti.App.Properties.getString('knp_sound') == '' || Ti.App.Properties.getString('knp_sound') == null)?'ON':Ti.App.Properties.getString('knp_sound');
 	var sound_button = Titanium.UI.createButton({ color: '#761f56',
 		top : "7%",
 		height : "10%",
-		title : "SOUND " + sound_settings,
+		title : "SOUND " + Ti.App.Properties.getString('knp_sound', 'OFF'),
 		width : "60%",
 		/*        borderColor : "#a42b76",
 		 borderRadius : 6,
@@ -537,7 +534,7 @@ function OptionsScreen(userinfo) {
 		backgroundImage : '/assets/button_smallLong_UP.png'
 	});
 	sound_button.addEventListener('click',function(e){
-		Ti.App.Properties.setString('knp_sound', ((Ti.App.Properties.getString('knp_sound') == 'ON')?'OFF':'ON'));
+		Ti.App.Properties.setString('knp_sound', ((Ti.App.Properties.getString('knp_sound', 'ON') == 'ON')?'OFF':'ON'));
 		sound_button.title = "SOUND " + Ti.App.Properties.getString('knp_sound');
 	});
 	
@@ -799,10 +796,11 @@ function OptionsScreen(userinfo) {
 	view.add(Logout_button);
 	Logout_button.addEventListener('click',function(){
 		Ti.App.Properties.setBool('signed_in',false);
-		Ti.App.fireEvent('close_window');
-		var LoginScreen = require('ui/handheld/android/LoginWindow');
-		var LoginScreen = new LoginScreen();
-		LoginScreen.open();
+		Ti.App.fireEvent("close_window");
+		// Ti.App.fireEvent('close_window');
+		// var LoginScreen = require('ui/handheld/android/LoginWindow');
+		// var LoginScreen = new LoginScreen();
+		// LoginScreen.open();
 	});
 	////ui for option screen
 	/*

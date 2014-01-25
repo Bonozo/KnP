@@ -175,7 +175,7 @@ function Customization(json, name) {
     });
     customization_win.add(down_arrow_image);
     down_arrow_image.addEventListener('click', function(e) {
-        alert("down arrow clicked")
+        alert("down arrow clicked");
     });
     var next_arrow_image = Titanium.UI.createImageView({
         bottom : '0%',

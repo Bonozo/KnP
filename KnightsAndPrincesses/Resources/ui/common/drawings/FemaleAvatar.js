@@ -51,7 +51,7 @@ function FemaleAvatar(config) {
 
 	var label = Titanium.UI.createLabel({
 		text : 'loading...',
-		visible : (config.thumb != undefined)?false:true
+		visible : true//(config.thumb != undefined)?false:true
 	});
 	view.add(label);
 	

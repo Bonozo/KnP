@@ -25,12 +25,12 @@ function sortfreind(userinfo, coininfo) {
 			bgcolor = '#662e53';
 			ch_image = '/assets/female_icon.png';
 			status_text = 'Online';
-			status_image = '/assets/online.png'
+			status_image = '/assets/online.png';
 		} else {
 			bgcolor = '#346e9d';
 			ch_image = '/assets/male_icon.png';
 			status_text = 'Offline';
-			status_image = '/assets/offline.png'
+			status_image = '/assets/offline.png';
 		}
 
 		if (i < 3) {

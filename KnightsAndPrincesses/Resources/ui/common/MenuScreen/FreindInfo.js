@@ -1,22 +1,22 @@
 function FreindInfo(userinfo, friendinfo) {
 
+	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
+	var screenHeight = Titanium.Platform.displayCaps.platformHeight;
+    function getPixelFromPercent(axis, percent) {
+        if (axis == 'x') {
+            return screenWidth * percent / 100;
+        } else if (axis == 'y') {
+            return screenHeight * percent / 100;
+        }
+    }
+
 	var self = Ti.UI.createWindow({
 		orientation : Ti.UI.PORTRAIT,
 		navBarHidden : true,
 		fullscreen : true
 	});
 	self.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
-	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
-	var screenHeight = Titanium.Platform.displayCaps.platformHeight;
 	var main_view = Ti.UI.createView();
-
-    function getPixelFromPercent(axis, percent) {
-        if (axis == 'x') {
-            return winWidth * percent / 100;
-        } else if (axis == 'y') {
-            return winHeight * percent / 100;
-        }
-    }
 
 	var activityIndicatorView = Titanium.UI.createView({
 		backgroundColor : '#FFFFFF',
@@ -24,8 +24,10 @@ function FreindInfo(userinfo, friendinfo) {
 		borderColor : '#333333',
 		borderWidth : '5dip',
 		visible : false,
+		left : getPixelFromPercent('x', 50) - (screenWidth / 4),
+		top : getPixelFromPercent('x', 42),
 		height : '8%',
-		width : (screenWidth/2),
+		width : (screenWidth / 2),
 		zIndex : 700
 	});
 	var activityIndicator = Ti.UI.createActivityIndicator({
@@ -36,13 +38,18 @@ function FreindInfo(userinfo, friendinfo) {
 			fontWeight : 'bold'
 		},
 		message : 'Loading...',
-		style : (Ti.Platform.name === 'iPhone OS')?Ti.UI.iPhone.ActivityIndicatorStyle.DARK:Ti.UI.ActivityIndicatorStyle.DARK,
+		style : (Ti.Platform.name === 'iPhone OS') ? Ti.UI.iPhone.ActivityIndicatorStyle.DARK : Ti.UI.ActivityIndicatorStyle.DARK,
 		height : '100%',
 		width : '100%'
 	});
-	// activityIndicator.message = 'Loading...';
 	activityIndicatorView.add(activityIndicator);
 	self.add(activityIndicatorView);
+	
+	(function(){
+		activityIndicator.show();
+		activityIndicatorView.visible = true;
+		activityIndicator.message = "Loading...";
+	})();
 
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 
@@ -200,15 +207,9 @@ function FreindInfo(userinfo, friendinfo) {
 	});
 
 	assign_quest_label.addEventListener('click', function(e) {
-		activityIndicator.show();
-		activityIndicatorView.visible = true;
 		var FriendQuest = require('/ui/common/MenuScreen/FreindAssignQuest');
 		var friendquest = FriendQuest(userinfo, friendinfo.UID);
 		friendquest.open();
-		friendquest.addEventListener('open',function(e){
-			activityIndicator.hide();
-			activityIndicatorView.visible = false;
-		});
 	});
 	QuestView.add(assign_quest_label);
 	view.add(QuestView);
@@ -219,6 +220,9 @@ function FreindInfo(userinfo, friendinfo) {
 	httpclientt.requestServer({
 
 		success : function(e) {
+			activityIndicator.hide();
+			activityIndicatorView.visible = false;
+
 			var friend_json = JSON.parse(this.responseText);
 			friend_status_lbl = friend_json.Record[0].STATUS_MESSAGE + ' \n LVL ' + friend_json.Record[0].LEVEL;
 			var friendsstatus_label = Titanium.UI.createLabel({
@@ -239,8 +243,8 @@ function FreindInfo(userinfo, friendinfo) {
 			});
 			var messages_button = Ti.UI.createButton({ color: '#761f56',
 				backgroundImage : '/assets/button_small_UP.png',
-				top : '19.8%',
-				left : '51.7%',
+				top : '30%',
+				right : '5%',
 				width : '21.5%',
 				height : '5%',
 				title : 'Messages',
@@ -355,8 +359,8 @@ function FreindInfo(userinfo, friendinfo) {
 
 	var unFriends_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_small_UP.png',
-		top : '19.8%',
-		left : '10%',
+		top : '22%',
+		right : '5%',
 		width : '21.5%',
 		height : '5%',
 		title : 'Unfriend',
@@ -416,11 +420,65 @@ function FreindInfo(userinfo, friendinfo) {
 		});
 
 	});
-	view.add(unFriends_button);
+	var friends_button = Ti.UI.createButton({ color: '#761f56',
+		backgroundImage : '/assets/button_small_UP.png',
+		top : '22%',
+		right : '5%',
+		width : '32%',
+		height : '5%',
+		title : 'Add friend',
+		font : {
+			fontSize : '10dip'
+		},
+		zIndex : 50
+	});
+	friends_button.addEventListener('click', function(e) {
+
+		var ConfirmationAlert = Titanium.UI.createAlertDialog({
+			title : 'You must have atleast 5 golds to send request.',
+			message : 'Are you Sure?',
+			buttonNames : ['Yes', 'No'],
+			cancel : 1
+		});
+
+		//actInd.show();
+		var _url = "http://bonozo.com:8080/knp/send_friend_request.php?uid=" + userinfo.Record[0].UID + "&friend_uid=" + friendinfo.UID + "&user_id=" + friendinfo.USER_ID + "";
+		var items_json = "";
+		var items_length = 0;
+		var httpclientt = require('/ui/common/Functions/function');
+		httpclientt.requestServer({
+			success : function(e) {
+				items_json = JSON.parse(this.responseText);
+				items_length = items_json.Record.length;
+				if (items_json.Record != undefined) {
+					//alert(userinfo.Record[0].EMAIL+":"+userinfo.Record[0].NAME+":"+user_id);
+
+					//actInd.hide();
+
+					// _assign_quest_id = items_json.Record[0].assign_quest_id;
+					// hideLoader();
+					var ConfirmationAlert = Titanium.UI.createAlertDialog({
+						title : 'Message',
+						message : items_json.Record[0],
+						buttonNames : ['OK'],
+						cancel : 0
+					});
+					ConfirmationAlert.addEventListener('click', function(e) {
+						self.close();
+					});
+					ConfirmationAlert.show();
+				}
+			},
+			method : 'GET',
+			contentType : 'text/xml',
+			url : _url,
+		});
+
+	});
 
 	var isFriends = function(callback) {
 		var httpclientt = require('/ui/common/Functions/function');
-		_url = "http://bonozo.com:8080/knp/is_friend.php?uid1=" + userinfo.Record[0].UID + "&uid2=" + friend_uid;
+		_url = "http://bonozo.com:8080/knp/is_friend.php?uid1=" + userinfo.Record[0].UID + "&uid2=" + friendinfo.UID;
 		httpclientt.requestServer({
 			success : function(e) {
 				items_json = JSON.parse(this.responseText);
@@ -436,11 +494,18 @@ function FreindInfo(userinfo, friendinfo) {
 			url : _url,
 
 		});
-	}
-	/*
-	 isFriends(function(bool){
+	};
+	(function(){
+	 isFriends(function(is_friend){
+	 	if(is_friend == "true"){
+			view.add(unFriends_button);
+	 	}
+	 	else{
+			view.add(friends_button);
+	 	}
 	 });
-	 */
+	})();
+
 	var Message_imageview = Titanium.UI.createImageView({
 		url : '/assets/iconReturn.png',
 		height : '5.2%',

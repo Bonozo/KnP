@@ -203,7 +203,7 @@ function GiftNotifications(userinfo) {
 							zIndex : 10
 						});
 					}
-					rowView.addEventListener('longclick', function(e) {
+					rowView.addEventListener('longpress', function(e) {
 
 						Titanium.Media.vibrate();
 						var RemoveNotification = require('/ui/common/MenuScreen/RemoveNotification');
@@ -213,7 +213,7 @@ function GiftNotifications(userinfo) {
 						});
 					});
 					var gift_label = Ti.UI.createLabel({
-						text : items_json.Record[i].SENDER_NAME, // + ' sent you a '+items_json.Record[i].GIFT_NAME,
+						text : items_json.Record[i].SENDER_NAME + ' sent you a ' + items_json.Record[i].GIFT_NAME,
 						font : {
 							fontSize : '20dip'
 						},
@@ -225,13 +225,14 @@ function GiftNotifications(userinfo) {
 					var gift_type = Ti.UI.createLabel({
 						text : ' sent you a ' + items_json.Record[i].GIFT_NAME,
 						font : {
+							fontWeight : 'bold',
 							fontSize : '16dip'
 						},
 						color : '#b3fad0',
 						left : '31%',
 						top : '14.5%'
 					});
-					rowView.add(gift_type);
+					// rowView.add(gift_type);
 
 					var time_label = Ti.UI.createLabel({
 						text : 'at ' + items_json.Record[i].DATETIME,

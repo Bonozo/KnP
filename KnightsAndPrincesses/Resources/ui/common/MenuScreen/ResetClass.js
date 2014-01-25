@@ -1,4 +1,5 @@
 function ResetClass(userinfo) {
+	var osname = Ti.Platform.osname;
 	var gender = 'm';
 	var images_counter = 0;
 	function hideLoader() {
@@ -18,12 +19,12 @@ function ResetClass(userinfo) {
 			type : 'linear',
 			colors : ['#3258ad', '#010f49'],
 			startPoint : {
-				x : 0,
-				y : 0
+				x : '0%',
+				y : '0%'
 			},
 			endPoint : {
-				x : 2,
-				y : 500
+				x : '0%',
+				y : '100%'
 			},
 			backFillStart : false
 		},
@@ -58,8 +59,9 @@ function ResetClass(userinfo) {
 	chooseclass_win.add(header_label);
 
 	var male_image = Titanium.UI.createImageView({
-		top : "15%",
-		image : '/assets/K_fullbody_bad.png'
+		top : "10%",
+		image : '/assets/k_fullbody_bad.png',
+		zIndex : 5
 		//height:"85%"
 	});
 	male_image.addEventListener('load', function(e) {
@@ -68,11 +70,12 @@ function ResetClass(userinfo) {
 
 	chooseclass_win.add(male_image);
 	var right_arrow = Titanium.UI.createImageView({
-		top : "35%",
+		top : "30%",
 		left : "60%",
 		width : "25%",
 		height : "20%",
-		image : "/assets/iconControlArrowLeft.png"
+		image : "/assets/iconControlArrowLeft.png",
+		zIndex : 10
 	});
 	chooseclass_win.add(right_arrow);
 	right_arrow.addEventListener('load', function(e) {
@@ -84,7 +87,8 @@ function ResetClass(userinfo) {
 		right : '0%',
 		image : '/assets/iconNextArrow.png',
 		height : '10%',
-		width : '35%'
+		width : '35%',
+		zIndex : 10
 	});
 	chooseclass_win.add(next_arrow);
 	next_arrow.addEventListener('load', function(e) {
@@ -99,30 +103,50 @@ function ResetClass(userinfo) {
 		image : '/assets/overlayNameScroll.png'
 	});
 	var name_text = Titanium.UI.createTextField({
-		left : "25%",
-		top : "56%",
+		left : "15%",
+		top : "46%",
 		width : "70%",
 		hintText : "Name",
 		height : "15%",
 		paddingLeft : '3',
-		backgroundColor : 'transparent'
+		backgroundColor : 'transparent',
+		backgroundImage : '/assets/overlayNameScroll.png',
+		paddingLeft : 40,
+		paddingRight : 30,
+		zIndex : 20
 	});
-	chooseclass_win.add(namescroll);
+	//chooseclass_win.add(namescroll);
 	chooseclass_win.add(name_text);
+	if (osname === 'iphone' || osname === 'ipad') {
+		name_text.addEventListener('focus', function() {
+			name_text.animate({
+				top : "40%",
+				duration : 500
+			});
+		});
+		name_text.addEventListener('blur', function() {
+			name_text.animate({
+				top : "46%",
+				duration : 500
+			});
+		});
+	}
 
 
 	var female_image = Titanium.UI.createImageView({
-		top : "15%",
+		top : "10%",
 		right : 0,
 		image : '/assets/hdpi_female_character.png',
+		zIndex : 5
 	});
 	var left_arrow = Titanium.UI.createImageView({
-		top : "40%",
+		top : "30%",
 		left : "10%",
 		visible : false,
 		width : "25%",
 		height : "20%",
-		image : "/assets/iconControlArrowRight.png"
+		image : "/assets/iconControlArrowRight.png",
+		zIndex : 10
 	});
 	left_arrow.addEventListener('load', function(e) {
 		hideLoader();
@@ -138,7 +162,7 @@ function ResetClass(userinfo) {
 	left_arrow.hide();
 	chooseclass_win.add(right_arrow);
 	left_arrow.addEventListener('click', function(e) {
-		male_image.image = '/assets/K_fullbody_bad.png';
+		male_image.image = '/assets/k_fullbody_bad.png';
 		gender = 'm';
 		left_arrow.hide();
 		right_arrow.show();

@@ -1,5 +1,54 @@
 function ProgressBar(userinfo_json) {
 	//alert(userinfo_json.LEVEL);
+	var countDown = function(h, m, s, _instance_index, fn_tick, fn_end) {
+		return {
+			total_sec : h * 60 * 60 + m * 60 + s,
+			timer : this.timer,
+			instance_index : _instance_index,
+			set : function(h, m, s) {
+				this.total_sec = parseInt(h) * 60 * 60 + parseInt(m) * 60 + parseInt(s);
+				this.time = {
+					h : h,
+					m : m,
+					s : s
+				};
+				return this;
+			},
+			start : function() {
+				var self = this;
+				this.timer = setInterval(function() {
+					//alert('running');
+					if (self.total_sec) {
+						self.total_sec--;
+						var hour = parseInt(self.total_sec / (60 * 60));
+						var min = (self.total_sec - (parseInt(hour * (60 * 60))) - (self.total_sec % 60)) / 60;
+
+						self.time = {
+							h : parseInt(self.total_sec / (60 * 60)),
+							m : parseInt(min),
+							s : (self.total_sec % 60)
+						};
+						fn_tick(self.time.h + ":" + self.time.m + ":" + self.time.s, self.instance_index);
+					} else {
+						self.stop();
+						fn_end(self.instance_index);
+					}
+				}, 1000);
+				return this;
+			},
+			stop : function() {
+				clearInterval(this.timer);
+				this.time = {
+					h : 0,
+					m : 0,
+					s : 0
+				};
+				this.total_sec = 0;
+				return this;
+			}
+		};
+	};
+	var current_energy = 0;
 	function updateEnergyAndXP(userinfo_json) {
 		var xp_max_val = userinfo_json.Record[0].LEVEL * 1000 + 1000, energy_max_val = userinfo_json.Record[0].LEVEL * 1000;
 		var XPBar = ((userinfo_json.Record[0].XP / xp_max_val) * 100);
@@ -9,14 +58,16 @@ function ProgressBar(userinfo_json) {
 		var EnergyBar = ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100);
 		EnergyBar_imageview.width = "" + ((EnergyBar / 100) * 45) + "%";
 		//alert("" + ((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%");
-		energyscore_label.text = "" + parseInt((userinfo_json.Record[0].ENERGY / energy_max_val) * 100) + "%";
+		current_energy = parseInt((userinfo_json.Record[0].ENERGY / energy_max_val) * 100);
+		energyscore_label.text = current_energy + "%";
 		level_label.text = 'LVL ' + userinfo_json.Record[0].LEVEL;
 		statusmsg_label.text = userinfo_json.Record[0].STATUS_MESSAGE;
 	}
-	function updateProgressBar(new_userinfojson){
+
+	function updateProgressBar(new_userinfojson) {
 		updateEnergyAndXP(new_userinfojson);
 		name_label.text = new_userinfojson.Record[0].NAME;
-		charactertype_label.text = (new_userinfojson.Record[0].GENDER == 'm')?"KNIGHT":"PRINCESS";
+		charactertype_label.text = (new_userinfojson.Record[0].GENDER == 'm') ? "KNIGHT" : "PRINCESS";
 	}
 
 	var view = Titanium.UI.createView({
@@ -38,12 +89,11 @@ function ProgressBar(userinfo_json) {
 		}
 	});
 	view.add(name_label);
-    var gender;
-    if(userinfo_json.Record[0].GENDER == 'm'){
-        gender = 'KNIGHT';
-    }
-    else 
-       gender = 'PRINCESS';
+	var gender;
+	if (userinfo_json.Record[0].GENDER == 'm') {
+		gender = 'KNIGHT';
+	} else
+		gender = 'PRINCESS';
 
 	var charactertype_label = Titanium.UI.createLabel({
 		text : gender,
@@ -115,7 +165,7 @@ function ProgressBar(userinfo_json) {
 		text : '1000/1000',
 		top : '30.9%',
 		left : '68%',
-		textAlign :  Ti.UI.TEXT_ALIGNMENT_LEFT,
+		textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
 		color : '#5afd9b',
 		font : {
 			fontSize : '10dip'
@@ -124,7 +174,7 @@ function ProgressBar(userinfo_json) {
 	});
 	view.add(xp_label);
 
-	var energyscore_label = Titanium.UI.createLabel({	
+	var energyscore_label = Titanium.UI.createLabel({
 		text : '1000/1000',
 		top : '60.3%',
 		left : '68%',
@@ -133,10 +183,57 @@ function ProgressBar(userinfo_json) {
 		font : {
 			fontSize : '10dip'
 		}
-
 	});
 	view.add(energyscore_label);
 
+	var energy_countdown_label = Titanium.UI.createLabel({
+		text : '00:00:00',
+		top : '60.3%',
+		right : '6%',
+		textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
+		color : '#5afd9b',
+		font : {
+			fontSize : '10dip'
+		}
+	});
+	view.add(energy_countdown_label);
+	var energy_countdown = function() {
+		var get_next_cron_time_url = "http://bonozo.com:8080/knp/get_next_cron_time.php?uid=" + userinfo_json.Record[0].UID;
+		var httpclientt = require('/ui/common/Functions/function');
+		httpclientt.requestServer({
+			success : function(e) {
+				var time_json = JSON.parse(this.responseText);
+				if (time_json.Record != undefined && time_json.Record.COUNTDOWN != "NULL") {
+					var n = time_json.Record.COUNTDOWN.split(":");
+					var countdown = new countDown(parseInt(n[0]), parseInt(n[1]), parseInt(n[2]), 1, function(curr_time, instance_index) {
+						energy_countdown_label.text = curr_time;
+					}, function(instance_index) {
+						energy_countdown_test();
+					});
+					countdown.start();
+				}
+			},
+			method : 'GET',
+			contentType : 'text/xml',
+			url : get_next_cron_time_url
+		});
+	};
+	var energy_countdown_test = function() {
+		setTimeout(function() {
+			if (current_energy < 100)
+				energy_countdown();
+			else
+				energy_countdown_test();
+		}, 1000);
+	};
+	(function() {
+		energy_countdown_test();
+	})();
+	/*
+	 new countDown(parseInt(n[0]), parseInt(n[1]), parseInt(n[2]), items_json.Record[i].ASSIGN_QUEST_ID, function(curr_time, instance_index) {
+	 questTime[instance_index].text = curr_time;
+	 }, function(instance_index) {
+	 */
 	var level_label = Titanium.UI.createLabel({
 		text : 'Level' + userinfo_json.Record[0].LEVEL,
 		top : '30.9%',
@@ -165,9 +262,9 @@ function ProgressBar(userinfo_json) {
 	view.add(energy_label);
 
 	updateEnergyAndXP(userinfo_json);
-    Ti.App.addEventListener('new_info', function(data) {
-    	updateProgressBar(data.userinfojson);
-    });
+	Ti.App.addEventListener('new_info', function(data) {
+		updateProgressBar(data.userinfojson);
+	});
 
 	Ti.App.addEventListener('update_xp', function(data) {
 		var httpclientt = require('/ui/common/Functions/function');
@@ -182,6 +279,22 @@ function ProgressBar(userinfo_json) {
 			url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfo_json.Record[0].UID + "",
 		});
 	});
+	var osname = Ti.Platform.osname;
+	if (osname === 'iphone' || osname === 'ipad') {
+		var run_service = function() {
+			setTimeout(function() {
+				if (Ti.App.Properties.getString('service_enabled')) {
+					var _uid = Ti.App.Properties.getString('uid');
+					Ti.App.fireEvent('service_notification', {
+						uid : _uid
+					});
+					run_service();
+				}
+				Ti.API.info("service run!");
+			}, 5000);
+		};
+		run_service();
+	}
 	return view;
 };
 

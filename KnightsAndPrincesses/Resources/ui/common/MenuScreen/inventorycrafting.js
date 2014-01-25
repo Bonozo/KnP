@@ -11,28 +11,28 @@ function crafting(userinfojson) {
 	view.add(bottom);
 	var top_imageview = Titanium.UI.createImageView({
 		image : '/assets/overlayPlayerInfoCroped.png',
-		height:'6.4%',
+		height : '6.4%',
 		width : '100%',
 		bottom : '94.6%'
 	});
 	view.add(top_imageview);
 	var name_label = Titanium.UI.createLabel({
-		text : userinfojson.Record[0].NAME,
-		top : '0',
+		text : 'Crafting',
+		top : '0.8%',
 		height : '3.1%',
 		left : '3%',
 		textAlign : 'left',
 		color : '#5afd9b',
 		font : {
 			fontWeight : 'bold',
-			fontSize : '12dip'
+			fontSize : '14dip'
 		}
 	});
 	view.add(name_label);
 
 	var menu_label = Titanium.UI.createLabel({
-		text : 'Crafting',
-		top : '0',
+		text : 'Back',
+		top : '0.8%',
 		height : '3.1%',
 		right : '15.6%',
 		textAlign : 'right',
@@ -62,26 +62,42 @@ function crafting(userinfojson) {
 			items_json = JSON.parse(this.responseText);
 			items_length = items_json.Record.length;
 			if (items_json.Record != undefined) {
-				var rowViewHeight = screenWidth * 0.136;
+				var rowViewHeight = screenWidth * 0.15;
 				var tabledata = [];
 
 				for (var i = 0; i < items_json.Record.length; i++) {
 					var rowView = Ti.UI.createTableViewRow({
-						height : rowViewHeight
+						height : rowViewHeight,
+						craft_ingredients : items_json.Record[i].INGREDIENTS,
+						craft_name : items_json.Record[i].CRAFT_NAME
 					});
 
+					rowView.addEventListener('click', function(e) {
+						//ShowCraftingRecipe
+
+						// var ShowCraftingRecipe = require('ui/common/MenuScreen/ShowCraftingRecipe');
+						// var showcraftingrecipe = new ShowCraftingRecipe(e.row.craft_name, e.row.craft_ingredients);
+						// showcraftingrecipe.open({
+							// modal : true
+						// });
+
+						// for (var key in e.row.craft_ingredients) {
+							// // if(e.source.craft_ingredients.hasOwnP)
+							// alert(key + " : " + e.row.craft_ingredients[key]);
+						// }
+					});
 					var return_imageview = Titanium.UI.createImageView({
-						image : '/assets/inv_128/'+items_json.Record[i].IMAGE+'.png',
+						image : '/assets/inv_128/' + items_json.Record[i].IMAGE + '.png',
 						width : '13%',
-						top : '5px',
+						//top : '5px',
 						left : '5px'
 					});
 					rowView.add(return_imageview);
 
 					var rowviewtext_label = Ti.UI.createLabel({
-						text : items_json.Record[i].CRAFT_NAME + "\n" + items_json.Record[i].CRAFT_DESCRIPTION,
+						text : items_json.Record[i].CRAFT_NAME + "",// + "\n" + items_json.Record[i].CRAFT_DESCRIPTION,
 						font : {
-							fontSize : '10dip'
+							fontSize : '14dip'
 						},
 						color : '#5afd9b',
 						left : '15%',
@@ -90,41 +106,75 @@ function crafting(userinfojson) {
 					rowView.add(rowviewtext_label);
 
 					// var redflower_imageview = Titanium.UI.createImageView({
-						// image : '/assets/redflower.png',
-						// width : '9%',
-						// top : '5px',
-						// left : '62%'
+					// image : '/assets/redflower.png',
+					// width : '9%',
+					// top : '5px',
+					// left : '62%'
 					// });
 					// rowView.add(redflower_imageview);
 
 					// var plus_label = Ti.UI.createLabel({
-						// text : '+',
-						// font : {
-							// fontSize : '13dip'
-						// },
-						// color : '#5afd9b',
-						// left : '72%',
-						// width : '3%'
+					// text : '+',
+					// font : {
+					// fontSize : '13dip'
+					// },
+					// color : '#5afd9b',
+					// left : '72%',
+					// width : '3%'
 					// });
 					// rowView.add(plus_label);
 
 					// var coins_imageview = Titanium.UI.createImageView({
-						// image : '/assets/iconGold.png',
-						// width : '7%',
-						// top : '5px',
-						// left : '78%'
+					// image : '/assets/iconGold.png',
+					// width : '7%',
+					// top : '5px',
+					// left : '78%'
 					// });
 					// rowView.add(coins_imageview);
 
-					var craft_imageview = Titanium.UI.createImageView({
-						image : '/assets/buttonCraftEXAMPLE.png',
-						width : '10%',
+					var details_button = Titanium.UI.createButton({
+						color : '#761f56',
+						backgroundImage : '/assets/button_small_UP.png',
+						width : '20%',
+						height : '60%',
+						title : 'Details',
 						craft_id : items_json.Record[i].CRAFT_ID,
 						craft_name : items_json.Record[i].CRAFT_NAME,
-						top : '15px',
-						left : '86%'
+						font : {
+							fontSize : 14,
+							fontWeight : "bold"
+						},
+						right : '22%',
+						craft_ingredients : items_json.Record[i].INGREDIENTS,
+						craft_name : items_json.Record[i].CRAFT_NAME,
+						craft_description : items_json.Record[i].CRAFT_DESCRIPTION
 					});
-					craft_imageview.addEventListener('click', function(e) {
+					rowView.add(details_button);
+					details_button.addEventListener('click', function(e){
+
+						var ShowCraftingRecipe = require('ui/common/MenuScreen/ShowCraftingRecipe');
+						var showcraftingrecipe = new ShowCraftingRecipe(e.source.craft_name, e.source.craft_description, e.source.craft_ingredients);
+						showcraftingrecipe.open({
+							modal : true
+						});
+					});
+
+					var crafting_button = Titanium.UI.createButton({
+						color : '#761f56',
+						backgroundImage : '/assets/button_small_UP.png',
+						width : '20%',
+						height : '60%',
+						title : 'Craft',
+						craft_id : items_json.Record[i].CRAFT_ID,
+						craft_name : items_json.Record[i].CRAFT_NAME,
+						font : {
+							fontSize : 14,
+							fontWeight : "bold"
+						},
+						right : '1%'
+					});
+					rowView.add(crafting_button);
+					crafting_button.addEventListener('click', function(e) {
 						var ConfirmationAlert = Titanium.UI.createAlertDialog({
 							title : 'Click \'Yes\' to create ' + e.source.craft_name + '.',
 							message : 'Sure?',
@@ -156,8 +206,7 @@ function crafting(userinfojson) {
 													Ti.App.fireEvent('update_inv_grid', {
 													});
 													//actInd.hide();
-												}
-												else  if (items_json.Record.Error != undefined){
+												} else if (items_json.Record.Error != undefined) {
 													alert(items_json.Record.Error);
 													//actInd.hide();
 												}
@@ -189,17 +238,18 @@ function crafting(userinfojson) {
 						ConfirmationAlert.show();
 						//alert(e.source.craft_id);
 					});
-					rowView.add(craft_imageview);
 
 					tabledata.push(rowView);
 				}//end of for loop
 
-				var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
-		
+				var tableview = Ti.UI.createTableView({
+					backgroundColor : 'transparent',
+					separatorColor : 'transparent',
+
 					data : tabledata,
 					width : '100%',
 					height : '70.3%',
-					top : '15%'
+					top : '8%'
 				});
 				view.add(tableview);
 				//actInd.hide();
@@ -211,41 +261,40 @@ function crafting(userinfojson) {
 		url : "http://bonozo.com:8080/knp/get_craft_ingredients.php",
 
 	});
-    var httpclientt = require('/ui/common/Functions/function');
-    httpclientt.requestServer({
-        success : function(e) {
-            var userinfo = JSON.parse(this.responseText);
-            if (userinfo.Record != undefined) {
-                var Footer = require('ui/common/menus/Footer');
-                var footer = new Footer(userinfo);
-                view.add(footer);
-            }
-        },
-        method : 'GET',
-        contentType : 'text/xml',
-        url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfojson.Record[0].UID + "",
-    });
-	
-
-/*
-	var UP_imageview = Titanium.UI.createImageView({
-		image : '/assets/iconControlArrowUp.png',
-		width : '12.5%',
-		top : '10.3%',
-		height : "10%",
-		left : '44.4%'
+	var httpclientt = require('/ui/common/Functions/function');
+	httpclientt.requestServer({
+		success : function(e) {
+			var userinfo = JSON.parse(this.responseText);
+			if (userinfo.Record != undefined) {
+				var Footer = require('ui/common/menus/Footer');
+				var footer = new Footer(userinfo);
+				view.add(footer);
+			}
+		},
+		method : 'GET',
+		contentType : 'text/xml',
+		url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfojson.Record[0].UID + "",
 	});
-	view.add(UP_imageview);
 
-	var down_imageview = Titanium.UI.createImageView({
-		image : '/assets/iconControlArrowDown.png',
-		width : '12.5%',
-		height : "10%",
-		top : '82%',
-		left : '44.4%'
-	});
-	view.add(down_imageview);
-*/
+	/*
+	 var UP_imageview = Titanium.UI.createImageView({
+	 image : '/assets/iconControlArrowUp.png',
+	 width : '12.5%',
+	 top : '10.3%',
+	 height : "10%",
+	 left : '44.4%'
+	 });
+	 view.add(UP_imageview);
+
+	 var down_imageview = Titanium.UI.createImageView({
+	 image : '/assets/iconControlArrowDown.png',
+	 width : '12.5%',
+	 height : "10%",
+	 top : '82%',
+	 left : '44.4%'
+	 });
+	 view.add(down_imageview);
+	 */
 	view.addEventListener('android:back', function(e) {
 		//alert("asd")
 		view.close();

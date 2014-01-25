@@ -1,13 +1,25 @@
 function AvatarByGold(userinfo, tabledata, rowView, callback) {
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
+	var gold_table_id = getRandomInt(1, 90000);
 	var gender = '';
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var items_json = "";
 	var items_length = 0;
-	var tableview = "";
+	var tableview = Ti.UI.createTableView({
+		backgroundColor : 'transparent',
+		separatorColor : 'transparent',
+		width : '100%',
+		height : '66%',
+		top : '2%'
+	});
 	// var rowView = [];
 	//var tabledata = [];
+	rowView.length = 0;
 	var avatar_images = [];
-	var AvatarThumbnail = require('/ui/common/drawings/AvatarThumbnail');
+	var AvatarGoldThumbnail = require('/ui/common/drawings/AvatarThumbnail');
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
 		success : function(e) {
@@ -33,7 +45,7 @@ function AvatarByGold(userinfo, tabledata, rowView, callback) {
 						backgroundImage : bg_image,
 						//zIndex : 10
 					});
-					rowView[i].addEventListener('longclick', function(e) {
+					rowView[i].addEventListener('longpress', function(e) {
 						Titanium.Media.vibrate();
 						var SendFriendRequest = require('/ui/common/MenuScreen/SendFriendRequest');
 						var sendfriendrequest = new SendFriendRequest(userinfo, items_json.Record[e.row.index]);
@@ -43,23 +55,23 @@ function AvatarByGold(userinfo, tabledata, rowView, callback) {
 					});
 					rowView[i].addEventListener('click', function(e) {
 						// alert(items_json.Record[e.row.index]);
-
 						Ti.App.addEventListener("message_read", function(data) {
 							backgroundImage = '/assets/freind_list' + ((e.row.genes == 'f') ? '_female' : '_male') + '.png';
-
 						});
 						var FreindInfo = require('/ui/common/MenuScreen/FreindInfo');
 						var freindinfo = new FreindInfo(userinfo, items_json.Record[e.row.index]);
 						freindinfo.open();
 					});
-					AvatarThumbnail({
+					AvatarGoldThumbnail({
 						width : '12%',
 						height : '85.5%',
 						top : '4.8px',
 						right : '3%'
-					}, items_json.Record[i].USER_APPEARANCE, items_json.Record[i].GENDER, i, function(avatar_imageview,index) {
-						avatar_images[index] = avatar_imageview;
-						rowView[index].add(avatar_images[index]);
+					}, items_json.Record[i].USER_APPEARANCE, items_json.Record[i].GENDER, i, function(avatar_imageview, index) {
+						if(gold_table_id != null){
+							avatar_images[index] = avatar_imageview;
+							rowView[index].add(avatar_images[index]);
+						}
 					});
 
 					var row_imageview = Titanium.UI.createImageView({
@@ -113,51 +125,53 @@ function AvatarByGold(userinfo, tabledata, rowView, callback) {
 					var name_label = Ti.UI.createLabel({
 						text : items_json.Record[i].NAME,
 						font : {
-							fontSize : '16dip'
+							fontWeight : 'bold',
+							fontSize : '18dip'
 						},
 						color : '#b3fad0',
 						left : '8px',
-						top : '5%',
+						top : '20%',
 						width : '45%'
 					});
 					rowView[i].add(name_label);
 					var status_message_label = Ti.UI.createLabel({
 						text : items_json.Record[i].STATUS_MESSAGE,
 						font : {
-							fontSize : '11dip'
+							fontSize : '12dip'
 						},
+						top : '55%',
 						color : '#b3fad0',
 						left : '8px',
 						width : '45%'
 					});
 					rowView[i].add(status_message_label);
 
+
 					tabledata.push(rowView[i]);
 				}//end of for loop
 
-				tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
-		
-					data : tabledata,
-					width : '100%',
-					height : '66%',
-					top : '2%'
-				});
+				tableview.data = tabledata;
 				//actInd.hide();
 				callback(tableview);
-				AvatarThumbnail = null;
+				AvatarGoldThumbnail = null;
 			}
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : "http://bonozo.com:8080/knp/get_avatar_list.php?uid=" + userinfo.Record[0].UID +"&gold=1"
+		url : "http://bonozo.com:8080/knp/get_avatar_list.php?uid=" + userinfo.Record[0].UID + "&gold=1"
 
 	});
-	// Ti.App.addEventListener('avatar_table_changed',function(data){
-		// if(data.release_table != 'AvatarByGold')return;
-		// Ti.App.fireEvent('render_table',{});
-	// });
+
+	Ti.App.addEventListener('avatar_table_changed', function(data) {
+		if (data.release_table != 'AvatarByGold')
+			return;
+		// alert(JSON.stringify(data));
+		gold_table_id = null;
+		//Ti.App.fireEvent('render_table', {});
+	}); 
+
 	return;
 
 }
 
-module.exports = AvatarByGold; 
+module.exports = AvatarByGold;

@@ -1,31 +1,31 @@
 function KnPStore(userinfo) {
 
-    function getPixelFromPercent(axis, percent) {
-        if (axis == 'x') {
-            return winWidth * percent / 100;
-        } else if (axis == 'y') {
-            return winHeight * percent / 100;
-        }
-    }
+	function getPixelFromPercent(axis, percent) {
+		if (axis == 'x') {
+			return winWidth * percent / 100;
+		} else if (axis == 'y') {
+			return winHeight * percent / 100;
+		}
+	}
 
 	// var InAppBilling = require('ti.inappbilling');
 
-    var view = Ti.UI.createWindow({
-        backgroundImage : '/assets/inventoryBackground.png',
-        navBarHidden : true,
-        fullscreen : true,
-        zIndex : 200
-    });
-    view.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
+	var view = Ti.UI.createWindow({
+		backgroundImage : '/assets/inventoryBackground.png',
+		navBarHidden : true,
+		fullscreen : true,
+		zIndex : 200
+	});
+	view.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 
-    var top_imageview = Ti.UI.createImageView({
+	var top_imageview = Ti.UI.createImageView({
 		image : '/assets/overlayPlayerInfoCroped.png',
-		height:'6.4%',
+		height : '6.4%',
 		width : '100%',
 		bottom : '94.6%'
-    });
-    view.add(top_imageview);
-    
+	});
+	view.add(top_imageview);
+
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
 	var screenHeight = Titanium.Platform.displayCaps.platformHeight;
 	var main_view = Ti.UI.createView();
@@ -37,7 +37,7 @@ function KnPStore(userinfo) {
 		borderWidth : '5dip',
 		visible : false,
 		height : '8%',
-		width : (screenWidth/2),
+		width : (screenWidth / 2),
 		zIndex : 700
 	});
 	var activityIndicator = Ti.UI.createActivityIndicator({
@@ -48,7 +48,7 @@ function KnPStore(userinfo) {
 			fontWeight : 'bold'
 		},
 		message : 'Loading...',
-		style : (Ti.Platform.name === 'iPhone OS')?Ti.UI.iPhone.ActivityIndicatorStyle.DARK:Ti.UI.ActivityIndicatorStyle.DARK,
+		style : (Ti.Platform.name === 'iPhone OS') ? Ti.UI.iPhone.ActivityIndicatorStyle.DARK : Ti.UI.ActivityIndicatorStyle.DARK,
 		height : '100%',
 		width : '100%'
 	});
@@ -58,388 +58,366 @@ function KnPStore(userinfo) {
 
 	activityIndicator.show();
 	activityIndicatorView.visible = true;
-					
-    var name_label = Titanium.UI.createLabel({
-        text : userinfo.Record[0].NAME,
-        top : '0',
-        height : '3.1%',
-        left : '3%',
-        textAlign : 'left',
-        color : '#5afd9b',
-        font : {
-            fontWeight : 'bold',
-            fontSize : '12dip'
-        }
-    });
-    view.add(name_label);
 
-    var menu_label = Titanium.UI.createLabel({
-        text : 'Store',
-        top : '0',
-        height : '3.1%',
-        right : '15.6%',
-        textAlign : 'right',
-        color : '#5afd9b',
-        font : {
-            fontSize : '12dip'
-        }
+	var name_label = Titanium.UI.createLabel({
+		text : 'Store',
+		top : '0.8%',
+		height : '3.1%',
+		left : '3%',
+		textAlign : 'left',
+		color : '#5afd9b',
+		font : {
+			fontWeight : 'bold',
+			fontSize : '14dip'
+		}
+	});
+	view.add(name_label);
 
-    });
-    view.add(menu_label);
+	var menu_label = Titanium.UI.createLabel({
+		text : 'Back',
+		top : '0.8%',
+		height : '3.1%',
+		right : '15.6%',
+		textAlign : 'right',
+		color : '#5afd9b',
+		font : {
+			fontSize : '12dip'
+		}
 
-    var return_imageview = Ti.UI.createImageView({
-        image : '/assets/iconReturn.png',
-        height : '8%',
-        width : '11.6%',
-        top : '1%',
-        right : '3%'
-    });
-    view.add(return_imageview);
-    return_imageview.addEventListener('click', function(e) {
-        view.close();
-    });
+	});
+	view.add(menu_label);
 
-    var httpclientt = require('/ui/common/Functions/function');
-    function getGold(callback) {
-        var get_golds = "http://bonozo.com:8080/knp/get_golds.php?uid=" + userinfo.Record[0].UID;
-        httpclientt.requestServer({
-            success : function(e) {
-                items_json = JSON.parse(this.responseText);
-                if (items_json.Record != undefined) {
-                    callback(items_json.Record[0]);
-                }
-            },
-            method : 'GET',
-            contentType : 'text/xml',
-            url : get_golds
-        });
-    }
+	var return_imageview = Ti.UI.createImageView({
+		image : '/assets/iconReturn.png',
+		height : '8%',
+		width : '11.6%',
+		top : '1%',
+		right : '3%'
+	});
+	view.add(return_imageview);
+	return_imageview.addEventListener('click', function(e) {
+		view.close();
+	});
+
+	var httpclientt = require('/ui/common/Functions/function');
+	function getGold(callback) {
+		var get_golds = "http://bonozo.com:8080/knp/get_golds.php?uid=" + userinfo.Record[0].UID;
+		httpclientt.requestServer({
+			success : function(e) {
+				items_json = JSON.parse(this.responseText);
+				if (items_json.Record != undefined) {
+					callback(items_json.Record[0]);
+				}
+			},
+			method : 'GET',
+			contentType : 'text/xml',
+			url : get_golds
+		});
+	}
 
 	var screenWidth = Titanium.Platform.displayCaps.platformWidth;
-    var tabledata = [];
-    var selected_item = {};
-    getGold(function(my_gold) {
-        var _url = "http://bonozo.com:8080/knp/get_store_inventories.php";
-        httpclientt.requestServer({
-            success : function(e) {
-                items_json = JSON.parse(this.responseText);
-                // alert('store_inv response = ' + JSON.stringify(items_json));
-                //if (items_json.Record != undefined) {
-                    var rowViewHeight = screenWidth * 0.136;
-                    for (var i = 0; i < items_json.Record.length; i++) {
-                        var rowView = Ti.UI.createTableViewRow({
-                            height : rowViewHeight,
-                            className : 'knp_inventory_store',
-                            zIndex : 500
-                        });
+	var tabledata = [];
+	var selected_item = {};
+	getGold(function(my_gold) {
+		var _url = "http://bonozo.com:8080/knp/get_store_inventories.php";
+		httpclientt.requestServer({
+			success : function(e) {
+				items_json = JSON.parse(this.responseText);
+				// alert('store_inv response = ' + JSON.stringify(items_json));
+				//if (items_json.Record != undefined) {
+				var rowViewHeight = screenWidth * 0.136;
+				for (var i = 0; i < items_json.Record.length; i++) {
+					var rowView = Ti.UI.createTableViewRow({
+						height : rowViewHeight,
+						className : 'knp_inventory_store',
+						zIndex : 500
+					});
 
-                        var return_imageview = Ti.UI.createImageView({
-                            image : '/assets/inv_128/' + items_json.Record[i].IMAGE + '.png',
-                            width : '13%',
-                            top : '5px',
-                            left : '5px'
-                        });
-                        rowView.add(return_imageview);
-                        var req_gold = parseInt(items_json.Record[i].REQ_GOLD);
-                        var total_unit = parseInt(my_gold.TOTAL_UNIT);
-                        var rowviewtext_label = Ti.UI.createLabel({
-                            text : items_json.Record[i].NAME + '\n' + items_json.Record[i].DESCRIPTION,
-                            font : {
-                                fontSize : '12dip'
-                            },
-                            color : '#5afd9b',
-                            left : '15%',
-                            width : '45%'
-                        });
-                        rowView.add(rowviewtext_label);
+					var return_imageview = Ti.UI.createImageView({
+						image : '/assets/inv_128/' + items_json.Record[i].IMAGE + '.png',
+						width : '13%',
+						top : '5px',
+						left : '5px'
+					});
+					rowView.add(return_imageview);
+					var req_gold = parseInt(items_json.Record[i].REQ_GOLD);
+					var total_unit = parseInt(my_gold.TOTAL_UNIT);
+					var rowviewtext_label = Ti.UI.createLabel({
+						text : items_json.Record[i].NAME,// + '\n' + items_json.Record[i].DESCRIPTION,
+						font : {
+							fontSize : '18dip',
+							fontWeight : 'bold'
+						},
+						color : '#5afd9b',
+						left : '15%',
+						width : '45%'
+					});
+					rowView.add(rowviewtext_label);
 
-                        var boolLock;
-                        var boolBuy;
-                        if (total_unit < req_gold) {
-                            boolLock = '/assets/itemLock.png';
-                            boolBuy = 'UNLOCK'
-                        } else {
-                            boolLock = '';
-                            boolBuy = 'Buy'
-                        }
+					var boolLock;
+					var boolBuy = '';
+					if((userinfo.Record[0].NUM_OF_GOLDS*userinfo.Record[0].LEVEL) < req_gold){
+					//if (total_unit < req_gold) {
+						boolLock = '/assets/itemLock.png';
+						boolBuy = 'Buy';
+					} else {
+						boolLock = '';
+						boolBuy = 'Buy';
+					}
 
-                        var lock_imageview = Ti.UI.createImageView({
-                            image : boolLock,
-                            width : '12%',
-                            top : '5px',
-                            left : '65%'
-                        });
-                        rowView.add(lock_imageview);
+					var lock_imageview = Ti.UI.createImageView({
+						image : boolLock,
+						width : '12%',
+						top : '5px',
+						left : '65%'
+					});
+					rowView.add(lock_imageview);
 
-                        var buy_button = Titanium.UI.createButton({
-                            title : boolBuy,
-                            width : '20%',
-                            font : {
-                                fontSize : '11dip'
-                            },
-                            inv_id : items_json.Record[i].INVENTORY_ID,
-                            req_gold : items_json.Record[i].REQ_GOLD,
-                            bottom : '10%',
-                            left : '80%',
-                            backgroundImage : '/assets/button_small_UP.png'
-                        });
-                        rowView.add(buy_button);
-                        //alert(items_json.Record[i].INVENTORY_ID);
-                        buy_button.addEventListener('click', function(e) {
-                            selected_item.invID = e.source.inv_id;
-                            selected_item.req_gold = e.source.req_gold;
-                            var ConfirmationAlert = Titanium.UI.createAlertDialog({
-                                title : 'Click \'Yes\' to Purchase.',
-                                message : 'Are you Sure?',
-                                buttonNames : ['Yes', 'No'],
-                                cancel : 1
-                            });
-                            ConfirmationAlert.show();
+					var buy_button = Titanium.UI.createButton({
+						title : boolBuy,
+						color : '#761f56',
+						width : '20%',
+						inventory : items_json.Record[i],
+						font : {
+							fontSize : '11dip'
+						},
+						inv_id : items_json.Record[i].INVENTORY_ID,
+						req_gold : items_json.Record[i].REQ_GOLD,
+						//bottom : '5%',
+						left : '80%',
+						backgroundImage : '/assets/button_small_UP.png'
+					});
+					rowView.add(buy_button);
+					//alert(items_json.Record[i].INVENTORY_ID);
+					buy_button.addEventListener('click', function(e) {
+						
+						var PurchaseInventory = require('/ui/common/MenuScreen/PurchaseInventory');
+						var purchaseinventory = new PurchaseInventory(userinfo, e.source.inventory);
+						purchaseinventory.open({
+							modal : true
+						});
+						//view.add(purchaseinventory);
+						return;
 
-                            ConfirmationAlert.addEventListener('click', function(e) {
-                                Titanium.API.info('e = ' + JSON.stringify(e));
+					});
 
-                                //Clicked cancel, first check is for iphone, second for android
-                                if (e.cancel === e.index || e.cancel === true) {
-                                    return;
-                                }
-                                switch (e.index) {
-                                    case 0:
+					var qty_label = Ti.UI.createLabel({
+						text : items_json.Record[i].REQ_GOLD, //'50',
+						left : '68%',
+						font : {
+							fontSize : '14dip',
+							fontWeight : 'bold'
+						},
+						color : '#59fe9a'
+					});
+					rowView.add(qty_label);
 
-                                        var send_gift_url = "http://bonozo.com:8080/knp/purchase_inventory.php?uid=" + userinfo.Record[0].UID + "&inv_id=" + selected_item.invID + "&req_golds=" + selected_item.req_gold;
-                                        var httpclientt = require('/ui/common/Functions/function');
+					var minicoins_imageview = Ti.UI.createImageView({
+						image : 'assets/iconGold.png',
+						left : '60%',
+						width : '5%',
+					});
+					rowView.add(minicoins_imageview);
 
-                                        httpclientt.requestServer({
-                                            success : function(e) {
+					tabledata.push(rowView);
 
-                                                items_json = JSON.parse(this.responseText);
-                                                if (items_json.Record != undefined) {
-                                                    alert(items_json.Record.Message);
+				}
+				var tableview = Ti.UI.createTableView({
+					backgroundColor : 'transparent',
+					separatorColor : '#59fe9a',
+					data : tabledata,
+					width : '100%',
+					height : '72.3%',
+					top : '10%'
+				});
+				view.add(tableview);
+				activityIndicator.hide();
+				activityIndicatorView.visible = false;
+				//actInd.hide();
+				//}
+				//else{
+				// 	alert('else');
+				//}
+			},
+			method : 'GET',
+			contentType : 'text/xml',
+			url : _url,
 
-                                                    Ti.App.fireEvent('update_footer', {
-                                                        clicked_item : 'KnPStore'
-                                                    });
+		});
 
-                                                }
+	});
 
-                                            },
-                                            method : 'GET',
-                                            contentType : 'text/xml',
-                                            url : send_gift_url
-                                            
-                                        });
-                                        break;
-                                    //This will never be reached, if you specified cancel for index 1
-                                    case 1:
-                                        break;
-                                    default:
-                                        break;
-                                }
+	var spell_button = Ti.UI.createButton({
+		color : '#761f56',
+		backgroundImage : '/assets/button_smallLong_UP.png',
+		font : {
+			fontSize : '9dip'
+		},
+		title : 'SPELLS',
+		width : '16%',
+		height : '4.5%',
+		right : '2.7%',
+		bottom : '10.3%'
+	});
+	//  view.add(spell_button);
 
-                            });
+	var armor_button = Ti.UI.createButton({
+		color : '#761f56',
+		backgroundImage : '/assets/button_smallLong_UP.png',
+		font : {
+			fontSize : '9dip'
+		},
+		title : 'ARMOR',
+		width : '16%',
+		height : '4.5%',
+		right : '20.8%',
+		bottom : '10.3%'
+	});
+	//    view.add(armor_button);
 
-                        });
+	var supplies_button = Ti.UI.createButton({
+		color : '#761f56',
+		backgroundImage : '/assets/button_smallLong_UP.png',
+		font : {
+			fontSize : '9dip'
+		},
+		title : 'SUPPLIES',
+		width : '16%',
+		height : '4.5%',
+		right : '37.9%',
+		bottom : '10.3%'
+	});
+	//    view.add(supplies_button);
 
-                        var qty_label = Ti.UI.createLabel({
-                            text : items_json.Record[i].REQ_GOLD, //'50',
-                            top : '10%',
-                            left : '90%',
-                            font : {
-                                fontSize : '10dip'
-                            },
-                            color : '#59fe9a'
-                        });
-                        rowView.add(qty_label);
+	var gifts_button = Ti.UI.createButton({
+		color : '#761f56',
+		backgroundImage : '/assets/button_smallLong_UP.png',
+		font : {
+			fontSize : '9dip'
+		},
+		title : 'GIFTS',
+		width : '16%',
+		height : '4.5%',
+		right : '55%',
+		bottom : '10.3%'
+	});
+	//    view.add(gifts_button);
 
-                        var minicoins_imageview =Ti.UI.createImageView({
-                            image : 'assets/iconGold.png',
-                            top : '0%',
-                            left : '80%',
-                            width : '5%',
-                        });
-                        rowView.add(minicoins_imageview);
+	var sort_label = Ti.UI.createLabel({
+		text : 'SORT',
+		color : '#58fe9b',
+		right : '73.1%',
+		bottom : '10.3%',
+		textAlign : 'right',
+		font : {
+			fontSize : '14dip'
+		}
+	});
+	//   view.add(sort_label);
 
-                        tabledata.push(rowView);
+	var getmore_button = Ti.UI.createButton({
+		color : '#761f56',
+		backgroundColor : '#9c5b00',
+		color : '#dcbf21',
+		title : 'Get More Gold',
+		height : '4.5%',
+		width : '35%',
+		right : '5%',
+		bottom : '10%',
+		borderColor : "#dcbf21",
+		borderRadius : 5,
+		borderWidth : 1
 
-                    }
-                    var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
-		
-                        data : tabledata,
-                        width : '100%',
-                        height : '72.3%',
-                        top : '10%'
-                    });
-                    view.add(tableview);
-					activityIndicator.hide();
-					activityIndicatorView.visible = false;
-                    //actInd.hide();
-                //}
-                //else{
-               // 	alert('else');
-                //}
-            },
-            method : 'GET',
-            contentType : 'text/xml',
-            url : _url,
+	});
+	view.add(getmore_button);
+	Ti.App.addEventListener('update_userjsoninfo',function(data){
+		var httpclientt = require('/ui/common/Functions/function');
 
-        });
-
-    });
-
-
-    var spell_button = Ti.UI.createButton({ color: '#761f56',
-        backgroundImage : '/assets/button_smallLong_UP.png',
-        font : {
-            fontSize : '9dip'
-        },
-        title : 'SPELLS',
-        width : '16%',
-        height : '4.5%',
-        right : '2.7%',
-        bottom : '10.3%'
-    });
-  //  view.add(spell_button);
-
-    var armor_button = Ti.UI.createButton({ color: '#761f56',
-        backgroundImage : '/assets/button_smallLong_UP.png',
-        font : {
-            fontSize : '9dip'
-        },
-        title : 'ARMOR',
-        width : '16%',
-        height : '4.5%',
-        right : '20.8%',
-        bottom : '10.3%'
-    });
-//    view.add(armor_button);
-
-    var supplies_button = Ti.UI.createButton({ color: '#761f56',
-        backgroundImage : '/assets/button_smallLong_UP.png',
-        font : {
-            fontSize : '9dip'
-        },
-        title : 'SUPPLIES',
-        width : '16%',
-        height : '4.5%',
-        right : '37.9%',
-        bottom : '10.3%'
-    });
-//    view.add(supplies_button);
-
-    var gifts_button = Ti.UI.createButton({ color: '#761f56',
-        backgroundImage : '/assets/button_smallLong_UP.png',
-        font : {
-            fontSize : '9dip'
-        },
-        title : 'GIFTS',
-        width : '16%',
-        height : '4.5%',
-        right : '55%',
-        bottom : '10.3%'
-    });
-//    view.add(gifts_button);
-
-    var sort_label = Ti.UI.createLabel({
-        text : 'SORT',
-        color : '#58fe9b',
-        right : '73.1%',
-        bottom : '10.3%',
-        textAlign : 'right',
-        font : {
-            fontSize : '14dip'
-        }
-    });
- //   view.add(sort_label);
-
-    var getmore_button = Ti.UI.createButton({ color: '#761f56',
-        backgroundColor : '#9c5b00',
-        color : '#dcbf21',
-        title : 'Get More Gold',
-        height : '4.5%',
-        right : '5%',
-        bottom : '10%',
-        borderColor : "#dcbf21",
-        borderRadius : 5,
-        borderWidth : 1
-
-    });
-    view.add(getmore_button);
-    getmore_button.addEventListener('click', function(e) {
+		httpclientt.requestServer({
+			success : function(e) {
+				userinfo = JSON.parse(this.responseText);
+			},
+			method : 'GET',
+			contentType : 'text/xml',
+			url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + data.UID + ""
+		});
+	});
+	getmore_button.addEventListener('click', function(e) {
 		var GoldPurchase = require('ui/common/MenuScreen/GoldPurchase');
 		var goldpurchase = new GoldPurchase(userinfo);
 		goldpurchase.open();
-    	return;
-    	
-        var ConfirmationAlert = Titanium.UI.createAlertDialog({
-            title : 'Click \'Yes\' to Purchase Gold.',
-            message : 'Are you Sure?',
-            buttonNames : ['Yes', 'No'],
-            cancel : 1
-        });
-        ConfirmationAlert.show();
-        ConfirmationAlert.addEventListener('click', function(e) {
-            Titanium.API.info('e = ' + JSON.stringify(e));
-            //Clicked cancel, first check is for iphone, second for android
-            if (e.cancel === e.index || e.cancel === true) {
-                return;
-            }
-            switch (e.index) {
-                case 0:
+		return;
 
-                    //alert(userinfo.Record[0].UID+"::"+selected_item.invID+"::"+selected_item.req_gold);
+		var ConfirmationAlert = Titanium.UI.createAlertDialog({
+			title : 'Click \'Yes\' to Purchase Gold.',
+			message : 'Are you Sure?',
+			buttonNames : ['Yes', 'No'],
+			cancel : 1
+		});
+		ConfirmationAlert.show();
+		ConfirmationAlert.addEventListener('click', function(e) {
+			Titanium.API.info('e = ' + JSON.stringify(e));
+			//Clicked cancel, first check is for iphone, second for android
+			if (e.cancel === e.index || e.cancel === true) {
+				return;
+			}
+			switch (e.index) {
+				case 0:
 
-                    //actInd.show();
-                    var send_gift_url = "http://bonozo.com:8080/knp/purchase_gold.php?uid=" + userinfo.Record[0].UID + "&num_of_golds=400";
-                    var httpclientt = require('/ui/common/Functions/function');
+					//alert(userinfo.Record[0].UID+"::"+selected_item.invID+"::"+selected_item.req_gold);
 
-                    httpclientt.requestServer({
-                        success : function(e) {
+					//actInd.show();
+					var send_gift_url = "http://bonozo.com:8080/knp/purchase_gold.php?uid=" + userinfo.Record[0].UID + "&num_of_golds=400";
+					var httpclientt = require('/ui/common/Functions/function');
 
-                            items_json = JSON.parse(this.responseText);
-                            if (items_json.Message != '') {
-                                alert('Successfully Purchased!');
+					httpclientt.requestServer({
+						success : function(e) {
 
-                                Ti.App.fireEvent('update_footer', {
-                                    clicked_item : 'KnPStore'
-                                });
+							items_json = JSON.parse(this.responseText);
+							if (items_json.Message != '') {
+								alert('Successfully Purchased!');
 
-                                //alert(items_json.Message);
-                                //actInd.hide();
-                            }
+								Ti.App.fireEvent('update_footer', {
+									clicked_item : 'KnPStore'
+								});
 
-                        },
-                        method : 'GET',
-                        contentType : 'text/xml',
-                        url : send_gift_url
-                    });
-                    break;
-                //This will never be reached, if you specified cancel for index 1
-                case 1:
-                    // alert('Clicked button 1 (NO)');
-                    break;
-                default:
-                    break;
-            }
+								//alert(items_json.Message);
+								//actInd.hide();
+							}
 
-        });
+						},
+						method : 'GET',
+						contentType : 'text/xml',
+						url : send_gift_url
+					});
+					break;
+				//This will never be reached, if you specified cancel for index 1
+				case 1:
+					// alert('Clicked button 1 (NO)');
+					break;
+				default:
+					break;
+			}
 
-    });
+		});
 
-    var httpclientt = require('/ui/common/Functions/function');
-    httpclientt.requestServer({
-        success : function(e) {
-            var userinfojson = JSON.parse(this.responseText);
+	});
 
-            var Footer = require('ui/common/menus/Footer');
-            var footer = new Footer(userinfojson);
-            view.add(footer);
+	var httpclientt = require('/ui/common/Functions/function');
+	httpclientt.requestServer({
+		success : function(e) {
+			var userinfojson = JSON.parse(this.responseText);
 
-        },
-        method : 'GET',
-        contentType : 'text/xml',
-        url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID + ""
-    });
+			var Footer = require('ui/common/menus/Footer');
+			var footer = new Footer(userinfojson);
+			view.add(footer);
 
-    return view;
+		},
+		method : 'GET',
+		contentType : 'text/xml',
+		url : "http://bonozo.com:8080/knp/get_avatar_info.php?uid=" + userinfo.Record[0].UID + ""
+	});
+
+	return view;
 };
 module.exports = KnPStore;

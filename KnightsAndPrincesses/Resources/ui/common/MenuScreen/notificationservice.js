@@ -14,7 +14,7 @@ if (osname === 'iphone' || osname === 'ipad') {
 			}
 			Ti.API.info("service run!");
 		}, 5000);
-	}
+	};
 } else {
 	Ti.API.info("service is of Android");
 	var service = Titanium.Android.currentService;

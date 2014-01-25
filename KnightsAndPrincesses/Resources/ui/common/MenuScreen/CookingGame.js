@@ -1,4 +1,4 @@
-function CookingGame(quest_status, quest_id, userinfo) {
+function CookingGame(quest_status, quest_id, userinfo, _assign_quest_id, single_player_game) {//(quest_status, quest_id, userinfo) {
     var played = false;
     var _assign_quest_id = "";
     var images_counter = 0;
@@ -105,7 +105,7 @@ function CookingGame(quest_status, quest_id, userinfo) {
 	
 	//Time counter class
 	var temp = '';
-    var updateTimerID = 0
+    var updateTimerID = 0;
     var cooking_time = [];
     var status_counter = '';
     var update_counter = [];

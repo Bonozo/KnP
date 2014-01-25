@@ -186,6 +186,7 @@ function StatusScreen(userinfo) {
 		color : '#63c689',
 		textAlign : 'left',
 		borderRadius : 12,
+		paddingLeft : 10,
 		bottom : '19%',
 		returnKeyType:Titanium.UI.RETURNKEY_DONE,
 		height : '10%',

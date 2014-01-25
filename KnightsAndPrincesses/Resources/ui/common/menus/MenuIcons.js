@@ -286,7 +286,7 @@ function MenuIcons(active_screen) {
 				var sound = Titanium.Media.createSound({
 					url : '/sounds/message_bell.mp3'
 				});
-				if((Ti.App.Properties.getString('knp_sound') == 'ON'))
+				if((Ti.App.Properties.getString('knp_sound', 'ON') == 'ON'))
 				sound.play();
 				new_request_beep = !new_request_beep;
 			}
@@ -302,7 +302,7 @@ function MenuIcons(active_screen) {
                 var sound = Titanium.Media.createSound({
                     url : '/sounds/message_bell.mp3'
                 });
-                if((Ti.App.Properties.getString('knp_sound') == 'ON'))
+                if((Ti.App.Properties.getString('knp_sound', 'ON') == 'ON'))
                 sound.play();
                 new_gift_beep = !new_gift_beep;
             }
@@ -319,7 +319,7 @@ function MenuIcons(active_screen) {
 				var sound = Titanium.Media.createSound({
 					url : '/sounds/message_bell.mp3'
 				});
-				if((Ti.App.Properties.getString('knp_sound') == 'ON'))
+				if((Ti.App.Properties.getString('knp_sound', 'ON') == 'ON'))
 				sound.play();
 				new_quest_beep = !new_quest_beep;
 			}
@@ -336,7 +336,7 @@ function MenuIcons(active_screen) {
 				var sound = Titanium.Media.createSound({
 					url : '/sounds/message_bell.mp3'
 				});
-				if((Ti.App.Properties.getString('knp_sound') == 'ON'))
+				if((Ti.App.Properties.getString('knp_sound', 'ON') == 'ON'))
 				sound.play();
 				new_task_beep = !new_task_beep;
 			}

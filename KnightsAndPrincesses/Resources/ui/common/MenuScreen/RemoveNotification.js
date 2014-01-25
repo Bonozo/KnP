@@ -76,7 +76,7 @@ function RemoveNotification(inv_trans_id,index) {
 				duration : 1000
 			});
 		}, interval);
-	}
+	};
 	
 	var remove_button = Ti.UI.createButton({ color: '#761f56',
 		title : 'Remove',

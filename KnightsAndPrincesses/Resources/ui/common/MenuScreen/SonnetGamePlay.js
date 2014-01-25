@@ -1,4 +1,4 @@
-function SonnetGame(quest_status, quest_id, userinfo) {
+function SonnetGame(quest_status, quest_id, userinfo, _assign_quest_id, single_player_game){//}(quest_status, quest_id, userinfo) {
 	var played = false;
 	var _assign_quest_id = "";
 	var images_counter = 0;
@@ -27,37 +27,38 @@ function SonnetGame(quest_status, quest_id, userinfo) {
     });
     window.add(view);
 
-	var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
-
-	var items_json = "";
-	var items_length = 0;
 	var httpclientt = require('ui/common/Functions/function');
-	httpclientt.requestServer({
-		success : function(e) {
-			items_json = JSON.parse(this.responseText);
-			items_length = items_json.Record.length;
-			if (items_json.Record != undefined) {
-				if (items_json.Record[0].LOW_ENERGY) {
-					var alertDialog = Titanium.UI.createAlertDialog({
-						title : 'Low Energy!',
-						message : items_json.Record[0].LOW_ENERGY,
-						buttonNames : ['OK']
-					});
-					alertDialog.show();
-					alertDialog.addEventListener('click', function(e) {
-						window.close();
-					});
-				} else {
-					_assign_quest_id = items_json.Record[0].ASSIGN_QUEST_ID;
+	if(single_player_game){
+		var _url = "http://bonozo.com:8080/knp/knp_assign_quests.php?" + "assign_by_uid=" + userinfo.Record[0].UID + "&" + "assign_to_uid=" + userinfo.Record[0].UID + "&" + "quest_ids=" + quest_id + "&message=Single Player Game&num_of_hours=3&status=SINGLE_PLAYER_GAME";
+		var items_json = "";
+		var items_length = 0;
+		httpclientt.requestServer({
+			success : function(e) {
+				items_json = JSON.parse(this.responseText);
+				items_length = items_json.Record.length;
+				if (items_json.Record != undefined) {
+					if (items_json.Record[0].LOW_ENERGY) {
+						var alertDialog = Titanium.UI.createAlertDialog({
+							title : 'Low Energy!',
+							message : items_json.Record[0].LOW_ENERGY,
+							buttonNames : ['OK']
+						});
+						alertDialog.show();
+						alertDialog.addEventListener('click', function(e) {
+							window.close();
+						});
+					} else {
+						_assign_quest_id = items_json.Record[0].ASSIGN_QUEST_ID;
+					}
+					hideLoader();
 				}
-				hideLoader();
-			}
-		},
-		method : 'GET',
-		contentType : 'text/xml',
-		url : _url
-
-	});
+			},
+			method : 'GET',
+			contentType : 'text/xml',
+			url : _url
+	
+		});
+	}
 
 	// Create an ImageView.
 	var gameImage = Ti.UI.createImageView({

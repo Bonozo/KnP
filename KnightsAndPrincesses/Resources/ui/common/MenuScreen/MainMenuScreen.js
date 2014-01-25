@@ -26,7 +26,7 @@ function MainMenuScreen(userinfojson) {
 		backgroundImage : '/assets/inventoryBackground.png'
 	});
 	main_window.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
-	Ti.App.addEventListener('close_window',function(){
+	Ti.App.addEventListener('close_window', function() {
 		main_window.close();
 	});
 	var images_counter = 0;
@@ -39,40 +39,42 @@ function MainMenuScreen(userinfojson) {
 				var ResetClassscreen = new ResetClass(userinfojson);
 				ResetClassscreen.open();
 			}
+			Ti.App.fireEvent("signed_in");
 		}
 	}
+	Ti.App.Properties.setString('uid', userinfojson.Record[0].UID);
 
 	if (osname === 'iphone' || osname === 'ipad') {
 		if (isiOS4Plus()) {
 
 			var service;
 			Ti.App.Properties.setString('service_enabled', true);
-			service = Ti.App.iOS.registerBackgroundService({
-				url : 'notificationservice.js'
-			});
-			Ti.API.info("registered background service = " + service);
-
-			Ti.App.iOS.addEventListener('notification', function(e) {
-				// You can use this event to pick up the info of the noticiation.
-				// Also to collect the 'userInfo' property data if any was set
-				Ti.API.info("local notification received: " + JSON.stringify(e));
-			});
-
-			// fired when an app resumes from suspension
-			Ti.App.addEventListener('resume', function(e) {
-				Ti.API.info("app is resuming from the background");
-			});
-			Ti.App.addEventListener('pause', function(e) {
-				Ti.API.info("app has pause from foreground");
-				// this will unregister the service if the user just opened the app
-				// ie: not via the notification 'OK' button..
-				if (service != null) {
-					Ti.App.Properties.setString('service_enabled', false);
-					service.stop();
-					service.unregister();
-				}
-				//Titanium.UI.iPhone.appBadge = null;
-			});
+			// service = Ti.App.iOS.registerBackgroundService({
+				// url : 'notificationservice.js'
+			// });
+			// Ti.API.info("registered background service = " + service);
+// 
+			// Ti.App.iOS.addEventListener('notification', function(e) {
+				// // You can use this event to pick up the info of the noticiation.
+				// // Also to collect the 'userInfo' property data if any was set
+				// Ti.API.info("local notification received: " + JSON.stringify(e));
+			// });
+// 
+			// // fired when an app resumes from suspension
+			// Ti.App.addEventListener('resume', function(e) {
+				// Ti.API.info("app is resuming from the background");
+			// });
+			// Ti.App.addEventListener('pause', function(e) {
+				// Ti.API.info("app has pause from foreground");
+				// // this will unregister the service if the user just opened the app
+				// // ie: not via the notification 'OK' button..
+				// if (service != null) {
+					// Ti.App.Properties.setString('service_enabled', false);
+					// service.stop();
+					// service.unregister();
+				// }
+				// //Titanium.UI.iPhone.appBadge = null;
+			// });
 
 			// Ti.App.addEventListener('pause', function(e) {
 			// Ti.API.info("app was paused from the foreground");
@@ -192,7 +194,8 @@ function MainMenuScreen(userinfojson) {
 		activityIndicatorView.visible = false;
 
 	});
-	Ti.App.addEventListener('game_played', function(updateduserjsoninfo) { updateduserjsoninfo
+	Ti.App.addEventListener('game_played', function(updateduserjsoninfo) {
+		//updateduserjsoninfo;
 	});
 
 	main_window.addEventListener('open', function(e) {

@@ -43,9 +43,9 @@ function FreindsScreen(userinfo) {
 
 	function getPixelFromPercent(axis, percent) {
 		if (axis == 'x') {
-			return winWidth * percent / 100;
+			return screenWidth * percent / 100;
 		} else if (axis == 'y') {
-			return winHeight * percent / 100;
+			return screenHeight * percent / 100;
 		}
 	}
 
@@ -57,6 +57,8 @@ function FreindsScreen(userinfo) {
 		visible : false,
 		height : '8%',
 		width : (screenWidth / 2),
+		left : getPixelFromPercent('x', 50) - (screenWidth / 4),
+		top : getPixelFromPercent('x', 42),
 		zIndex : 700
 	});
 	var activityIndicator = Ti.UI.createActivityIndicator({
@@ -112,29 +114,40 @@ function FreindsScreen(userinfo) {
 		left : "2%",
 		top : "70%",
 		font : {
-			fontSize : '11dip'
+			fontSize : '12dip'
 		},
 		zIndex : 600,
-		//width : "20%",
+		width : "35%",
 		height : "8%"
 	});
 	view.add(gift_notification);
 	gift_notification.addEventListener('click', function(e) {
-		activityIndicator.show();
-		activityIndicatorView.visible = true;
 		var gift_notification = require('ui/common/MenuScreen/GiftNotifications');
 		var GiftNotiFromFreind = new gift_notification(userinfo);
 		GiftNotiFromFreind.open();
-		GiftNotiFromFreind.addEventListener('open', function(e) {
-			activityIndicator.hide();
-			activityIndicatorView.visible = false;
-		});
 	});
 
 	var req_notification = '';
 	var new_request_imageview;
 	var gift_imageview;
 	var gift_icon = '';
+	new_request_imageview = Titanium.UI.createImageView({
+		image : '/assets/message_alert.png',
+		width : '4%',
+		height : getPixelFromPercent('x',4),
+		right : '1.6%',
+		bottom : '14.9%',
+		zIndex : 900,
+		visible : false
+	});
+	view.add(new_request_imageview);
+	Ti.App.addEventListener('NEW_REQUEST',function(data){
+		new_request_imageview.zIndex = 900;
+		if(data.status)
+			new_request_imageview.visible = true;
+		else
+			new_request_imageview.visible = false;
+	});
 	var get_notification_url = "http://bonozo.com:8080/knp/get_notifications.php?uid=" + userinfo.Record[0].UID;
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
@@ -144,16 +157,7 @@ function FreindsScreen(userinfo) {
 				req_notification = items_json.Record[0].REQUEST;
 				gift_icon = items_json.Record[0].GIFT;
 				if (req_notification == 'NEW_REQUEST') {
-					new_request_imageview = Titanium.UI.createImageView({
-						image : '/assets/message_alert.png',
-						width : '4%',
-						height : '4%',
-						right : '2.7%',
-						bottom : '16.4%',
-						zIndex : 600
-					});
-					view.add(new_request_imageview);
-
+					new_request_imageview.visible = true;
 				}
 				if (items_json.Record[0].GIFT == 'NEW_GIFT') {
 					gift_imageview = Titanium.UI.createImageView({
@@ -176,7 +180,6 @@ function FreindsScreen(userinfo) {
 	});
 	//if(req_notification == "NEW_REQUEST"){
 	Ti.App.addEventListener("request_send", function() {
-		//alert('hear');
 		new_request_imageview.hide();
 		//req_notification = "NO_REQUEST";
 
@@ -216,10 +219,10 @@ function FreindsScreen(userinfo) {
 		// });
 	// });
 	function fireTableChangeEvent(newTable){
-	    // Ti.App.fireEvent('avatar_table_changed', {
-	        // release_table 	: activeTable,
-	        // new_table : newTable
-	    // });
+	    Ti.App.fireEvent('avatar_table_changed', {
+	        release_table 	: activeTable,
+	        new_table : newTable
+	    });
 	    activeTable = newTable;
 		main_table_view.data = null;
 		view.remove(main_table_view);
@@ -370,7 +373,7 @@ function FreindsScreen(userinfo) {
 		bottom : '21%',
 		zIndex : 900
 	});
-	view.add(online_button);
+	//view.add(online_button);
 
 	var coin_button = Ti.UI.createButton({ color: '#761f56',
 		backgroundImage : '/assets/button_smallLong_UP.png',
@@ -380,7 +383,7 @@ function FreindsScreen(userinfo) {
 		title : 'COIN',
 		width : '17%',
 		height : '6.5%',
-		right : '20.8%',
+		right : '2.7%',
 		bottom : '21%',
 		zIndex : 900
 	});
@@ -412,7 +415,7 @@ function FreindsScreen(userinfo) {
 		title : 'LEVEL',
 		width : '17%',
 		height : '6.5%',
-		right : '37.9%',
+		right : '20.8%',
 		bottom : '21%',
 		zIndex : 900
 	});
@@ -447,7 +450,7 @@ function FreindsScreen(userinfo) {
 			fontSize : '14dip'
 		}
 	});
-	view.add(sort_label);
+	// view.add(sort_label);
 	Ti.App.addEventListener('update_friend_list', function(data) {
 		view.remove(main_table_view);
 		activeTable = data.activeScreen;

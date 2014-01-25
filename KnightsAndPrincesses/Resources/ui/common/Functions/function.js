@@ -30,4 +30,4 @@ exports.requestServer = function requestServer(e) {
 		}
 		Ti.App.Properties.setBool('internet_error', true);
 	}
-}
+};

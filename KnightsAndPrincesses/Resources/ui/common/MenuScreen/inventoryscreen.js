@@ -1,8 +1,8 @@
 function Inventoryscreen(userinfo) {
 	// var view = Ti.UI.createView({
-		// width : '100%',
-		// height : '100%',
-		// zIndex : 200
+	// width : '100%',
+	// height : '100%',
+	// zIndex : 200
 	// });
 
 	var view = Titanium.UI.createView({
@@ -16,13 +16,13 @@ function Inventoryscreen(userinfo) {
 	var screenHeight = Titanium.Platform.displayCaps.platformHeight;
 	var main_view = Ti.UI.createView();
 
-    function getPixelFromPercent(axis, percent) {
-        if (axis == 'x') {
-            return winWidth * percent / 100;
-        } else if (axis == 'y') {
-            return winHeight * percent / 100;
-        }
-    }
+	function getPixelFromPercent(axis, percent) {
+		if (axis == 'x') {
+			return winWidth * percent / 100;
+		} else if (axis == 'y') {
+			return winHeight * percent / 100;
+		}
+	}
 
 	var activityIndicatorView = Titanium.UI.createView({
 		backgroundColor : '#FFFFFF',
@@ -31,7 +31,7 @@ function Inventoryscreen(userinfo) {
 		borderWidth : '5dip',
 		visible : false,
 		height : '8%',
-		width : (screenWidth/2),
+		width : (screenWidth / 2),
 		zIndex : 700
 	});
 	var activityIndicator = Ti.UI.createActivityIndicator({
@@ -42,7 +42,7 @@ function Inventoryscreen(userinfo) {
 			fontWeight : 'bold'
 		},
 		message : 'Loading...',
-		style : (Ti.Platform.name === 'iPhone OS')?Ti.UI.iPhone.ActivityIndicatorStyle.DARK:Ti.UI.ActivityIndicatorStyle.DARK,
+		style : (Ti.Platform.name === 'iPhone OS') ? Ti.UI.iPhone.ActivityIndicatorStyle.DARK : Ti.UI.ActivityIndicatorStyle.DARK,
 		height : '100%',
 		width : '100%'
 	});
@@ -78,7 +78,7 @@ function Inventoryscreen(userinfo) {
 	var gender = userinfo.Record[0].GENDER;
 	view.addEventListener('load', function(e) {
 	});
-	
+
 	var center_view = Ti.UI.createImageView({
 		image : '/assets/itemWindow_001.png',
 		opacity : '0.7',
@@ -94,9 +94,10 @@ function Inventoryscreen(userinfo) {
 		top : '12.3%',
 		left : '44%',
 		textAlign : 'left',
-		color : '#FFFFFF',
+		color : '#5afd9b',
 		font : {
-			fontSize : '12dip'
+			fontSize : 16,
+			fontWeight : 'bold'
 		},
 		zIndex : 100
 
@@ -107,7 +108,7 @@ function Inventoryscreen(userinfo) {
 		top : '23.3%',
 		right : '7.9%',
 		textAlign : 'left',
-		color : '#FFFFFF',
+		color : '#5afd9b',
 		font : {
 			fontSize : '10dip'
 		},
@@ -116,31 +117,29 @@ function Inventoryscreen(userinfo) {
 	});
 	view.add(value_label);
 
-	var crafting_button = Titanium.UI.createButton({color: '#761f56',
+	var crafting_button = Titanium.UI.createButton({
+		color : '#761f56',
 		backgroundImage : '/assets/button_small_UP.png',
 		title : 'Crafting',
-		height : '6%',
+		height : '7%',
 		width : '24%',
-		top : '26.2%',
-		right : '25.7%',
-		zIndex : 100
+		top : '27.5%',
+		right : '30%',
+		zIndex : 100,
+		font : { fontSize: 14}
 	});
 	view.add(crafting_button);
 	crafting_button.addEventListener('click', function(e) {
 
 		activityIndicator.show();
 		activityIndicatorView.visible = true;
-		
+
 		var inventorycrafting = require('ui/common/MenuScreen/inventorycrafting');
 		var inventory = new inventorycrafting(userinfo);
-		inventory.open({
-			modal : true
-		});
-		
-		inventory.addEventListener('open',function(e){
-		    activityIndicator.hide();
-			activityIndicatorView.visible = false;
-		});
+		inventory.open();
+		activityIndicator.hide();
+		activityIndicatorView.visible = false;
+
 	});
 	var chest_imageview = Ti.UI.createImageView({
 		image : '/assets/Chest.png',
@@ -157,14 +156,14 @@ function Inventoryscreen(userinfo) {
 	var view_per_row = 4;
 
 	var tableViewWidth_Px = (tableviewwidth_percent / 100) * ScreenWidth;
-	var ViewWidth_In_rowView = tableViewWidth_Px / view_per_row;
+	var ViewWidth_In_rowView = (tableViewWidth_Px / view_per_row) * 2;
 	//view inner rowview width in px
 	var selected_item = {};
 	var osname = Ti.Platform.osname;
 	var height = Ti.Platform.displayCaps.platformHeight;
 	var width = Ti.Platform.displayCaps.platformWidth;
 	var isTablet = osname === 'ipad' || (osname === 'android' && (width > 899 || height > 899));
-	 isTablet = true;
+	isTablet = true;
 	var high_res_icons = "inv_128/";
 	function CreateInventoryGrid(TableviewCallback) {
 		var httpclientt = require('/ui/common/Functions/function');
@@ -176,16 +175,16 @@ function Inventoryscreen(userinfo) {
 					var inventory_index = 0;
 					for (var i = 0; i < (items_json.Record.length / view_per_row); i++) {
 						if (i == 0) {
-							textat_label.text = items_json.Record[inventory_index].NAME + "\n" + items_json.Record[inventory_index].DESCRIPTION + "\nQty : " + items_json.Record[inventory_index].TOTAL_UNIT;
+							textat_label.text = items_json.Record[inventory_index].NAME + "\n" + items_json.Record[inventory_index].TOTAL_UNIT + " Unit(s)";//items_json.Record[inventory_index].DESCRIPTION + "\nQty : " + items_json.Record[inventory_index].TOTAL_UNIT;
 							value_label.text = 'Value: ' + items_json.Record[inventory_index].REQ_GOLD + ' Gold';
-							curr_inv_image.image = '/assets/'  + ((isTablet)?high_res_icons:'') + items_json.Record[inventory_index].IMAGE + '.png';
+							curr_inv_image.image = '/assets/' + ((isTablet) ? high_res_icons : '') + items_json.Record[inventory_index].IMAGE + '.png';
 							selected_item.id = items_json.Record[inventory_index].ID;
 							selected_item.type = items_json.Record[inventory_index].CATEGORY;
 							selected_item.name = items_json.Record[inventory_index].NAME;
 						}
 
 						var tablerowview = Titanium.UI.createTableViewRow({
-							className : 'inventory'+i,
+							className : 'inventory' + i,
 							height : ViewWidth_In_rowView + 'px'	//height of rowview should same as the width of single view
 						});
 						var view_left = 0;
@@ -200,7 +199,7 @@ function Inventoryscreen(userinfo) {
 								left : view_left
 							});
 							var imageview = Ti.UI.createImageView({
-								image : '/assets/'+((isTablet)?high_res_icons:'')+'' + items_json.Record[inventory_index].IMAGE + '.png',
+								image : '/assets/' + ((isTablet) ? high_res_icons : '') + '' + items_json.Record[inventory_index].IMAGE + '.png',
 								zIndex : 100,
 								width : ViewWidth_In_rowView - 2 + 'px',
 								height : ViewWidth_In_rowView - 2 + 'px',
@@ -210,29 +209,31 @@ function Inventoryscreen(userinfo) {
 								req_gold : items_json.Record[inventory_index].REQ_GOLD,
 								total_unit : items_json.Record[inventory_index].TOTAL_UNIT,
 								id : items_json.Record[inventory_index].ID,
-								type : items_json.Record[inventory_index].CATEGORY,
+								type : items_json.Record[inventory_index].CATEGORY
 								//name : items_json.Record[inventory_index].NAME
 							});
 							imageview.addEventListener('click', function(e) {
-								textat_label.text = e.source.name + "\n" + e.source.description + "\nQty : " + e.source.total_unit;
+								textat_label.text = e.source.name + "\n" + e.source.total_unit + " Unit(s)";// + e.source.description + "\nQty : " + e.source.total_unit;
 								value_label.text = 'Value: ' + e.source.req_gold + ' Gold';
 								curr_inv_image.image = e.source.image;
 								selected_item.id = e.source.id;
 								selected_item.type = e.source.type;
 								selected_item.name = e.source.name;
 							});
-							
+
 							tablerowview.add(imageview);
 							tablerowview.add(view_imageview);
 
-							view_left = view_left + ViewWidth_In_rowView;
+							view_left = view_left + (ViewWidth_In_rowView / 2);
 							inventory_index++;
 							j++;
 						}
 						tableviewData.push(tablerowview);
 					}
-					var tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
-		
+					var tableview = Ti.UI.createTableView({
+						backgroundColor : 'transparent',
+						separatorColor : 'transparent',
+
 						data : tableviewData,
 						zIndex : 100,
 						separatorColor : 'transparent',
@@ -252,13 +253,15 @@ function Inventoryscreen(userinfo) {
 					});
 					view.add(center_view);
 
-					var gift_button = Titanium.UI.createButton({color: '#761f56',
+					var gift_button = Titanium.UI.createButton({
+						color : '#761f56',
 						backgroundImage : '/assets/button_small_UP.png',
 						title : 'Gift',
-						height : '6%',
-						width : '16.2%',
-						top : '26.2%',
-						right : '7.7%'
+						height : '7%',
+						font : { fontSize: 14},
+						width : '18%',
+						top : '27.5%',
+						right : '9%'
 					});
 					view.add(gift_button);
 					gift_button.addEventListener('click', function(e) {
@@ -306,9 +309,10 @@ function Inventoryscreen(userinfo) {
 	});
 
 	view.add(curr_inv_image);
-	var knpstore = Titanium.UI.createButton({color: '#761f56',
+	var knpstore = Titanium.UI.createButton({
+		color : '#761f56',
 		top : '33.5%',
-		left : '5%',
+		left : '6%',
 		backgroundImage : '/assets/button_small_UP.png',
 		height : "8%",
 		zIndex : 5000,
@@ -324,10 +328,8 @@ function Inventoryscreen(userinfo) {
 		var KnPStore = require('ui/common/MenuScreen/KnPStore');
 		var kandp = new KnPStore(userinfo);
 		kandp.open();
-		kandp.addEventListener('open',function(e){
-		    activityIndicator.hide();
+			activityIndicator.hide();
 			activityIndicatorView.visible = false;
-		});
 	});
 
 	return view;

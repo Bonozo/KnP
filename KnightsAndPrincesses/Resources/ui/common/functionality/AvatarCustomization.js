@@ -22,7 +22,11 @@ function AvatarCustomization(config) {
 		height : '10%',
 		width : '100%',
 		top : 0,
-		left : 0
+		left : 0,
+		font : {
+			fontSize : 14
+		},
+		color : '#761f56'
 	});
 
 	var head_button = Titanium.UI.createButton({
@@ -30,8 +34,12 @@ function AvatarCustomization(config) {
 		title : config.btn_labels.head,
 		height : '10%',
 		width : '100%',
-		top : '10%',
-		left : 0
+		top : '10.5%',
+		left : 0,
+		font : {
+			fontSize : 14
+		},
+		color : '#761f56'
 	});
 
 	var dress_button = Titanium.UI.createButton({
@@ -39,8 +47,12 @@ function AvatarCustomization(config) {
 		title : config.btn_labels.dress,
 		height : '10%',
 		width : '100%',
-		top : '20%',
-		left : 0
+		top : '21%',
+		left : 0,
+		font : {
+			fontSize : 14
+		},
+		color : '#761f56'
 	});
 
 	var jewel_weapon_button = Titanium.UI.createButton({
@@ -48,8 +60,12 @@ function AvatarCustomization(config) {
 		title : (config.gender == 'm') ? config.btn_labels.weapon : config.btn_labels.jewelery,
 		height : '10%',
 		width : '100%',
-		top : '30%',
-		left : 0
+		top : '31.5%',
+		left : 0,
+		font : {
+			fontSize : 14
+		},
+		color : '#761f56'
 	});
 	
 	if(config.gender == 'm'){
@@ -58,8 +74,12 @@ function AvatarCustomization(config) {
 			title : config.btn_labels.shield,
 			height : '10%',
 			width : '100%',
-			top : '40%',
-			left : 0
+			top : '42%',
+			left : 0,
+			font : {
+				fontSize : 14
+			},
+			color : '#761f56'
 		});
 		shield_button.addEventListener('click', function() {
 			if (!btns_enable)
@@ -81,8 +101,12 @@ function AvatarCustomization(config) {
 			title : config.btn_labels.helmet,
 			height : '10%',
 			width : '100%',
-			top : '50%',
-			left : 0
+			top : '52.5%',
+			left : 0,
+			font : {
+				fontSize : 14
+			},
+			color : '#761f56'
 		});
 		helmet_button.addEventListener('click', function() {
 			if (!btns_enable)
@@ -119,9 +143,13 @@ function AvatarCustomization(config) {
 		backgroundImage : '/assets/button_small_UP.png',
 		title : 'Save',
 		height : '10%',
-		top : '60%',
+		top : '64%',
 		width : '100%',
-		left : 0
+		left : 0,
+		font : {
+			fontSize : 14
+		},
+		color : '#761f56'
 	});
 	var httpclientt = require('/ui/common/Functions/function');
 	httpclientt.requestServer({
@@ -322,6 +350,7 @@ function AvatarCustomization(config) {
 						clicked_item : 'SceneryCustomization',
 						userinfojson : items_json
 					});
+					Ti.API.info('URL : ' + set_avatar_appearance_url);
 					alert("Successfully Updated!");
 				}
 			},

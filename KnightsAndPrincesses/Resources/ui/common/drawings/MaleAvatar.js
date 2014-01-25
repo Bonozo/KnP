@@ -6,22 +6,21 @@ function MaleAvatar(config) {
 			top : 0,
 			left : 0,
 			image : image_src,
-			visible : (config.thumb != undefined)?true:false,
+			visible : (config.thumb != undefined) ? true : false,
 			zIndex : z_index
 		});
 	}
 
 	function imageLoaded() {
-		if (--num_of_images < 1){
+		if (--num_of_images < 1) {
 			UnhideAll();
 		}
 	}
 
 	var view = Titanium.UI.createView();
-	if(config.thumb != undefined){
+	if (config.thumb != undefined) {
 		var num_of_images = 5;
-	}
-	else{
+	} else {
 		var num_of_images = 7;
 	}
 
@@ -36,8 +35,8 @@ function MaleAvatar(config) {
 	helmet_imageview.addEventListener('load', function(e) {
 		imageLoaded();
 	});
-	
-	if(config.thumb == undefined){
+
+	if (config.thumb == undefined) {
 		var shield_imageview = getImageView(config.appearence.shield, 40);
 		view.add(shield_imageview);
 		shield_imageview.addEventListener('load', function(e) {
@@ -63,7 +62,7 @@ function MaleAvatar(config) {
 		imageLoaded();
 	});
 
-	if(config.thumb == undefined){
+	if (config.thumb == undefined) {
 		var weapon_imageview = getImageView(config.appearence.weapon, 70);
 		view.add(weapon_imageview);
 		weapon_imageview.addEventListener('load', function(e) {
@@ -77,7 +76,7 @@ function MaleAvatar(config) {
 	});
 	view.add(label);
 
-	if(config.custom != undefined && config.custom == true){
+	if (config.custom != undefined && config.custom == true) {
 		Ti.App.addEventListener('update_appearance', function(data) {
 			//alert(JSON.stringify(data));
 			if (data.gender == 'm') {
@@ -114,13 +113,13 @@ function MaleAvatar(config) {
 	function UnhideAll() {
 		body_imageview.visible = true;
 		helmet_imageview.visible = true;
-		if(config.thumb == undefined){
+		if (config.thumb == undefined) {
 			shield_imageview.visible = true;
 		}
 		hair_back_imageview.visible = true;
 		face_imageview.visible = true;
 		hair_front_imageview.visible = true;
-		if(config.thumb == undefined){
+		if (config.thumb == undefined) {
 			weapon_imageview.visible = true;
 		}
 		label.hide();

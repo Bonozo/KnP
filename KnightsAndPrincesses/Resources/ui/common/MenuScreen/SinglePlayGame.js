@@ -1,19 +1,19 @@
 function SinglePlayGame(game, quest_status, quest_id, userinfo) {
     if (game == 'joust_game') {
         var JoustinGamePlay = require('/ui/common/MenuScreen/JoustinGamePlay');
-        var joustingameplay = new JoustinGamePlay('INCOMPLETE', 80000003, userinfo);
+        var joustingameplay = new JoustinGamePlay('INCOMPLETE', 80000003, userinfo, '', true);
         return joustingameplay;
     } else if (game == 'archery_game') {
         var ArcheryGamePlay = require('/ui/common/games/ArcheryMainGame');
-        var archerygameplay = new ArcheryGamePlay('INCOMPLETE', 80000001, userinfo);
+        var archerygameplay = new ArcheryGamePlay('INCOMPLETE', 80000001, userinfo, '', true);
         return archerygameplay;
     } else if (game == 'cooking_game') {
         var CookingGamePlay = require('/ui/common/MenuScreen/CookingGame');
-        var cookinggameplay = new CookingGamePlay('INCOMPLETE', 80000004, userinfo);
+        var cookinggameplay = new CookingGamePlay('INCOMPLETE', 80000004, userinfo, '', true);
         return cookinggameplay;
     } else if (game == 'sonnet_game') {
         var SonnetGamePlay = require('/ui/common/MenuScreen/SonnetGamePlay');
-        var sonnetgameplay = new SonnetGamePlay('INCOMPLETE', 80000002, userinfo);
+        var sonnetgameplay = new SonnetGamePlay('INCOMPLETE', 80000002, userinfo, '', true);
         return sonnetgameplay;
     } else {
         var played = false;

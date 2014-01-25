@@ -19,10 +19,10 @@ function FreindListForGift(userinfo, selected_item, callback) {
 
 				for (var i = 0; i < items_json.Record.length; i++) {
 					if (items_json.Record[i].GENDER == 'f') {
-						bg_image = '/assets/row_view_bg_female.png'
+						bg_image = '/assets/row_view_bg_female.png';
 						avatar_image = "female_icon";
 					} else {
-						bg_image = '/assets/row_view_bg_male.png'
+						bg_image = '/assets/row_view_bg_male.png';
 						avatar_image = "male_icon";
 					}
 					var rowView = Ti.UI.createTableViewRow({
@@ -34,7 +34,7 @@ function FreindListForGift(userinfo, selected_item, callback) {
 						zIndex : 10
 					});
 					/*
-					 rowView.addEventListener('longclick', function(e) {
+					 rowView.addEventListener('longpress', function(e) {
 					 Titanium.Media.vibrate();
 					 var SendFriendRequest = require('/ui/common/MenuScreen/SendFriendRequest');
 					 var sendfriendrequest = new SendFriendRequest(userinfo, items_json.Record[e.row.index]);
@@ -117,8 +117,9 @@ function FreindListForGift(userinfo, selected_item, callback) {
 					tabledata.push(rowView);
 				}//end of for loop
 
-				tableview =  Ti.UI.createTableView({		backgroundColor : 'transparent', 		separatorColor : 'transparent',
-		
+				tableview = Ti.UI.createTableView({
+					backgroundColor : 'transparent',
+					separatorColor : 'transparent',
 					data : tabledata,
 					width : '100%',
 					height : '56%',
