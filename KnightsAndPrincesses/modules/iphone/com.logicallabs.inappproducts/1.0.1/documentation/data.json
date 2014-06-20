@@ -1,0 +1,965 @@
+{
+    "project": {
+        "name": "In-App Products Module for iOS",
+        "description": "The Logical Labs In-App Products module provides Titanium developers access to features related to in-app product purchases.",
+        "version": "1.0.1",
+        "url": "http://www.logicallabs.com/"
+    },
+    "files": {
+        "Classes/ComLogicallabsInappproductsModule.m": {
+            "name": "Classes/ComLogicallabsInappproductsModule.m",
+            "modules": {
+                "Readme": 1
+            },
+            "classes": {
+                "InAppProductsModule": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "Classes/DownloadProxy.m": {
+            "name": "Classes/DownloadProxy.m",
+            "modules": {},
+            "classes": {
+                "Download": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "Classes/ProductProxy.m": {
+            "name": "Classes/ProductProxy.m",
+            "modules": {},
+            "classes": {
+                "Product": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "Classes/PurchaseProxy.m": {
+            "name": "Classes/PurchaseProxy.m",
+            "modules": {},
+            "classes": {
+                "Purchase": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "Readme": {
+            "name": "Readme",
+            "submodules": {},
+            "classes": {
+                "InAppProductsModule": 1,
+                "Download": 1,
+                "Product": 1,
+                "Purchase": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "Classes/PurchaseProxy.m",
+            "line": 15,
+            "description": "## Introduction\n\nThis module allows the Titanium developer to provide in-app products.\n\n## Usage\n\n**Note**: This module provides functionality that **will not work** in the\nsimulator. Please run your tests on an actual device.\n\nThis module provides access to the products defined in iTunes Connect.\nYou will need to add your app to iTunes Connect and define the in-app\nproducts there.\n\nThe following code segments are not complete; they only demonstrate the\nessentials of using the module. See <code>example/app.js</code> for a complete\nexample.\n\nYou load the module as usual:\n\n\tvar InAppProducts = require('com.logicallabs.inappproducts');\n\nBasic steps to get a list of available products:\n\n\tInAppProducts.addEventListener('receivedProducts', function(e) {\n\t\te.products.forEach(...\n\t});\n\t\n\tif (InAppProducts.getProducts({ SKUs: productIDs })) {\n\t\tTi.API.info('getProducts request started successfully.');\n\t} else {\n\t\talert('Error: could not start getProducts request!');\n\t}\n\nBasic steps to purchase a product:\n\n\tInAppProducts.addEventListener('purchaseUpdate', function(e) {\n       switch (e.purchase.state) {\n\t\t\t...\n\t});\n\tproductObj.purchase();\n\n## Completing a Purchase\n\nThe purchase process of in-app products on iOS separates the steps of completing\nthe payment and completing the purchase itself. When the payment for the\nproduct is received, the related {{#crossLink \"Purchase\"}}{{/crossLink}}\nobject goes into\n{{#crossLink \"InAppProductsModule/PURCHASE\\_STATE\\_PURCHASED:attribute\"}}\n{{/crossLink}} state. This signals to the app that the purchased functionality\nshould be made available to the user in the app's environment.\n\nOnce the app completed the processing of a purchase, it must call the\n{{#crossLink \"Purchase/complete:method\"}}{{/crossLink}} method. If the app\nfails to do this, perhaps because it is terminated before it can completely\nprocess the purchase, it will receive a\n{{#crossLink \"InAppProductsModule/purchaseUpdate:event\"}}{{/crossLink}} event\nfor the uncompleted purchase the next time it starts up. The module will\ncache these events until the\n{{#crossLink \"InAppProductsModule/purchaseUpdate:event\"}}{{/crossLink}} event\nhandler becomes available and then deliver all the outstanding events at once.\nFor this reason it is important to prepare this event handler for handling such\nseemingly unsolicited events.\n\n## Issues and Limitations\n\nWeb receipt verification with the iTunes Store is not part of the module at\nthis time -- the best\npractice encouraged by Apple is to perform this verification on an independent\nserver, not on the device.\n\n## Change Log\n\n### Version 1.0.0\n\n* First release\n\n## Author\n\ntitanium@logicallabs.com\n\n## License\n\nLogical Labs Commercial License\n\n## Copyright\n\nCopyright (c) 2013 by Logical Labs, LLC"
+        }
+    },
+    "classes": {
+        "InAppProductsModule": {
+            "name": "InAppProductsModule",
+            "shortname": "InAppProductsModule",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Readme",
+            "namespace": "",
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 93
+        },
+        "Download": {
+            "name": "Download",
+            "shortname": "Download",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Readme",
+            "namespace": "",
+            "file": "Classes/DownloadProxy.m",
+            "line": 9,
+            "description": "A Download object represents downloadable content associated with a product.\nWhen you create a product in iTunes Connect, you can associate one or more\npieces of downloadable content with it. Then, at runtime, when a product is\npurchased by a user, your app uses Download objects to download the content\nfrom the App Store."
+        },
+        "Product": {
+            "name": "Product",
+            "shortname": "Product",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Readme",
+            "namespace": "",
+            "file": "Classes/ProductProxy.m",
+            "line": 27
+        },
+        "Purchase": {
+            "name": "Purchase",
+            "shortname": "Purchase",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Readme",
+            "namespace": "",
+            "file": "Classes/PurchaseProxy.m",
+            "line": 15
+        }
+    },
+    "classitems": [
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 213,
+            "description": "Notifies the app about a change in the state of the module. See the\n{{#crossLink \"InAppProductsModule/state:property\"}}\n{{/crossLink}} property for more information.\n\nOn iOS, this event is only provided for compatibility with Android.\nIt is only fired once, when the module is loaded, and\nthe state is always\n{{#crossLink \"InAppProductsModule/STATE\\_READY:attribute\"}}\n{{/crossLink}}.",
+            "itemtype": "event",
+            "name": "stateChange",
+            "params": [
+                {
+                    "name": "state",
+                    "description": "",
+                    "type": "Number"
+                }
+            ],
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 269,
+            "description": "The values of the\n{{#crossLink \"Download/timeRemaining:property\"}}\n{{/crossLink}} property when the system cannot determine how much time is\nneeded to finish downloading the content.",
+            "itemtype": "attribute",
+            "name": "DOWNLOAD_TIME_UNKNOWN",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 284,
+            "description": "One of the possible values of the\n{{#crossLink \"Download/state:property\"}}\n{{/crossLink}} property.\n\nIndicates that the download has not started yet.",
+            "itemtype": "attribute",
+            "name": "DOWNLOAD_STATE_WAITING",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 296,
+            "description": "One of the possible values of the\n{{#crossLink \"Download/state:property\"}}\n{{/crossLink}} property of a\n{{#crossLink \"Download\"}}\n{{/crossLink}} object.\n\nIndicates that the content is currently being downloaded.",
+            "itemtype": "attribute",
+            "name": "DOWNLOAD_STATE_ACTIVE",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 310,
+            "description": "One of the possible values of the\n{{#crossLink \"Download/state:property\"}}\n{{/crossLink}} property of a\n{{#crossLink \"Download\"}}\n{{/crossLink}} object.\n\nIndicates that your app paused the download.",
+            "itemtype": "attribute",
+            "name": "DOWNLOAD_STATE_PAUSED",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 324,
+            "description": "One of the possible values of the\n{{#crossLink \"Download/state:property\"}}\n{{/crossLink}} property of a\n{{#crossLink \"Download\"}}\n{{/crossLink}} object.\n\nIndicates that the content was successfully downloaded.",
+            "itemtype": "attribute",
+            "name": "DOWNLOAD_STATE_FINISHED",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 338,
+            "description": "One of the possible values of the\n{{#crossLink \"Download/state:property\"}}\n{{/crossLink}} property of a\n{{#crossLink \"Download\"}}\n{{/crossLink}} object.\n\nIndicates that an error occurred while the file was being downloaded.",
+            "itemtype": "attribute",
+            "name": "DOWNLOAD_STATE_FAILED",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 352,
+            "description": "One of the possible values of the\n{{#crossLink \"Download/state:property\"}}\n{{/crossLink}} property of a\n{{#crossLink \"Download\"}}\n{{/crossLink}} object.\n\nIndicates that your app canceled the download.",
+            "itemtype": "attribute",
+            "name": "DOWNLOAD_STATE_CANCELED",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 367,
+            "description": "One of the possible values of the\n{{#crossLink \"InAppProductsModule/state:property\"}}\n{{/crossLink}} property.\n\nThis value means that module not ready to be used.",
+            "itemtype": "attribute",
+            "name": "STATE_NOT_READY",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 379,
+            "description": "One of the possible values of the\n{{#crossLink \"InAppProductsModule/state:property\"}}\n{{/crossLink}} property.\n\nThis value means that module is ready to be used.",
+            "itemtype": "attribute",
+            "name": "STATE_READY",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 391,
+            "description": "One of the possible values of the\n{{#crossLink \"InAppProductsModule/state:property\"}}\n{{/crossLink}} property.\n\nThis value means that the app is running in the simulator.\nThis module provides functionality that **will not work** in the\nsimulator. Please run your tests on an actual device.",
+            "itemtype": "attribute",
+            "name": "STATE_NOT_SUPPORTED",
+            "type": "{Number}",
+            "since": "1.0.1",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 406,
+            "description": "One of the possible values returned by the\n{{#crossLink \"InAppProductsModule/getSupportStatus:method\"}}\n{{/crossLink}} method.\n\nThis value means that none of the product types are supported.",
+            "itemtype": "attribute",
+            "name": "SUPPORT_STATUS_NONE",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 418,
+            "description": "One of the possible values returned by the\n{{#crossLink \"InAppProductsModule/getSupportStatus:method\"}}\n{{/crossLink}} method.\n\nThis value means that all the product types are supported.",
+            "itemtype": "attribute",
+            "name": "SUPPORT_STATUS_ALL",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 430,
+            "description": "One of the possible values returned by the\n{{#crossLink \"InAppProductsModule/getSupportStatus:method\"}}\n{{/crossLink}} method.\n\nThis value means that an error occurred while querying the support\nstatus.",
+            "itemtype": "attribute",
+            "name": "SUPPORT_STATUS_ERROR",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 444,
+            "description": "One of the possible values of the <code>state</code> property of\n{{#crossLink \"Purchase\"}}\n{{/crossLink}} objects.",
+            "itemtype": "attribute",
+            "name": "PURCHASE_STATE_PURCHASING",
+            "type": "{Number}",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 453,
+            "description": "One of the possible values of the <code>state</code> property of\n{{#crossLink \"Purchase\"}}\n{{/crossLink}} objects.",
+            "itemtype": "attribute",
+            "name": "PURCHASE_STATE_PURCHASED",
+            "type": "{Number}",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 462,
+            "description": "One of the possible values of the <code>state</code> property of\n{{#crossLink \"Purchase\"}}\n{{/crossLink}} objects.",
+            "itemtype": "attribute",
+            "name": "PURCHASE_STATE_FAILED",
+            "type": "{Number}",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 471,
+            "description": "One of the possible values of the <code>state</code> property of\n{{#crossLink \"Purchase\"}}\n{{/crossLink}} objects.",
+            "itemtype": "attribute",
+            "name": "PURCHASE_STATE_RESTORED",
+            "type": "{Number}",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 485,
+            "description": "The state of the module. On iOS, this is always going to be\n{{#crossLink \"InAppProductsModule/STATE\\_READY:attribute\"}}\n{{/crossLink}}; only provided for compatibility with Android.",
+            "itemtype": "property",
+            "name": "state",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 504,
+            "description": "Determines whether billing is supported. Note that the return\nvalue is a number, not a simple boolean in order to accommodate the more\nelaborate equivalent function on Android. Use the\n{{#crossLink \"InAppProductsModule/SUPPORT\\_STATUS\\_NONE:attribute\"}}\n{{/crossLink}} and\n{{#crossLink \"InAppProductsModule/SUPPORT\\_STATUS\\_ALL:attribute\"}}\n{{/crossLink}} constants to interpret the returned value.",
+            "itemtype": "method",
+            "name": "getSupportStatus",
+            "return": {
+                "description": "See the SUPPORT\\_STATUS\\_* constants for possible\nvalues.",
+                "type": "Number"
+            },
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 527,
+            "description": "Requests product information for the provided SKUs from iTunes Store.\n\nThe final result of this operation is reported via the\n{{#crossLink \"InAppProductsModule/receivedProducts:event\"}}\n{{/crossLink}} event.",
+            "itemtype": "method",
+            "name": "getProducts",
+            "params": [
+                {
+                    "name": "params",
+                    "description": "An object with the following properties:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "SKUs",
+                            "description": "",
+                            "type": "Array of Strings"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "<code>true</code> if the product request was started\nsuccessfully.",
+                "type": "Boolean"
+            },
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 559,
+            "description": "Cancels a pending\n{{#crossLink \"InAppProductsModule/getProducts:method\"}}\n{{/crossLink}} call. You will not receive a\n{{#crossLink \"InAppProductsModule/receivedProducts:event\"}}\n{{/crossLink}} event if you cancel a product request.\n\nThis function is only available on iOS.",
+            "itemtype": "method",
+            "name": "cancelProductRequest",
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 586,
+            "description": "This event returns the result of a\n{{#crossLink \"InAppProductsModule/getProducts:method\"}}\n{{/crossLink}} call.",
+            "itemtype": "event",
+            "name": "receivedProducts",
+            "params": [
+                {
+                    "name": "products",
+                    "description": "An array of\n{{#crossLink \"Product\"}}\n{{/crossLink}} objects.",
+                    "type": "Array of Products"
+                },
+                {
+                    "name": "invalid",
+                    "description": "An array of strings holding those\nproduct identifiers that were passed on to the\n{{#crossLink \"InAppProductsModule/getProducts:method\"}}\n{{/crossLink}} function but are not valid.",
+                    "type": "Array of Strings"
+                },
+                {
+                    "name": "errorCode",
+                    "description": "The error code; only present if an\nerror occurred.",
+                    "type": "Number"
+                },
+                {
+                    "name": "errorMessage",
+                    "description": "The error message; only present if an error\noccurred.",
+                    "type": "String"
+                }
+            ],
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 637,
+            "description": "Initiates the recovery of recoverable purchases.\n\nThe final result of this operation is reported via the\n{{#crossLink \"InAppProductsModule/receivedPurchases:event\"}}\n{{/crossLink}} event, which provides an array of all the purchases that\nhave been recovered.\n\nIn addition, you will receive a\n{{#crossLink \"InAppProductsModule/purchaseUpdate:event\"}}\n{{/crossLink}} event **for each purchase** that is recovered, as the\nrecovery progresses. You will want to complete the recovered purchase\nas appropriate either via the {{#crossLink \"Purchase/complete:method\"}}\n{{/crossLink}} method by setting the\n{{#crossLink \"InAppProductsModule/autoCompletePurchase:property\"}}\n{{/crossLink}} property to <code>true</code>.",
+            "itemtype": "method",
+            "name": "getPurchases",
+            "return": {
+                "description": "<code>true</code> if the recovery was initiated\nsuccessfully.",
+                "type": "Boolean"
+            },
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 694,
+            "description": "Defines whether the module will automatically mark the purchases completed.\n**By default** this property is set to <code>false</code> in order to avoid\na situation where a purchase gets \"lost\" due to a crash in the application.\nThis can happen if the module marks the purchase completed before the\napplication has a chance to processed the purchase and unlocked the\nfunctionality purchased by the user.\n\nIf this property is set to <code>true</code>, the module will mark every\npurchase in the\n{{#crossLink \"InAppProductsModule/PURCHASE\\_STATE\\_PURCHASED:attribute\"}}\n{{/crossLink}},\n{{#crossLink \"InAppProductsModule/PURCHASE\\_STATE\\_FAILED:attribute\"}}\n{{/crossLink}}, and\n{{#crossLink \"InAppProductsModule/PURCHASE\\_STATE\\_RESTORED:attribute\"}}\n{{/crossLink}} state.\n\nIf this property is set to <code>false</code>, which is the default, then\nit is the **responsibility of the app** to do the same by calling the\n{{#crossLink \"Purchase/complete:method\"}}\n{{/crossLink}} method.",
+            "itemtype": "property",
+            "name": "autoCompletePurchases",
+            "type": "{Boolean}",
+            "default": "false",
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 731,
+            "description": "The semantics of this event are significantly different on iOS and Android.\nOn iOS, this event is tied to the <a href=\"https://developer.apple.com/library/ios/documentation/StoreKit/Reference/SKPaymentTransactionObserver_Protocol/Reference/Reference.html#//apple_ref/occ/intfm/SKPaymentTransactionObserver/paymentQueue:updatedTransactions:\">paymentQueue:updatedTransactions:</a>\nnative callback function.\n\nOn iOS, just like on Android, this event reports the result of a call to the\n{{#crossLink \"Product/purchase:method\"}}\n{{/crossLink}}.\n\nIn addition, this event is sent for each purchase that is restored as a\nresult of a call to\n{{#crossLink \"InAppProductsModule/getPurchases:method\"}}\n{{/crossLink}}.\n\nFurthermore, you will receive this event when your app starts up if\nthere are any pending purchases. A pending purchase is one that has not\nbeen completed either by explicitly calling the\n{{#crossLink \"Purchase/complete:method\"}}\n{{/crossLink}} method or implicitly (by the module) in case the\n{{#crossLink \"InAppProductsModule/autoCompletePurchase:property\"}}\n{{/crossLink}} property is set to <code>true</code>.\n\nThe app will end up with a pending purchase if it crashes before it can\nrecord the fact that a purchase took place. Therefore it is a good idea\nto attach the <code>purchaseUpdate</code> event handler to the module as\nsoon as possible during the startup of the app and process any and all\npending purchases. This way the app's user will have access to the purchased\nfunctionality immediately.",
+            "itemtype": "event",
+            "name": "purchaseUpdate",
+            "params": [
+                {
+                    "name": "purchase",
+                    "description": "",
+                    "type": "Purchase"
+                }
+            ],
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 820,
+            "description": "This event returns the result of a\n{{#crossLink \"InAppProductsModule/getPurchases:method\"}}\n{{/crossLink}} call.",
+            "itemtype": "event",
+            "name": "receivedPurchases",
+            "params": [
+                {
+                    "name": "purchases",
+                    "description": "An array\n{{#crossLink \"Purchase\"}}\n{{/crossLink}} objects. Note that this attribute is present and may contain\npartial information even if an error occurred.",
+                    "type": "Array of Purchases"
+                },
+                {
+                    "name": "errorCode",
+                    "description": "The error code; only present if an\nerror occurred.",
+                    "type": "Number"
+                },
+                {
+                    "name": "errorMessage",
+                    "description": "The error message; only present if\nan error occurred.",
+                    "type": "String"
+                }
+            ],
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 862,
+            "description": "Starts downloading the specificed content. In order for a download object to\nbe queued for downloading, it must be associated with a purchase that has not\nbeen finished yet.",
+            "itemtype": "method",
+            "name": "startDownloads",
+            "params": [
+                {
+                    "name": "downloads",
+                    "description": "An array\n{{#crossLink \"Download\"}}\n{{/crossLink}} objects.",
+                    "type": "Array of Downloads"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 890,
+            "description": "Pauses a set of downloads.",
+            "itemtype": "method",
+            "name": "pauseDownloads",
+            "params": [
+                {
+                    "name": "downloads",
+                    "description": "An array\n{{#crossLink \"Download\"}}\n{{/crossLink}} objects.",
+                    "type": "Array of Downloads"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 916,
+            "description": "Resumes a set of downloads.",
+            "itemtype": "method",
+            "name": "resumeDownloads",
+            "params": [
+                {
+                    "name": "downloads",
+                    "description": "An array\n{{#crossLink \"Download\"}}\n{{/crossLink}} objects.",
+                    "type": "Array of Downloads"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 942,
+            "description": "Cancels downloading the specificed content.",
+            "itemtype": "method",
+            "name": "cancelDownloads",
+            "params": [
+                {
+                    "name": "downloads",
+                    "description": "An array\n{{#crossLink \"Download\"}}\n{{/crossLink}} objects.",
+                    "type": "Array of Downloads"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ComLogicallabsInappproductsModule.m",
+            "line": 968,
+            "description": "This event provides updates related to\n{{#crossLink \"InAppProductsModule/startDownloads:method\"}}\n{{/crossLink}},\n{{#crossLink \"InAppProductsModule/pauseDownloads:method\"}}\n{{/crossLink}},\n{{#crossLink \"InAppProductsModule/resumeDownloads:method\"}}\n{{/crossLink}}, and\n{{#crossLink \"InAppProductsModule/cancelDownloads:method\"}}\n{{/crossLink}} operations.",
+            "itemtype": "event",
+            "name": "downloadUpdate",
+            "params": [
+                {
+                    "name": "downloads",
+                    "description": "An array\n{{#crossLink \"Download\"}}\n{{/crossLink}} objects.",
+                    "type": "Array of Downloads"
+                }
+            ],
+            "since": "1.0.0",
+            "class": "InAppProductsModule",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/DownloadProxy.m",
+            "line": 40,
+            "description": "A string that uniquely identifies the downloadable content.",
+            "itemtype": "property",
+            "name": "contentID",
+            "since": "1.0.0",
+            "type": "{String}",
+            "final": 1,
+            "class": "Download",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/DownloadProxy.m",
+            "line": 53,
+            "description": "The length of the downloadable content, in bytes.",
+            "itemtype": "property",
+            "name": "contentLength",
+            "since": "1.0.0",
+            "type": "{Number}",
+            "final": 1,
+            "class": "Download",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/DownloadProxy.m",
+            "line": 66,
+            "description": "The local location of the downloaded file.\n\nThe value of this property is valid only when the \n{{#crossLink \"Download/state:property\"}}\n{{/crossLink}} property\nis set to\n{{#crossLink \"InAppProductsModule/DOWNLOAD\\_STATE\\_FINISHED:attribute\"}}\n{{/crossLink}}.\n\nThe URL becomes invalid after the purchase associated with the download\nis completed.",
+            "itemtype": "property",
+            "name": "contentURL",
+            "since": "1.0.0",
+            "type": "{String}",
+            "final": 1,
+            "class": "Download",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/DownloadProxy.m",
+            "line": 89,
+            "description": "A string that identifies which version of the content is available for\ndownload.\nThe version string must be formatted as a series of integers separated by \nperiods.",
+            "itemtype": "property",
+            "name": "contentVersion",
+            "since": "1.0.0",
+            "type": "{String}",
+            "final": 1,
+            "class": "Download",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/DownloadProxy.m",
+            "line": 105,
+            "description": "The current state of the download object.\n\nPossible values are\n{{#crossLink \"InAppProductsModule/DOWNLOAD\\_STATE\\_WAITING:attribute\"}}\n{{/crossLink}},\n{{#crossLink \"InAppProductsModule/DOWNLOAD\\_STATE\\_ACTIVE:attribute\"}}\n{{/crossLink}},\n{{#crossLink \"InAppProductsModule/DOWNLOAD\\_STATE\\_PAUSED:attribute\"}}\n{{/crossLink}},\n{{#crossLink \"InAppProductsModule/DOWNLOAD\\_STATE\\_FINISHED:attribute\"}}\n{{/crossLink}},\n{{#crossLink \"InAppProductsModule/DOWNLOAD\\_STATE\\_FAILED:attribute\"}}\n{{/crossLink}}, and\n{{#crossLink \"InAppProductsModule/DOWNLOAD\\_STATE\\_CANCELED:attribute\"}}\n{{/crossLink}},",
+            "itemtype": "property",
+            "name": "state",
+            "since": "1.0.0",
+            "type": "{String}",
+            "final": 1,
+            "class": "Download",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/DownloadProxy.m",
+            "line": 132,
+            "description": "The code of the error that prevented the content from being downloaded.",
+            "itemtype": "property",
+            "name": "errorCode",
+            "since": "1.0.0",
+            "type": "{Number}",
+            "final": 1,
+            "class": "Download",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/DownloadProxy.m",
+            "line": 149,
+            "description": "The error message associated with a failed download.",
+            "itemtype": "property",
+            "name": "errorMessage",
+            "since": "1.0.0",
+            "type": "{String}",
+            "final": 1,
+            "class": "Download",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/DownloadProxy.m",
+            "line": 166,
+            "description": "A value that indicates how much of the file has been downloaded.\n\nThe value of this property is a floating point number between 0.0 and 1.0,\ninclusive, where 0.0 means no data has been download and 1.0 means all the\ndata has been downloaded. Typically, your app uses the value of this property\nto update a user interface element, such as a progress bar, that displays how\nmuch of the file has been downloaded.\n\nDo not use the value of this property to determine whether the download has\ncompleted. Instead, use the\n{{#crossLink \"Download/state:property\"}}\n{{/crossLink}} property.",
+            "itemtype": "property",
+            "name": "progress",
+            "since": "1.0.0",
+            "type": "{Number}",
+            "final": 1,
+            "class": "Download",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/DownloadProxy.m",
+            "line": 190,
+            "description": "An estimated time, in seconds, to finish downloading the content.\n\nThe system attempts to estimate how long it will take to finish downloading\nthe file. If it cannot create a good estimate, the value of this property is\nset to\n{{#crossLink \"InAppProductsModule/DOWNLOAD\\_TIME\\_UNKNOWN:attribute\"}}\n{{/crossLink}},",
+            "itemtype": "property",
+            "name": "timeRemaining",
+            "since": "1.0.0",
+            "type": "{Number}",
+            "final": 1,
+            "class": "Download",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/DownloadProxy.m",
+            "line": 209,
+            "itemtype": "property",
+            "name": "purchase",
+            "since": "1.0.0",
+            "type": "{Purchase}",
+            "final": 1,
+            "class": "Download",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ProductProxy.m",
+            "line": 58,
+            "description": "Product description.",
+            "itemtype": "property",
+            "name": "description",
+            "type": "{String}",
+            "final": 1,
+            "since": "1.0.0",
+            "class": "Product",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ProductProxy.m",
+            "line": 71,
+            "description": "Product title.",
+            "itemtype": "property",
+            "name": "title",
+            "type": "{String}",
+            "final": 1,
+            "since": "1.0.0",
+            "class": "Product",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ProductProxy.m",
+            "line": 84,
+            "description": "Product price as number.",
+            "itemtype": "property",
+            "name": "priceAsNumber",
+            "type": "{Number}",
+            "final": 1,
+            "since": "1.0.0",
+            "class": "Product",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ProductProxy.m",
+            "line": 97,
+            "description": "Product price as string, formatted for correct locale.",
+            "itemtype": "property",
+            "name": "priceAsString",
+            "type": "{String}",
+            "final": 1,
+            "since": "1.0.0",
+            "class": "Product",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ProductProxy.m",
+            "line": 116,
+            "description": "The locale used to format the price of the product.",
+            "itemtype": "property",
+            "name": "priceLocale",
+            "type": "{String}",
+            "final": 1,
+            "since": "1.0.0",
+            "class": "Product",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ProductProxy.m",
+            "line": 130,
+            "description": "The product identifier.",
+            "itemtype": "property",
+            "name": "SKU",
+            "type": "{String}",
+            "final": 1,
+            "since": "1.0.0",
+            "class": "Product",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/ProductProxy.m",
+            "line": 143,
+            "description": "Begins purchase process for provided product",
+            "itemtype": "method",
+            "name": "purchase",
+            "params": [
+                {
+                    "name": "params",
+                    "description": "An object with the following properties:",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "applicationPayload",
+                            "description": "An opaque identifier for the user’s\naccount on your system. This is used to help the store detect irregular\nactivity. For example, in a game, it would be unusual for dozens of different\niTunes Store accounts making purchases on behalf of the same in-game\ncharacter. The recommended implementation is to use a one-way hash of the\nuser’s account name to calculate the value for this property. Optional,\ndefaults null.",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "quantity",
+                            "description": "Number of products to purchase. Optional,\ndefaults to 1.",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "1"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Void"
+            },
+            "since": "1.0.0",
+            "class": "Product",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 36,
+            "description": "Purchase state.",
+            "itemtype": "property",
+            "name": "state",
+            "type": "{Number}",
+            "final": 1,
+            "since": "1.0.0",
+            "class": "Purchase",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 49,
+            "description": "Only valid if the state is\n{{#crossLink \"InAppProductsModule/PURCHASE\\_STATE\\_FAILED:attribute\"}}\n{{/crossLink}}.",
+            "itemtype": "property",
+            "name": "errorCode",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "Purchase",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 68,
+            "description": "Only valid if the state is\n{{#crossLink \"InAppProductsModule/PURCHASE\\_STATE\\_FAILED:attribute\"}}\n{{/crossLink}}.",
+            "itemtype": "property",
+            "name": "errorMessage",
+            "type": "{String}",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "Purchase",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 86,
+            "description": "Receipt of the purchase. Only valid if the state is\n{{#crossLink \"InAppProductsModule/PURCHASE\\_STATE\\_PURCHASED:attribute\"}}\n{{/crossLink}}.",
+            "itemtype": "property",
+            "name": "receipt",
+            "type": "{TiBlob}",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "Purchase",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 108,
+            "description": "Time of purchase.",
+            "itemtype": "property",
+            "name": "time",
+            "type": "{Date}",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "Purchase",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 121,
+            "description": "A unique order identifier for the transaction.",
+            "itemtype": "property",
+            "name": "orderNumber",
+            "type": "{String}",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "Purchase",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 134,
+            "description": "Number of products purchased.",
+            "itemtype": "property",
+            "name": "quantity",
+            "type": "{Number}",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "Purchase",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 151,
+            "description": "An opaque identifier for the user’s\naccount on your system. Only available on iOS7.0 and above.",
+            "itemtype": "property",
+            "name": "applicationPayload",
+            "type": "{NSString}",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "Purchase",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 171,
+            "description": "The item's product identifier.",
+            "itemtype": "property",
+            "name": "SKU",
+            "type": "{String}",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "Purchase",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 188,
+            "description": "The original purchase associated with this (restored) purchase.\nOnly valid if the state is\n{{#crossLink \"InAppProductsModule/PURCHASE\\_STATE\\_RESTORED:attribute\"}}\n{{/crossLink}}.",
+            "itemtype": "property",
+            "name": "originalPurchase",
+            "type": "{Purchase}",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "Purchase",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 208,
+            "description": "An array of\n{{#crossLink \"Download\"}}\n{{/crossLink}} objects associated with this purchase.\n\nOnly valid if the state is\n{{#crossLink \"InAppProductsModule/PURCHASE\\_STATE\\_PURCHASED:attribute\"}}\n{{/crossLink}}.\nThe {{#crossLink \"Download\"}}{{/crossLink}} objects stored in this property\nmust be used to download the content before the purchase is completed;\nafter that the download objects are no longer usable.",
+            "itemtype": "property",
+            "name": "downloads",
+            "type": "{Array of Downloads}",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "Purchase",
+            "module": "Readme"
+        },
+        {
+            "file": "Classes/PurchaseProxy.m",
+            "line": 235,
+            "description": "Marks the purchase as completed. Your application should call this method\nfrom the \n{{#crossLink \"InAppProductsModule/purchaseUpdate:event\"}}\n{{/crossLink}} event handler after it has successfully processed the\npurchase and unlocked the functionality purchased by the user.\n\nNote that on iOS, you will receive a\n{{#crossLink \"InAppProductsModule/purchaseUpdate:event\"}}\n{{/crossLink}} event not only in response to the\nAlternatively, you can set the\n{{#crossLink \"InAppProductsModule/autoCompletePurchase:property\"}}\n{{/crossLink}} property to <code>true</code>; that will cause the module\nto automatically complete the purchase right before",
+            "itemtype": "method",
+            "name": "complete",
+            "since": "1.0.0",
+            "final": 1,
+            "class": "Purchase",
+            "module": "Readme"
+        }
+    ],
+    "warnings": []
+}

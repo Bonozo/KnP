@@ -1,0 +1,1 @@
+function Avatar(e){var t=Ti.UI.createView(e.main_view);if("m"==e.gender)var i=require("/ui/common/drawings/MaleAvatar"),n=new i(e);else var o=require("/ui/common/drawings/FemaleAvatar"),n=new o(e);return t.add(n),t}module.exports=Avatar;

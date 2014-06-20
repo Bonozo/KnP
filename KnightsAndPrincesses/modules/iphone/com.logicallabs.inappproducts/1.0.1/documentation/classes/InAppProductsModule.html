@@ -1,0 +1,2582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>InAppProductsModule - In-App Products Module for iOS</title>
+    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
+    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="..&#x2F;assets/css/logo.png" title="In-App Products Module for iOS"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <h3 class="project-name">In-App Products Module for iOS</h3>
+            <em>API Docs for: 1.0.1</em>
+        </div>
+    </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-modules">Module</a></li>
+            <li><a href="#api-classes">Classes</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="..&#x2F;modules/Readme.html">Readme</a></li>
+            
+            </ul>
+
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="..&#x2F;classes/Download.html">Download</a></li>
+            
+                <li><a href="..&#x2F;classes/InAppProductsModule.html">InAppProductsModule</a></li>
+            
+                <li><a href="..&#x2F;classes/Product.html">Product</a></li>
+            
+                <li><a href="..&#x2F;classes/Purchase.html">Purchase</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1>InAppProductsModule Class</h1>
+<div class="box meta">
+    
+
+    
+
+    
+
+    
+        
+            Module: <a href="../modules/Readme.html">Readme</a>
+        
+    
+
+    
+</div>
+
+
+
+<div class="box intro">
+    
+</div>
+
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
+        
+            <li class="api-class-tab attrs"><a href="#attrs">Constants</a></li>
+        
+        
+            <li class="api-class-tab events"><a href="#events">Events</a></li>
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_cancelDownloads">cancelDownloads</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_cancelProductRequest">cancelProductRequest</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getProducts">getProducts</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getPurchases">getPurchases</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getSupportStatus">getSupportStatus</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_pauseDownloads">pauseDownloads</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_resumeDownloads">resumeDownloads</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_startDownloads">startDownloads</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_autoCompletePurchases">autoCompletePurchases</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_state">state</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section attrs">
+                    <h3>Constants</h3>
+
+                    <ul class="index-list attrs">
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_DOWNLOAD_STATE_ACTIVE">DOWNLOAD_STATE_ACTIVE</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_DOWNLOAD_STATE_CANCELED">DOWNLOAD_STATE_CANCELED</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_DOWNLOAD_STATE_FAILED">DOWNLOAD_STATE_FAILED</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_DOWNLOAD_STATE_FINISHED">DOWNLOAD_STATE_FINISHED</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_DOWNLOAD_STATE_PAUSED">DOWNLOAD_STATE_PAUSED</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_DOWNLOAD_STATE_WAITING">DOWNLOAD_STATE_WAITING</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_DOWNLOAD_TIME_UNKNOWN">DOWNLOAD_TIME_UNKNOWN</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_PURCHASE_STATE_FAILED">PURCHASE_STATE_FAILED</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_PURCHASE_STATE_PURCHASED">PURCHASE_STATE_PURCHASED</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_PURCHASE_STATE_PURCHASING">PURCHASE_STATE_PURCHASING</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_PURCHASE_STATE_RESTORED">PURCHASE_STATE_RESTORED</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_STATE_NOT_READY">STATE_NOT_READY</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_STATE_NOT_SUPPORTED">STATE_NOT_SUPPORTED</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_STATE_READY">STATE_READY</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_SUPPORT_STATUS_ALL">SUPPORT_STATUS_ALL</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_SUPPORT_STATUS_ERROR">SUPPORT_STATUS_ERROR</a>
+                            </li>
+                        
+                            <li class="index-item attr">
+                                <a href="#attr_SUPPORT_STATUS_NONE">SUPPORT_STATUS_NONE</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section events">
+                    <h3>Events</h3>
+
+                    <ul class="index-list events">
+                        
+                            <li class="index-item event">
+                                <a href="#event_downloadUpdate">downloadUpdate</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_purchaseUpdate">purchaseUpdate</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_receivedProducts">receivedProducts</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_receivedPurchases">receivedPurchases</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_stateChange">stateChange</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+        </div>
+
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_cancelDownloads" class="method item">
+    <h3 class="name"><code>cancelDownloads</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>downloads</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Void</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Cancels downloading the specificed content.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">downloads</code>
+                        <span class="type">Array of Downloads</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>An array
+<a href="../classes/Download.html" class="crosslink">Download</a> objects.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Void</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_cancelProductRequest" class="method item">
+    <h3 class="name"><code>cancelProductRequest</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Void</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Cancels a pending
+<a href="../classes/InAppProductsModule.html#method_getProducts" class="crosslink">getProducts</a> call. You will not receive a
+<a href="../classes/InAppProductsModule.html#event_receivedProducts" class="crosslink">receivedProducts</a> event if you cancel a product request.</p>
+
+<p>This function is only available on iOS.</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Void</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getProducts" class="method item">
+    <h3 class="name"><code>getProducts</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>params</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Requests product information for the provided SKUs from iTunes Store.</p>
+
+<p>The final result of this operation is reported via the
+<a href="../classes/InAppProductsModule.html#event_receivedProducts" class="crosslink">receivedProducts</a> event.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">params</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>An object with the following properties:</p>
+                    </div>
+
+                    
+                        <ul class="params-list">
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name">SKUs</code>
+                                    <span class="type">Array of Strings</span>
+                                
+
+                                <div class="param-description">
+                                    
+                                </div>
+
+                                
+                            </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                    <code>true</code> if the product request was started
+successfully.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getPurchases" class="method item">
+    <h3 class="name"><code>getPurchases</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Boolean</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Initiates the recovery of recoverable purchases.</p>
+
+<p>The final result of this operation is reported via the
+<a href="../classes/InAppProductsModule.html#event_receivedPurchases" class="crosslink">receivedPurchases</a> event, which provides an array of all the purchases that
+have been recovered.</p>
+
+<p>In addition, you will receive a
+<a href="../classes/InAppProductsModule.html#event_purchaseUpdate" class="crosslink">purchaseUpdate</a> event <strong>for each purchase</strong> that is recovered, as the
+recovery progresses. You will want to complete the recovered purchase
+as appropriate either via the <a href="../classes/Purchase.html#method_complete" class="crosslink">complete</a> method by setting the
+InAppProductsModule/autoCompletePurchase:property property to <code>true</code>.</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Boolean</span>:
+                    
+                    <code>true</code> if the recovery was initiated
+successfully.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getSupportStatus" class="method item">
+    <h3 class="name"><code>getSupportStatus</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Number</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Determines whether billing is supported. Note that the return
+value is a number, not a simple boolean in order to accommodate the more
+elaborate equivalent function on Android. Use the
+<a href="../classes/InAppProductsModule.html#attr_SUPPORT_STATUS_NONE" class="crosslink">SUPPORT_STATUS_NONE</a> and
+<a href="../classes/InAppProductsModule.html#attr_SUPPORT_STATUS_ALL" class="crosslink">SUPPORT_STATUS_ALL</a> constants to interpret the returned value.</p>
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Number</span>:
+                    
+                    See the SUPPORT_STATUS_* constants for possible
+values.
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_pauseDownloads" class="method item">
+    <h3 class="name"><code>pauseDownloads</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>downloads</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Void</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Pauses a set of downloads.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">downloads</code>
+                        <span class="type">Array of Downloads</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>An array
+<a href="../classes/Download.html" class="crosslink">Download</a> objects.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Void</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_resumeDownloads" class="method item">
+    <h3 class="name"><code>resumeDownloads</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>downloads</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Void</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Resumes a set of downloads.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">downloads</code>
+                        <span class="type">Array of Downloads</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>An array
+<a href="../classes/Download.html" class="crosslink">Download</a> objects.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Void</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_startDownloads" class="method item">
+    <h3 class="name"><code>startDownloads</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>downloads</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Void</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Starts downloading the specificed content. In order for a download object to
+be queued for downloading, it must be associated with a purchase that has not
+been finished yet.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">downloads</code>
+                        <span class="type">Array of Downloads</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>An array
+<a href="../classes/Download.html" class="crosslink">Download</a> objects.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Void</span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_autoCompletePurchases" class="property item">
+    <h3 class="name"><code>autoCompletePurchases</code></h3>
+    <span class="type">Boolean</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Defines whether the module will automatically mark the purchases completed.
+<strong>By default</strong> this property is set to <code>false</code> in order to avoid
+a situation where a purchase gets "lost" due to a crash in the application.
+This can happen if the module marks the purchase completed before the
+application has a chance to processed the purchase and unlocked the
+functionality purchased by the user.</p>
+
+<p>If this property is set to <code>true</code>, the module will mark every
+purchase in the
+<a href="../classes/InAppProductsModule.html#attr_PURCHASE_STATE_PURCHASED" class="crosslink">PURCHASE_STATE_PURCHASED</a>,
+<a href="../classes/InAppProductsModule.html#attr_PURCHASE_STATE_FAILED" class="crosslink">PURCHASE_STATE_FAILED</a>, and
+<a href="../classes/InAppProductsModule.html#attr_PURCHASE_STATE_RESTORED" class="crosslink">PURCHASE_STATE_RESTORED</a> state.</p>
+
+<p>If this property is set to <code>false</code>, which is the default, then
+it is the <strong>responsibility of the app</strong> to do the same by calling the
+<a href="../classes/Purchase.html#method_complete" class="crosslink">complete</a> method.</p>
+    </div>
+
+    
+        <p><strong>Default:</strong> false</p>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_state" class="property item">
+    <h3 class="name"><code>state</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+        <span class="flag final">read-only</span>
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>The state of the module. On iOS, this is always going to be
+<a href="../classes/InAppProductsModule.html#attr_STATE_READY" class="crosslink">STATE_READY</a>; only provided for compatibility with Android.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+            <div id="attrs" class="api-class-tabpanel">
+                <h2 class="off-left">Constants</h2>
+
+                
+                    <div id="attr_DOWNLOAD_STATE_ACTIVE" class="attr item">
+    <a name="config_DOWNLOAD_STATE_ACTIVE"></a> 
+    <h3 class="name"><code>DOWNLOAD_STATE_ACTIVE</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the
+<a href="../classes/Download.html#property_state" class="crosslink">state</a> property of a
+<a href="../classes/Download.html" class="crosslink">Download</a> object.</p>
+
+<p>Indicates that the content is currently being downloaded.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_DOWNLOAD_STATE_CANCELED" class="attr item">
+    <a name="config_DOWNLOAD_STATE_CANCELED"></a> 
+    <h3 class="name"><code>DOWNLOAD_STATE_CANCELED</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the
+<a href="../classes/Download.html#property_state" class="crosslink">state</a> property of a
+<a href="../classes/Download.html" class="crosslink">Download</a> object.</p>
+
+<p>Indicates that your app canceled the download.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_DOWNLOAD_STATE_FAILED" class="attr item">
+    <a name="config_DOWNLOAD_STATE_FAILED"></a> 
+    <h3 class="name"><code>DOWNLOAD_STATE_FAILED</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the
+<a href="../classes/Download.html#property_state" class="crosslink">state</a> property of a
+<a href="../classes/Download.html" class="crosslink">Download</a> object.</p>
+
+<p>Indicates that an error occurred while the file was being downloaded.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_DOWNLOAD_STATE_FINISHED" class="attr item">
+    <a name="config_DOWNLOAD_STATE_FINISHED"></a> 
+    <h3 class="name"><code>DOWNLOAD_STATE_FINISHED</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the
+<a href="../classes/Download.html#property_state" class="crosslink">state</a> property of a
+<a href="../classes/Download.html" class="crosslink">Download</a> object.</p>
+
+<p>Indicates that the content was successfully downloaded.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_DOWNLOAD_STATE_PAUSED" class="attr item">
+    <a name="config_DOWNLOAD_STATE_PAUSED"></a> 
+    <h3 class="name"><code>DOWNLOAD_STATE_PAUSED</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the
+<a href="../classes/Download.html#property_state" class="crosslink">state</a> property of a
+<a href="../classes/Download.html" class="crosslink">Download</a> object.</p>
+
+<p>Indicates that your app paused the download.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_DOWNLOAD_STATE_WAITING" class="attr item">
+    <a name="config_DOWNLOAD_STATE_WAITING"></a> 
+    <h3 class="name"><code>DOWNLOAD_STATE_WAITING</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the
+<a href="../classes/Download.html#property_state" class="crosslink">state</a> property.</p>
+
+<p>Indicates that the download has not started yet.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_DOWNLOAD_TIME_UNKNOWN" class="attr item">
+    <a name="config_DOWNLOAD_TIME_UNKNOWN"></a> 
+    <h3 class="name"><code>DOWNLOAD_TIME_UNKNOWN</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>The values of the
+<a href="../classes/Download.html#property_timeRemaining" class="crosslink">timeRemaining</a> property when the system cannot determine how much time is
+needed to finish downloading the content.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_PURCHASE_STATE_FAILED" class="attr item">
+    <a name="config_PURCHASE_STATE_FAILED"></a> 
+    <h3 class="name"><code>PURCHASE_STATE_FAILED</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the <code>state</code> property of
+<a href="../classes/Purchase.html" class="crosslink">Purchase</a> objects.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_PURCHASE_STATE_PURCHASED" class="attr item">
+    <a name="config_PURCHASE_STATE_PURCHASED"></a> 
+    <h3 class="name"><code>PURCHASE_STATE_PURCHASED</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the <code>state</code> property of
+<a href="../classes/Purchase.html" class="crosslink">Purchase</a> objects.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_PURCHASE_STATE_PURCHASING" class="attr item">
+    <a name="config_PURCHASE_STATE_PURCHASING"></a> 
+    <h3 class="name"><code>PURCHASE_STATE_PURCHASING</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the <code>state</code> property of
+<a href="../classes/Purchase.html" class="crosslink">Purchase</a> objects.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_PURCHASE_STATE_RESTORED" class="attr item">
+    <a name="config_PURCHASE_STATE_RESTORED"></a> 
+    <h3 class="name"><code>PURCHASE_STATE_RESTORED</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the <code>state</code> property of
+<a href="../classes/Purchase.html" class="crosslink">Purchase</a> objects.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_STATE_NOT_READY" class="attr item">
+    <a name="config_STATE_NOT_READY"></a> 
+    <h3 class="name"><code>STATE_NOT_READY</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the
+<a href="../classes/InAppProductsModule.html#property_state" class="crosslink">state</a> property.</p>
+
+<p>This value means that module not ready to be used.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_STATE_NOT_SUPPORTED" class="attr item">
+    <a name="config_STATE_NOT_SUPPORTED"></a> 
+    <h3 class="name"><code>STATE_NOT_SUPPORTED</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.1</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the
+<a href="../classes/InAppProductsModule.html#property_state" class="crosslink">state</a> property.</p>
+
+<p>This value means that the app is running in the simulator.
+This module provides functionality that <strong>will not work</strong> in the
+simulator. Please run your tests on an actual device.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_STATE_READY" class="attr item">
+    <a name="config_STATE_READY"></a> 
+    <h3 class="name"><code>STATE_READY</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values of the
+<a href="../classes/InAppProductsModule.html#property_state" class="crosslink">state</a> property.</p>
+
+<p>This value means that module is ready to be used.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_SUPPORT_STATUS_ALL" class="attr item">
+    <a name="config_SUPPORT_STATUS_ALL"></a> 
+    <h3 class="name"><code>SUPPORT_STATUS_ALL</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values returned by the
+<a href="../classes/InAppProductsModule.html#method_getSupportStatus" class="crosslink">getSupportStatus</a> method.</p>
+
+<p>This value means that all the product types are supported.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_SUPPORT_STATUS_ERROR" class="attr item">
+    <a name="config_SUPPORT_STATUS_ERROR"></a> 
+    <h3 class="name"><code>SUPPORT_STATUS_ERROR</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values returned by the
+<a href="../classes/InAppProductsModule.html#method_getSupportStatus" class="crosslink">getSupportStatus</a> method.</p>
+
+<p>This value means that an error occurred while querying the support
+status.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="attr_SUPPORT_STATUS_NONE" class="attr item">
+    <a name="config_SUPPORT_STATUS_NONE"></a> 
+    <h3 class="name"><code>SUPPORT_STATUS_NONE</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>One of the possible values returned by the
+<a href="../classes/InAppProductsModule.html#method_getSupportStatus" class="crosslink">getSupportStatus</a> method.</p>
+
+<p>This value means that none of the product types are supported.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+            <div id="events" class="api-class-tabpanel">
+                <h2 class="off-left">Events</h2>
+
+                
+                    <div id="event_downloadUpdate" class="events item">
+    <h3 class="name"><code>downloadUpdate</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>This event provides updates related to
+<a href="../classes/InAppProductsModule.html#method_startDownloads" class="crosslink">startDownloads</a>,
+<a href="../classes/InAppProductsModule.html#method_pauseDownloads" class="crosslink">pauseDownloads</a>,
+<a href="../classes/InAppProductsModule.html#method_resumeDownloads" class="crosslink">resumeDownloads</a>, and
+<a href="../classes/InAppProductsModule.html#method_cancelDownloads" class="crosslink">cancelDownloads</a> operations.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">downloads</code>
+                        <span class="type">Array of Downloads</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>An array
+<a href="../classes/Download.html" class="crosslink">Download</a> objects.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_purchaseUpdate" class="events item">
+    <h3 class="name"><code>purchaseUpdate</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>The semantics of this event are significantly different on iOS and Android.
+On iOS, this event is tied to the <a href="https://developer.apple.com/library/ios/documentation/StoreKit/Reference/SKPaymentTransactionObserver_Protocol/Reference/Reference.html#//apple_ref/occ/intfm/SKPaymentTransactionObserver/paymentQueue:updatedTransactions:">paymentQueue:updatedTransactions:</a>
+native callback function.</p>
+
+<p>On iOS, just like on Android, this event reports the result of a call to the
+<a href="../classes/Product.html#method_purchase" class="crosslink">purchase</a>.</p>
+
+<p>In addition, this event is sent for each purchase that is restored as a
+result of a call to
+<a href="../classes/InAppProductsModule.html#method_getPurchases" class="crosslink">getPurchases</a>.</p>
+
+<p>Furthermore, you will receive this event when your app starts up if
+there are any pending purchases. A pending purchase is one that has not
+been completed either by explicitly calling the
+<a href="../classes/Purchase.html#method_complete" class="crosslink">complete</a> method or implicitly (by the module) in case the
+InAppProductsModule/autoCompletePurchase:property property is set to <code>true</code>.</p>
+
+<p>The app will end up with a pending purchase if it crashes before it can
+record the fact that a purchase took place. Therefore it is a good idea
+to attach the <code>purchaseUpdate</code> event handler to the module as
+soon as possible during the startup of the app and process any and all
+pending purchases. This way the app's user will have access to the purchased
+functionality immediately.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">purchase</code>
+                        <span class="type"><a href="../classes/Purchase.html" class="crosslink">Purchase</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_receivedProducts" class="events item">
+    <h3 class="name"><code>receivedProducts</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>This event returns the result of a
+<a href="../classes/InAppProductsModule.html#method_getProducts" class="crosslink">getProducts</a> call.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">products</code>
+                        <span class="type">Array of Products</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>An array of
+<a href="../classes/Product.html" class="crosslink">Product</a> objects.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">invalid</code>
+                        <span class="type">Array of Strings</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>An array of strings holding those
+product identifiers that were passed on to the
+<a href="../classes/InAppProductsModule.html#method_getProducts" class="crosslink">getProducts</a> function but are not valid.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">errorCode</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The error code; only present if an
+error occurred.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">errorMessage</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The error message; only present if an error
+occurred.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_receivedPurchases" class="events item">
+    <h3 class="name"><code>receivedPurchases</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>This event returns the result of a
+<a href="../classes/InAppProductsModule.html#method_getPurchases" class="crosslink">getPurchases</a> call.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">purchases</code>
+                        <span class="type">Array of Purchases</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>An array
+<a href="../classes/Purchase.html" class="crosslink">Purchase</a> objects. Note that this attribute is present and may contain
+partial information even if an error occurred.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">errorCode</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The error code; only present if an
+error occurred.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">errorMessage</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The error message; only present if
+an error occurred.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_stateChange" class="events item">
+    <h3 class="name"><code>stateChange</code></h3>
+    <span class="type"></span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+            
+        
+        
+        </p>
+
+        
+
+        
+            <p>Available since 1.0.0</p>
+        
+    </div>
+
+    <div class="description">
+        <p>Notifies the app about a change in the state of the module. See the
+<a href="../classes/InAppProductsModule.html#property_state" class="crosslink">state</a> property for more information.</p>
+
+<p>On iOS, this event is only provided for compatibility with Android.
+It is only fired once, when the module is loaded, and
+the state is always
+<a href="../classes/InAppProductsModule.html#attr_STATE_READY" class="crosslink">STATE_READY</a>.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">state</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+</div>
+
+                
+            </div>
+        
+    </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="..&#x2F;assets/js/yui-prettify.js"></script>
+<script src="..&#x2F;assets/../api.js"></script>
+<script src="..&#x2F;assets/js/api-filter.js"></script>
+<script src="..&#x2F;assets/js/api-list.js"></script>
+<script src="..&#x2F;assets/js/api-search.js"></script>
+<script src="..&#x2F;assets/js/apidocs.js"></script>
+</body>
+</html>

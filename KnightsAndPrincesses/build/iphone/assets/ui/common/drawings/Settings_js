@@ -1,0 +1,1 @@
+function Settings(){function e(e,t){return"x"==e?i*t/100:"y"==e?n*t/100:void 0}function t(e,t){return e/t}var i=Ti.Platform.displayCaps.platformWidth,n=Ti.Platform.displayCaps.platformHeight,a=100,o=10,r=1.585,s=1,d=e("x",a),c=e("x",o);return{avatar_width:t(d,r),avatar_height:d,avatar_thumb_width:t(c,s),avatar_thumb_height:c}}module.exports=Settings;

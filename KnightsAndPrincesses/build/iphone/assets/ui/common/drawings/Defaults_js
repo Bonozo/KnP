@@ -1,0 +1,1 @@
+function Defaults(e,t){var i=require("/ui/common/Functions/function");i.requestServer({success:function(){items_json=JSON.parse(this.responseText),void 0!=items_json.Record&&(record=items_json.Record,t(record))},method:"GET",contentType:"text/xml",url:"http://bonozo.com:8080/knp/get_avatar_default_appearence.php?gender="+e})}module.exports=Defaults;

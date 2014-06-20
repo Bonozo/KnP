@@ -1,5 +1,16 @@
 function GoldPurchase(userinfo) {
+		
+	
+	var view = Ti.UI.createWindow({
+		backgroundImage : '/assets/inventoryBackground.png',
+		navBarHidden : true,
+		fullscreen : true,
+		zIndex : 200
+	});
+	view.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
+
 	var osname = Ti.Platform.osname;
+	var Storekit;
 	function getPixelFromPercent(axis, percent) {
 		if (axis == 'x') {
 			return winWidth * percent / 100;
@@ -9,6 +20,19 @@ function GoldPurchase(userinfo) {
 	}
 
 	var selected_num_of_golds = 0;
+
+	function isIOS7Plus() {
+		if (Titanium.Platform.name == 'iPhone OS') {
+			var version = Titanium.Platform.version.split(".");
+			var major = parseInt(version[0], 10);
+			if (major >= 7) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	var IOS7 = isIOS7Plus();
 
 	if (osname === 'android') {
 		(function() {
@@ -169,38 +193,71 @@ function GoldPurchase(userinfo) {
 		 */
 		InAppBilling.startBillingService();
 	} else {// for iPhone
-		var Storekit = require('ti.storekit');
-		var verifyingReceipts = false;
-		var _product = "";
 
+		Storekit = require('ti.storekit');
+
+		/*
+		 If you decide to perform receipt verification then you need to indicate if the receipts should be verified
+		 against the "Sandbox" or "Live" server. If you are verifying auto-renewable subscriptions then you need
+		 to set the shared secret for the application from your iTunes Connect account.
+		 */
+		
+		Storekit.receiptVerificationSandbox = (Ti.App.deployType !== 'production');
+
+		var loading = Ti.UI.createActivityIndicator({
+			bottom:10, height:50, width:50,
+			backgroundColor:'black', borderRadius:10,
+			style:Ti.UI.iPhone.ActivityIndicatorStyle.BIG
+		});
+		var loadingCount = 0;
+		function showLoading()
+		{
+			loadingCount += 1;
+			if (loadingCount == 1) {
+				loading.show();
+			}
+		}
+		function hideLoading()
+		{
+			if (loadingCount > 0) {
+				loadingCount -= 1;
+				if (loadingCount == 0) {
+					loading.hide();
+				}
+			}
+		}
+		view.add(loading);
+		
 		/*
 		 Now let's define a couple utility functions. We'll use these throughout the app.
 		 */
 		var tempPurchasedStore = {};
-
+		
 		/**
 		 * Keeps track (internally) of purchased products.
 		 * @param identifier The identifier of the Ti.Storekit.Product that was purchased.
 		 */
-		function markProductAsPurchased(identifier) {
+		function markProductAsPurchased(identifier)
+		{
 			Ti.API.info('Marking as purchased: ' + identifier);
 			// Store it in an object for immediate retrieval.
 			tempPurchasedStore[identifier] = true;
 			// And in to Ti.App.Properties for persistent storage.
 			Ti.App.Properties.setBool('Purchased-' + identifier, true);
 		}
-
+		
 		/**
 		 * Checks if a product has been purchased in the past, based on our internal memory.
 		 * @param identifier The identifier of the Ti.Storekit.Product that was purchased.
 		 */
-		function checkIfProductPurchased(identifier) {
+		function checkIfProductPurchased(identifier)
+		{
 			Ti.API.info('Checking if purchased: ' + identifier);
 			if (tempPurchasedStore[identifier] === undefined)
 				tempPurchasedStore[identifier] = Ti.App.Properties.getBool('Purchased-' + identifier, false);
 			return tempPurchasedStore[identifier];
 		}
-
+		
 		/**
 		 * Requests a product. Use this to get the information you have set up in iTunesConnect, like the localized name and
 		 * price for the current user.
@@ -208,23 +265,29 @@ function GoldPurchase(userinfo) {
 		 * @param success A callback function.
 		 * @return A Ti.Storekit.Product.
 		 */
-		function requestProduct(identifier, success) {
-			Storekit.requestProducts([identifier], function(evt) {
+		function requestProduct(identifier, success)
+		{
+			showLoading();
+			Storekit.requestProducts([identifier], function (evt) {
+				hideLoading();
 				if (!evt.success) {
 					alert('ERROR: We failed to talk to Apple!');
-				} else if (evt.invalid) {
+				}
+				else if (evt.invalid) {
 					alert('ERROR: We requested an invalid product!');
-				} else {
+				}
+				else {
 					success(evt.products[0]);
 				}
 			});
 		}
-
+		
 		/**
 		 * Purchases a product.
 		 * @param product A Ti.Storekit.Product (hint: use Storekit.requestProducts to get one of these!).
 		 */
-		Storekit.addEventListener('transactionState', function(evt) {
+		Storekit.addEventListener('transactionState', function (evt) {
+			hideLoading();
 			switch (evt.state) {
 				case Storekit.FAILED:
 					if (evt.cancelled) {
@@ -235,7 +298,7 @@ function GoldPurchase(userinfo) {
 					break;
 				case Storekit.PURCHASED:
 					if (verifyingReceipts) {
-						Storekit.verifyReceipt(evt, function(e) {
+						Storekit.verifyReceipt(evt, function (e) {
 							if (e.success) {
 								if (e.valid) {
 									alert('Thanks! Receipt Verified');
@@ -251,9 +314,6 @@ function GoldPurchase(userinfo) {
 						alert('Thanks!');
 						markProductAsPurchased(evt.productIdentifier);
 					}
-					break;
-				case Storekit.PURCHASING:
-					Ti.API.info("Purchasing " + evt.productIdentifier);
 					var send_gift_url = "http://bonozo.com:8080/knp/purchase_gold.php?uid=" + userinfo.Record[0].UID + "&num_of_golds=" + selected_num_of_golds;
 					var httpclientt = require('/ui/common/Functions/function');
 	
@@ -275,34 +335,42 @@ function GoldPurchase(userinfo) {
 						url : send_gift_url
 					});
 					break;
+				case Storekit.PURCHASING:
+					Ti.API.info("Purchasing " + evt.productIdentifier);
+					break;
 				case Storekit.RESTORED:
 					// The complete list of restored products is sent with the `restoredCompletedTransactions` event
 					Ti.API.info("Restored " + evt.productIdentifier);
-					break;
+				    break;
 			}
 		});
-
-		function purchaseProduct(product) {
+		
+		function purchaseProduct(product)
+		{
+			showLoading();
 			Storekit.purchase(product);
 		}
-
+		
 		/**
 		 * Restores any purchases that the current user has made in the past, but we have lost memory of.
 		 */
-		function restorePurchases() {
+		function restorePurchases()
+		{
+			showLoading();
 			Storekit.restoreCompletedTransactions();
 		}
-
-
-		Storekit.addEventListener('restoredCompletedTransactions', function(evt) {
+		Storekit.addEventListener('restoredCompletedTransactions', function (evt) {
+			hideLoading();
 			if (evt.error) {
 				alert(evt.error);
-			} else if (evt.transactions == null || evt.transactions.length == 0) {
+			}
+			else if (evt.transactions == null || evt.transactions.length == 0) {
 				alert('There were no purchases to restore!');
-			} else {
+			}
+			else {
 				for (var i = 0; i < evt.transactions.length; i++) {
 					if (verifyingReceipts) {
-						Storekit.verifyReceipt(evt.transactions[i], function(e) {
+						Storekit.verifyReceipt(evt.transactions[i], function (e) {
 							if (e.valid) {
 								markProductAsPurchased(e.productIdentifier);
 							} else {
@@ -316,108 +384,8 @@ function GoldPurchase(userinfo) {
 				alert('Restored ' + evt.transactions.length + ' purchases!');
 			}
 		});
-		/*
-		 1) Can the user make payments? Their device may be locked down, or this may be a simulator.
-		 */
-		if (!Storekit.canMakePayments)
-			alert('This device cannot make purchases!');
-		else {
-			// /*
-			// 2) Tracking what the user has purchased in the past.
-			// */
-			// var whatHaveIPurchased = Ti.UI.createButton({
-			// color : '#761f56',
-			// title : 'What Have I Purchased?',
-			// top : 10,
-			// left : 5,
-			// right : 5,
-			// height : 40
-			// });
-			// whatHaveIPurchased.addEventListener('click', function() {
-			// alert({
-			// 'Single Item' : checkIfProductPurchased('KnP_Gold') ? 'Purchased!' : 'Not Yet'//,
-			// //'Subscription':checkIfProductPurchased('MonthlySodaPop') ? 'Purchased!' : 'Not Yet'
-			// });
-			// });
-			// win.add(whatHaveIPurchased);
-
-			/*
-			 3) Buying a single item.
-			 */
-			requestProduct('KnP_Gold', function(product) {
-				_product = product;
-				// var buySingleItem = Ti.UI.createButton({
-				// color : '#761f56',
-				// title : 'Buy ' + product.title + ', ' + product.formattedPrice,
-				// top : 60,
-				// left : 5,
-				// right : 5,
-				// height : 40
-				// });
-				// buySingleItem.addEventListener('click', function() {
-				// purchaseProduct(product);
-				// });
-				// win.add(buySingleItem);
-			});
-
-			/*
-			4) Buying a subscription.
-			*/
-
-			// /*
-			// 5) Restoring past purchases.
-			// */
-			// var restoreCompletedTransactions = Ti.UI.createButton({
-			// color : '#761f56',
-			// title : 'Restore Lost Purchases',
-			// top : 160,
-			// left : 5,
-			// right : 5,
-			// height : 40
-			// });
-			// restoreCompletedTransactions.addEventListener('click', function() {
-			// restorePurchases();
-			// });
-			// win.add(restoreCompletedTransactions);
-
-			// /*
-			// 6) Receipt verification.
-			// */
-			// var view = Ti.UI.createView({
-			// layout : 'horizontal',
-			// top : 210,
-			// left : 10,
-			// width : 'auto',
-			// height : 'auto'
-			// });
-			// var verifyingLabel = Ti.UI.createLabel({
-			// text : 'Verify receipts:',
-			// height : Ti.UI.SIZE || 'auto',
-			// width : Ti.UI.SIZE || 'auto'
-			// });
-			// var onSwitch = Ti.UI.createSwitch({
-			// value : false,
-			// isSwitch : true,
-			// left : 4,
-			// height : Ti.UI.SIZE || 'auto',
-			// width : Ti.UI.SIZE || 'auto'
-			// });
-			// onSwitch.addEventListener('change', function(e) {
-			// verifyingReceipts = e.value;
-			// });
-			// view.add(verifyingLabel);
-			// view.add(onSwitch);
-			// win.add(view);
-		}
+		
 	}
-
-	var view = Ti.UI.createWindow({
-		backgroundImage : '/assets/inventoryBackground.png',
-		navBarHidden : true,
-		fullscreen : true,
-		zIndex : 200
-	});
-	view.orientationModes = [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT];
 
 	var top_imageview = Ti.UI.createImageView({
 		image : '/assets/overlayPlayerInfoCroped.png',
@@ -523,7 +491,7 @@ function GoldPurchase(userinfo) {
 					left : '5px'
 				});
 				rowView.add(return_imageview);
-				var rowviewtext_label = Ti.UI.createLabel({
+				var rowViewtext_label = Ti.UI.createLabel({
 					text : items_json.Record[i].NUM_OF_GOLDS + ' Golds',
 					font : {
 						fontSize : '16dip'
@@ -532,7 +500,7 @@ function GoldPurchase(userinfo) {
 					left : '15%',
 					width : '45%'
 				});
-				rowView.add(rowviewtext_label);
+				rowView.add(rowViewtext_label);
 
 				buy_button[i] = Titanium.UI.createButton({
 					title : '$' + items_json.Record[i].PRICE + '\nBuy',
@@ -580,7 +548,14 @@ function GoldPurchase(userinfo) {
 									});
 									displaySynchronousResponseCodes(synchronousResponse);
 								} else {
-									purchaseProduct(_product);
+
+									if (!Storekit.canMakePayments)
+										alert('This device cannot make purchases!');
+									else {
+										requestProduct('HundredGolds', function (product) {
+											purchaseProduct(product);
+										});
+									}
 								}
 
 								break;
@@ -590,9 +565,7 @@ function GoldPurchase(userinfo) {
 							default:
 								break;
 						}
-
 					});
-
 				});
 
 				var qty_label = Ti.UI.createLabel({
@@ -628,7 +601,7 @@ function GoldPurchase(userinfo) {
 		},
 		method : 'GET',
 		contentType : 'text/xml',
-		url : _url,
+		url : _url
 	});
 
 	NotifyMe('Starting Billing Service');

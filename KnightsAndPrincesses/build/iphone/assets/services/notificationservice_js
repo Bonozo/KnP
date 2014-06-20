@@ -1,0 +1,1 @@
+var osname=Ti.Platform.osname;if("iphone"===osname||"ipad"===osname){Ti.API.info("service is of iPhone");var run_service=function(){}}else{Ti.API.info("service is of Android");var service=Titanium.Android.currentService,intent=service.intent,_uid=intent.getStringExtra("uid");Ti.App.fireEvent("service_notification",{uid:_uid})}

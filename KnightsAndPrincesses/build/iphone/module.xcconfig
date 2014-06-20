@@ -1,0 +1,4 @@
+// this is a generated file - DO NOT EDIT
+
+TI_STOREKIT_OTHER_LDFLAGS=$(inherited) -framework StoreKit -framework Security
+OTHER_LDFLAGS=$(inherited) $(TI_STOREKIT_OTHER_LDFLAGS) 
