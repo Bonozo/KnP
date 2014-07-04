@@ -537,7 +537,7 @@ function LoginWindow() {
 		left : '12.5%',
 		width : "75%",
 		paddingLeft : 10,
-		value : "robot2@email.com",// Ti.App.Properties.getString('knp_email'), //
+		value : Ti.App.Properties.getString('knp_email'), //"robot2@email.com",
 		borderRadius : 0,
 		borderColor : "#333333",
 		backgroundColor : '#FFFFFF',
@@ -580,7 +580,7 @@ function LoginWindow() {
 		paddingLeft : 10,
 		left : '12.5%',
 		width : "75%",
-		value : "test",//Ti.App.Properties.getString('knp_password'), //"robot1@email.com",
+		value : Ti.App.Properties.getString('knp_password'), //"test" "robot2@email.com",
 		borderRadius : 0,
 		borderColor : "#333333",
 		passwordMask : true,
