@@ -751,6 +751,8 @@ function JoustinGamePlay(quest_status, quest_id, userinfo, _assign_quest_id, sin
 					alertView.visible = true;
 					points_label.text = "Total points : " + (points += curr_points);
 					knight_image.hide();
+					bg_image.stop();
+					rails_image.stop();
 					setTimeout(function(){
 						if(!play_game)
 							return;
