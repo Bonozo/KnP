@@ -45,9 +45,4 @@ if(isset($_GET))
 }
 
 
-?>ode($records));
-
-}
-
-
 ?>

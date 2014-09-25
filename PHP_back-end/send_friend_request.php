@@ -12,23 +12,27 @@ $tmp_fname = 'cookie.txt';
 $channel    = "alert";
 $message    = "You have received a friend request from '";
 $title      = "Knights And Princesses";
+/*
 
+*/
 if(isset($_GET))
 {
 	extract($_GET);
 	if(isset($uid,$friend_uid,$user_id))
 	{
-
-
 		$dbObj->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$query = "SELECT kits.TOTAL_UNIT,kum.ENERGY,kum.NAME FROM KAP_USER_MAIN kum,KNP_INVENTORY_TRANSACTION_SUMMARY kits WHERE kits.UID = :uid AND kits.INV_ID = '10004' and kum.UID = :uid";
+		$query = "SELECT kits.TOTAL_UNIT,kum.ENERGY,kum.NAME,kum.LEVEL FROM KAP_USER_MAIN kum,KNP_INVENTORY_TRANSACTION_SUMMARY kits WHERE kits.UID = :uid AND kits.INV_ID = '10004' and kum.UID = :uid";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(array(':uid'=>$uid));
 		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
 		$sender_name = $res[0]['NAME'];
 
 		if($res[0]['TOTAL_UNIT']>=MIN_GOLD){
-			if($res[0]['ENERGY']>=MIN_ENERGY){
+			$energy_max_val = $res[0]['LEVEL'] * 1000;
+			$curr_energy = (($res[0]['ENERGY'] / $energy_max_val) * 100);
+			$curr_energy = intval($curr_energy);
+			if( $curr_energy >= MIN_ENERGY){
+			//if($res[0]['ENERGY']>=MIN_ENERGY){
 				$query = "SELECT IF(
 ((SELECT `LEVEL` FROM `KAP_USER_MAIN` WHERE `UID` = :uid) >= (SELECT `LEVEL` FROM `KAP_USER_MAIN` WHERE `UID` = :friend_uid)),
 'TRUE','FALSE') AS 'ELIGIBLE'
@@ -177,12 +181,16 @@ $json       = '{"alert":"'. $message .'","title":"'. $title .'","vibrate":true,"
 
 				}
 				else{
+					
 					$posts[] = "You can only send request to the same or lower level.";
 
 				}
 			}
 			else{
-				$posts[] = "You have insufficient energy to send request.";
+				$energy_max_val = $res[0]['LEVEL'] * 1000;
+				$curr_energy = (($res[0]['ENERGY'] / $energy_max_val) * 100);
+
+				$posts[] = $curr_energy . "\n" . MIN_ENERGY;//"You have insufficient energy to send request.";
 			}
 		}
 		else{
@@ -221,15 +229,6 @@ function CloudLogin($email,$password){
 	$response = objectToArray(json_decode(curl_exec($curlObj)));//echo "CLOUD_LOGIN";print_r($response);///die();
 	if($response['meta']['status'] == 'ok'){
 		return array(true,$response['response']['users'][0]['id']);
-	} 
-	else if($response['meta']['status'] == 'fail'){
-		return array(false,$response['meta']['message']);
-	}
-	return array(false,'Unknown error');
-}
-
-
-?>0]['id']);
 	} 
 	else if($response['meta']['status'] == 'fail'){
 		return array(false,$response['meta']['message']);

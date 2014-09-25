@@ -17,7 +17,7 @@ define('DB_USERNAME','root');
 define('DB_PASSWORD','admin911');
 define('VERSION','0.4.01');
 define('MIN_GOLD','5');
-define('MIN_ENERGY','100');
+define('MIN_ENERGY','10');
 define('CLOUD_ADMIN','admin@bonozo.com');
 define('CLOUD_PASSWORD','admin');
 error_reporting(0);

@@ -163,11 +163,3 @@ function CreateCloudUser($email,$password){
 	}
 	return array(false,'Unknown error');
 }
-k'){
-		return array(true,$response['response']['users'][0]['id']);
-	} 
-	else if($response['meta']['status'] == 'fail'){
-		return array(false,$response['meta']['message']);
-	}
-	return array(false,'Unknown error');
-}

@@ -37,16 +37,4 @@ if(isset($_GET))
 }
 
 
-?>or'=>$posts);
-
-	}
-	else
-	{
-		$records = array('Error'=>"Bad Request!");
-	}
-	echo json_indent(json_encode($records));
-
-}
-
-
 ?>

@@ -52,5 +52,4 @@ else
 }
 
 echo json_indent(json_encode($records));
-?>on_indent(json_encode($records));
 ?>

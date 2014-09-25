@@ -15,6 +15,7 @@ $query =
 	WHERE
 		NOT `INVENTORY_ID` = '10004' AND
 		`SELLABLE` = 'Y'
+		ORDER BY `NAME`
 	";
 
 $statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));

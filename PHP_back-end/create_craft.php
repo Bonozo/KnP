@@ -160,11 +160,3 @@ $records = array('Record'=>$records);
 
 echo json_indent(json_encode($records));
 ?>
-else
-{
-	$records = array('Error'=>"Bad Request!");
-}
-$records = array('Record'=>$records);
-
-echo json_indent(json_encode($records));
-?>

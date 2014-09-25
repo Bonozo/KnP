@@ -38,17 +38,11 @@ foreach($res as $post){
   $reward = explode(",",$rewards);
   foreach($reward as $inventory){
 	  $key_value = explode(":",$inventory);
-	  $posts[$counter][$key_value[0]] = $key_value[1];
+	  $posts[$counter]['INGREDIENTS'][$key_value[0]] = $key_value[1];
   }
   $counter ++;
 }
 $records = array('Record'=>$posts);//$records = array('Error'=>$posts);
-
-echo json_indent(json_encode($records));
-
-
-
-?>ecords = array('Error'=>$posts);
 
 echo json_indent(json_encode($records));
 

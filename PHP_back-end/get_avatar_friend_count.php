@@ -46,5 +46,4 @@ else
 $records = array('Record'=>$records);
 
 echo json_indent(json_encode($records));
-?>_indent(json_encode($records));
 ?>

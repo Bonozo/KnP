@@ -173,14 +173,4 @@ function getAvatarName($uid){
 	return $res[0]['NAME'];
 }
 
-?>_CURSOR => PDO::CURSOR_FWDONLY));
-	$statement->execute(
-	array(
-		':uid'=>$uid
-		));
-	$res = $statement->fetchAll(PDO::FETCH_ASSOC);
-	
-	return $res[0]['NAME'];
-}
-
 ?>

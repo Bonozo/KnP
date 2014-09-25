@@ -44,7 +44,7 @@ if (isset($_GET)) {
 					$last_user = $last_user_email;
 				}
 				$new_uid = InsertUserOnDB($name, $email, $password, $gender);
-				$query = "SELECT `UID`,`NAME`,`EMAIL`,`GENDER`,`STATUS_MESSAGE`,`USER_ID` FROM KAP_USER_MAIN WHERE 				`UID` = :new_uid";
+				$query = "SELECT `UID`,`NAME`,`EMAIL`,`GENDER`,`STATUS_MESSAGE`,`USER_ID`,DATEDIFF(NOW(),`TIMESTAMP`) AS 'ACCOUNT_AGE' FROM KAP_USER_MAIN WHERE `UID` = :new_uid";
 				$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 				$statement->execute(
 				array(
@@ -54,12 +54,47 @@ if (isset($_GET)) {
 			
 				foreach($res as $post){
 					$posts[0]["UID"] = $post["UID"];
+					$posts[0]['ACCOUNT_AGE'] = $post['ACCOUNT_AGE'];
+					$posts[0]["NAME"] = $post["NAME"];
+					$posts[0]["EMAIL"] = $post["EMAIL"];
+					$posts[0]["GENDER"] = $post["GENDER"];
+					$posts[0]["STATUS_MESSAGE"] = $post["STATUS_MESSAGE"];
+					$posts[0]["USER_ID"] = $post["USER_ID"];
+					$posts[0]["LAST_USER"] = $last_user;
+					$posts[0]["DEVICE_TOKEN"] = $device_token;
+
+
+/*					$posts[0]["UID"] = $post["UID"];
 					$posts[0]["NAME"] = $post["NAME"];
 					$posts[0]["EMAIL"] = $post["EMAIL"];
 					$posts[0]["GENDER"] = $post["GENDER"];
 					$posts[0]["STATUS_MESSAGE"] = $post["STATUS_MESSAGE"];
 					$posts[0]["LAST_USER"] = $last_user;
-				}
+*/				}
+				$query =   
+					   "SELECT uwt.`WEAR_TYPE_ID`,uw.`WEAR_ID`,uw.`IMAGE`,uw.`NAME`
+						FROM 
+							`USER_WEAR_TYPE` uwt
+						LEFT JOIN 
+							`USER_WEAR` uw 
+						ON 
+							uwt.`WEAR_TYPE_ID`= uw.`WEAR_TYPE_ID`
+						LEFT JOIN 
+							`USER_WEAR_INFO` uwi
+						ON 
+							uwt.`WEAR_TYPE_ID` = uwi.`WEAR_TYPE_ID`
+						AND 
+							uw.`WEAR_ID` = uwi.`WEAR_ID`
+						WHERE 
+							uwi.UID = :uid
+						ORDER BY
+							uwt.WEAR_TYPE_ID ASC
+						";
+   
+				$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+				$statement->execute(array(':uid'=>$new_uid));
+				$result = $statement->fetchAll(PDO::FETCH_ASSOC);//print_r($result);
+				$posts[0]["USER_APPEARANCE"] = $result;
 				
 				$records = array("Record"=>$posts);//$records = array('Error'=>$posts);
 
@@ -312,15 +347,6 @@ function emailValidation($email){
 		 * Check for Email already exist
 		 */
 		$query = "SELECT `EMAIL` FROM `KAP_USER_MAIN` WHERE `EMAIL` = :email";
-		$statement = $dbObj -> prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-		$statement -> execute(array(':email' => $email));
-		$res = $statement -> fetchAll(PDO::FETCH_ASSOC);
-	
-		return is_value_exists($res, "EMAIL", $email);
-	}
-	return '-2';
-}
-?>IN` WHERE `EMAIL` = :email";
 		$statement = $dbObj -> prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement -> execute(array(':email' => $email));
 		$res = $statement -> fetchAll(PDO::FETCH_ASSOC);

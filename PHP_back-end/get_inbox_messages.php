@@ -244,19 +244,4 @@ else
 $records = array('Record'=>$records);
 
 echo json_indent(json_encode($records));
-?>d'=>$inbox);
-		}
-*/	}
-	else
-	{
-		$records = array('Error'=>"Bad Request!");
-	}
-}
-else
-{
-	$records = array('Error'=>"Bad Request!");
-}
-$records = array('Record'=>$records);
-
-echo json_indent(json_encode($records));
 ?>

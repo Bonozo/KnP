@@ -53,22 +53,4 @@ else
 $records = array('Record'=>$records);
 
 echo json_indent(json_encode($records));
-?> explode(":",$inventory);
-			  $posts[$counter][$key_value[0]] = $key_value[1];
-			}
-		}
-		$records = $posts;
-	}
-	else
-	{
-		$records = array('Error'=>"Bad Request!");
-	}
-}
-else
-{
-	$records = array('Error'=>"Bad Request!");
-}
-$records = array('Record'=>$records);
-
-echo json_indent(json_encode($records));
 ?>

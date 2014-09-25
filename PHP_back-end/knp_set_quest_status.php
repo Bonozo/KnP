@@ -42,10 +42,10 @@ if(isset($_GET))
 		));
 		$result = $statement->fetchAll(PDO::FETCH_ASSOC);
 		if($result[0]['NUM_OF_REMAINING_QUESTS'] == 0){ /*  You have completed all games in this quests  */
-		/*
-		$assign_quest_id
-		*/
-		$quest_status = getQuestStatus($assign_quest_id);
+			/*
+			$assign_quest_id
+			*/
+			$quest_status = getQuestStatus($assign_quest_id);
 			if(strcmp($quest_status,'INCOMPLETE_FRIEND') == 0){
 				$query = "
 				UPDATE 
@@ -216,7 +216,6 @@ if(isset($_GET))
 					//print_r($posts);
 					//$posts[] = $posts;
 
-					
 			}
 			else
 				$posts[] = array("Message"=>"Something went wrong!");
@@ -225,8 +224,39 @@ if(isset($_GET))
 			
 		}
 		else{
-			//print_r(getQuestsRewards($assign_quest_id));
-			$posts[] = array("Message"=>"Completed!");
+			$posts[] = array("Message"=>"Updated!");
+			$rewards = getQuestsRewards($assign_quest_id);
+			foreach($rewards['REC'] as $inv_id => $units){
+				updateInventorySummary($uid,$inv_id," + ",$units);
+			}
+			$query = "
+				SELECT kqm.QUEST_NAME, GROUP_CONCAT(kiim.NAME, CONCAT(':',kqr.UNIT)) AS 'REWARDS' 
+				FROM
+				KNP_QUESTS_MAIN kqm, KNP_QUESTS_REWARDS kqr, KNP_INVENTORY_ITEMS_MAIN kiim
+				WHERE
+				kqr.QUEST_ID = kqm.QUEST_ID AND
+				kqr.INVENTORY_ID = kiim.INVENTORY_ID AND
+				kqm.QUEST_ID = :quest_id
+				GROUP BY
+				kqm.QUEST_ID";
+			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+			$statement->execute(
+			array(
+				':quest_id' => $quest_id
+				));
+			$res = $statement->fetchAll(PDO::FETCH_ASSOC);
+			//print_r($res);
+			$counter = 0;
+			foreach($res as $post){
+				$posts[$counter]['QUEST_NAME'] = $post['QUEST_NAME'];
+				$rewards = $post['REWARDS'];
+				$reward = explode(",",$rewards);
+				foreach($reward as $inventory){
+				  $key_value = explode(":",$inventory);
+				  $posts[$counter][$key_value[0]] = $key_value[1];
+				}
+			}
+			$records = $posts;
 		}
 	}
 	else
@@ -304,19 +334,6 @@ function updateInventorySummary($uid,$inv_id,$operation,$unit){
 		$query = "
 		INSERT INTO 
 			`KNP_INVENTORY_TRANSACTION_SUMMARY`
-		(`UID`,`INV_ID`,`TOTAL_UNIT`,`CONSUMED_UNIT`)
-		VALUES
-		(:uid,:inv_id,:unit,'0')";
-		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-		$statement->execute(
-		array(
-			':uid' => $uid,
-			':inv_id' => $inv_id,
-			':unit' => $unit
-			));
-	}
-}
-?>TRANSACTION_SUMMARY`
 		(`UID`,`INV_ID`,`TOTAL_UNIT`,`CONSUMED_UNIT`)
 		VALUES
 		(:uid,:inv_id,:unit,'0')";

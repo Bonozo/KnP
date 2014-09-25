@@ -34,7 +34,4 @@ else
 $records = array('Record'=>$records);
 
 echo json_indent(json_encode($records));
-?>ds);
-
-echo json_indent(json_encode($records));
 ?>

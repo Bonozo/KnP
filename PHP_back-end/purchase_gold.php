@@ -70,6 +70,4 @@ else
 }
 $records = array('Record'=>$records);
 echo json_indent(json_encode($records));
-?>'=>$records);
-echo json_indent(json_encode($records));
 ?>

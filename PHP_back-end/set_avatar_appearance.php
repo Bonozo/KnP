@@ -193,25 +193,29 @@ if(isset($_GET))
 		$statement->execute($params);*/
 
 
-		$query = "SELECT `UID`,`NAME`,`EMAIL`,`GENDER`,`STATUS_MESSAGE`,`USER_ID`,`DEVICE_TOKEN` FROM KAP_USER_MAIN WHERE 
+		$query = "SELECT `UID`,`NAME`,DATEDIFF(NOW(),`TIMESTAMP`) AS 'ACCOUNT_AGE',`MARITIAL_STATUS`,`LEVEL`,`XP`,`ENERGY`,`EMAIL`,`GENDER`,`STATUS_MESSAGE`,`USER_ID`,`DEVICE_TOKEN` FROM KAP_USER_MAIN WHERE 
 		`UID` = :uid";
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(
 		array(
 			':uid' => $uid,
 		));
-		$res = $statement->fetchAll(PDO::FETCH_ASSOC);//print_r($res);
-		//print_r($res);
-		$posts= array();
-		foreach($res as $post){
-			$posts[0]["UID"] = $post["UID"];
-			$posts[0]["NAME"] = $post["NAME"];
-			$posts[0]["EMAIL"] = $post["EMAIL"];
-			$posts[0]["GENDER"] = $post["GENDER"];
-			$posts[0]["STATUS_MESSAGE"] = $post["STATUS_MESSAGE"];
-			$posts[0]["USER_ID"] = $post["USER_ID"];
-			$posts[0]["DEVICE_TOKEN"] = $post["DEVICE_TOKEN"];
+		$basic_info = $statement->fetchAll(PDO::FETCH_ASSOC);//print_r($res);
+			//print_r($res);
+
+		////////////////////////////////////////////////////////////
+		$query =   
+			"SELECT TOTAL_UNIT FROM KNP_INVENTORY_TRANSACTION_SUMMARY WHERE UID = :uid AND INV_ID = '10004'";
+		
+		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$statement->execute(array(':uid'=>$uid));
+		$res5 = $statement->fetchAll(PDO::FETCH_ASSOC);
+		
+		if(sizeof($res5) == 0){
+			$res5[] = array("TOTAL_UNIT" => "0");
 		}
+		////////////////////////////////////////////////////////////
+
 		$query =   
 		   "SELECT uwt.`WEAR_TYPE_ID`,uw.`WEAR_ID`,uw.`IMAGE`,uw.`NAME`
 			FROM 
@@ -232,8 +236,25 @@ if(isset($_GET))
 		$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$statement->execute(array(':uid'=>$uid));
 		$result = $statement->fetchAll(PDO::FETCH_ASSOC);//print_r($result);
-		$posts[0]["USER_APPEARANCE"] = $result;
 		
+		$posts= array();
+		foreach($basic_info as $post){
+			$posts[0]["UID"] = $post["UID"];
+			$posts[0]["NAME"] = $post["NAME"];
+			$posts[0]["LEVEL"] = $post["LEVEL"];
+			$posts[0]["XP"] = $post["XP"];
+			$posts[0]["ENERGY"] = $post["ENERGY"];
+			$posts[0]["MARITIAL_STATUS"] = $post["MARITIAL_STATUS"];
+			$posts[0]["ACCOUNT_AGE"] = $post["ACCOUNT_AGE"];
+			$posts[0]["EMAIL"] = $post["EMAIL"];
+			$posts[0]["GENDER"] = $post["GENDER"];
+			$posts[0]["STATUS_MESSAGE"] = $post["STATUS_MESSAGE"];
+			$posts[0]["USER_ID"] = $post["USER_ID"];
+			$posts[0]["DEVICE_TOKEN"] = $post["DEVICE_TOKEN"];
+			$posts[0]['NUM_OF_GOLDS'] = $res5[0]['TOTAL_UNIT'];
+			$posts[0]["USER_APPEARANCE"] = $result;
+		}
+
 		$records = array('Record'=>$posts);//$records = array('Error'=>$posts[0]);
 
 	}

@@ -9,7 +9,7 @@ $dbObj = new sdb("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USERNAME, DB_PASSW
 if(isset($_GET))
 {
 	extract($_GET); 
-	if(isset($uid,$inv_id,$req_golds))
+	if(isset($uid,$inv_id,$req_golds, $units))
 	{
 		$apple_inventory_id = 10060;
 		$num_of_required_apple = 4;
@@ -52,13 +52,14 @@ if(isset($_GET))
 				`KNP_INVENTORY_TRANSACTION`
 				(`BENEFICIARY_UID`,`INVENTORY_ID`,`UNIT_TRANSFER`,`TRANS_TYPE`,`COMMENTS`)
 				VALUES 
-				( :uid,:inv_id,'1','INVENTORY_PURCHASE','Inventory Purchased');
+				( :uid,:inv_id,:units,'INVENTORY_PURCHASE','Inventory Purchased');
 			";
 			$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$statement->execute(
 			array(
 				':uid' => $uid,
 				':inv_id' => $inv_id,
+				':units' => $units,
 				':req_golds' => $req_golds
 				));
 
@@ -103,18 +104,19 @@ if(isset($_GET))
 					`KNP_INVENTORY_TRANSACTION_SUMMARY`
 						(`UID`,`INV_ID`,`TOTAL_UNIT`,`CONSUMED_UNIT`) 
 					VALUES 
-						( :uid,:inv_id,'1','0');";
+						( :uid,:inv_id,:units,'0');";
 				$statement = $dbObj->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 				$statement->execute(
 				array(
 					':inv_id' => $inv_id,
+					':units' => $units,
 					':uid' => $uid
 					));
 				
 			}
 			else{
 				$inv_units = intval($res[1]['TOTAL_UNIT']);
-				$inv_units = (int)$inv_units + 1;
+				$inv_units = (int)$inv_units + (int)$units;
 				
 				$query = "
 				UPDATE 
@@ -185,6 +187,7 @@ if(isset($_GET))
 				}
 			}
 			$posts = array('Message'=> "Successfully purchased!");
+			$records = $posts;
 
 		}
 		else{
@@ -194,7 +197,8 @@ if(isset($_GET))
 	}
 	else
 	{
-		$records = array('Error'=>"Bad Request!");
+		$posts = array('Message'=>"Please upgrade your KnP version to purchase inventory!");
+		$records = $posts;
 	}
 }
 else

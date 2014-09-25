@@ -141,10 +141,4 @@ function CloudLogin($email,$password){
 	return array(false,'Unknown error');
 }
 
-?>response['meta']['status'] == 'fail'){
-		return array(false,$response['meta']['message']);
-	}
-	return array(false,'Unknown error');
-}
-
 ?>

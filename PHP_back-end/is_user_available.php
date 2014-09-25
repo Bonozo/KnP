@@ -39,9 +39,4 @@ if(isset($_GET))
 }
 
 
-?>ecords));
-
-}
-
-
 ?>

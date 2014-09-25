@@ -23,7 +23,7 @@ if(isset($_GET))
 		));
 		$res = $statement->fetchAll(PDO::FETCH_ASSOC);
 		$task_id = getCurrentTaskID($uid);//$res[0]['ACTIVE_TASK'];
-
+		
 		
 		$sql = "
 			SELECT TM.TASK_ID, TM.NAME, TM.DESCRIPTION, TD.ID AS 'TASK_DETAIL_ID', TD.TASK, TD.SCREEN, TD.SCREEN_TYPE, TD.ICON_SHADE_LEFT
@@ -52,7 +52,13 @@ if(isset($_GET))
 			$details[$counter]['STATUS'] = (isset($status_info[0]['STATUS']))?$status_info[0]['STATUS']:"PENDING";
 			
 			$details[$counter]['ID'] = $post['TASK_ID'];
-			$details[$counter]['TASK'] = $post['TASK'];
+			if($post['TASK_DETAIL_ID'] == '3003'){
+				$num_of_apples = getNumberOfApples($uid);
+				$details[$counter]['TASK'] = $post['TASK'] . " (" . $num_of_apples . "/4)";
+			}
+			else{
+				$details[$counter]['TASK'] = $post['TASK'];
+			}
 			$details[$counter]['SCREEN'] = $post['SCREEN'];
 			$details[$counter]['SCREEN_TYPE'] = $post['SCREEN_TYPE'];
 			$details[$counter]['ICON_SHADE_LEFT'] = $post['ICON_SHADE_LEFT'];
@@ -130,5 +136,28 @@ function getCurrentTaskID($uid){
 	return $active_task_id;
 	
 	//die("completed_tasks_count : ".$completed_tasks_count[0]['COMPLETED_TASKS']."\nnum_of_tasks:".$num_of_tasks);
+}
+function getNumberOfApples($uid){
+	global $dbObj;
+	$apple_inventory_id = 10060;
+	$sql = 	"
+			SELECT TOTAL_UNIT
+			FROM `KNP_INVENTORY_TRANSACTION_SUMMARY`
+			WHERE `INV_ID` = :apple_inventory_id
+			AND `UID` = :uid
+			";
+	$statement = $dbObj->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+	$statement->execute(
+	array(
+		':apple_inventory_id' => $apple_inventory_id,
+		':uid' => $uid
+		));
+	$num_of_apples = $statement->fetchAll(PDO::FETCH_ASSOC);
+	if(sizeof($num_of_apples) < 1){
+		return 0;
+	}
+	else{
+		return $num_of_apples[0]['TOTAL_UNIT'];
+	}
 }
 ?>

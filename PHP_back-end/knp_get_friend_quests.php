@@ -41,20 +41,37 @@ if(isset($_GET))
 		$counter = 0;
 		foreach($res as $key => $post){
 
-			if(strtotime($post["EXPIRED_TIME"]) < strtotime(date("Y:m:d h:i:s", time()))){
-			  if($post["STATUS"] != "COMPLETE"){
-				  ExpireQuest($post["ASSIGN_QUEST_ID"]);
-				  $posts[$counter]["EXPIRED_TIME"] = "00:00:00";
-				  $posts[$counter]["STATUS"] = 'EXPIRE';//:"3",
-			  }
-			  else{
-				  $posts[$counter]["EXPIRED_TIME"] = "00:00:00";
-				  $posts[$counter]["STATUS"] = $post["STATUS"];//:"3",
-			  }
+if($test){
+echo strtotime(date("Y:m:d h:i:s", '-17:31:35')); die();
+	print_r(array('EXPIRED_TIME'=>$post["EXPIRED_TIME"]));
+	if(strtotime($post["EXPIRED_TIME"]) > strtotime(date("Y:m:d h:i:s", time()))){
+		echo "TRUE";
+	}
+	else{
+		echo "FALSE : " . strtotime(date("Y:m:d h:i:s", time())) . "\n" . strtotime($post["EXPIRED_TIME"]);
+	}
+	die();
+	exit;
+}
+			if(strtotime($post["REMAINING_TIME"]) < 0 && $post['STATUS'] == 'INCOMPLETE'){
+				ExpireQuest($post["ASSIGN_QUEST_ID"]);
+				$posts[$counter]["EXPIRED_TIME"] = "00:00:00";
+				$posts[$counter]["STATUS"] = 'EXPIRE';//:"3",
 			}
-			else{
-			  $posts[$counter]["EXPIRED_TIME"] = $post["REMAINING_TIME"];
-			  $posts[$counter]["STATUS"] = $post["STATUS"];//:"3",
+/*			if(strtotime($post["EXPIRED_TIME"]) > strtotime(date("Y:m:d h:i:s", time()))){
+				if($post["STATUS"] != "COMPLETE"){
+					ExpireQuest($post["ASSIGN_QUEST_ID"]);
+					$posts[$counter]["EXPIRED_TIME"] = "00:00:00";
+					$posts[$counter]["STATUS"] = 'EXPIRE';//:"3",
+				}
+				else{
+					$posts[$counter]["EXPIRED_TIME"] = "00:00:00";
+					$posts[$counter]["STATUS"] = $post["STATUS"];//:"3",
+				}
+			}
+*/			else{
+				$posts[$counter]["EXPIRED_TIME"] = $post["REMAINING_TIME"];
+				$posts[$counter]["STATUS"] = $post["STATUS"];//:"3",
 			}
 			
 			//			  $posts[$counter]["EXPIRED_TIME"] = $TimeRemaining;
